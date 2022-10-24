@@ -15,15 +15,12 @@ class JobListView(ListCreateAPIView):
     lookup_field = 'pk'
 
     def get_queryset(self):
-        return Job.objects.all()
+        return Job.objects.filter(is_active=True)
 
     def perform_create(self, serializer):
         # get authenticated user
         user = self.request.user
 
-        # Return internal job True
-        internal = True
-
         # create job
-        serializer.save(user=user, internal=internal)
+        serializer.save(user=user)
 

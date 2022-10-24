@@ -7,7 +7,7 @@ from .validators import validate_title, unique_job_validator
 
 class JobSerializer(serializers.ModelSerializer):
     title = serializers.CharField(max_length=100, validators=[validate_title, unique_job_validator])
-    user = serializers.SerializerMethodField()
+    user = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Job
@@ -21,6 +21,7 @@ class JobSerializer(serializers.ModelSerializer):
             'salary',
             'user',
         ]
+        read_only_fields = ['date_created']
 
     def get_user(self, obj):
         return {

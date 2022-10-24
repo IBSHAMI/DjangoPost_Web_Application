@@ -18,6 +18,7 @@ class Job(models.Model):
     salary = models.PositiveIntegerField(blank=True, null=True)
 
     internal = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
