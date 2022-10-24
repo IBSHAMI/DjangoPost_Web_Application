@@ -1,3 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
+from rest_framework.generics import (
+    ListAPIView,
+    RetrieveAPIView,
+    CreateAPIView,
+    DestroyAPIView,
+    UpdateAPIView,
+)
 
-# Create your views here.
+from .models import Job
+from .serializers import JobSerializer
+
+
+class JobListView(ListAPIView):
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
+    lookup_field = 'pk'
+
