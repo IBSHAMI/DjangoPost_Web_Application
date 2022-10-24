@@ -140,3 +140,16 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+
+# REST FRAMEWORK SETTINGS
+REST_FRAMEWORK = {
+    # We can set our default authentication classes or permission classes here
+    # All views will inherit these settings unless we override them
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "api.authentication.TokenAuthentication"
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly", # Read only for non-authenticated users (GET requests)
+    ]
+}

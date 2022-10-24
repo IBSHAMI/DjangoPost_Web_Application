@@ -19,7 +19,6 @@ class JobSerializer(serializers.ModelSerializer):
             'date_created',
             'remote',
             'salary',
-            'internal',
             'user',
         ]
 
