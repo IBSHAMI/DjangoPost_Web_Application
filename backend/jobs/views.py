@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from rest_framework import serializers
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveAPIView,
@@ -7,7 +8,7 @@ from rest_framework.generics import (
 )
 
 from .models import Job
-from .serializers import JobSerializer
+from .serializers import JobSerializer, JobDetailSerializer
 
 
 class JobListView(ListCreateAPIView):
@@ -24,3 +25,46 @@ class JobListView(ListCreateAPIView):
         # create job
         serializer.save(user=user)
 
+
+class JobDetailView(RetrieveAPIView):
+    queryset = Job.objects.filter(is_active=True)
+    serializer_class = JobDetailSerializer
+    lookup_field = 'pk'
+
+
+class JobUpdateView(UpdateAPIView):
+    serializer_class = JobSerializer
+    lookup_field = 'pk'
+
+    def get_queryset(self):
+        # get authenticated user
+        user = self.request.user
+
+        queryset = Job.objects.filter(user=user)
+        return queryset
+
+    def perform_update(self, serializer):
+        # check if job is under user
+        if serializer.instance.user == self.request.user:
+            super().perform_update(serializer)
+        else:
+            raise serializers.ValidationError('You are not the owner of this job')
+
+
+class JobDeleteView(DestroyAPIView):
+    serializer_class = JobSerializer
+    lookup_field = 'pk'
+
+    def get_queryset(self):
+        # get authenticated user
+        user = self.request.user
+
+        queryset = Job.objects.filter(user=user)
+        return queryset
+
+    def perform_destroy(self, instance):
+        # check if job is under user
+        if instance.user == self.request.user:
+            super().perform_destroy(instance)
+        else:
+            raise serializers.ValidationError('You are not the owner of this job')

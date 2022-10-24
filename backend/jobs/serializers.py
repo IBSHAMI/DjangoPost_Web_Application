@@ -8,6 +8,7 @@ from .validators import validate_title, unique_job_validator
 class JobSerializer(serializers.ModelSerializer):
     title = serializers.CharField(max_length=100, validators=[validate_title, unique_job_validator])
     user = serializers.SerializerMethodField(read_only=True)
+    detail_url = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Job
@@ -20,11 +21,73 @@ class JobSerializer(serializers.ModelSerializer):
             'remote',
             'salary',
             'user',
+            'detail_url',
         ]
-        read_only_fields = ['date_created']
+        read_only_fields = ['date_created', 'user']
 
     def get_user(self, obj):
         return {
             'username': obj.user.username,
             'email': obj.user.email,
         }
+
+    def get_detail_url(self, obj):
+        # Acess the request object from the serializer context
+        request = self.context.get('request')
+        if request is None:
+            return None
+        return reverse('api:jobs:job_detail', kwargs={'pk': obj.pk}, request=request)
+
+
+class JobDetailSerializer(JobSerializer):
+    user = serializers.SerializerMethodField(read_only=True)
+    update_url = serializers.SerializerMethodField(read_only=True)
+    delete_url = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Job
+        fields = [
+            'pk',
+            'title',
+            'description',
+            'location',
+            'date_created',
+            'remote',
+            'salary',
+            'user',
+            'update_url',
+            'delete_url',
+        ]
+        read_only_fields = ['date_created', 'user']
+
+    def get_user(self, obj):
+        return {
+            'username': obj.user.username,
+            'email': obj.user.email,
+        }
+
+    def get_update_url(self, obj):
+        # Acess the request object from the serializer context
+        request = self.context.get('request')
+        if request is None:
+            return None
+
+        # get user from request
+        user = request.user
+        if obj.user == user:
+            return reverse('api:jobs:job_update', kwargs={'pk': obj.pk}, request=request)
+        else:
+            return None
+
+    def get_delete_url(self, obj):
+        # Access the request object from the serializer context
+        request = self.context.get('request')
+        if request is None:
+            return None
+
+        # get user from request
+        user = request.user
+        if obj.user == user:
+            return reverse('api:jobs:job_delete', kwargs={'pk': obj.pk}, request=request)
+        else:
+            return None
