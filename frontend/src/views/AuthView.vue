@@ -5,7 +5,11 @@
       <section class="absolute w-full h-full">
         <div
           class="absolute top-0 w-full h-full bg-gray-900"
-          style="background-size: 100%; background-repeat: no-repeat"
+          style="
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-image: url('../../public/assets/img/auth_background_image.png');
+          "
         ></div>
         <div class="container mx-auto px-4 h-full">
           <div class="flex content-center items-center justify-center h-full">
@@ -28,7 +32,7 @@
                       <img
                         alt="..."
                         class="w-5 mr-1"
-                        src="../assets/img/github.svg"
+                        src="../../public/assets/img/github.svg"
                       />Github</button
                     ><button
                       class="bg-white active:bg-gray-100 text-gray-800 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs"
@@ -38,7 +42,7 @@
                       <img
                         alt="..."
                         class="w-5 mr-1"
-                        src="../assets/img/google.svg"
+                        src="../../public/assets/img/google.svg"
                       />Google
                     </button>
                   </div>
