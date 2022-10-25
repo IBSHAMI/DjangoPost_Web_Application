@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar-item></navbar-item>
+    <auth-navbar-item></auth-navbar-item>
     <main>
       <section class="absolute w-full h-full">
         <div
@@ -11,7 +11,7 @@
           <div class="flex content-center items-center justify-center h-full">
             <div class="w-full lg:w-4/12 px-4">
               <div
-                class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300 border-0"
+                class="relative flex flex-col min-w-0 break-words w-full my-8 shadow-lg rounded-lg bg-gray-300 border-0"
               >
                 <div class="rounded-t mb-0 px-6 py-6">
                   <div class="text-center mb-3">
@@ -112,19 +112,19 @@
             </div>
           </div>
         </div>
-        <footer-item></footer-item>
+        <auth-footer-item></auth-footer-item>
       </section>
     </main>
   </div>
 </template>
 <script>
-import NavbarItem from "@/components/NavbarItem.vue";
-import FooterItem from "@/components/FooterItem.vue";
+import AuthNavbarItem from "@/components/AuthNavbarItem.vue";
+import AuthFooterItem from "@/components/AuthFooterItem.vue";
 export default {
   name: "login-page",
   components: {
-    NavbarItem,
-    FooterItem,
+    AuthNavbarItem,
+    AuthFooterItem,
   },
 };
 </script>
