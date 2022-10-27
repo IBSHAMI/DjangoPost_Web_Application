@@ -1,134 +1,241 @@
 <template>
   <div>
-    <auth-navbar-item></auth-navbar-item>
-    <main>
-      <section class="absolute w-full h-full">
-        <div
-          class="absolute top-0 w-full h-full bg-gray-900"
-          style="
-            background-size: 100%;
-            background-repeat: no-repeat;
-            background-image: url('../../public/assets/img/auth_background_image.png');
-          "
-        ></div>
-        <div class="container mx-auto px-4 h-full">
-          <div class="flex content-center items-center justify-center h-full">
-            <div class="w-full lg:w-4/12 px-4">
-              <div
-                class="relative flex flex-col min-w-0 break-words w-full my-8 shadow-lg rounded-lg bg-gray-300 border-0"
-              >
-                <div class="rounded-t mb-0 px-6 py-6">
-                  <div class="text-center mb-3">
-                    <h6 class="text-gray-600 text-sm font-bold">
-                      Sign in with
-                    </h6>
-                  </div>
-                  <div class="btn-wrapper text-center">
-                    <button
-                      class="bg-white active:bg-gray-100 text-gray-800 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs"
-                      type="button"
-                      style="transition: all 0.15s ease 0s"
+    <navbar-item></navbar-item>
+    <main class="container">
+      <section class="absolute w-full h-full" v-if="signup">
+        <div>
+          <div
+            class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
+          >
+            <a
+              href="#"
+              class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+            >
+              <img
+                class="w-8 h-8 mr-2"
+                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
+                alt="logo"
+              />
+              Flowbite
+            </a>
+            <div
+              class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+            >
+              <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h1
+                  class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+                >
+                  Sign in to your account
+                </h1>
+                <form class="space-y-4 md:space-y-6" action="#">
+                  <div>
+                    <label
+                      for="email"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >Your email</label
                     >
-                      <img
-                        alt="..."
-                        class="w-5 mr-1"
-                        src="../../public/assets/img/github.svg"
-                      />Github</button
-                    ><button
-                      class="bg-white active:bg-gray-100 text-gray-800 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs"
-                      type="button"
-                      style="transition: all 0.15s ease 0s"
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="name@company.com"
+                      required=""
+                    />
+                  </div>
+                  <div>
+                    <label
+                      for="password"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >Password</label
                     >
-                      <img
-                        alt="..."
-                        class="w-5 mr-1"
-                        src="../../public/assets/img/google.svg"
-                      />Google
-                    </button>
+                    <input
+                      type="password"
+                      name="password"
+                      id="password"
+                      placeholder="••••••••"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required=""
+                    />
                   </div>
-                  <hr class="mt-6 border-b-1 border-gray-400" />
-                </div>
-                <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-                  <div class="text-gray-500 text-center mb-3 font-bold">
-                    <small>Or sign in with credentials</small>
-                  </div>
-                  <form>
-                    <div class="relative w-full mb-3">
-                      <label
-                        class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                        for="grid-password"
-                        >Email</label
-                      ><input
-                        type="email"
-                        class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
-                        placeholder="Email"
-                        style="transition: all 0.15s ease 0s"
-                      />
-                    </div>
-                    <div class="relative w-full mb-3">
-                      <label
-                        class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                        for="grid-password"
-                        >Password</label
-                      ><input
-                        type="password"
-                        class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
-                        placeholder="Password"
-                        style="transition: all 0.15s ease 0s"
-                      />
-                    </div>
-                    <div>
-                      <label class="inline-flex items-center cursor-pointer"
-                        ><input
-                          id="customCheckLogin"
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-start">
+                      <div class="flex items-center h-5">
+                        <input
+                          id="remember"
+                          aria-describedby="remember"
                           type="checkbox"
-                          class="form-checkbox border-0 rounded text-gray-800 ml-1 w-5 h-5"
-                          style="transition: all 0.15s ease 0s"
-                        /><span class="ml-2 text-sm font-semibold text-gray-700"
-                          >Remember me</span
-                        ></label
-                      >
+                          class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                          required=""
+                        />
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label
+                          for="remember"
+                          class="text-gray-500 dark:text-gray-300"
+                          >Remember me</label
+                        >
+                      </div>
                     </div>
-                    <div class="text-center mt-6">
-                      <button
-                        class="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
-                        type="button"
-                        style="transition: all 0.15s ease 0s"
-                      >
-                        Sign In
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <div class="flex flex-wrap mt-6">
-                <div class="w-1/2">
-                  <a href="#pablo" class="text-gray-300"
-                    ><small>Forgot password?</small></a
+                    <a
+                      href="#"
+                      class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+                      >Forgot password?</a
+                    >
+                  </div>
+                  <button
+                    type="submit"
+                    class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                   >
-                </div>
-                <div class="w-1/2 text-right">
-                  <a href="#pablo" class="text-gray-300"
-                    ><small>Create new account</small></a
+                    Sign in
+                  </button>
+                  <p
+                    class="text-sm font-light text-gray-500 dark:text-gray-400"
                   >
-                </div>
+                    Don’t have an account yet?
+                    <a
+                      href="#"
+                      class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                      @click.prevent="signupPageShow"
+                      >Sign up</a
+                    >
+                  </p>
+                </form>
               </div>
             </div>
           </div>
         </div>
-        <auth-footer-item></auth-footer-item>
+      </section>
+      <section class="bg-gray-50 dark:bg-gray-900" v-else-if="!signup">
+        <div
+          class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
+        >
+          <a
+            href="#"
+            class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+          >
+            <img
+              class="w-8 h-8 mr-2"
+              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
+              alt="logo"
+            />
+            Flowbite
+          </a>
+          <div
+            class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+          >
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <h1
+                class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+              >
+                Create and account
+              </h1>
+              <form class="space-y-4 md:space-y-6" action="#">
+                <div>
+                  <label
+                    for="email"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Your email</label
+                  >
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="name@company.com"
+                    required=""
+                  />
+                </div>
+                <div>
+                  <label
+                    for="password"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="••••••••"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required=""
+                  />
+                </div>
+                <div>
+                  <label
+                    for="confirm-password"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Confirm password</label
+                  >
+                  <input
+                    type="confirm-password"
+                    name="confirm-password"
+                    id="confirm-password"
+                    placeholder="••••••••"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required=""
+                  />
+                </div>
+                <div class="flex items-start">
+                  <div class="flex items-center h-5">
+                    <input
+                      id="terms"
+                      aria-describedby="terms"
+                      type="checkbox"
+                      class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                      required=""
+                    />
+                  </div>
+                  <div class="ml-3 text-sm">
+                    <label
+                      for="terms"
+                      class="font-light text-gray-500 dark:text-gray-300"
+                      >I accept the
+                      <a
+                        class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                        href="#"
+                        >Terms and Conditions</a
+                      ></label
+                    >
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                >
+                  Create an account
+                </button>
+                <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                  Already have an account?
+                  <a
+                    href="#"
+                    class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                    @click.prevent="signupPageShow"
+                    >Login here</a
+                  >
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
+    <footer-item></footer-item>
   </div>
 </template>
 <script>
-import AuthNavbarItem from "@/components/AuthNavbarItem.vue";
-import AuthFooterItem from "@/components/AuthFooterItem.vue";
 export default {
   name: "login-page",
-  components: {
-    AuthNavbarItem,
-    AuthFooterItem,
+  data() {
+    return {
+      signup: false,
+    };
   },
+  methods: {
+    signupPageShow() {
+      this.signup = !this.signup;
+    },
+  },
+  components: {},
 };
 </script>
