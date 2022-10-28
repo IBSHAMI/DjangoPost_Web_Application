@@ -107,7 +107,7 @@
         </div>
       </section>
       <!-- Sign up -->
-      <section class="bg-[#6b7280]" v-else-if="signup">
+      <section class="absolute w-full h-full bg-[#6b7280]" v-else-if="signup">
         <div
           class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
         >
