@@ -125,6 +125,25 @@
           <div
             class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
           >
+            <div
+              v-if="sub_show_alert"
+              class="text-white px-6 py-4 border-0 rounded relative mb-4 bg-indigo-500"
+              :class="{
+                sub_show_valid: sub_show_alert,
+              }"
+            >
+              <span class="text-xl inline-block mr-5 align-middle">
+                <i class="fas fa-bell" />
+              </span>
+              <span class="inline-block align-middle mr-8">
+                {{ sub_alert_message }}
+              </span>
+              <button
+                class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none"
+              >
+                <span>×</span>
+              </button>
+            </div>
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1
                 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
@@ -135,6 +154,7 @@
                 class="space-y-4 md:space-y-6"
                 action="#"
                 :validation-schema="schema"
+                @submit="register"
               >
                 <div>
                   <label
@@ -166,7 +186,6 @@
                     id="email"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
-                    required=""
                   />
                   <ErrorMessage
                     name="email"
@@ -185,8 +204,23 @@
                     id="password"
                     placeholder="••••••••"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
-                  />
+                    :bails="false"
+                    v-slot="{ field, errors }"
+                  >
+                    <input
+                      type="password"
+                      placeholder="••••••••"
+                      v-bind="field"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+                    <div
+                      class="text-red-500 text-xs italic"
+                      v-for="error in errors"
+                      :key="error"
+                    >
+                      {{ error }}
+                    </div>
+                  </vee-field>
                   <ErrorMessage
                     name="password"
                     class="text-red-500 text-xs italic"
@@ -204,7 +238,6 @@
                     id="confirm_password"
                     placeholder="••••••••"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
                   />
                   <ErrorMessage
                     name="confirm_password"
@@ -243,6 +276,7 @@
                 </div>
                 <button
                   type="submit"
+                  :disabled="sub_show_alert"
                   class="bg-sky-500 text-white active:bg-blue-600 font-bold uppercase text-base px-8 py-3 rounded shadow-md hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 >
                   Create an account
@@ -278,15 +312,33 @@ export default {
       schema: {
         username: "required|min:3|max:20|alpha_spaces",
         email: "required|min:3|max:100|email",
-        password: "required|min:3|max:100",
+        password: "required|min:9|max:100|excluded_password:password",
         confirm_password: "confirmed:@password",
-        terms: "required|",
+        terms: "required_terms",
       },
+      sub_in_process: false,
+      sub_show_alert: false,
+      sub_alert_variant: "bg-red-500",
+      sub_alert_message: "Please wait, processing your request",
     };
   },
   methods: {
     signupPageShow() {
       this.signup = !this.signup;
+    },
+    // this function will noot be called unless,
+    // all from validation is passed
+    register(values) {
+      // vales is an object with all the values from the form
+      this.sub_show_alert = true;
+      this.sub_in_process = true;
+      this.sub_alert_variant = "bg-blue-500";
+      this.sub_alert_message = "Please wait, processing your request";
+
+      // show that the form submission is successful
+      this.sub_alert_variant = "bg-green-500";
+      this.sub_alert_message = "Registration successful";
+      console.log(values);
     },
   },
   components: {
