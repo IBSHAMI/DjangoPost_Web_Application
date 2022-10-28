@@ -11,6 +11,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@vee-validate/rules": "^4.7.1",
     "pinia": "^2.0.23",
     "vee-validate": "^4.7.1",
     "vue": "^3.2.41",
