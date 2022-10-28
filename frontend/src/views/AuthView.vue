@@ -1,8 +1,7 @@
 <template>
   <div>
-    <navbar-item></navbar-item>
     <main class="container">
-      <section class="absolute w-full h-full bg-[#6b7280]" v-if="signup">
+      <section class="absolute w-full h-full bg-[#6b7280]" v-if="!signup">
         <div>
           <div
             class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
@@ -106,7 +105,7 @@
           </div>
         </div>
       </section>
-      <section class="bg-[#6b7280]" v-else-if="!signup">
+      <section class="bg-[#6b7280]" v-else-if="signup">
         <div
           class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
         >
@@ -220,10 +219,14 @@
         </div>
       </section>
     </main>
-    <footer-item></footer-item>
   </div>
 </template>
 <script>
+// Pinia built in function to merge the store with the component
+import { mapStores } from "pinia";
+// convention is to name the store with use and the name of the store at the end
+import useAuthenticationStore from "@/stores/authentication";
+
 export default {
   name: "login-page",
   data() {
@@ -236,6 +239,8 @@ export default {
       this.signup = !this.signup;
     },
   },
-  components: {},
+  components: {
+    ...mapStores(useAuthenticationStore),
+  },
 };
 </script>
