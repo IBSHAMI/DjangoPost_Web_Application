@@ -21,26 +21,46 @@
             <div
               class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
             >
+              <div
+                v-if="login_show_alert"
+                class="text-white px-6 py-4 border-0 rounded relative mb-4 bg-indigo-500"
+                :class="login_alert_variant"
+              >
+                <span class="text-xl inline-block mr-5 align-middle">
+                  <i class="fas fa-bell" />
+                </span>
+                <span class="inline-block align-middle mr-8">
+                  {{ login_alert_message }}
+                </span>
+              </div>
               <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1
                   class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
                 >
                   Sign in to your account
                 </h1>
-                <form class="space-y-4 md:space-y-6" action="#">
+                <vee-form
+                  class="space-y-4 md:space-y-6"
+                  action="#"
+                  :validation-schema="schema_login"
+                  @submit="login"
+                >
                   <div>
                     <label
                       for="email"
                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >Your email</label
                     >
-                    <input
+                    <vee-field
                       type="email"
                       name="email"
                       id="email"
                       class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="name@company.com"
-                      required=""
+                    />
+                    <ErrorMessage
+                      name="email"
+                      class="text-red-500 text-xs italic"
                     />
                   </div>
                   <div>
@@ -49,13 +69,17 @@
                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >Password</label
                     >
-                    <input
+                    <vee-field
                       type="password"
                       name="password"
                       id="password"
                       placeholder="••••••••"
                       class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       required=""
+                    />
+                    <ErrorMessage
+                      name="password"
+                      class="text-red-500 text-xs italic"
                     />
                   </div>
                   <div class="flex items-center justify-between">
@@ -85,6 +109,7 @@
                   </div>
                   <button
                     type="submit"
+                    :disabled="login_in_process"
                     class="bg-sky-500 text-white active:bg-blue-600 font-bold uppercase text-base px-8 py-3 rounded shadow-md hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   >
                     Sign In
@@ -100,7 +125,7 @@
                       >Sign up</a
                     >
                   </p>
-                </form>
+                </vee-form>
               </div>
             </div>
           </div>
@@ -127,10 +152,8 @@
           >
             <div
               v-if="sub_show_alert"
-              class="text-white px-6 py-4 border-0 rounded relative mb-4 bg-indigo-500"
-              :class="{
-                sub_show_valid: sub_show_alert,
-              }"
+              class="text-black px-6 py-4 border-0 rounded relative mb-4"
+              :class="sub_alert_variant"
             >
               <span class="text-xl inline-block mr-5 align-middle">
                 <i class="fas fa-bell" />
@@ -138,11 +161,6 @@
               <span class="inline-block align-middle mr-8">
                 {{ sub_alert_message }}
               </span>
-              <button
-                class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none"
-              >
-                <span>×</span>
-              </button>
             </div>
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1
@@ -276,7 +294,7 @@
                 </div>
                 <button
                   type="submit"
-                  :disabled="sub_show_alert"
+                  :disabled="sub_in_process"
                   class="bg-sky-500 text-white active:bg-blue-600 font-bold uppercase text-base px-8 py-3 rounded shadow-md hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 >
                   Create an account
@@ -316,10 +334,18 @@ export default {
         confirm_password: "confirmed:@password",
         terms: "required_terms",
       },
+      schema_login: {
+        email: "required|min:3|max:100",
+        password: "required|min:9|max:100",
+      },
       sub_in_process: false,
       sub_show_alert: false,
       sub_alert_variant: "bg-red-500",
       sub_alert_message: "Please wait, processing your request",
+      login_in_process: false,
+      login_show_alert: false,
+      login_alert_variant: "bg-red-500",
+      login_alert_message: "Please wait, processing your request",
     };
   },
   methods: {
@@ -338,6 +364,18 @@ export default {
       // show that the form submission is successful
       this.sub_alert_variant = "bg-green-500";
       this.sub_alert_message = "Registration successful";
+      console.log(values);
+    },
+    login(values) {
+      // vales is an object with all the values from the form
+      this.login_show_alert = true;
+      this.login_in_process = true;
+      this.login_alert_variant = "bg-blue-500";
+      this.login_alert_message = "Please wait, processing your request";
+
+      // show that the form submission is successful
+      this.login_alert_variant = "bg-green-500";
+      this.login_alert_message = "Login successful";
       console.log(values);
     },
   },
