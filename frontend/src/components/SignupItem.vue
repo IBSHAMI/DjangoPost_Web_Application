@@ -223,6 +223,7 @@ export default {
         .post(API.auth.register, newUserData)
         .then((res) => {
           console.log(res);
+          this.signupPageShow();
         })
         .catch((err) => {
           console.log(err);
