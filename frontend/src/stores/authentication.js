@@ -22,6 +22,8 @@ export default defineStore("authentication", {
     },
     setToken(token) {
       this.$patch({ token: token, isAuthenticated: true });
+      // set token in local storage
+      localStorage.setItem("Bearer", token);
     },
     setUser(user) {
       this.$patch({ user: user });

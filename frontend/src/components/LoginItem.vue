@@ -130,11 +130,17 @@
 </template>
 
 <script>
+import useAuthenticationStore from "@/stores/authentication";
 import { API } from "@/api";
 import axios from "axios";
 
 export default {
   name: "LoginItem",
+  setup() {
+    // init the store
+    const authenticationStore = useAuthenticationStore();
+    return { authenticationStore };
+  },
   data() {
     return {
       schema_login: {
@@ -161,18 +167,29 @@ export default {
       };
 
       // send the login credentials to the server
-      axios
-        .post(API.auth.login, loginCredentials)
-        .then((res) => {
-          console.log(res);
-          this.$router.push({ name: "LandingPage" });
-        })
-        .catch((err) => console.log(err));
-
-      // show that the form submission is successful
-      this.login_in_process = false;
-      this.login_alert_variant = "bg-green-500";
-      this.login_alert_message = "Login successful";
+      setTimeout(() => {
+        axios
+          .post(API.auth.login, loginCredentials)
+          .then((response) => {
+            this.login_in_process = false;
+            this.login_alert_variant = "bg-green-500";
+            this.login_alert_message = "Login successful, redirecting...";
+            console.log(response);
+            // save the token in the store
+            const token = response.data.auth_token;
+            this.authenticationStore.setToken(token);
+            this.authenticationStore.setUser(loginCredentials.email);
+            setTimeout(() => {
+              this.$router.push({ name: "LandingPage" });
+            }, 1000);
+          })
+          // eslint-disable-next-line no-unused-vars
+          .catch((error) => {
+            this.login_in_process = false;
+            this.login_alert_variant = "bg-red-500";
+            this.login_alert_message = "Login failed, please try again";
+          });
+      }, 1000);
     },
     signupPageShow() {
       this.$emit("signupPageShow");
