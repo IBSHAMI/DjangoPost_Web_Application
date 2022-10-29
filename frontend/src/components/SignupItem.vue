@@ -228,6 +228,7 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+      this.sub_in_process = false;
     },
     signupPageShow() {
       this.$emit("signup-page-show");

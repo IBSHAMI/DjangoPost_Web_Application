@@ -163,10 +163,14 @@ export default {
       // send the login credentials to the server
       axios
         .post(API.auth.login, loginCredentials)
-        .then((res) => console.log(res))
+        .then((res) => {
+          console.log(res);
+          this.$router.push({ name: "LandingPage" });
+        })
         .catch((err) => console.log(err));
 
       // show that the form submission is successful
+      this.login_in_process = false;
       this.login_alert_variant = "bg-green-500";
       this.login_alert_message = "Login successful";
     },
