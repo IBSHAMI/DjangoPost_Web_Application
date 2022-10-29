@@ -19,5 +19,16 @@ export default defineStore("authentication", {
         state.isAuthenticated = false;
       }
     },
+    setToken(state, token) {
+      state.token = token;
+      state.isAuthenticated = true;
+    },
+    setUser(state, user) {
+      state.user = user;
+    },
+    logout(state) {
+      state.token = null;
+      state.isAuthenticated = false;
+    },
   },
 });
