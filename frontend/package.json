@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@vee-validate/rules": "^4.7.1",
+    "axios": "^1.1.3",
     "pinia": "^2.0.23",
     "vee-validate": "^4.7.1",
     "vue": "^3.2.41",
