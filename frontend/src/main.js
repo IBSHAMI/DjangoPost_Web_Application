@@ -4,6 +4,7 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
 import veeValidatePlugin from "@/includes/validation";
+import axios from "axios";
 
 import "./assets/base.css";
 
@@ -18,5 +19,8 @@ app.use(router);
 
 // we pass our custom plugins
 app.use(veeValidatePlugin);
+
+// we use axios to make http requests to the django backend
+app.use(axios);
 
 app.mount("#app");

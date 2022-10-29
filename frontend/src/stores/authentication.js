@@ -7,6 +7,17 @@ export default defineStore("authentication", {
     user: null,
     isAuthenticated: false,
   }),
-  // // We use getters to create computed properties
-  // getters: {
+  // actions is like methods in Vue
+  mutations: {
+    // initialize is called when the store is created
+    initializeStore(state) {
+      if (localStorage.getItem("Bearer")) {
+        state.token = localStorage.getItem("Bearer");
+        state.isAuthenticated = true;
+      } else {
+        state.token = null;
+        state.isAuthenticated = false;
+      }
+    },
+  },
 });
