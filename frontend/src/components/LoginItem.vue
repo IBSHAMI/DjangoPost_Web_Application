@@ -130,6 +130,9 @@
 </template>
 
 <script>
+import { API } from "@/api";
+import axios from "axios";
+
 export default {
   name: "LoginItem",
   data() {
@@ -152,10 +155,20 @@ export default {
       this.login_alert_variant = "bg-blue-500";
       this.login_alert_message = "Please wait, processing your request";
 
+      const loginCredentials = {
+        email: values.email,
+        password: values.password,
+      };
+
+      // send the login credentials to the server
+      axios
+        .post(API.auth.login, loginCredentials)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+
       // show that the form submission is successful
       this.login_alert_variant = "bg-green-500";
       this.login_alert_message = "Login successful";
-      console.log(values);
     },
     signupPageShow() {
       this.$emit("signupPageShow");

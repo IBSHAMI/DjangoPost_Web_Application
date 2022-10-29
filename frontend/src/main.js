@@ -15,12 +15,9 @@ const app = createApp(App);
 app.use(createPinia());
 
 // we create the router after the plugin
-app.use(router);
+app.use(router, axios);
 
 // we pass our custom plugins
 app.use(veeValidatePlugin);
-
-// we use axios to make http requests to the django backend
-app.use(axios);
 
 app.mount("#app");

@@ -178,6 +178,9 @@
 </template>
 
 <script>
+import { API } from "@/api";
+import axios from "axios";
+
 export default {
   name: "SignupItem",
   data() {
@@ -208,7 +211,22 @@ export default {
       // show that the form submission is successful
       this.sub_alert_variant = "bg-green-500";
       this.sub_alert_message = "Registration successful";
-      console.log(values);
+
+      const newUserData = {
+        username: values.username,
+        email: values.email,
+        password: values.password,
+      };
+
+      // send the new user data to the server
+      axios
+        .post(API.auth.register, newUserData)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     signupPageShow() {
       this.$emit("signup-page-show");

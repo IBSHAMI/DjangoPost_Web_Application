@@ -8,7 +8,7 @@ from django.db.models.signals import post_save
 # custom user model
 class User(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
-    phone_number = models.CharField("Phone number", unique=True, max_length=15)
+    phone_number = models.CharField("Phone number", unique=True, max_length=15, blank=True, null=True)
     user_creation_date = models.DateTimeField(auto_now_add=True)
     profile_pic = models.ImageField(upload_to='profile_pics', blank=True)
 

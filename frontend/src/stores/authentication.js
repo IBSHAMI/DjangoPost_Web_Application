@@ -8,27 +8,26 @@ export default defineStore("authentication", {
     isAuthenticated: false,
   }),
   // actions is like methods in Vue
-  mutations: {
+  actions: {
     // initialize is called when the store is created
-    initializeStore(state) {
+    initializeStore() {
       if (localStorage.getItem("Bearer")) {
-        state.token = localStorage.getItem("Bearer");
-        state.isAuthenticated = true;
+        this.$patch({
+          token: localStorage.getItem("Bearer"),
+          isAuthenticated: true,
+        });
       } else {
-        state.token = null;
-        state.isAuthenticated = false;
+        this.$patch({ token: null, isAuthenticated: false });
       }
     },
-    setToken(state, token) {
-      state.token = token;
-      state.isAuthenticated = true;
+    setToken(token) {
+      this.$patch({ token: token, isAuthenticated: true });
     },
-    setUser(state, user) {
-      state.user = user;
+    setUser(user) {
+      this.$patch({ user: user });
     },
-    logout(state) {
-      state.token = null;
-      state.isAuthenticated = false;
+    logout() {
+      this.$patch({ token: null, user: null, isAuthenticated: false });
     },
   },
 });

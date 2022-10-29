@@ -161,3 +161,7 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticatedOrReadOnly", # Read only for non-authenticated users (GET requests)
     ]
 }
+
+DJOSER = {
+    'LOGIN_FIELD': 'email'
+}
