@@ -218,18 +218,21 @@ export default {
       setTimeout(() => {
         axios
           .post(API.auth.register, newUserData)
+          // eslint-disable-next-line no-unused-vars
           .then((res) => {
             this.sub_in_process = false;
             this.sub_alert_variant = "bg-green-500";
-            this.sub_alert_message = "Registration successful";
-            this.signupPageShow();
-            console.log(res);
+            this.sub_alert_message = "Registration successful, redirecting...";
+            setTimeout(() => {
+              this.sub_show_alert = false;
+              this.signupPageShow();
+            }, 2000);
           })
+          // eslint-disable-next-line no-unused-vars
           .catch((err) => {
             this.sub_in_process = false;
             this.sub_alert_variant = "bg-red-500";
             this.sub_alert_message = "Registration failed";
-            console.log(err);
           });
       }, 2000);
     },
