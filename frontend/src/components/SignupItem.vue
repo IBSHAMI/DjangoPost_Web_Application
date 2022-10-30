@@ -116,7 +116,7 @@
                 >Confirm password</label
               >
               <vee-field
-                type="confirm_password"
+                type="password"
                 name="confirm_password"
                 id="confirm_password"
                 placeholder="••••••••"
@@ -208,27 +208,30 @@ export default {
       this.sub_alert_variant = "bg-blue-500";
       this.sub_alert_message = "Please wait, processing your request";
 
-      // show that the form submission is successful
-      this.sub_alert_variant = "bg-green-500";
-      this.sub_alert_message = "Registration successful";
-
       const newUserData = {
         username: values.username,
         email: values.email,
         password: values.password,
       };
 
-      // send the new user data to the server
-      axios
-        .post(API.auth.register, newUserData)
-        .then((res) => {
-          console.log(res);
-          this.signupPageShow();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      this.sub_in_process = false;
+      // send data to the server
+      setTimeout(() => {
+        axios
+          .post(API.auth.register, newUserData)
+          .then((res) => {
+            this.sub_in_process = false;
+            this.sub_alert_variant = "bg-green-500";
+            this.sub_alert_message = "Registration successful";
+            this.signupPageShow();
+            console.log(res);
+          })
+          .catch((err) => {
+            this.sub_in_process = false;
+            this.sub_alert_variant = "bg-red-500";
+            this.sub_alert_message = "Registration failed";
+            console.log(err);
+          });
+      }, 2000);
     },
     signupPageShow() {
       this.$emit("signup-page-show");
