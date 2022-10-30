@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
-import AuthView from "../views/AuthView.vue";
+import HomeView from "@/views/HomeView.vue";
+import AuthView from "@/views/AuthView.vue";
+import JobsView from "@/views/JobsView.vue";
 
 // Vue excpect this to be an array of objects with a path and a component
 // each object is called a route record
@@ -14,6 +15,11 @@ const routes = [
     path: "/authentication",
     name: "Auth",
     component: AuthView,
+  },
+  {
+    path: "/jobs",
+    name: "Jobs",
+    component: JobsView,
   },
 ];
 

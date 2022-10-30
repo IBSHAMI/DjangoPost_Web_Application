@@ -174,13 +174,12 @@ export default {
             this.login_in_process = false;
             this.login_alert_variant = "bg-green-500";
             this.login_alert_message = "Login successful, redirecting...";
-            console.log(response);
             // save the token in the store
             const token = response.data.auth_token;
             this.authenticationStore.setToken(token);
             this.authenticationStore.setUser(loginCredentials.email);
             setTimeout(() => {
-              this.$router.push({ name: "LandingPage" });
+              this.$router.push({ name: "Jobs" });
             }, 1000);
           })
           // eslint-disable-next-line no-unused-vars
@@ -188,6 +187,7 @@ export default {
             this.login_in_process = false;
             this.login_alert_variant = "bg-red-500";
             this.login_alert_message = "Login failed, please try again";
+            console.log(error);
           });
       }, 1000);
     },
