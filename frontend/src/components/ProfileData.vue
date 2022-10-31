@@ -182,7 +182,7 @@
                 <div>
                   <label
                     class="block text-sm text-base font-medium text-gray-700"
-                    >Resume</label
+                    >Upload Resume</label
                   >
                   <div class="mt-1 flex items-center py-2">
                     <input
@@ -196,7 +196,7 @@
                 <div>
                   <label
                     class="block text-sm text-base font-medium text-gray-700"
-                    >Photo</label
+                    >Upload Profile Photo</label
                   >
                   <div class="mt-1 flex items-center py-2">
                     <input
