@@ -1,7 +1,9 @@
 <template>
   <div>
-    <main-navbar-item />
-    <profile-data v-if="(passedSlug = 'data')" />
+    <div class="relative bg-white mx-auto max-w-7xl px-4 sm:px-6">
+      <main-navbar-item class="pb-8" />
+      <profile-data v-if="(passedSlug = 'data')" />
+    </div>
   </div>
 </template>
 
