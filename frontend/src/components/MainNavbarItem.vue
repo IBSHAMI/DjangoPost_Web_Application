@@ -111,11 +111,11 @@
                       </svg>
                       <div class="ml-4">
                         <p class="text-base font-medium text-gray-900">
-                          Help Center
+                          Your Profile
                         </p>
                         <p class="mt-1 text-sm text-gray-500">
-                          Get all of your questions answered in our forums or
-                          contact support.
+                          View your profile data and edit and upload your latest
+                          resume.
                         </p>
                       </div>
                     </a>
@@ -211,48 +211,6 @@
                         </p>
                       </div>
                     </a>
-                  </div>
-                  <div class="bg-gray-50 px-5 py-5 sm:px-8 sm:py-8">
-                    <div>
-                      <h3 class="text-base font-medium text-gray-500">
-                        Recent Posts
-                      </h3>
-                      <ul role="list" class="mt-4 space-y-4">
-                        <li class="truncate text-base">
-                          <a
-                            href="#"
-                            class="font-medium text-gray-900 hover:text-gray-700"
-                            >Boost your conversion rate</a
-                          >
-                        </li>
-
-                        <li class="truncate text-base">
-                          <a
-                            href="#"
-                            class="font-medium text-gray-900 hover:text-gray-700"
-                            >How to use search engine optimization to drive
-                            traffic to your site</a
-                          >
-                        </li>
-
-                        <li class="truncate text-base">
-                          <a
-                            href="#"
-                            class="font-medium text-gray-900 hover:text-gray-700"
-                            >Improve your customer experience</a
-                          >
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="mt-5 text-sm">
-                      <a
-                        href="#"
-                        class="font-medium text-indigo-600 hover:text-indigo-500"
-                      >
-                        View all posts
-                        <span aria-hidden="true"> &rarr;</span>
-                      </a>
-                    </div>
                   </div>
                 </div>
               </div>
