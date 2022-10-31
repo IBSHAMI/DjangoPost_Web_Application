@@ -500,17 +500,28 @@
 </template>
 
 <script>
+import useprofileDropdownStore from "@/stores/profile_dropdown.js";
+
 export default {
   name: "MainNavbarItem",
-  data() {
+  setup() {
+    // Initialize the dropdown
+    const dropdownStore = useprofileDropdownStore();
     return {
-      dropdownOpen: true,
+      dropdownStore,
     };
+  },
+  data() {
+    return {};
   },
   methods: {
     toggleDropdown() {
-      this.dropdownOpen = !this.dropdownOpen;
-      console.log(this.dropdownOpen);
+      this.dropdownStore.toggleDropdown();
+    },
+  },
+  computed: {
+    dropdownOpen() {
+      return this.dropdownStore.dropdownOpen;
     },
   },
 };

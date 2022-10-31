@@ -1,7 +1,7 @@
 from djoser.serializers import UserCreateSerializer as BaseUserRegistrationSerializer
 
 
-# overwrite the custom user registration serializer
+# Overwrite the custom user registration serializer
 class UserRegistrationSerializer(BaseUserRegistrationSerializer):
 
     # Added username and email fields to be used for registration
