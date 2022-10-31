@@ -60,11 +60,6 @@
                 aria-expanded="false"
               >
                 <span>Profile</span>
-                <!--
-              Heroicon name: mini/chevron-down
-
-              Item active: "text-gray-600", Item inactive: "text-gray-400"
-            -->
                 <svg
                   class="text-gray-400 ml-2 h-5 w-5 group-hover:text-gray-500"
                   xmlns="http://www.w3.org/2000/svg"
@@ -89,8 +84,8 @@
                   <div
                     class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8"
                   >
-                    <a
-                      href="#"
+                    <router-link
+                      to="/profile/data"
                       class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
                     >
                       <!-- Heroicon name: outline/lifebuoy -->
@@ -118,7 +113,7 @@
                           resume.
                         </p>
                       </div>
-                    </a>
+                    </router-link>
 
                     <a
                       href="#"

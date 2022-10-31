@@ -23,9 +23,10 @@ const routes = [
     component: JobsView,
   },
   {
-    path: "/profile",
+    path: "/profile/:slug",
     name: "Profile",
     component: ProfileView,
+    props: true,
   },
 ];
 
