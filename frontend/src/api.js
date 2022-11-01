@@ -6,4 +6,7 @@ export const API = {
     logout: `${baseURL}/api/auth/token/logout/`,
     register: `${baseURL}/api/auth/users/`,
   },
+  employee: {
+    details: `${baseURL}/api/users/employee/data/`,
+  },
 };

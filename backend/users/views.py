@@ -17,9 +17,10 @@ class EmployeeDetailsAPIView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         # get the sent request
         request = self.request
+        print(request.headers)
 
         # get the user Token
-        token = request.headers.get('Authorization')
+        token = request.headers.get('Authorization').split(' ')[1] # get the token from the header
         user_email = Token.objects.get(key=token).user
         user = User.objects.get(email=user_email)
 

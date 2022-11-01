@@ -249,10 +249,15 @@
 
 <script>
 import ProfileResumeUpload from "@/components/ProfileResumeUpload.vue";
-import ProfilePictureUpload from "./ProfilePictureUpload.vue";
+import ProfilePictureUpload from "@/components/ProfilePictureUpload.vue";
+import axios from "axios";
+import { API } from "@/api";
 
 export default {
   name: "ProfileDataItem",
+  created() {
+    this.getUserDate();
+  },
   data() {
     return {
       // Upload Resume and Profile Picture varaibles
@@ -276,6 +281,26 @@ export default {
     ProfilePictureUpload,
   },
   methods: {
+    getUserDate() {
+      axios
+        .get(API.employee.details)
+        .then((response) => {
+          console.log(response.data);
+          this.firstName = response.data.first_name;
+          this.lastName = response.data.last_name;
+          this.email = response.data.email;
+          this.softwareField = response.data.software_field;
+          this.expectedSalary = response.data.expected_salary;
+          this.linkedinProfile = response.data.linkedin_profile;
+          this.portfolioWebsite = response.data.portfolio_website;
+          this.about = response.data.about;
+          this.resume = response.data.resume;
+          this.profilePhoto = response.data.profile_photo;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     upload(file, type) {
       console.log(file);
       console.log(type);
