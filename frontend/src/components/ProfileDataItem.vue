@@ -184,29 +184,46 @@
                     class="block text-sm text-base font-medium text-gray-700"
                     >Upload Resume</label
                   >
-                  <div class="mt-1 flex items-center py-2">
-                    <input
-                      type="file"
-                      id="Upload Photo"
-                      name="Upload Photo"
-                      class="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  <div class="mt-1 py-2">
+                    <button
+                      class="text-sky-500 border border-sky-500 hover:bg-sky-500 hover:text-white active:bg-sky-600 font-bold uppercase px-8 py-3 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      v-if="!resumeUploadShow"
+                      @click.prevent="resumeUploadShow = true"
+                    >
+                      Upload Resume
+                    </button>
+                    <profile-resume-upload
+                      v-else
+                      @upload="upload"
+                      @closeUploadModel="CloseUploadModel"
                     />
                   </div>
                 </div>
+
                 <div>
                   <label
                     class="block text-sm text-base font-medium text-gray-700"
                     >Upload Profile Photo</label
                   >
-                  <div class="mt-1 flex items-center py-2">
-                    <input
-                      type="file"
-                      id="Upload Photo"
-                      name="Upload Photo"
-                      class="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  <div class="mt-1 py-2">
+                    <button
+                      class="text-sky-500 border border-sky-500 hover:bg-sky-500 hover:text-white active:bg-sky-600 font-bold uppercase px-8 py-3 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      v-if="!PictureUploadShow"
+                      @click.prevent="PictureUploadShow = true"
+                    >
+                      Upload Profile Photo
+                    </button>
+                    <profile-picture-upload
+                      v-else
+                      @upload="upload"
+                      @closeUploadModel="CloseUploadModel"
                     />
                   </div>
                 </div>
+
+                <!-- <profile-upload @upload="upload" /> -->
               </div>
               <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
                 <button
@@ -231,7 +248,45 @@
 </template>
 
 <script>
+import ProfileResumeUpload from "@/components/ProfileResumeUpload.vue";
+import ProfilePictureUpload from "./ProfilePictureUpload.vue";
+
 export default {
-  name: "ProfileData",
+  name: "ProfileDataItem",
+  data() {
+    return {
+      // Upload Resume and Profile Picture varaibles
+      resumeUploadShow: false,
+      PictureUploadShow: false,
+
+      firstName: "",
+      lastName: "",
+      email: "",
+      softwareField: "",
+      expectedSalary: "",
+      linkedinProfile: "",
+      portfolioWebsite: "",
+      about: "",
+      resume: "",
+      profilePhoto: "",
+    };
+  },
+  components: {
+    ProfileResumeUpload,
+    ProfilePictureUpload,
+  },
+  methods: {
+    upload(file, type) {
+      console.log(file);
+      console.log(type);
+    },
+    CloseUploadModel(model) {
+      if (model === "resume_model") {
+        this.resumeUploadShow = false;
+      } else if (model === "picture_model") {
+        this.PictureUploadShow = false;
+      }
+    },
+  },
 };
 </script>

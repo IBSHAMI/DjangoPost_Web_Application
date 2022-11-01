@@ -2,14 +2,14 @@
   <div>
     <div class="relative bg-white mx-auto max-w-7xl px-4 sm:px-6">
       <main-navbar-item class="pb-8" />
-      <profile-data v-if="(passedSlug = 'data')" />
+      <profile-data-item v-if="(passedSlug = 'data')" />
     </div>
   </div>
 </template>
 
 <script>
 import MainNavbarItem from "@/components/MainNavbarItem.vue";
-import ProfileData from "@/components/ProfileData.vue";
+import ProfileDataItem from "@/components/ProfileDataItem.vue";
 
 export default {
   name: "ProfileView",
@@ -21,7 +21,7 @@ export default {
 
   components: {
     MainNavbarItem,
-    ProfileData,
+    ProfileDataItem,
   },
 };
 </script>
