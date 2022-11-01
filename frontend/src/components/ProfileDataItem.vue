@@ -28,7 +28,7 @@
                         name="price"
                         id="price"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-800 focus:ring-indigo-800 sm:text-sm"
-                        placeholder="0.00"
+                        :value="firstName"
                       />
                     </div>
                   </div>
@@ -44,7 +44,7 @@
                         name="company-website"
                         id="company-website"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        placeholder=""
+                        :value="lastName"
                       />
                     </div>
                   </div>
@@ -62,7 +62,7 @@
                         name="price"
                         id="price"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        placeholder="0.00"
+                        :value="email"
                       />
                     </div>
                   </div>
@@ -80,7 +80,7 @@
                         name="price"
                         id="price"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        placeholder="0.00"
+                        :value="softwareField"
                       />
                     </div>
                   </div>
@@ -103,7 +103,7 @@
                         name="price"
                         id="price"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        placeholder="0.00"
+                        :value="expectedSalary"
                       />
                       <div class="absolute inset-y-0 right-0 flex items-center">
                         <label for="currency" class="sr-only">Currency</label>
@@ -136,7 +136,7 @@
                         name="company-website"
                         id="company-website"
                         class="block w-full h-full flex-1 rounded-none rounded-r-md border-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        placeholder="www.example.com"
+                        :value="linkedinProfile"
                       />
                     </div>
                   </div>
@@ -156,7 +156,7 @@
                         name="company-website"
                         id="company-website"
                         class="block w-full flex-1 rounded-none rounded-r-md border-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        placeholder="www.example.com"
+                        :value="portfolioWebsite"
                       />
                     </div>
                   </div>
@@ -174,7 +174,7 @@
                         name="about"
                         rows="3"
                         class="mt-1 block w-full rounded-md border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        placeholder="you@example.com"
+                        :value="about"
                       ></textarea>
                     </div>
                   </div>
