@@ -14,10 +14,11 @@ export default defineStore("authentication", {
       if (localStorage.getItem("Bearer")) {
         this.$patch({
           token: localStorage.getItem("Bearer"),
+          user: localStorage.getItem("user"),
           isAuthenticated: true,
         });
       } else {
-        this.$patch({ token: null, isAuthenticated: false });
+        this.$patch({ token: null, user: null, isAuthenticated: false });
       }
     },
     setToken(token) {
@@ -27,6 +28,7 @@ export default defineStore("authentication", {
     },
     setUser(user) {
       this.$patch({ user: user });
+      localStorage.setItem("user", user);
     },
     logout() {
       this.$patch({ token: null, user: null, isAuthenticated: false });
