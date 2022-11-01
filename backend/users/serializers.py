@@ -16,6 +16,8 @@ class EmployeeProfileSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source='user.first_name')
     last_name = serializers.CharField(source='user.last_name')
     email = serializers.CharField(source='user.email')
+    resume = serializers.CharField()
+    profile_picture = serializers.CharField()
 
     class Meta:
         model = EmployeeProfile
@@ -28,6 +30,6 @@ class EmployeeProfileSerializer(serializers.ModelSerializer):
                   'expected_salary_currency',
                   'linkedin_url',
                   'Portfolio_url',
-                  'resume')
-
-
+                  'resume',
+                  'profile_picture',
+                  )
