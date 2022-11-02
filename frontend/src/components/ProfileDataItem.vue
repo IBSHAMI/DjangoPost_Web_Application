@@ -273,7 +273,7 @@ export default {
       portfolioWebsite: "",
       about: "",
       resume: "",
-      profilePhoto: "",
+      profilePicture: "",
     };
   },
   components: {
@@ -295,15 +295,19 @@ export default {
           this.portfolioWebsite = response.data.portfolio_website;
           this.about = response.data.about;
           this.resume = response.data.resume;
-          this.profilePhoto = response.data.profile_photo;
+          this.profilePicture = response.data.profile_photo;
         })
         .catch((error) => {
           console.log(error);
         });
     },
     upload(file, type) {
-      console.log(file);
-      console.log(type);
+      // We upload the files to their respective models
+      if (type === "resume") {
+        this.resume = file;
+      } else if (type === "picture") {
+        this.profilePicture = file;
+      }
     },
     CloseUploadModel(model) {
       if (model === "resume_model") {

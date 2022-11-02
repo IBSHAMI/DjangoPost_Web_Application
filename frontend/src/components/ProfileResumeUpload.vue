@@ -52,32 +52,7 @@
         <!-- Progess Bars -->
         <div class="mb-4">
           <!-- File Name -->
-          <div class="font-bold text-sm">Just another song.mp3</div>
-          <div class="flex h-4 overflow-hidden bg-gray-200 rounded">
-            <!-- Inner Progress Bar -->
-            <div
-              class="transition-all progress-bar bg-blue-400"
-              style="width: 75%"
-            ></div>
-          </div>
-        </div>
-        <div class="mb-4">
-          <div class="font-bold text-sm">Just another song.mp3</div>
-          <div class="flex h-4 overflow-hidden bg-gray-200 rounded">
-            <div
-              class="transition-all progress-bar bg-blue-400"
-              style="width: 35%"
-            ></div>
-          </div>
-        </div>
-        <div class="mb-4">
-          <div class="font-bold text-sm">Just another song.mp3</div>
-          <div class="flex h-4 overflow-hidden bg-gray-200 rounded">
-            <div
-              class="transition-all progress-bar bg-blue-400"
-              style="width: 55%"
-            ></div>
-          </div>
+          <div class="font-bold text-sm" v-html="fileName"></div>
         </div>
       </div>
     </div>
@@ -92,6 +67,7 @@ export default {
       isDragActive: false,
       uploadError: false,
       uploadErrorMessage: "",
+      fileName: "",
     };
   },
   methods: {
@@ -126,7 +102,10 @@ export default {
         return;
       }
       if (file[0].type === "application/pdf") {
-        this.$emit("upload", file, "pdf");
+        // Get file name
+        this.fileName = file[0].name;
+        this.closeErrorAlert();
+        this.$emit("upload", file, "resume");
       } else {
         this.uploadErrorHandle("You can only upload pdf files");
       }
