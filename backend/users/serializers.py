@@ -29,7 +29,7 @@ class EmployeeProfileSerializer(serializers.ModelSerializer):
                   'expected_salary',
                   'expected_salary_currency',
                   'linkedin_url',
-                  'Portfolio_url',
+                  'portfolio_url',
                   'resume',
                   'profile_picture',
                   )

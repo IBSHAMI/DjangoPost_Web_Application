@@ -31,7 +31,7 @@ class EmployeeProfile(models.Model):
     expected_salary = models.IntegerField(blank=True, null=True)
     expected_salary_currency = models.CharField(max_length=100, blank=True, null=True, choices=CURRENCY_CHOICES)
     linkedin_url = models.URLField(max_length=200, blank=True, null=True)
-    Portfolio_url = models.URLField(max_length=200, blank=True, null=True)
+    portfolio_url = models.URLField(max_length=200, blank=True, null=True)
     about = models.TextField(blank=True, null=True)
     resume = models.FileField(upload_to='users/employee/resumes', blank=True, null=True)
     profile_picture = models.ImageField(upload_to='users/employee/profile_pics', blank=True, null=True)
