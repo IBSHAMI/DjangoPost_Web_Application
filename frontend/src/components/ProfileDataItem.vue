@@ -14,6 +14,25 @@
         <div class="mt-5 md:col-span-2 md:mt-0">
           <form action="#" method="POST">
             <div class="shadow sm:overflow-hidden sm:rounded-md">
+              <div
+                class="text-white px-6 py-4 border-0 rounded relative mb-4"
+                :class="alertBackgroundColor"
+                v-show="alert"
+              >
+                <span class="text-xl inline-block mr-5 align-middle">
+                  <i class="fas fa-bell" />
+                </span>
+                <span class="inline-block align-middle mr-8">
+                  {{ alertMessage }}
+                </span>
+                <div
+                  class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none"
+                  style="cursor: pointer"
+                  @click.prevent="closeAlert"
+                >
+                  <span>×</span>
+                </div>
+              </div>
               <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
                 <div class="grid grid-cols-4 gap-6 py-5">
                   <div class="col-span-3 sm:col-span-2">
@@ -28,7 +47,7 @@
                         name="price"
                         id="price"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-800 focus:ring-indigo-800 sm:text-sm"
-                        :value="firstName"
+                        v-model="firstName"
                       />
                     </div>
                   </div>
@@ -44,7 +63,7 @@
                         name="company-website"
                         id="company-website"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        :value="lastName"
+                        v-model="lastName"
                       />
                     </div>
                   </div>
@@ -62,7 +81,7 @@
                         name="price"
                         id="price"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        :value="email"
+                        v-model="email"
                       />
                     </div>
                   </div>
@@ -80,7 +99,7 @@
                         name="price"
                         id="price"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        :value="softwareField"
+                        v-model="softwareField"
                       />
                     </div>
                   </div>
@@ -103,7 +122,7 @@
                         name="price"
                         id="price"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        :value="expectedSalary"
+                        v-model="expectedSalary"
                       />
                       <div class="absolute inset-y-0 right-0 flex items-center">
                         <label for="currency" class="sr-only">Currency</label>
@@ -136,7 +155,7 @@
                         name="company-website"
                         id="company-website"
                         class="block w-full h-full flex-1 rounded-none rounded-r-md border-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        :value="linkedinProfile"
+                        v-model="linkedinProfile"
                       />
                     </div>
                   </div>
@@ -156,7 +175,7 @@
                         name="company-website"
                         id="company-website"
                         class="block w-full flex-1 rounded-none rounded-r-md border-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        :value="portfolioWebsite"
+                        v-model="portfolioWebsite"
                       />
                     </div>
                   </div>
@@ -174,7 +193,7 @@
                         name="about"
                         rows="3"
                         class="mt-1 block w-full rounded-md border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        :value="about"
+                        v-model="about"
                       ></textarea>
                     </div>
                   </div>
@@ -185,6 +204,13 @@
                     >Upload Resume</label
                   >
                   <div class="mt-1 py-2">
+                    <!--Show the name of the already uploaded file if any -->
+                    <div
+                      v-if="resume"
+                      class="flex items-center justify-between pb-4"
+                    >
+                      {{ resume }}
+                    </div>
                     <button
                       class="text-sky-500 border border-sky-500 hover:bg-sky-500 hover:text-white active:bg-sky-600 font-bold uppercase px-8 py-3 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
@@ -207,6 +233,12 @@
                     >Upload Profile Photo</label
                   >
                   <div class="mt-1 py-2">
+                    <div
+                      v-if="profilePicture"
+                      class="flex items-center justify-between pb-4"
+                    >
+                      {{ profilePicture }}
+                    </div>
                     <button
                       class="text-sky-500 border border-sky-500 hover:bg-sky-500 hover:text-white active:bg-sky-600 font-bold uppercase px-8 py-3 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
@@ -225,9 +257,12 @@
 
                 <!-- <profile-upload @upload="upload" /> -->
               </div>
-              <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+              <div
+                class="bg-gray-50 px-4 py-3 text-right sm:px-6"
+                @click.prevent="updateUserData"
+              >
                 <button
-                  type="submit"
+                  type="button"
                   class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                   Save
@@ -248,6 +283,7 @@
 </template>
 
 <script>
+import useAuthenticationStore from "@/stores/authentication";
 import ProfileResumeUpload from "@/components/ProfileResumeUpload.vue";
 import ProfilePictureUpload from "@/components/ProfilePictureUpload.vue";
 import axios from "axios";
@@ -258,17 +294,27 @@ export default {
   created() {
     this.getUserDate();
   },
+  setup() {
+    // init the store
+    const authenticationStore = useAuthenticationStore();
+    return { authenticationStore };
+  },
   data() {
     return {
       // Upload Resume and Profile Picture varaibles
       resumeUploadShow: false,
       PictureUploadShow: false,
 
+      // Upload alert
+      alert: false,
+      alertBackgroundColor: "",
+      alertMessage: "",
+
       firstName: "",
       lastName: "",
       email: "",
       softwareField: "",
-      expectedSalary: "",
+      expectedSalary: null,
       linkedinProfile: "",
       portfolioWebsite: "",
       about: "",
@@ -282,8 +328,16 @@ export default {
   },
   methods: {
     getUserDate() {
+      const token = `Bearer ${this.authenticationStore.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        "content-type": "application/json",
+        // eslint-disable-next-line prettier/prettier
+        "Authorization": token,
+      };
+
       axios
-        .get(API.employee.details)
+        .get(API.employee.details, { headers: headers })
         .then((response) => {
           console.log(response.data);
           this.firstName = response.data.first_name;
@@ -295,10 +349,13 @@ export default {
           this.portfolioWebsite = response.data.portfolio_website;
           this.about = response.data.about;
           this.resume = response.data.resume;
-          this.profilePicture = response.data.profile_photo;
+          this.profilePicture = response.data.profile_picture;
         })
+        // eslint-disable-next-line no-unused-vars
         .catch((error) => {
-          console.log(error);
+          this.alert = true;
+          this.alertMessage = " Error occur while fetching data";
+          this.alertBackgroundColor = "bg-red-500";
         });
     },
     upload(file, type) {
@@ -315,6 +372,47 @@ export default {
       } else if (model === "picture_model") {
         this.PictureUploadShow = false;
       }
+    },
+    // Send the user data to the backend
+    updateUserData() {
+      const token = `Bearer ${this.authenticationStore.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        "Content-Type": "application/json",
+        // eslint-disable-next-line prettier/prettier
+        "Authorization": token,
+      };
+      console.log(this.firstName);
+      axios
+        .patch(
+          API.employee.details,
+          {
+            first_name: this.firstName,
+            last_name: this.lastName,
+            email: this.email,
+            software_field: this.softwareField,
+            expected_salary: this.expectedSalary,
+            linkedin_profile: this.linkedinProfile,
+            portfolio_website: this.portfolioWebsite,
+            about: this.about,
+            resume: this.resume,
+            profile_picture: this.profilePicture,
+          },
+          { headers: headers }
+        )
+        // eslint-disable-next-line no-unused-vars
+        .then((response) => {
+          // show that the data is updated
+          this.alert = true;
+          this.alertMessage = "Data updated successfully";
+          this.alertBackgroundColor = "bg-green-500";
+        })
+        // eslint-disable-next-line no-unused-vars
+        .catch((error) => {
+          this.alert = true;
+          this.alertMessage = " Error occur while updating data";
+          this.alertBackgroundColor = "bg-red-500";
+        });
     },
   },
 };

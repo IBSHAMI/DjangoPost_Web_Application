@@ -12,24 +12,25 @@ class UserRegistrationSerializer(BaseUserRegistrationSerializer):
         fields = ('id', 'username', 'email', 'password')
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
 class EmployeeProfileSerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField(source='user.first_name')
-    last_name = serializers.CharField(source='user.last_name')
-    email = serializers.CharField(source='user.email')
-    resume = serializers.CharField()
-    profile_picture = serializers.CharField()
+    user = UserSerializer()
 
     class Meta:
         model = EmployeeProfile
-        fields = ('id',
-                  'first_name',
-                  'last_name',
-                  'email',
-                  'software_field',
-                  'expected_salary',
-                  'expected_salary_currency',
-                  'linkedin_url',
-                  'portfolio_url',
-                  'resume',
-                  'profile_picture',
-                  )
+        fields = '__all__'
+
+    # Since we using a nested serializer [user and employee models].
+    # we have to override the update method to update the employee and user models alone
+    # def update(self, instance, validated_data):
+    #     print(validated_data)
+    #     first_name = validated_data['first_name']
+    #     print("hereeee")
+    #     print(first_name)
+    #
+    #     return instance

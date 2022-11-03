@@ -9,6 +9,6 @@ app_name = 'users'
 
 urlpatterns = [
     # get by pk field to filter
-    path('employee/data/', EmployeeDetailsAPIView.as_view(), name='employee-details'),
+    path('employee/data/', EmployeeDetailsAPIView.as_view(), name='employee-data'),
 
 ]
