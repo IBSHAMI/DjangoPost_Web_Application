@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     # local packages
     'users',
     'jobs',
+    'employee',
 ]
 
 SITE_ID = 1

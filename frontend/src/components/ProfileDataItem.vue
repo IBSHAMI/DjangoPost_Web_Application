@@ -332,8 +332,8 @@ export default {
         email: "required|email",
         software_field: "max:25",
         expected_salary: "max:25",
-        linkedin_profile: "url",
-        portfolio_website: "url",
+        linkedin_profile: "required|url",
+        portfolio_website: "required|url",
       },
 
       // Upload Resume and Profile Picture varaibles
@@ -385,13 +385,22 @@ export default {
           this.linkedinProfile = response.data.linkedin_url;
           this.portfolioWebsite = response.data.portfolio_url;
           this.about = response.data.about;
-          this.resume = this.getFileBaseName(response.data.resume);
-          this.profilePicture = this.getFileBaseName(
-            response.data.profile_picture
-          );
+          if (response.data.resume) {
+            this.resume = this.getFileBaseName(response.data.resume);
+          }
+          if (response.data.profile_picture) {
+            this.profilePicture = this.getFileBaseName(
+              response.data.profile_picture
+            );
+          }
+          // this.resume = this.getFileBaseName(response.data.resume);
+          // this.profilePicture = this.getFileBaseName(
+          //   response.data.profile_picture
+          // );
         })
         // eslint-disable-next-line no-unused-vars
         .catch((error) => {
+          console.log(error);
           this.alert = true;
           this.alertMessage = " Error occur while fetching data";
           this.alertBackgroundColor = "bg-red-500";

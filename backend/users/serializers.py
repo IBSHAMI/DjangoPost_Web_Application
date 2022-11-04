@@ -1,9 +1,8 @@
-from abc import ABC
-
 from rest_framework import serializers
 from djoser.serializers import UserCreateSerializer as BaseUserRegistrationSerializer
+from django.contrib.auth import get_user_model
 
-from .models import User, EmployeeProfile, CompanyProfile, PayPalAccount
+User = get_user_model()
 
 
 # Overwrite the custom user registration serializer
@@ -19,19 +18,3 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
 
-
-class EmployeeProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
-    class Meta:
-        model = EmployeeProfile
-        fields = [
-            'user',
-            'software_field',
-            'expected_salary',
-            'linkedin_url',
-            'portfolio_url',
-            'about',
-            'resume',
-            'profile_picture',
-        ]

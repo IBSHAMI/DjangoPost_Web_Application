@@ -1,14 +1,8 @@
-from django.urls import path
-
-from .views import (
-    EmployeeDetailsAPIView,
-    # EmployeeResumeAPIView,
-)
+from django.urls import path, include
 
 
 app_name = 'users'
 
 urlpatterns = [
-    # get by pk field to filter
-    path('employee/data/', EmployeeDetailsAPIView.as_view(), name='employee-data'),
+    path('employee/', include('employee.urls')),
 ]
