@@ -362,6 +362,9 @@ export default {
     ProfilePictureUpload,
   },
   methods: {
+    getFileBaseName(path) {
+      return path.split("/").reverse()[0];
+    },
     getUserDate() {
       const token = `Bearer ${this.authenticationStore.token}`;
       // Add the token to the header as Bearer token
@@ -382,8 +385,10 @@ export default {
           this.linkedinProfile = response.data.linkedin_url;
           this.portfolioWebsite = response.data.portfolio_url;
           this.about = response.data.about;
-          this.resume = response.data.resume;
-          this.profilePicture = response.data.profile_picture;
+          this.resume = this.getFileBaseName(response.data.resume);
+          this.profilePicture = this.getFileBaseName(
+            response.data.profile_picture
+          );
         })
         // eslint-disable-next-line no-unused-vars
         .catch((error) => {

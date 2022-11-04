@@ -34,6 +34,8 @@ class EmployeeProfile(models.Model):
 
     def get_resume_filename(self):
         if self.resume:
+            print(os.path.basename(self.resume.name))
+            print("here")
             return os.path.basename(self.resume.name)
         return ""
 
