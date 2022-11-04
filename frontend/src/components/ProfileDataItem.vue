@@ -145,10 +145,6 @@
                       >Linkedin Profile</label
                     >
                     <div class="mt-1 w-full h-full flex py-2">
-                      <span
-                        class="block h-full inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500"
-                        >http://</span
-                      >
                       <input
                         type="text"
                         name="company-website"
@@ -165,10 +161,6 @@
                       >Portfolio Website</label
                     >
                     <div class="mt-1 w-full h-full flex py-2">
-                      <span
-                        class="block inline-flex items-center rounded-l-md border border-r-0 border-2 bg-gray-50 px-3 text-sm text-gray-500"
-                        >http://</span
-                      >
                       <input
                         type="text"
                         name="company-website"
@@ -344,8 +336,8 @@ export default {
           this.email = response.data.email;
           this.softwareField = response.data.software_field;
           this.expectedSalary = response.data.expected_salary;
-          this.linkedinProfile = response.data.linkedin_profile;
-          this.portfolioWebsite = response.data.portfolio_website;
+          this.linkedinProfile = response.data.linkedin_url;
+          this.portfolioWebsite = response.data.portfolio_url;
           this.about = response.data.about;
           this.resume = response.data.resume;
           this.profilePicture = response.data.profile_picture;
@@ -391,8 +383,8 @@ export default {
       data.append("email", this.email);
       data.append("software_field", this.softwareField);
       data.append("expected_salary", this.expectedSalary);
-      data.append("linkedin_profile", this.linkedinProfile);
-      data.append("portfolio_website", this.portfolioWebsite);
+      data.append("linkedin_url", this.linkedinProfile);
+      data.append("portfolio_url", this.portfolioWebsite);
       data.append("about", this.about);
 
       // Check if resume is typeof file
