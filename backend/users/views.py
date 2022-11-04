@@ -62,7 +62,6 @@ class EmployeeDetailsAPIView(generics.RetrieveUpdateAPIView):
         # get request data
         request = self.request
         user = request.user
-        print(request.data)
 
         # get the user object
         user = User.objects.get(email=user)
