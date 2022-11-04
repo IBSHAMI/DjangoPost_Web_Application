@@ -230,7 +230,7 @@
                   <div class="mt-1 py-2">
                     <!--Show the name of the already uploaded file if any -->
                     <div
-                      v-if="resume"
+                      v-show="!resumeUploadShow"
                       class="flex items-center justify-between pb-4"
                     >
                       {{ resume }}
@@ -258,7 +258,7 @@
                   >
                   <div class="mt-1 py-2">
                     <div
-                      v-if="profilePicture"
+                      v-show="!PictureUploadShow"
                       class="flex items-center justify-between pb-4"
                     >
                       {{ profilePicture }}
@@ -374,7 +374,6 @@ export default {
       axios
         .get(API.employee.details, { headers: headers })
         .then((response) => {
-          console.log(response.data);
           this.firstName = response.data.first_name;
           this.lastName = response.data.last_name;
           this.email = response.data.email;
@@ -398,6 +397,7 @@ export default {
       if (type === "resume") {
         // we save the file data to the resume variable
         this.resume = file[0];
+        this.resume;
       } else if (type === "picture") {
         // we save the file data to the profilePicture variable
         this.profilePicture = file[0];
@@ -423,8 +423,6 @@ export default {
         // eslint-disable-next-line prettier/prettier
         "Authorization": token,
       };
-      console.log(this.resume);
-      console.log(typeof this.resume);
 
       const data = new FormData();
       data.append("first_name", this.firstName);
