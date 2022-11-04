@@ -35,19 +35,3 @@ class EmployeeProfileSerializer(serializers.ModelSerializer):
             'resume',
             'profile_picture',
         ]
-
-
-# # create a serializer for the resume and image fields
-# class ProfileResumeSerializer(serializers.Serializer):
-#     resume = serializers.FileField()
-#
-#     class Meta:
-#         fields = [
-#             'resume',
-#         ]
-#
-#
-# class ProfilePictureSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = EmployeeProfile
-#         fields = ['profile_picture']

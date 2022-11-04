@@ -10,14 +10,7 @@ from rest_framework.authtoken.models import Token
 from .models import User, EmployeeProfile
 from .serializers import (
     EmployeeProfileSerializer,
-    # ProfileResumeSerializer,
-    # ProfilePictureSerializer,
 )
-
-# Get file locations in order to return only the file name to the frontend
-media_file_location = settings.MEDIA_ROOT
-resume_file_location = settings.MEDIA_ROOT + '/users/employee/resumes/'
-profile_picture_file_location = settings.MEDIA_ROOT + '/users/employee/profile_pics/'
 
 
 class EmployeeDetailsAPIView(generics.RetrieveUpdateAPIView):
