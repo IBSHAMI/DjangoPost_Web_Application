@@ -402,7 +402,6 @@ export default {
       if (type === "resume") {
         // we save the file data to the resume variable
         this.resume = file[0];
-        this.resume;
       } else if (type === "picture") {
         // we save the file data to the profilePicture variable
         this.profilePicture = file[0];

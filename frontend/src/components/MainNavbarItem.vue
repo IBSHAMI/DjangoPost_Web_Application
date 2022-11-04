@@ -143,8 +143,8 @@
                     </div>
                   </a>
 
-                  <a
-                    href="#"
+                  <router-link
+                    to="/profile/contact"
                     class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
                   >
                     <!-- Heroicon name: outline/calendar -->
@@ -164,13 +164,15 @@
                       />
                     </svg>
                     <div class="ml-4">
-                      <p class="text-base font-medium text-gray-900">Events</p>
+                      <p class="text-base font-medium text-gray-900">
+                        Contacts
+                      </p>
                       <p class="mt-1 text-sm text-gray-500">
                         See what meet-ups and other events we might be planning
                         near you.
                       </p>
                     </div>
-                  </a>
+                  </router-link>
 
                   <a
                     href="#"
