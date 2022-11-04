@@ -1,3 +1,5 @@
+from abc import ABC
+
 from rest_framework import serializers
 from djoser.serializers import UserCreateSerializer as BaseUserRegistrationSerializer
 
@@ -23,14 +25,29 @@ class EmployeeProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EmployeeProfile
-        fields = '__all__'
+        fields = [
+            'user',
+            'software_field',
+            'expected_salary',
+            'linkedin_url',
+            'portfolio_url',
+            'about',
+            'resume',
+            'profile_picture',
+        ]
 
-    # Since we using a nested serializer [user and employee models].
-    # we have to override the update method to update the employee and user models alone
-    # def update(self, instance, validated_data):
-    #     print(validated_data)
-    #     first_name = validated_data['first_name']
-    #     print("hereeee")
-    #     print(first_name)
-    #
-    #     return instance
+
+# # create a serializer for the resume and image fields
+# class ProfileResumeSerializer(serializers.Serializer):
+#     resume = serializers.FileField()
+#
+#     class Meta:
+#         fields = [
+#             'resume',
+#         ]
+#
+#
+# class ProfilePictureSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = EmployeeProfile
+#         fields = ['profile_picture']

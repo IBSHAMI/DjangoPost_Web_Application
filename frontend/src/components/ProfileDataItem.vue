@@ -118,7 +118,7 @@
                         <span class="text-gray-500 sm:text-sm">$</span>
                       </div>
                       <input
-                        type="text"
+                        type="number"
                         name="price"
                         id="price"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -132,7 +132,6 @@
                           class="h-full rounded-md border-transparent bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         >
                           <option>USD</option>
-                          <option>MYR</option>
                         </select>
                       </div>
                     </div>
@@ -361,9 +360,11 @@ export default {
     upload(file, type) {
       // We upload the files to their respective models
       if (type === "resume") {
-        this.resume = file;
+        // we save the file data to the resume variable
+        this.resume = file[0];
       } else if (type === "picture") {
-        this.profilePicture = file;
+        // we save the file data to the profilePicture variable
+        this.profilePicture = file[0];
       }
     },
     CloseUploadModel(model) {
@@ -378,28 +379,42 @@ export default {
       const token = `Bearer ${this.authenticationStore.token}`;
       // Add the token to the header as Bearer token
       const headers = {
-        "Content-Type": "application/json",
         // eslint-disable-next-line prettier/prettier
         "Authorization": token,
       };
-      console.log(this.firstName);
+      console.log(this.resume);
+      console.log(typeof this.resume);
+
+      const data = new FormData();
+      data.append("first_name", this.firstName);
+      data.append("last_name", this.lastName);
+      data.append("email", this.email);
+      data.append("software_field", this.softwareField);
+      data.append("expected_salary", this.expectedSalary);
+      data.append("linkedin_profile", this.linkedinProfile);
+      data.append("portfolio_website", this.portfolioWebsite);
+      data.append("about", this.about);
+
+      // Check if resume is typeof file
+      if (this.resume === null) {
+        data.append("resume", "");
+      } else if (typeof this.resume === "object") {
+        data.append("resume", this.resume);
+      } else {
+        data.append("resume", "");
+      }
+
+      // Check if profile picture is typeof file
+      if (this.profilePicture === null) {
+        data.append("profile_picture", "");
+      } else if (typeof this.profilePicture === "object") {
+        data.append("profile_picture", this.profilePicture);
+      } else {
+        data.append("profile_picture", "");
+      }
+
       axios
-        .patch(
-          API.employee.details,
-          {
-            first_name: this.firstName,
-            last_name: this.lastName,
-            email: this.email,
-            software_field: this.softwareField,
-            expected_salary: this.expectedSalary,
-            linkedin_profile: this.linkedinProfile,
-            portfolio_website: this.portfolioWebsite,
-            about: this.about,
-            resume: this.resume,
-            profile_picture: this.profilePicture,
-          },
-          { headers: headers }
-        )
+        .patch(API.employee.details, data, { headers: headers })
         // eslint-disable-next-line no-unused-vars
         .then((response) => {
           // show that the data is updated

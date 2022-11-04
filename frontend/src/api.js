@@ -8,5 +8,6 @@ export const API = {
   },
   employee: {
     details: `${baseURL}/api/users/employee/data/`,
+    resume_deatils: `${baseURL}/api/users/employee/resume/`,
   },
 };
