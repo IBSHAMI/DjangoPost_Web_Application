@@ -41,6 +41,10 @@
                       class="block text-base font-medium text-gray-700"
                       >First Name</label
                     >
+                    <ErrorMessage
+                      name="first_name"
+                      class="text-red-500 text-xs italic"
+                    />
                     <div class="w-full h-full relative mt-1 py-2">
                       <vee-field
                         type="text"
@@ -48,10 +52,6 @@
                         id="first_name"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-800 focus:ring-indigo-800 sm:text-sm"
                         v-model="firstName"
-                      />
-                      <ErrorMessage
-                        name="first_name"
-                        class="text-red-500 text-xs italic"
                       />
                     </div>
                   </div>
@@ -61,6 +61,10 @@
                       class="block text-base font-medium text-gray-700"
                       >Last Name</label
                     >
+                    <ErrorMessage
+                      name="last_name"
+                      class="text-red-500 text-xs italic"
+                    />
                     <div class="mt-1 w-full h-full flex py-2">
                       <vee-field
                         type="text"
@@ -68,10 +72,6 @@
                         id="last_name"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="lastName"
-                      />
-                      <ErrorMessage
-                        name="last_name"
-                        class="text-red-500 text-xs italic"
                       />
                     </div>
                   </div>
@@ -105,6 +105,10 @@
                       class="block text-base font-medium text-gray-700"
                       >Software Field</label
                     >
+                    <ErrorMessage
+                      name="software_field"
+                      class="text-red-500 text-xs italic"
+                    />
                     <div class="w-full h-full relative mt-1 py-2">
                       <vee-field
                         type="text"
@@ -112,10 +116,6 @@
                         id="software_field"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="softwareField"
-                      />
-                      <ErrorMessage
-                        name="software_field"
-                        class="text-red-500 text-xs italic"
                       />
                     </div>
                   </div>
@@ -127,6 +127,10 @@
                       class="block text-base font-medium text-gray-700"
                       >Expected Salary</label
                     >
+                    <ErrorMessage
+                      name="expected_salary"
+                      class="text-red-500 text-xs italic"
+                    />
                     <div class="w-full h-full relative mt-1 py-2">
                       <div
                         class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
@@ -140,10 +144,7 @@
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="expectedSalary"
                       />
-                      <ErrorMessage
-                        name="expected_salary"
-                        class="text-red-500 text-xs italic"
-                      />
+
                       <div class="absolute inset-y-0 right-0 flex items-center">
                         <label for="currency" class="sr-only">Currency</label>
                         <select
@@ -164,6 +165,10 @@
                       class="block text-base font-medium text-gray-700"
                       >Linkedin Profile</label
                     >
+                    <ErrorMessage
+                      name="linkedin_profile"
+                      class="text-red-500 text-xs italic"
+                    />
                     <div class="mt-1 w-full h-full flex py-2">
                       <vee-field
                         type="text"
@@ -171,10 +176,6 @@
                         id="linkedin_profile"
                         class="block w-full h-full flex-1 rounded-none rounded-r-md border-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="linkedinProfile"
-                      />
-                      <ErrorMessage
-                        name="linkedin_profile"
-                        class="text-red-500 text-xs italic"
                       />
                     </div>
                   </div>
@@ -206,6 +207,10 @@
                       class="block text-base font-medium text-gray-700"
                       >About</label
                     >
+                    <ErrorMessage
+                      name="about"
+                      class="text-red-500 text-xs italic"
+                    />
                     <div class="w-full h-full relative mt-1 py-2">
                       <textarea
                         id="about"
@@ -214,10 +219,6 @@
                         class="mt-1 block w-full rounded-md border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="about"
                       ></textarea>
-                      <ErrorMessage
-                        name="about"
-                        class="text-red-500 text-xs italic"
-                      />
                     </div>
                   </div>
                 </div>
@@ -329,11 +330,10 @@ export default {
         first_name: "min:5|max:20",
         last_name: "min:5|max:20",
         email: "required|email",
-        software_field: "max:250",
+        software_field: "max:25",
         expected_salary: "max:25",
         linkedin_profile: "url",
         portfolio_website: "url",
-        about: "max:250",
       },
 
       // Upload Resume and Profile Picture varaibles
