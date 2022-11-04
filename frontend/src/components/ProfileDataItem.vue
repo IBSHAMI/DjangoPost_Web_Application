@@ -410,6 +410,11 @@ export default {
         this.PictureUploadShow = false;
       }
     },
+    closeAlert() {
+      this.alert = false;
+      this.alertBackgroundColor = "";
+      this.alertMessage = "";
+    },
     // Send the user data to the backend
     updateUserData() {
       const token = `Bearer ${this.authenticationStore.token}`;
