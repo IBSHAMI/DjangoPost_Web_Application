@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="mt-5 md:col-span-2 md:mt-0">
-          <form action="#" method="POST">
+          <vee-form action="#" :validation-schema="schema">
             <div class="shadow sm:overflow-hidden sm:rounded-md">
               <div
                 class="text-white px-6 py-4 border-0 rounded relative mb-4"
@@ -42,12 +42,16 @@
                       >First Name</label
                     >
                     <div class="w-full h-full relative mt-1 py-2">
-                      <input
+                      <vee-field
                         type="text"
-                        name="price"
-                        id="price"
+                        name="first_name"
+                        id="first_name"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-800 focus:ring-indigo-800 sm:text-sm"
                         v-model="firstName"
+                      />
+                      <ErrorMessage
+                        name="first_name"
+                        class="text-red-500 text-xs italic"
                       />
                     </div>
                   </div>
@@ -58,12 +62,16 @@
                       >Last Name</label
                     >
                     <div class="mt-1 w-full h-full flex py-2">
-                      <input
+                      <vee-field
                         type="text"
-                        name="company-website"
-                        id="company-website"
+                        name="last_name"
+                        id="last_name"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="lastName"
+                      />
+                      <ErrorMessage
+                        name="last_name"
+                        class="text-red-500 text-xs italic"
                       />
                     </div>
                   </div>
@@ -76,12 +84,16 @@
                       >Email</label
                     >
                     <div class="w-full h-full relative mt-1 py-2">
-                      <input
+                      <vee-field
                         type="text"
-                        name="price"
-                        id="price"
+                        name="email"
+                        id="email"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="email"
+                      />
+                      <ErrorMessage
+                        name="email"
+                        class="text-red-500 text-xs italic"
                       />
                     </div>
                   </div>
@@ -94,12 +106,16 @@
                       >Software Field</label
                     >
                     <div class="w-full h-full relative mt-1 py-2">
-                      <input
+                      <vee-field
                         type="text"
-                        name="price"
-                        id="price"
+                        name="software_field"
+                        id="software_field"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="softwareField"
+                      />
+                      <ErrorMessage
+                        name="software_field"
+                        class="text-red-500 text-xs italic"
                       />
                     </div>
                   </div>
@@ -117,12 +133,16 @@
                       >
                         <span class="text-gray-500 sm:text-sm">$</span>
                       </div>
-                      <input
+                      <vee-field
                         type="number"
-                        name="price"
-                        id="price"
+                        name="expected_salary"
+                        id="expected_salary"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="expectedSalary"
+                      />
+                      <ErrorMessage
+                        name="expected_salary"
+                        class="text-red-500 text-xs italic"
                       />
                       <div class="absolute inset-y-0 right-0 flex items-center">
                         <label for="currency" class="sr-only">Currency</label>
@@ -145,12 +165,16 @@
                       >Linkedin Profile</label
                     >
                     <div class="mt-1 w-full h-full flex py-2">
-                      <input
+                      <vee-field
                         type="text"
-                        name="company-website"
-                        id="company-website"
+                        name="linkedin_profile"
+                        id="linkedin_profile"
                         class="block w-full h-full flex-1 rounded-none rounded-r-md border-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="linkedinProfile"
+                      />
+                      <ErrorMessage
+                        name="linkedin_profile"
+                        class="text-red-500 text-xs italic"
                       />
                     </div>
                   </div>
@@ -161,12 +185,16 @@
                       >Portfolio Website</label
                     >
                     <div class="mt-1 w-full h-full flex py-2">
-                      <input
+                      <vee-field
                         type="text"
-                        name="company-website"
-                        id="company-website"
+                        name="portfolio_website"
+                        id="profile_website"
                         class="block w-full flex-1 rounded-none rounded-r-md border-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="portfolioWebsite"
+                      />
+                      <ErrorMessage
+                        name="profile_website"
+                        class="text-red-500 text-xs italic"
                       />
                     </div>
                   </div>
@@ -186,6 +214,10 @@
                         class="mt-1 block w-full rounded-md border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="about"
                       ></textarea>
+                      <ErrorMessage
+                        name="about"
+                        class="text-red-500 text-xs italic"
+                      />
                     </div>
                   </div>
                 </div>
@@ -260,7 +292,7 @@
                 </button>
               </div>
             </div>
-          </form>
+          </vee-form>
         </div>
       </div>
     </div>
@@ -292,6 +324,18 @@ export default {
   },
   data() {
     return {
+      // Create schema for form validation
+      schema: {
+        first_name: "min:5|max:20",
+        last_name: "min:5|max:20",
+        email: "required|email",
+        software_field: "max:250",
+        expected_salary: "max:25",
+        linkedin_profile: "url",
+        portfolio_website: "url",
+        about: "max:250",
+      },
+
       // Upload Resume and Profile Picture varaibles
       resumeUploadShow: false,
       PictureUploadShow: false,

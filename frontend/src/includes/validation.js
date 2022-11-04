@@ -12,6 +12,7 @@ import {
   alpha_spaces as alphaSpaces,
   email,
   confirmed,
+  url,
   not_one_of as excluded,
 } from "@vee-validate/rules";
 
@@ -35,6 +36,7 @@ export default {
     defineRule("email", email);
     defineRule("confirmed", confirmed);
     defineRule("excluded_password", excluded);
+    defineRule("url", url);
 
     // a global config object for all defined rules
     configure({
@@ -51,6 +53,7 @@ export default {
           excluded: `The ${ctx.field} is not allowed`,
           excluded_password: `The ${ctx.field} is an easy password`,
           required_terms: `You must agree to the terms and conditions`,
+          url: `The ${ctx.field} must be a valid URL`,
         };
         const message = messages[ctx.rule.name]
           ? messages[ctx.rule.name]
