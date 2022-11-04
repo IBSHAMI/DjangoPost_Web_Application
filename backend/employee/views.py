@@ -43,10 +43,7 @@ class EmployeeDetailsAPIView(generics.RetrieveUpdateAPIView):
         instance.resume = resume
         instance.profile_picture = profile_picture
 
-        print(instance)
-
         serializer = self.get_serializer(instance)
-        print(serializer.data)
 
         # pop out the user model from the response
         data = serializer.data
@@ -71,7 +68,6 @@ class EmployeeDetailsAPIView(generics.RetrieveUpdateAPIView):
         user.last_name = request.data['last_name']
         user.email = request.data['email']
         user.save()
-        print(request.data)
         data = request.data.copy()
         data.pop('first_name')
         data.pop('last_name')
