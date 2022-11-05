@@ -14,25 +14,12 @@
         <div class="mt-5 md:col-span-2 md:mt-0">
           <vee-form action="#" :validation-schema="schema">
             <div class="shadow sm:overflow-hidden sm:rounded-md">
-              <div
-                class="text-white px-6 py-4 border-0 rounded relative mb-4"
-                :class="alertBackgroundColor"
-                v-show="alert"
-              >
-                <span class="text-xl inline-block mr-5 align-middle">
-                  <i class="fas fa-bell" />
-                </span>
-                <span class="inline-block align-middle mr-8">
-                  {{ alertMessage }}
-                </span>
-                <div
-                  class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none"
-                  style="cursor: pointer"
-                  @click.prevent="closeAlert"
-                >
-                  <span>×</span>
-                </div>
-              </div>
+              <alert-item
+                :alert="alert"
+                :alertBackgroundColor="alertBackgroundColor"
+                :alertMessage="alertMessage"
+                @closeAlert="closeAlert"
+              />
               <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
                 <div class="grid grid-cols-4 gap-6 py-5">
                   <div class="col-span-3 sm:col-span-2">
@@ -310,6 +297,7 @@
 import useAuthenticationStore from "@/stores/authentication";
 import ProfileResumeUpload from "@/components/ProfileResumeUpload.vue";
 import ProfilePictureUpload from "@/components/ProfilePictureUpload.vue";
+import AlertItem from "@/components/AlertItem.vue";
 import axios from "axios";
 import { API } from "@/api";
 
@@ -360,6 +348,7 @@ export default {
   components: {
     ProfileResumeUpload,
     ProfilePictureUpload,
+    AlertItem,
   },
   methods: {
     getFileBaseName(path) {
