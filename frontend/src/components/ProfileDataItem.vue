@@ -172,6 +172,10 @@
                       class="block text-base font-medium text-gray-700"
                       >Portfolio Website</label
                     >
+                    <ErrorMessage
+                      name="portfolio_website"
+                      class="text-red-500 text-xs italic"
+                    />
                     <div class="mt-1 w-full h-full flex py-2">
                       <vee-field
                         type="text"
@@ -180,17 +184,13 @@
                         class="block w-full flex-1 rounded-none rounded-r-md border-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="portfolioWebsite"
                       />
-                      <ErrorMessage
-                        name="profile_website"
-                        class="text-red-500 text-xs italic"
-                      />
                     </div>
                   </div>
                 </div>
                 <div>
                   <div class="col-span-3 sm:col-span-2">
                     <label
-                      for="price"
+                      for="about"
                       class="block text-base font-medium text-gray-700"
                       >About</label
                     >
@@ -199,13 +199,14 @@
                       class="text-red-500 text-xs italic"
                     />
                     <div class="w-full h-full relative mt-1 py-2">
-                      <textarea
+                      <vee-field
+                        as="textarea"
                         id="about"
                         name="about"
                         rows="3"
                         class="mt-1 block w-full rounded-md border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="about"
-                      ></textarea>
+                      ></vee-field>
                     </div>
                   </div>
                 </div>
@@ -322,6 +323,7 @@ export default {
         expected_salary: "max:25",
         linkedin_profile: "required|url",
         portfolio_website: "required|url",
+        about: "max:500|min:30",
       },
 
       // Upload Resume and Profile Picture varaibles

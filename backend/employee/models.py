@@ -1,5 +1,6 @@
 import os
 from django.db import models
+from django.core.validators import URLValidator, MaxLengthValidator
 from django.db.models.signals import post_save
 from django.conf import settings
 
@@ -11,9 +12,9 @@ class EmployeeProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='employee_profile')
     software_field = models.CharField(max_length=100, blank=True, null=True)
     expected_salary = models.IntegerField(default=0)
-    linkedin_url = models.URLField(max_length=200, blank=True, null=True)
-    portfolio_url = models.URLField(max_length=200, blank=True, null=True)
-    about = models.TextField(blank=True, null=True)
+    linkedin_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
+    portfolio_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
+    about = models.TextField(blank=True, null=True, validators=[MaxLengthValidator(500)])
     resume = models.FileField(upload_to='users/employee/resumes', blank=True, null=True)
     profile_picture = models.ImageField(upload_to='users/employee/profile_pics', blank=True, null=True)
 

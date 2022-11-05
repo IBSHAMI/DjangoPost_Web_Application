@@ -100,6 +100,8 @@
             </div>
           </div>
           <button
+            type="submit"
+            @click.prevent="contactSupport"
             class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
           >
             Submit
@@ -202,6 +204,7 @@ export default {
       this.alertMessage = "";
     },
     contactSupport() {
+      console.log(this.schema);
       console.log("contact support");
       const token = `Bearer ${this.authenticationStore.token}`;
       // Add the token to the header as Bearer token

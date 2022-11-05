@@ -3,12 +3,13 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from .managers import CustomUserManager
+from django.core.validators import EmailValidator
 from django.db.models.signals import post_save
 
 
 # custom user model
 class User(AbstractUser):
-    email = models.EmailField(_('email address'), unique=True)
+    email = models.EmailField(_('email address'), unique=True, validators=[EmailValidator()])
     phone_number = models.CharField("Phone number", unique=True, max_length=15, blank=True, null=True)
     user_creation_date = models.DateTimeField(auto_now_add=True)
 
@@ -16,8 +17,6 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
-
-
 
 
 # Create Company Profile after user is created

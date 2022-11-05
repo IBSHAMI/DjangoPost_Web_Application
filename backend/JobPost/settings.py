@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'users',
     'jobs',
     'employee',
+    'company',
 ]
 
 SITE_ID = 1
