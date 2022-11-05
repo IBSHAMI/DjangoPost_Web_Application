@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import useAuthenticationStore from "@/stores/authentication";
 import HomeView from "@/views/HomeView.vue";
 import AuthView from "@/views/AuthView.vue";
 import JobsView from "@/views/JobsView.vue";
@@ -21,18 +22,37 @@ const routes = [
     path: "/jobs",
     name: "Jobs",
     component: JobsView,
+    meta: {},
   },
   {
     path: "/profile/:slug",
     name: "Profile",
     component: ProfileView,
     props: true,
+    meta: {
+      requireAuthentication: true,
+    },
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const authenticationStore = useAuthenticationStore();
+
+  // Check if the route requires authentication and if it is check if the user is authenticated
+  console.log(to.meta.requireAuthentication);
+  if (to.meta.requireAuthentication && !authenticationStore.isAuthenticated) {
+    console.log("You are not authenticated");
+    // If the user is not authenticated redirect to the authentication page
+    next({ name: "Auth" });
+  } else {
+    // If the user is authenticated or the route does not require authentication continue to the route
+    next();
+  }
 });
 
 export default router;

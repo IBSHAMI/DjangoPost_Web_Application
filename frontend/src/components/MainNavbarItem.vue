@@ -39,7 +39,20 @@
             </svg>
           </button>
         </div>
-        <nav class="hidden space-x-10 md:flex">
+        <nav
+          class="hidden space-x-10 md:flex"
+          v-if="!authenticationStore.isAuthenticated"
+        >
+          <router-link
+            :to="{ name: 'Auth' }"
+            class="text-base font-medium text-gray-500 hover:text-gray-900"
+            >Login/Signup</router-link
+          >
+        </nav>
+        <nav
+          class="hidden space-x-10 md:flex"
+          v-else-if="authenticationStore.isAuthenticated"
+        >
           <a
             href="#"
             class="text-base font-medium text-gray-500 hover:text-gray-900"
@@ -178,9 +191,11 @@
         <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
           <a
             href="#"
+            @click.prevent="logout"
             class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
-            >Logout</a
           >
+            Logout
+          </a>
           <a
             href="#"
             class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
@@ -194,14 +209,22 @@
 
 <script>
 import useprofileDropdownStore from "@/stores/profile_dropdown.js";
+import useAuthenticationStore from "@/stores/authentication";
+import axios from "axios";
+import { API } from "@/api";
 
 export default {
   name: "MainNavbarItem",
   setup() {
     // Initialize the dropdown
     const dropdownStore = useprofileDropdownStore();
+
+    // initialize the authentification store
+    const authenticationStore = useAuthenticationStore();
+
     return {
       dropdownStore,
+      authenticationStore,
     };
   },
   data() {
@@ -210,6 +233,31 @@ export default {
   methods: {
     toggleDropdown() {
       this.dropdownStore.toggleDropdown();
+    },
+    logout() {
+      console.log("logout");
+      const token = `Bearer ${this.authenticationStore.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        "content-type": "application/json",
+        // eslint-disable-next-line prettier/prettier
+        "Authorization": token,
+      };
+
+      // Send the request to the backend to logout
+      axios
+        .post(API.auth.logout, token, {
+          headers: headers,
+        })
+        .then((response) => {
+          // If the logout was successful, remove the token from the store
+          console.log(response);
+          this.authenticationStore.logout();
+          this.$router.go();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
   computed: {

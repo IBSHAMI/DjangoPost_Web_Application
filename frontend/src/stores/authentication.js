@@ -31,6 +31,8 @@ export default defineStore("authentication", {
       localStorage.setItem("user", user);
     },
     logout() {
+      localStorage.removeItem("Bearer");
+      localStorage.removeItem("user");
       this.$patch({ token: null, user: null, isAuthenticated: false });
     },
   },

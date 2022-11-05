@@ -12,9 +12,21 @@
 import MainNavbarItem from "@/components/MainNavbarItem.vue";
 import ProfileDataItem from "@/components/ProfileDataItem.vue";
 import ProfileContactItem from "@/components/ProfileContactItem.vue";
+import useAuthenticationStore from "@/stores/authentication";
 
 export default {
   name: "ProfileView",
+  beforeRouteEnter(to, from, next) {
+    const authenticationStore = useAuthenticationStore();
+    const isauthenticated = authenticationStore.isAuthenticated;
+
+    // Check if user is loggin in, otherwise redirect to auth page
+    if (!isauthenticated) {
+      next({ name: "Auth" });
+    } else {
+      next();
+    }
+  },
   data() {
     return {
       passedSlug: this.$route.params.slug,
