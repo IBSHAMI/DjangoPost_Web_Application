@@ -1,8 +1,10 @@
 from rest_framework import generics
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
 
 from .models import EmployeeProfile
 from .serializers import EmployeeProfileSerializer
@@ -26,7 +28,6 @@ class EmployeeDetailsAPIView(generics.RetrieveUpdateAPIView):
 
         # get the employee profile
         employee = EmployeeProfile.objects.get(user=user)
-        print(employee)
 
         get_object = employee
 
@@ -87,3 +88,29 @@ class EmployeeDetailsAPIView(generics.RetrieveUpdateAPIView):
         self.perform_update(serializer)
 
         return Response(serializer.data)
+
+
+#  Create a view to recieve and send customer messages
+class EmployeeContactSupportAPIView(APIView):
+
+    def post(self, request, *args, **kwargs):
+        admin_email = 'admin@admin.com'
+
+        # get the sent request data
+        data = request.data
+
+        first_name = data['first_name']
+        last_name = data['last_name']
+        email = data['email']
+        message = data['message']
+
+        # send the message to the customer support email
+        send_mail(
+            subject=f'Customer Support request from {first_name} {last_name}',
+            message=message + f'customer email: {email}',
+            from_email=admin_email,
+            recipient_list=[admin_email],
+        )
+
+        return Response({'message': 'Message sent successfully'})
+

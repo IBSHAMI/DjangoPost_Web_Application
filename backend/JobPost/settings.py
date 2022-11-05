@@ -188,3 +188,6 @@ DJOSER = {
         'user_create': 'users.serializers.UserRegistrationSerializer',
     },
 }
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -14,6 +14,12 @@
       </div>
       <div class="lg:w-1/2 md:w-2/3 mx-auto">
         <vee-form action="#" :validation-schema="schema">
+          <alert-item
+            :alert="alert"
+            :alertBackgroundColor="alertBackgroundColor"
+            :alertMessage="alertMessage"
+            @closeAlert="closeAlert"
+          />
           <div class="flex flex-wrap -m-2">
             <div class="p-2 w-1/2">
               <div class="relative">
@@ -83,11 +89,12 @@
                 <textarea
                   id="message"
                   name="message"
+                  v-model="message"
                   class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
                 ></textarea>
               </div>
             </div>
-            <div class="p-2 w-full">
+            <div class="p-2 w-full" @click.prevent="contactSupport">
               <button
                 class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
               >
@@ -111,6 +118,7 @@
 
 <script>
 import useAuthenticationStore from "@/stores/authentication";
+import AlertItem from "@/components/AlertItem.vue";
 import axios from "axios";
 import { API } from "@/api";
 
@@ -125,6 +133,11 @@ export default {
       lastName: "",
       email: "",
       message: "",
+
+      // Upload alert
+      alert: false,
+      alertBackgroundColor: "",
+      alertMessage: "",
 
       schema: {
         firstName: {
@@ -156,6 +169,9 @@ export default {
     const authenticationStore = useAuthenticationStore();
     return { authenticationStore };
   },
+  components: {
+    AlertItem,
+  },
   methods: {
     getUserDate() {
       const token = `Bearer ${this.authenticationStore.token}`;
@@ -169,7 +185,6 @@ export default {
       axios
         .get(API.employee.details, { headers: headers })
         .then((response) => {
-          console.log(response.data);
           this.firstName = response.data.first_name;
           this.lastName = response.data.last_name;
           this.email = response.data.email;
@@ -177,6 +192,41 @@ export default {
         // eslint-disable-next-line no-unused-vars
         .catch((error) => {
           console.log(error);
+        });
+    },
+    closeAlert() {
+      this.alert = false;
+      this.alertBackgroundColor = "";
+      this.alertMessage = "";
+    },
+    contactSupport() {
+      const token = `Bearer ${this.authenticationStore.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        // eslint-disable-next-line prettier/prettier
+        "Authorization": token,
+      };
+
+      const data = {
+        first_name: this.firstName,
+        last_name: this.lastName,
+        email: this.email,
+        message: this.message,
+      };
+
+      axios
+        .post(API.employee.contact_support, data, { headers: headers })
+        // eslint-disable-next-line no-unused-vars
+        .then((response) => {
+          this.alert = true;
+          this.alertBackgroundColor = "bg-green-500";
+          this.alertMessage = "Message sent successfully";
+        })
+        // eslint-disable-next-line no-unused-vars
+        .catch((error) => {
+          this.alert = true;
+          this.alertBackgroundColor = "bg-red-500";
+          this.alertMessage = "Something went wrong, try again later";
         });
     },
   },
