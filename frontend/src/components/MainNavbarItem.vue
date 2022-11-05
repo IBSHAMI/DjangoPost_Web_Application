@@ -39,155 +39,157 @@
             </svg>
           </button>
         </div>
-        <nav
-          class="hidden space-x-10 md:flex"
-          v-if="!authenticationStore.isAuthenticated"
-        >
-          <router-link
-            :to="{ name: 'Auth' }"
-            class="text-base font-medium text-gray-500 hover:text-gray-900"
-            >Login/Signup</router-link
+        <div v-if="companyEmployeeSectionsStore.isEmployee">
+          <nav
+            class="hidden space-x-10 md:flex"
+            v-if="!authenticationStore.isAuthenticated"
           >
-        </nav>
-        <nav
-          class="hidden space-x-10 md:flex"
-          v-else-if="authenticationStore.isAuthenticated"
-        >
-          <a
-            href="#"
-            class="text-base font-medium text-gray-500 hover:text-gray-900"
-            >Notifications</a
+            <router-link
+              :to="{ name: 'Auth' }"
+              class="text-base font-medium text-gray-500 hover:text-gray-900"
+              >Login/Signup</router-link
+            >
+          </nav>
+          <nav
+            class="hidden space-x-10 md:flex"
+            v-else-if="authenticationStore.isAuthenticated"
           >
+            <a
+              href="#"
+              class="text-base font-medium text-gray-500 hover:text-gray-900"
+              >Notifications</a
+            >
 
-          <div class="relative" @click.prevent="toggleDropdown">
-            <!-- Item active: "text-gray-900", Item inactive: "text-gray-500" -->
-            <button
-              type="button"
-              class="text-gray-500 group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              aria-expanded="false"
-            >
-              <span>Profile</span>
-              <svg
-                class="text-gray-400 ml-2 h-5 w-5 group-hover:text-gray-500"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
+            <div class="relative" @click.prevent="toggleDropdown">
+              <!-- Item active: "text-gray-900", Item inactive: "text-gray-500" -->
+              <button
+                type="button"
+                class="text-gray-500 group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                aria-expanded="false"
               >
-                <path
-                  fill-rule="evenodd"
-                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </button>
-            <div
-              class="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0 dropdown-content"
-              :style="{ display: dropdownOpen ? 'block' : 'none' }"
-            >
+                <span>Profile</span>
+                <svg
+                  class="text-gray-400 ml-2 h-5 w-5 group-hover:text-gray-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
               <div
-                class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5"
+                class="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0 dropdown-content"
+                :style="{ display: dropdownOpen ? 'block' : 'none' }"
               >
                 <div
-                  class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8"
+                  class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5"
                 >
-                  <router-link
-                    to="/profile/data"
-                    class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
+                  <div
+                    class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8"
                   >
-                    <!-- Heroicon name: outline/lifebuoy -->
-                    <svg
-                      class="h-6 w-6 flex-shrink-0 text-indigo-600"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      aria-hidden="true"
+                    <router-link
+                      to="/profile/data"
+                      class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
                     >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M16.712 4.33a9.027 9.027 0 011.652 1.306c.51.51.944 1.064 1.306 1.652M16.712 4.33l-3.448 4.138m3.448-4.138a9.014 9.014 0 00-9.424 0M19.67 7.288l-4.138 3.448m4.138-3.448a9.014 9.014 0 010 9.424m-4.138-5.976a3.736 3.736 0 00-.88-1.388 3.737 3.737 0 00-1.388-.88m2.268 2.268a3.765 3.765 0 010 2.528m-2.268-4.796a3.765 3.765 0 00-2.528 0m4.796 4.796c-.181.506-.475.982-.88 1.388a3.736 3.736 0 01-1.388.88m2.268-2.268l4.138 3.448m0 0a9.027 9.027 0 01-1.306 1.652c-.51.51-1.064.944-1.652 1.306m0 0l-3.448-4.138m3.448 4.138a9.014 9.014 0 01-9.424 0m5.976-4.138a3.765 3.765 0 01-2.528 0m0 0a3.736 3.736 0 01-1.388-.88 3.737 3.737 0 01-.88-1.388m2.268 2.268L7.288 19.67m0 0a9.024 9.024 0 01-1.652-1.306 9.027 9.027 0 01-1.306-1.652m0 0l4.138-3.448M4.33 16.712a9.014 9.014 0 010-9.424m4.138 5.976a3.765 3.765 0 010-2.528m0 0c.181-.506.475-.982.88-1.388a3.736 3.736 0 011.388-.88m-2.268 2.268L4.33 7.288m6.406 1.18L7.288 4.33m0 0a9.024 9.024 0 00-1.652 1.306A9.025 9.025 0 004.33 7.288"
-                      />
-                    </svg>
-                    <div class="ml-4">
-                      <p class="text-base font-medium text-gray-900">
-                        Your Profile
-                      </p>
-                      <p class="mt-1 text-sm text-gray-500">
-                        View your profile data and edit and upload your latest
-                        resume.
-                      </p>
-                    </div>
-                  </router-link>
+                      <!-- Heroicon name: outline/lifebuoy -->
+                      <svg
+                        class="h-6 w-6 flex-shrink-0 text-indigo-600"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M16.712 4.33a9.027 9.027 0 011.652 1.306c.51.51.944 1.064 1.306 1.652M16.712 4.33l-3.448 4.138m3.448-4.138a9.014 9.014 0 00-9.424 0M19.67 7.288l-4.138 3.448m4.138-3.448a9.014 9.014 0 010 9.424m-4.138-5.976a3.736 3.736 0 00-.88-1.388 3.737 3.737 0 00-1.388-.88m2.268 2.268a3.765 3.765 0 010 2.528m-2.268-4.796a3.765 3.765 0 00-2.528 0m4.796 4.796c-.181.506-.475.982-.88 1.388a3.736 3.736 0 01-1.388.88m2.268-2.268l4.138 3.448m0 0a9.027 9.027 0 01-1.306 1.652c-.51.51-1.064.944-1.652 1.306m0 0l-3.448-4.138m3.448 4.138a9.014 9.014 0 01-9.424 0m5.976-4.138a3.765 3.765 0 01-2.528 0m0 0a3.736 3.736 0 01-1.388-.88 3.737 3.737 0 01-.88-1.388m2.268 2.268L7.288 19.67m0 0a9.024 9.024 0 01-1.652-1.306 9.027 9.027 0 01-1.306-1.652m0 0l4.138-3.448M4.33 16.712a9.014 9.014 0 010-9.424m4.138 5.976a3.765 3.765 0 010-2.528m0 0c.181-.506.475-.982.88-1.388a3.736 3.736 0 011.388-.88m-2.268 2.268L4.33 7.288m6.406 1.18L7.288 4.33m0 0a9.024 9.024 0 00-1.652 1.306A9.025 9.025 0 004.33 7.288"
+                        />
+                      </svg>
+                      <div class="ml-4">
+                        <p class="text-base font-medium text-gray-900">
+                          Your Profile
+                        </p>
+                        <p class="mt-1 text-sm text-gray-500">
+                          View your profile data and edit and upload your latest
+                          resume.
+                        </p>
+                      </div>
+                    </router-link>
 
-                  <a
-                    href="#"
-                    class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
-                  >
-                    <!-- Heroicon name: outline/bookmark-square -->
-                    <svg
-                      class="h-6 w-6 flex-shrink-0 text-indigo-600"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      aria-hidden="true"
+                    <a
+                      href="#"
+                      class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
                     >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9"
-                      />
-                    </svg>
-                    <div class="ml-4">
-                      <p class="text-base font-medium text-gray-900">
-                        Jobs Histroy
-                      </p>
-                      <p class="mt-1 text-sm text-gray-500">
-                        Learn how to maximize our platform to get the most out
-                        of it.
-                      </p>
-                    </div>
-                  </a>
+                      <!-- Heroicon name: outline/bookmark-square -->
+                      <svg
+                        class="h-6 w-6 flex-shrink-0 text-indigo-600"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9"
+                        />
+                      </svg>
+                      <div class="ml-4">
+                        <p class="text-base font-medium text-gray-900">
+                          Jobs Histroy
+                        </p>
+                        <p class="mt-1 text-sm text-gray-500">
+                          Learn how to maximize our platform to get the most out
+                          of it.
+                        </p>
+                      </div>
+                    </a>
 
-                  <router-link
-                    to="/profile/contact"
-                    class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
-                  >
-                    <!-- Heroicon name: outline/calendar -->
-                    <svg
-                      class="h-6 w-6 flex-shrink-0 text-indigo-600"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      aria-hidden="true"
+                    <router-link
+                      to="/profile/contact"
+                      class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
                     >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
-                      />
-                    </svg>
-                    <div class="ml-4">
-                      <p class="text-base font-medium text-gray-900">
-                        Contacts
-                      </p>
-                      <p class="mt-1 text-sm text-gray-500">
-                        See what meet-ups and other events we might be planning
-                        near you.
-                      </p>
-                    </div>
-                  </router-link>
+                      <!-- Heroicon name: outline/calendar -->
+                      <svg
+                        class="h-6 w-6 flex-shrink-0 text-indigo-600"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
+                        />
+                      </svg>
+                      <div class="ml-4">
+                        <p class="text-base font-medium text-gray-900">
+                          Contacts
+                        </p>
+                        <p class="mt-1 text-sm text-gray-500">
+                          See what meet-ups and other events we might be
+                          planning near you.
+                        </p>
+                      </div>
+                    </router-link>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </nav>
+          </nav>
+        </div>
         <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
           <a
             href="#"
@@ -196,10 +198,15 @@
           >
             Logout
           </a>
-          <a
-            href="#"
+          <router-link
+            :to="{ name: 'Company' }"
+            @click.prevent="switchAccount"
             class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-            >Post job</a
+            >{{
+              companyEmployeeSectionsStore.isEmployee
+                ? "Post Jobs"
+                : "Find Jobs"
+            }}</router-link
           >
         </div>
       </div>
@@ -210,6 +217,7 @@
 <script>
 import useprofileDropdownStore from "@/stores/profile_dropdown.js";
 import useAuthenticationStore from "@/stores/authentication";
+import useCompanyEmployeeSectionsStore from "@/stores/company_employee_sections";
 import axios from "axios";
 import { API } from "@/api";
 
@@ -222,9 +230,13 @@ export default {
     // initialize the authentification store
     const authenticationStore = useAuthenticationStore();
 
+    // initialize the company employee sections store
+    const companyEmployeeSectionsStore = useCompanyEmployeeSectionsStore();
+
     return {
       dropdownStore,
       authenticationStore,
+      companyEmployeeSectionsStore,
     };
   },
   data() {
@@ -258,6 +270,9 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    switchAccount() {
+      this.companyEmployeeSectionsStore.switchAccountType();
     },
   },
   computed: {
