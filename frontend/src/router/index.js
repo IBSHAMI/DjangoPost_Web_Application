@@ -3,6 +3,7 @@ import useAuthenticationStore from "@/stores/authentication";
 import HomeView from "@/views/HomeView.vue";
 import AuthView from "@/views/AuthView.vue";
 import JobsView from "@/views/JobsView.vue";
+import CompanyView from "@/views/CompanyView.vue";
 import ProfileView from "@/views/ProfileView.vue";
 
 // Vue excpect this to be an array of objects with a path and a component
@@ -28,6 +29,15 @@ const routes = [
     path: "/profile/:slug",
     name: "Profile",
     component: ProfileView,
+    props: true,
+    meta: {
+      requireAuthentication: true,
+    },
+  },
+  {
+    path: "/company/:slug",
+    name: "Company",
+    component: CompanyView,
     props: true,
     meta: {
       requireAuthentication: true,
