@@ -39,7 +39,7 @@
             </svg>
           </button>
         </div>
-        <div v-if="companyEmployeeSectionsStore.isEmployee">
+        <div v-if="employeeProfile">
           <nav
             class="hidden space-x-10 md:flex"
             v-if="!authenticationStore.isAuthenticated"
@@ -190,6 +190,25 @@
             </div>
           </nav>
         </div>
+        <div v-else-if="companyProfile">
+          <nav class="space-x-10 md:flex">
+            <router-link
+              to=""
+              class="text-base font-medium text-gray-500 hover:text-gray-900"
+              >Company Profile</router-link
+            >
+            <router-link
+              to=""
+              class="text-base font-medium text-gray-500 hover:text-gray-900"
+              >Create Job</router-link
+            >
+            <router-link
+              to=""
+              class="text-base font-medium text-gray-500 hover:text-gray-900"
+              >Jobs</router-link
+            >
+          </nav>
+        </div>
         <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
           <a
             href="#"
@@ -199,14 +218,16 @@
             Logout
           </a>
           <router-link
-            :to="{ name: 'Company' }"
-            @click.prevent="switchAccount"
+            v-if="employeeProfile"
+            :to="{ name: 'Company', params: { slug: 'data' } }"
             class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-            >{{
-              companyEmployeeSectionsStore.isEmployee
-                ? "Post Jobs"
-                : "Find Jobs"
-            }}</router-link
+            >{{ "Post Jobs" }}</router-link
+          >
+          <router-link
+            v-if="companyProfile"
+            :to="{ name: 'Profile', params: { slug: 'data' } }"
+            class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+            >{{ "Find Jobs" }}</router-link
           >
         </div>
       </div>
@@ -217,7 +238,6 @@
 <script>
 import useprofileDropdownStore from "@/stores/profile_dropdown.js";
 import useAuthenticationStore from "@/stores/authentication";
-import useCompanyEmployeeSectionsStore from "@/stores/company_employee_sections";
 import axios from "axios";
 import { API } from "@/api";
 
@@ -231,17 +251,16 @@ export default {
     const authenticationStore = useAuthenticationStore();
 
     // initialize the company employee sections store
-    const companyEmployeeSectionsStore = useCompanyEmployeeSectionsStore();
 
     return {
       dropdownStore,
       authenticationStore,
-      companyEmployeeSectionsStore,
     };
   },
   data() {
     return {};
   },
+  props: ["companyProfile", "employeeProfile"],
   methods: {
     toggleDropdown() {
       this.dropdownStore.toggleDropdown();
@@ -270,9 +289,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    },
-    switchAccount() {
-      this.companyEmployeeSectionsStore.switchAccountType();
     },
   },
   computed: {

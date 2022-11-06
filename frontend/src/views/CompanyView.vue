@@ -1,6 +1,6 @@
 <template>
   <div>
-    <main-navbar-item />
+    <main-navbar-item :companyProfile="companyProfile" />
   </div>
 </template>
 
@@ -9,6 +9,11 @@ import MainNavbarItem from "@/components/MainNavbarItem.vue";
 
 export default {
   name: "CompanyView",
+  data() {
+    return {
+      companyProfile: true,
+    };
+  },
   components: {
     MainNavbarItem,
   },
