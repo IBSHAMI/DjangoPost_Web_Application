@@ -174,7 +174,7 @@ import { API } from "@/api";
 export default {
   name: "ProfileDataItem",
   created() {
-    this.getUserDate();
+    this.getCompanyData();
   },
   setup() {
     // init the store
@@ -186,7 +186,7 @@ export default {
       // Create schema for form validation
       schema: {
         company_name: "min:5|max:40",
-        company_size: "min:5|max:40",
+        company_size: "min:1|max:40",
         company_website: "required|url",
         company_description: "min:5|max:1000",
       },
@@ -214,7 +214,7 @@ export default {
     getFileBaseName(path) {
       return path.split("/").reverse()[0];
     },
-    getUserDate() {
+    getCompanyData() {
       const token = `Bearer ${this.authenticationStore.token}`;
       // Add the token to the header as Bearer token
       const headers = {

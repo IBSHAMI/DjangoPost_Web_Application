@@ -305,7 +305,7 @@ import { API } from "@/api";
 export default {
   name: "ProfileDataItem",
   created() {
-    this.getUserDate();
+    this.getEmployeeData();
   },
   setup() {
     // init the store
@@ -356,7 +356,7 @@ export default {
     getFileBaseName(path) {
       return path.split("/").reverse()[0];
     },
-    getUserDate() {
+    getEmployeeData() {
       const token = `Bearer ${this.authenticationStore.token}`;
       // Add the token to the header as Bearer token
       const headers = {
