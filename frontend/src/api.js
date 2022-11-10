@@ -10,4 +10,8 @@ export const API = {
     details: `${baseURL}/api/users/employee/data/`,
     contact_support: `${baseURL}/api/users/employee/contact-support/`,
   },
+  company: {
+    details: `${baseURL}/api/users/company/data/`,
+    contact_support: `${baseURL}/api/users/company/contact-support/`,
+  },
 };

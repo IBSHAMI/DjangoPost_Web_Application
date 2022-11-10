@@ -5,4 +5,5 @@ app_name = 'users'
 
 urlpatterns = [
     path('employee/', include('employee.urls')),
+    path('company/', include('company.urls')),
 ]
