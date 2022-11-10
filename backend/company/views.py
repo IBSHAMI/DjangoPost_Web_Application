@@ -17,6 +17,22 @@ class CompanyDetailsAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = CompanyProfileSerializer
     parser_classes = (MultiPartParser, FormParser, FileUploadParser)
 
+    def get_object(self):
+        # get the sent request
+        request = self.request
+
+        # get the user Token
+        token = request.headers.get('Authorization').split(' ')[1]
+        user_email = Token.objects.get(key=token).user
+        user = User.objects.get(email=user_email)
+
+        # get the company profile
+        company = CompanyProfile.objects.get(user=user)
+
+        get_object = company
+
+        return get_object
+
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
 

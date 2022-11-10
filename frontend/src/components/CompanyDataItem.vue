@@ -24,41 +24,21 @@
                 <div class="grid grid-cols-4 gap-6 py-5">
                   <div class="col-span-3 sm:col-span-2">
                     <label
-                      for="price"
+                      for="company_name"
                       class="block text-base font-medium text-gray-700"
-                      >First Name</label
+                      >Company name</label
                     >
                     <ErrorMessage
-                      name="first_name"
+                      name="company_name"
                       class="text-red-500 text-xs italic"
                     />
                     <div class="w-full h-full relative mt-1 py-2">
                       <vee-field
                         type="text"
-                        name="first_name"
-                        id="first_name"
-                        class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-800 focus:ring-indigo-800 sm:text-sm"
-                        v-model="firstName"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-span-3 sm:col-span-2">
-                    <label
-                      for="company-website"
-                      class="block text-base font-medium text-gray-700"
-                      >Last Name</label
-                    >
-                    <ErrorMessage
-                      name="last_name"
-                      class="text-red-500 text-xs italic"
-                    />
-                    <div class="mt-1 w-full h-full flex py-2">
-                      <vee-field
-                        type="text"
-                        name="last_name"
-                        id="last_name"
+                        name="company_name"
+                        id="company_name"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        v-model="lastName"
+                        v-model="companyName"
                       />
                     </div>
                   </div>
@@ -66,82 +46,22 @@
                 <div class="grid grid-cols-4 gap-6 py-5">
                   <div class="col-span-3 sm:col-span-2">
                     <label
-                      for="price"
+                      for="company_size"
                       class="block text-base font-medium text-gray-700"
-                      >Email</label
-                    >
-                    <div class="w-full h-full relative mt-1 py-2">
-                      <vee-field
-                        type="text"
-                        name="email"
-                        id="email"
-                        class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        v-model="email"
-                      />
-                      <ErrorMessage
-                        name="email"
-                        class="text-red-500 text-xs italic"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="grid grid-cols-4 gap-6 py-5">
-                  <div class="col-span-3 sm:col-span-2">
-                    <label
-                      for="price"
-                      class="block text-base font-medium text-gray-700"
-                      >Software Field</label
+                      >Company size</label
                     >
                     <ErrorMessage
-                      name="software_field"
+                      name="company_size"
                       class="text-red-500 text-xs italic"
                     />
                     <div class="w-full h-full relative mt-1 py-2">
                       <vee-field
                         type="text"
-                        name="software_field"
-                        id="software_field"
+                        name="company_size"
+                        id="company_size"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        v-model="softwareField"
+                        v-model="companySize"
                       />
-                    </div>
-                  </div>
-                </div>
-                <div class="grid grid-cols-4 gap-6 py-5">
-                  <div class="col-span-3 sm:col-span-2">
-                    <label
-                      for="price"
-                      class="block text-base font-medium text-gray-700"
-                      >Expected Salary</label
-                    >
-                    <ErrorMessage
-                      name="expected_salary"
-                      class="text-red-500 text-xs italic"
-                    />
-                    <div class="w-full h-full relative mt-1 py-2">
-                      <div
-                        class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
-                      >
-                        <span class="text-gray-500 sm:text-sm">$</span>
-                      </div>
-                      <vee-field
-                        type="number"
-                        name="expected_salary"
-                        id="expected_salary"
-                        class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        v-model="expectedSalary"
-                      />
-
-                      <div class="absolute inset-y-0 right-0 flex items-center">
-                        <label for="currency" class="sr-only">Currency</label>
-                        <select
-                          id="currency"
-                          name="currency"
-                          class="h-full rounded-md border-transparent bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        >
-                          <option>USD</option>
-                        </select>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -150,39 +70,19 @@
                     <label
                       for="company-website"
                       class="block text-base font-medium text-gray-700"
-                      >Linkedin Profile</label
+                      >Company Website</label
                     >
                     <ErrorMessage
-                      name="linkedin_profile"
+                      name="company-website"
                       class="text-red-500 text-xs italic"
                     />
                     <div class="mt-1 w-full h-full flex py-2">
                       <vee-field
                         type="text"
-                        name="linkedin_profile"
-                        id="linkedin_profile"
+                        name="company-website"
+                        id="company-website"
                         class="block w-full h-full flex-1 rounded-none rounded-r-md border-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        v-model="linkedinProfile"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-span-3 sm:col-span-2">
-                    <label
-                      for="company-website"
-                      class="block text-base font-medium text-gray-700"
-                      >Portfolio Website</label
-                    >
-                    <ErrorMessage
-                      name="portfolio_website"
-                      class="text-red-500 text-xs italic"
-                    />
-                    <div class="mt-1 w-full h-full flex py-2">
-                      <vee-field
-                        type="text"
-                        name="portfolio_website"
-                        id="profile_website"
-                        class="block w-full flex-1 rounded-none rounded-r-md border-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        v-model="portfolioWebsite"
+                        v-model="companyWebsite"
                       />
                     </div>
                   </div>
@@ -190,9 +90,9 @@
                 <div>
                   <div class="col-span-3 sm:col-span-2">
                     <label
-                      for="about"
+                      for="company_description"
                       class="block text-base font-medium text-gray-700"
-                      >About</label
+                      >Company Description</label
                     >
                     <ErrorMessage
                       name="about"
@@ -201,73 +101,43 @@
                     <div class="w-full h-full relative mt-1 py-2">
                       <vee-field
                         as="textarea"
-                        id="about"
-                        name="about"
+                        id="company_description"
+                        name="company_description"
                         rows="3"
                         class="mt-1 block w-full rounded-md border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        v-model="about"
+                        v-model="companyDescription"
                       ></vee-field>
                     </div>
                   </div>
                 </div>
+
                 <div>
                   <label
                     class="block text-sm text-base font-medium text-gray-700"
-                    >Upload Resume</label
+                    >Upload Company logo</label
                   >
                   <div class="mt-1 py-2">
-                    <!--Show the name of the already uploaded file if any -->
                     <div
-                      v-show="!resumeUploadShow"
+                      v-show="!logoUploadShow"
                       class="flex items-center justify-between pb-4"
                     >
-                      {{ resume }}
+                      {{ companyLogo }}
                     </div>
                     <button
                       class="text-sky-500 border border-sky-500 hover:bg-sky-500 hover:text-white active:bg-sky-600 font-bold uppercase px-8 py-3 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
-                      v-if="!resumeUploadShow"
-                      @click.prevent="resumeUploadShow = true"
+                      v-if="!logoUploadShow"
+                      @click.prevent="logoUploadShow = true"
                     >
-                      Upload Resume
+                      Upload Company logo
                     </button>
-                    <profile-resume-upload
+                    <company-logo-upload
                       v-else
                       @upload="upload"
                       @closeUploadModel="CloseUploadModel"
                     />
                   </div>
                 </div>
-
-                <div>
-                  <label
-                    class="block text-sm text-base font-medium text-gray-700"
-                    >Upload Profile Photo</label
-                  >
-                  <div class="mt-1 py-2">
-                    <div
-                      v-show="!PictureUploadShow"
-                      class="flex items-center justify-between pb-4"
-                    >
-                      {{ profilePicture }}
-                    </div>
-                    <button
-                      class="text-sky-500 border border-sky-500 hover:bg-sky-500 hover:text-white active:bg-sky-600 font-bold uppercase px-8 py-3 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      v-if="!PictureUploadShow"
-                      @click.prevent="PictureUploadShow = true"
-                    >
-                      Upload Profile Photo
-                    </button>
-                    <profile-picture-upload
-                      v-else
-                      @upload="upload"
-                      @closeUploadModel="CloseUploadModel"
-                    />
-                  </div>
-                </div>
-
-                <!-- <profile-upload @upload="upload" /> -->
               </div>
               <div
                 class="bg-gray-50 px-4 py-3 text-right sm:px-6"
@@ -296,8 +166,7 @@
 
 <script>
 import useAuthenticationStore from "@/stores/authentication";
-import ProfileResumeUpload from "@/components/ProfileResumeUpload.vue";
-import ProfilePictureUpload from "@/components/ProfilePictureUpload.vue";
+import CompanyLogoUpload from "./CompanyLogoUpload.vue";
 import AlertItem from "@/components/AlertItem.vue";
 import axios from "axios";
 import { API } from "@/api";
@@ -316,40 +185,29 @@ export default {
     return {
       // Create schema for form validation
       schema: {
-        first_name: "min:5|max:20",
-        last_name: "min:5|max:20",
-        email: "required|email",
-        software_field: "max:25",
-        expected_salary: "max:25",
-        linkedin_profile: "required|url",
-        portfolio_website: "required|url",
-        about: "max:500|min:30",
+        company_name: "min:5|max:40",
+        company_size: "min:5|max:40",
+        company_website: "required|url",
+        company_description: "min:5|max:1000",
       },
 
       // Upload Resume and Profile Picture varaibles
-      resumeUploadShow: false,
-      PictureUploadShow: false,
+      logoUploadShow: false,
 
       // Upload alert
       alert: false,
       alertBackgroundColor: "",
       alertMessage: "",
 
-      firstName: "",
-      lastName: "",
-      email: "",
-      softwareField: "",
-      expectedSalary: null,
-      linkedinProfile: "",
-      portfolioWebsite: "",
-      about: "",
-      resume: "",
-      profilePicture: "",
+      companyName: "",
+      companySize: "",
+      companyWebsite: "",
+      companyDescription: "",
+      companyLogo: "",
     };
   },
   components: {
-    ProfileResumeUpload,
-    ProfilePictureUpload,
+    CompanyLogoUpload,
     AlertItem,
   },
   methods: {
@@ -366,28 +224,15 @@ export default {
       };
 
       axios
-        .get(API.employee.details, { headers: headers })
+        .get(API.company.details, { headers: headers })
         .then((response) => {
-          this.firstName = response.data.first_name;
-          this.lastName = response.data.last_name;
-          this.email = response.data.email;
-          this.softwareField = response.data.software_field;
-          this.expectedSalary = response.data.expected_salary;
-          this.linkedinProfile = response.data.linkedin_url;
-          this.portfolioWebsite = response.data.portfolio_url;
-          this.about = response.data.about;
-          if (response.data.resume) {
-            this.resume = this.getFileBaseName(response.data.resume);
+          this.companyName = response.data.company_name;
+          this.companySize = response.data.company_size;
+          this.companyWebsite = response.data.company_website;
+          this.companyDescription = response.data.company_description;
+          if (response.data.company_logo) {
+            this.companyLogo = this.getFileBaseName(response.data.company_logo);
           }
-          if (response.data.profile_picture) {
-            this.profilePicture = this.getFileBaseName(
-              response.data.profile_picture
-            );
-          }
-          // this.resume = this.getFileBaseName(response.data.resume);
-          // this.profilePicture = this.getFileBaseName(
-          //   response.data.profile_picture
-          // );
         })
         // eslint-disable-next-line no-unused-vars
         .catch((error) => {
@@ -397,22 +242,12 @@ export default {
           this.alertBackgroundColor = "bg-red-500";
         });
     },
-    upload(file, type) {
-      // We upload the files to their respective models
-      if (type === "resume") {
-        // we save the file data to the resume variable
-        this.resume = file[0];
-      } else if (type === "picture") {
-        // we save the file data to the profilePicture variable
-        this.profilePicture = file[0];
-      }
+    upload(file) {
+      // we save the file data to the profilePicture variable
+      this.companyLogo = file[0];
     },
-    CloseUploadModel(model) {
-      if (model === "resume_model") {
-        this.resumeUploadShow = false;
-      } else if (model === "picture_model") {
-        this.PictureUploadShow = false;
-      }
+    CloseUploadModel() {
+      this.logoUploadShow = false;
     },
     closeAlert() {
       this.alert = false;
