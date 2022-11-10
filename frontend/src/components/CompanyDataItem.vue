@@ -141,7 +141,7 @@
               </div>
               <div
                 class="bg-gray-50 px-4 py-3 text-right sm:px-6"
-                @click.prevent="updateUserData"
+                @click.prevent="updateCompanyData"
               >
                 <button
                   type="button"
@@ -255,7 +255,7 @@ export default {
       this.alertMessage = "";
     },
     // Send the user data to the backend
-    updateUserData() {
+    updateCompanyData() {
       const token = `Bearer ${this.authenticationStore.token}`;
       // Add the token to the header as Bearer token
       const headers = {
@@ -264,35 +264,22 @@ export default {
       };
 
       const data = new FormData();
-      data.append("first_name", this.firstName);
-      data.append("last_name", this.lastName);
-      data.append("email", this.email);
-      data.append("software_field", this.softwareField);
-      data.append("expected_salary", this.expectedSalary);
-      data.append("linkedin_url", this.linkedinProfile);
-      data.append("portfolio_url", this.portfolioWebsite);
-      data.append("about", this.about);
+      data.append("company_name", this.companyName);
+      data.append("company_size", this.companySize);
+      data.append("company_website", this.companyWebsite);
+      data.append("company_description", this.companyDescription);
 
       // Check if resume is typeof file
-      if (this.resume === null) {
-        data.append("resume", "");
-      } else if (typeof this.resume === "object") {
-        data.append("resume", this.resume);
+      if (this.companyLogo === null) {
+        data.append("company_logo", "");
+      } else if (typeof this.companyLogo === "object") {
+        data.append("company_logo", this.companyLogo);
       } else {
-        data.append("resume", "");
-      }
-
-      // Check if profile picture is typeof file
-      if (this.profilePicture === null) {
-        data.append("profile_picture", "");
-      } else if (typeof this.profilePicture === "object") {
-        data.append("profile_picture", this.profilePicture);
-      } else {
-        data.append("profile_picture", "");
+        data.append("company_logo", "");
       }
 
       axios
-        .patch(API.employee.details, data, { headers: headers })
+        .patch(API.company.details, data, { headers: headers })
         // eslint-disable-next-line no-unused-vars
         .then((response) => {
           // show that the data is updated

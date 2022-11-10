@@ -47,7 +47,7 @@ class CompanyDetailsAPIView(generics.RetrieveUpdateAPIView):
         return Response(serializer.data)
 
     def update(self, request, *args, **kwargs):
-        data = request.data
+        data = request.data.copy()
         # Check if company logo is being updated
         company_logo = request.data.get('company_logo')
         if not company_logo:
