@@ -14,6 +14,7 @@ class CompanyProfile(models.Model):
     company_website = models.URLField(max_length=200, blank=True, null=True)
     company_size = models.CharField(max_length=10, blank=True, null=True)
     company_logo = models.ImageField(upload_to='users/company/logos', blank=True, null=True)
+    company_location = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.user.email

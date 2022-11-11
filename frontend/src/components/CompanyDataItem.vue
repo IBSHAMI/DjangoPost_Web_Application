@@ -68,6 +68,28 @@
                 <div class="grid grid-cols-4 gap-6 py-5">
                   <div class="col-span-3 sm:col-span-2">
                     <label
+                      for="company_location"
+                      class="block text-base font-medium text-gray-700"
+                      >Company Location</label
+                    >
+                    <ErrorMessage
+                      name="company_location"
+                      class="text-red-500 text-xs italic"
+                    />
+                    <div class="w-full h-full relative mt-1 py-2">
+                      <vee-field
+                        type="text"
+                        name="company_location"
+                        id="company_location"
+                        class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        v-model="companyLocation"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="grid grid-cols-4 gap-6 py-5">
+                  <div class="col-span-3 sm:col-span-2">
+                    <label
                       for="company-website"
                       class="block text-base font-medium text-gray-700"
                       >Company Website</label
@@ -189,6 +211,7 @@ export default {
         company_size: "min:1|max:40",
         company_website: "required|url",
         company_description: "min:5|max:1000",
+        company_location: "min:5|max:40",
       },
 
       // Upload Resume and Profile Picture varaibles
@@ -201,6 +224,7 @@ export default {
 
       companyName: "",
       companySize: "",
+      companyLocation: "",
       companyWebsite: "",
       companyDescription: "",
       companyLogo: "",
@@ -228,6 +252,7 @@ export default {
         .then((response) => {
           this.companyName = response.data.company_name;
           this.companySize = response.data.company_size;
+          this.companyLocation = response.data.company_location;
           this.companyWebsite = response.data.company_website;
           this.companyDescription = response.data.company_description;
           if (response.data.company_logo) {
@@ -266,6 +291,7 @@ export default {
       const data = new FormData();
       data.append("company_name", this.companyName);
       data.append("company_size", this.companySize);
+      data.append("company_location", this.companyLocation);
       data.append("company_website", this.companyWebsite);
       data.append("company_description", this.companyDescription);
 

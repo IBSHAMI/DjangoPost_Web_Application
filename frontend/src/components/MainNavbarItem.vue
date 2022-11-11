@@ -193,17 +193,17 @@
         <div v-else-if="companyProfile">
           <nav class="space-x-10 md:flex">
             <router-link
-              to=""
+              :to="{ name: 'Company', params: { slug: 'data' } }"
               class="text-base font-medium text-gray-500 hover:text-gray-900"
               >Company Profile</router-link
             >
-            <router-link
+            <!-- <router-link
               to=""
               class="text-base font-medium text-gray-500 hover:text-gray-900"
               >Create Job</router-link
-            >
+            > -->
             <router-link
-              to=""
+              :to="{ name: 'Company', params: { slug: 'jobs' } }"
               class="text-base font-medium text-gray-500 hover:text-gray-900"
               >Jobs</router-link
             >
