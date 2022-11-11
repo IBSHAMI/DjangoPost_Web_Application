@@ -81,7 +81,7 @@
                         type="text"
                         name="company-website"
                         id="company-website"
-                        class="block w-full h-full flex-1 rounded-none rounded-r-md border-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="companyWebsite"
                       />
                     </div>
