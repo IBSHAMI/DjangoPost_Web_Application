@@ -22,7 +22,7 @@
                   name="position_title"
                   id="position_title"
                   class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  v-model="positionTile"
+                  v-model="positionTitle"
                 />
                 <ErrorMessage
                   name="position_title"
@@ -219,7 +219,7 @@
                   type="checkbox"
                   class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                   name="terms"
-                  value="1"
+                  v-model="remote"
                 />
                 <ErrorMessage
                   name="remote"
@@ -234,10 +234,7 @@
             </div>
           </div>
         </div>
-        <div
-          class="bg-gray-50 px-4 py-3 text-center sm:px-6"
-          @click.prevent="updateUserData"
-        >
+        <div class="bg-gray-50 px-4 py-3 text-center sm:px-6" @click.prevent="">
           <button
             type="button"
             class="text-sky-500 border border-sky-500 hover:bg-sky-500 hover:text-white active:bg-sky-600 font-bold uppercase px-8 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -257,13 +254,47 @@ export default {
   name: "CreateJobFormItem",
   data() {
     return {
+      // Alert varaibles
       alert: false,
       alertMessage: "",
       alertBackgroundColor: "",
+
+      // schema for the form
+      schema: {
+        job_title: "required|min:10|max:100",
+        position_type: "required|min:10|max:100",
+        position_location: "required|min:10|max:100",
+        language_required: "required|min:10|max:100",
+        positions_number: "required",
+        salary: "required",
+        position_experience: "",
+        company_description: "",
+        job_description: "",
+        remote: "",
+      },
+
+      // form data
+      positionTitle: "",
+      positionType: "",
+      positionLocation: "",
+      languageRequired: "",
+      positionsNumber: "",
+      salary: "",
+      positionExperienceRequired: "",
+      companyDescription: "",
+      jobDescription: "",
+      remote: false,
     };
   },
   components: {
     AlertItem,
+  },
+  methods: {
+    closeAlert() {
+      this.alert = false;
+      this.alertBackgroundColor = "";
+      this.alertMessage = "";
+    },
   },
 };
 </script>
