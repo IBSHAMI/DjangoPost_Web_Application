@@ -66,7 +66,7 @@
                 <div class="grid grid-cols-4 gap-6 py-5">
                   <div class="col-span-3 sm:col-span-2">
                     <label
-                      for="price"
+                      for="email"
                       class="block text-base font-medium text-gray-700"
                       >Email</label
                     >
@@ -88,7 +88,7 @@
                 <div class="grid grid-cols-4 gap-6 py-5">
                   <div class="col-span-3 sm:col-span-2">
                     <label
-                      for="price"
+                      for="software_field"
                       class="block text-base font-medium text-gray-700"
                       >Software Field</label
                     >

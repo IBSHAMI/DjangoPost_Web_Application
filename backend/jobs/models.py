@@ -12,6 +12,7 @@ class Job(models.Model):
     company_description = models.TextField(blank=True, null=True)
     description = models.TextField(max_length=1000, blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
+    type = models.CharField(max_length=100, blank=True, null=True)
     language = models.CharField(max_length=100, blank=True, null=True)
     experience = models.PositiveIntegerField(blank=True, null=True)
     number_of_positions = models.PositiveIntegerField(blank=True, null=True)
