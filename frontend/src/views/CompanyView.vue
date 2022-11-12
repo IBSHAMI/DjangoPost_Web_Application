@@ -2,7 +2,7 @@
   <div class="relative bg-white mx-auto max-w-7xl px-4 sm:px-6">
     <main-navbar-item class="pb-8" :companyProfile="companyProfile" />
     <company-data-item v-if="passedSlug === 'data'" />
-    <jobs-forms-item v-if="passedSlug === 'jobs'" />
+    <jobs-forms-item v-else-if="passedSlug === 'jobs'" />
   </div>
 </template>
 
@@ -24,8 +24,10 @@ export default {
     CompanyDataItem,
     JobsFormsItem,
   },
-  $route(to) {
-    this.passedSlug = to.params.slug;
+  watch: {
+    $route(to) {
+      this.passedSlug = to.params.slug;
+    },
   },
 };
 </script>
