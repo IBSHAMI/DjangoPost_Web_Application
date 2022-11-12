@@ -3,6 +3,7 @@
     <main-navbar-item class="pb-8" :companyProfile="companyProfile" />
     <company-data-item v-if="passedSlug === 'data'" />
     <jobs-forms-item v-else-if="passedSlug === 'jobs'" />
+    <create-job-form-item v-else-if="passedSlug === 'create-job'" />
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import MainNavbarItem from "@/components/MainNavbarItem.vue";
 import CompanyDataItem from "../components/CompanyDataItem.vue";
 import JobsFormsItem from "../components/JobsFormsItem.vue";
+import CreateJobFormItem from "../components/CreateJobFormItem.vue";
 
 export default {
   name: "CompanyView",
@@ -23,6 +25,7 @@ export default {
     MainNavbarItem,
     CompanyDataItem,
     JobsFormsItem,
+    CreateJobFormItem,
   },
   watch: {
     $route(to) {
