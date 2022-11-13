@@ -48,7 +48,7 @@
               </div>
               <div class="p-2 w-1/2">
                 <div class="relative">
-                  <label for="email" class="leading-7 text-sm text-gray-600"
+                  <label for="last_name" class="leading-7 text-sm text-gray-600"
                     >Last name</label
                   >
                   <ErrorMessage
@@ -57,7 +57,7 @@
                   />
                   <div>
                     <vee-field
-                      type="test"
+                      type="text"
                       id="last_name"
                       name="last_name"
                       v-model="lastName"
@@ -77,7 +77,7 @@
                   />
                   <div>
                     <vee-field
-                      type="email"
+                      type="text"
                       id="email"
                       name="email"
                       v-model="email"

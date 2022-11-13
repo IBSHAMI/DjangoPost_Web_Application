@@ -11,7 +11,7 @@
             </p>
           </div>
         </div>
-        <div class="mt-5 md:col-span-2 md:mt-0">
+        <div class="border-2 mt-5 md:col-span-2 md:mt-0">
           <vee-form
             action="#"
             :validation-schema="schema"
@@ -28,7 +28,7 @@
                 <div class="grid grid-cols-4 gap-6 py-5">
                   <div class="col-span-3 sm:col-span-2">
                     <label
-                      for="price"
+                      for="first_name"
                       class="block text-base font-medium text-gray-700"
                       >First Name</label
                     >

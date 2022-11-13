@@ -11,8 +11,12 @@
             </p>
           </div>
         </div>
-        <div class="mt-5 md:col-span-2 md:mt-0">
-          <vee-form action="#" :validation-schema="schema">
+        <div class="border-2 mt-5 md:col-span-2 md:mt-0">
+          <vee-form
+            action="#"
+            :validation-schema="schema"
+            @submit="updateCompanyData"
+          >
             <div class="shadow sm:overflow-hidden sm:rounded-md">
               <alert-item
                 :alert="alert"
@@ -90,19 +94,19 @@
                 <div class="grid grid-cols-4 gap-6 py-5">
                   <div class="col-span-3 sm:col-span-2">
                     <label
-                      for="company-website"
+                      for="company_website"
                       class="block text-base font-medium text-gray-700"
                       >Company Website</label
                     >
                     <ErrorMessage
-                      name="company-website"
+                      name="company_website"
                       class="text-red-500 text-xs italic"
                     />
                     <div class="mt-1 w-full h-full flex py-2">
                       <vee-field
                         type="text"
-                        name="company-website"
-                        id="company-website"
+                        name="company_website"
+                        id="company_website"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="companyWebsite"
                       />
@@ -117,7 +121,7 @@
                       >Company Description</label
                     >
                     <ErrorMessage
-                      name="about"
+                      name="company_description"
                       class="text-red-500 text-xs italic"
                     />
                     <div class="w-full h-full relative mt-1 py-2">
@@ -125,7 +129,7 @@
                         as="textarea"
                         id="company_description"
                         name="company_description"
-                        rows="3"
+                        rows="6"
                         class="mt-1 block w-full rounded-md border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         v-model="companyDescription"
                       ></vee-field>
@@ -161,12 +165,9 @@
                   </div>
                 </div>
               </div>
-              <div
-                class="bg-gray-50 px-4 py-3 text-right sm:px-6"
-                @click.prevent="updateCompanyData"
-              >
+              <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
                 <button
-                  type="button"
+                  type="submit"
                   class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                   Save
@@ -194,7 +195,7 @@ import axios from "axios";
 import { API } from "@/api";
 
 export default {
-  name: "ProfileDataItem",
+  name: "CompanyDataItem",
   created() {
     this.getCompanyData();
   },
@@ -207,11 +208,11 @@ export default {
     return {
       // Create schema for form validation
       schema: {
-        company_name: "min:5|max:40",
-        company_size: "min:1|max:40",
+        company_name: "required|min:5|max:40",
+        company_size: "required|min:1|max:40",
         company_website: "required|url",
-        company_description: "min:5|max:1000",
-        company_location: "min:5|max:40",
+        company_description: "required|min:5|max:1000",
+        company_location: "required|min:2|max:40",
       },
 
       // Upload Resume and Profile Picture varaibles
@@ -281,6 +282,7 @@ export default {
     },
     // Send the user data to the backend
     updateCompanyData() {
+      console.log("updateCompanyData");
       const token = `Bearer ${this.authenticationStore.token}`;
       // Add the token to the header as Bearer token
       const headers = {

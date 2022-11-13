@@ -1,6 +1,6 @@
 <template>
-  <div class="mt-5 md:col-span-2 md:mt-0">
-    <vee-form action="#" :validation-schema="schema">
+  <div class="flex items-center justify-center mt-5 md:col-span-2 md:mt-0">
+    <vee-form action="#" :validation-schema="schema" class="border-2">
       <div class="shadow sm:overflow-hidden sm:rounded-md">
         <alert-item
           :alert="alert"
@@ -179,7 +179,7 @@
                   as="textarea"
                   id="job_description"
                   name="job_description"
-                  rows="3"
+                  rows="6"
                   class="mt-1 block w-full rounded-md border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   v-model="jobDescription"
                 ></vee-field>
