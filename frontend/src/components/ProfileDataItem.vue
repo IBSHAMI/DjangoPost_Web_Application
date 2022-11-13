@@ -12,7 +12,11 @@
           </div>
         </div>
         <div class="mt-5 md:col-span-2 md:mt-0">
-          <vee-form action="#" :validation-schema="schema">
+          <vee-form
+            action="#"
+            :validation-schema="schema"
+            @submit="updateUserData"
+          >
             <div class="shadow sm:overflow-hidden sm:rounded-md">
               <alert-item
                 :alert="alert"
@@ -269,12 +273,9 @@
 
                 <!-- <profile-upload @upload="upload" /> -->
               </div>
-              <div
-                class="bg-gray-50 px-4 py-3 text-right sm:px-6"
-                @click.prevent="updateUserData"
-              >
+              <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
                 <button
-                  type="button"
+                  type="submit"
                   class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                   Save
@@ -421,6 +422,7 @@ export default {
     },
     // Send the user data to the backend
     updateUserData() {
+      console.log("updateUserData");
       const token = `Bearer ${this.authenticationStore.token}`;
       // Add the token to the header as Bearer token
       const headers = {

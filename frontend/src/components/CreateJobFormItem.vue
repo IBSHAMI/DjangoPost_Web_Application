@@ -166,32 +166,6 @@
           <div>
             <div class="col-span-3 sm:col-span-2">
               <label
-                for="company_description"
-                class="block text-base font-medium text-gray-700"
-                >Company Description
-                <p class="text-sm text-red-500">
-                  Field already populated from your profile
-                </p></label
-              >
-              <ErrorMessage
-                name="company_description"
-                class="text-red-500 text-xs italic"
-              />
-              <div class="w-full h-full relative mt-1 py-2">
-                <vee-field
-                  as="textarea"
-                  id="company_description"
-                  name="company_description"
-                  rows="3"
-                  class="mt-1 block w-full rounded-md border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  v-model="companyDescription"
-                ></vee-field>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="col-span-3 sm:col-span-2">
-              <label
                 for="job_description"
                 class="block text-base font-medium text-gray-700"
                 >Job description</label
@@ -261,15 +235,14 @@ export default {
 
       // schema for the form
       schema: {
-        job_title: "required|min:10|max:100",
+        position_title: "required|min:10|max:100",
         position_type: "required|min:10|max:100",
         position_location: "required|min:10|max:100",
         language_required: "required|min:10|max:100",
         positions_number: "required",
         salary: "required",
         position_experience: "",
-        company_description: "",
-        job_description: "",
+        job_description: "required|min:100|max:1000",
         remote: "",
       },
 
@@ -281,7 +254,6 @@ export default {
       positionsNumber: "",
       salary: "",
       positionExperienceRequired: "",
-      companyDescription: "",
       jobDescription: "",
       remote: false,
     };
@@ -290,6 +262,9 @@ export default {
     AlertItem,
   },
   methods: {
+    getCompanyDescription() {
+      this.companyDescription = this.$store.state.user.company_description;
+    },
     closeAlert() {
       this.alert = false;
       this.alertBackgroundColor = "";

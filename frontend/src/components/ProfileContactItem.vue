@@ -18,103 +18,109 @@
           :validation-schema="schema"
           @submit="contactSupport"
         >
-          <alert-item
-            :alert="alert"
-            :alertBackgroundColor="alertBackgroundColor"
-            :alertMessage="alertMessage"
-            @closeAlert="closeAlert"
-          />
-          <div class="flex flex-wrap -m-2">
-            <div class="p-2 w-1/2">
-              <div class="relative">
-                <label for="name" class="leading-7 text-sm text-gray-600"
-                  >First Name</label
-                >
-                <ErrorMessage
-                  name="first_name"
-                  class="text-red-500 text-xs italic"
-                />
-                <div>
-                  <vee-field
-                    type="text"
-                    id="first_name"
+          <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
+            <alert-item
+              :alert="alert"
+              :alertBackgroundColor="alertBackgroundColor"
+              :alertMessage="alertMessage"
+              @closeAlert="closeAlert"
+            />
+            <div class="flex flex-wrap -m-2">
+              <div class="p-2 w-1/2">
+                <div class="relative">
+                  <label for="name" class="leading-7 text-sm text-gray-600"
+                    >First Name</label
+                  >
+                  <ErrorMessage
                     name="first_name"
-                    v-model="firstName"
-                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    class="text-red-500 text-xs italic"
                   />
+                  <div>
+                    <vee-field
+                      type="text"
+                      id="first_name"
+                      name="first_name"
+                      v-model="firstName"
+                      class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="p-2 w-1/2">
-              <div class="relative">
-                <label for="email" class="leading-7 text-sm text-gray-600"
-                  >Last name</label
-                >
-                <ErrorMessage
-                  name="last_name"
-                  class="text-red-500 text-xs italic"
-                />
-                <div>
-                  <vee-field
-                    type="test"
-                    id="last_name"
+              <div class="p-2 w-1/2">
+                <div class="relative">
+                  <label for="email" class="leading-7 text-sm text-gray-600"
+                    >Last name</label
+                  >
+                  <ErrorMessage
                     name="last_name"
-                    v-model="lastName"
-                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    class="text-red-500 text-xs italic"
                   />
+                  <div>
+                    <vee-field
+                      type="test"
+                      id="last_name"
+                      name="last_name"
+                      v-model="lastName"
+                      class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="p-2 w-1/2">
-              <div class="relative">
-                <label for="email" class="leading-7 text-sm text-gray-600"
-                  >Email</label
-                >
-                <ErrorMessage
-                  name="email"
-                  class="text-red-500 text-xs italic"
-                />
-                <div>
-                  <vee-field
-                    type="email"
-                    id="email"
+              <div class="p-2 w-1/2">
+                <div class="relative">
+                  <label for="email" class="leading-7 text-sm text-gray-600"
+                    >Email</label
+                  >
+                  <ErrorMessage
                     name="email"
-                    v-model="email"
-                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    class="text-red-500 text-xs italic"
                   />
+                  <div>
+                    <vee-field
+                      type="email"
+                      id="email"
+                      name="email"
+                      v-model="email"
+                      class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="p-2 w-full">
+                <div class="relative">
+                  <label for="message" class="leading-7 text-sm text-gray-600"
+                    >Message</label
+                  >
+                  <ErrorMessage
+                    name="message"
+                    class="text-red-500 text-xs italic"
+                  />
+                  <vee-field
+                    as="textarea"
+                    id="message"
+                    name="message"
+                    v-model="message"
+                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                  ></vee-field>
                 </div>
               </div>
             </div>
-            <div class="p-2 w-full">
-              <div class="relative">
-                <label for="message" class="leading-7 text-sm text-gray-600"
-                  >Message</label
-                >
-                <textarea
-                  id="message"
-                  name="message"
-                  v-model="message"
-                  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                ></textarea>
-              </div>
+            <div class="pt-3">
+              <button
+                type="submit"
+                class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+              >
+                Submit
+              </button>
             </div>
-          </div>
-          <button
-            type="submit"
-            @click.prevent="contactSupport"
-            class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-          >
-            Submit
-          </button>
-          <div
-            class="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center"
-          >
-            <a class="text-indigo-500">example@email.com</a>
-            <p class="leading-normal my-5">
-              49 Smith St. <br />Saint Cloud, MN 56301
-            </p>
           </div>
         </vee-form>
+      </div>
+      <div class="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">
+        <a class="text-indigo-500">example@email.com</a>
+        <p class="leading-normal my-5">
+          49 Smith St. <br />Saint Cloud, MN 56301
+        </p>
       </div>
     </div>
   </section>
@@ -144,27 +150,10 @@ export default {
       alertMessage: "",
 
       schema: {
-        firstName: {
-          required: true,
-          min: 3,
-          max: 255,
-        },
-        lastName: {
-          required: true,
-          min: 3,
-          max: 255,
-        },
-        email: {
-          required: true,
-          email: true,
-          min: 3,
-          max: 255,
-        },
-        message: {
-          required: true,
-          min: 3,
-          max: 255,
-        },
+        first_name: "required",
+        last_name: "required",
+        email: "required|email",
+        message: "required",
       },
     };
   },
@@ -204,8 +193,6 @@ export default {
       this.alertMessage = "";
     },
     contactSupport() {
-      console.log(this.schema);
-      console.log("contact support");
       const token = `Bearer ${this.authenticationStore.token}`;
       // Add the token to the header as Bearer token
       const headers = {
