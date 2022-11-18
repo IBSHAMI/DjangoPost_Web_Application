@@ -7,7 +7,6 @@ from django.conf import settings
 # import token model from drf
 from rest_framework.authtoken.models import Token
 
-from .models import User, EmployeeProfile
 
 
 

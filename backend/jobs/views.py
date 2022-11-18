@@ -9,6 +9,7 @@ from rest_framework.generics import (
 
 from .models import Job
 from .serializers import JobSerializer, JobDetailSerializer
+from company.models import CompanyProfile
 
 
 class JobListView(ListCreateAPIView):
@@ -22,8 +23,12 @@ class JobListView(ListCreateAPIView):
         # get authenticated user
         user = self.request.user
 
+        # get company description
+        company = get_object_or_404(CompanyProfile, user=user)
+        company_description = company.company_description
+
         # create job
-        serializer.save(user=user)
+        serializer.save(user=user, company_description=company_description)
 
 
 class JobDetailView(RetrieveAPIView):

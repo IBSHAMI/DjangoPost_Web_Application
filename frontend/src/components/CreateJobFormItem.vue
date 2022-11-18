@@ -1,6 +1,11 @@
 <template>
   <div class="flex items-center justify-center mt-5 md:col-span-2 md:mt-0">
-    <vee-form action="#" :validation-schema="schema" class="border-2">
+    <vee-form
+      action="#"
+      :validation-schema="schema"
+      @submit="createJob"
+      class="border-2"
+    >
       <div class="shadow sm:overflow-hidden sm:rounded-md">
         <alert-item
           :alert="alert"
@@ -154,7 +159,7 @@
                   name="position_experience"
                   id="position_experience"
                   class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  v-model="positionExperienceRequired"
+                  v-model="positionExperience"
                 />
                 <ErrorMessage
                   name="position_experience"
@@ -192,8 +197,9 @@
                   aria-describedby="remote"
                   type="checkbox"
                   class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                  name="terms"
+                  name="remote"
                   v-model="remote"
+                  :value="true"
                 />
                 <ErrorMessage
                   name="remote"
@@ -208,9 +214,9 @@
             </div>
           </div>
         </div>
-        <div class="bg-gray-50 px-4 py-3 text-center sm:px-6" @click.prevent="">
+        <div class="bg-gray-50 px-4 py-3 text-center sm:px-6">
           <button
-            type="button"
+            type="submit"
             class="text-sky-500 border border-sky-500 hover:bg-sky-500 hover:text-white active:bg-sky-600 font-bold uppercase px-8 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
           >
             Create Job
@@ -222,10 +228,18 @@
 </template>
 
 <script>
+import useAuthenticationStore from "@/stores/authentication";
 import AlertItem from "@/components/AlertItem.vue";
+import axios from "axios";
+import { API } from "@/api";
 
 export default {
   name: "CreateJobFormItem",
+  setup() {
+    // init the store
+    const authenticationStore = useAuthenticationStore();
+    return { authenticationStore };
+  },
   data() {
     return {
       // Alert varaibles
@@ -236,13 +250,13 @@ export default {
       // schema for the form
       schema: {
         position_title: "required|min:10|max:100",
-        position_type: "required|min:10|max:100",
-        position_location: "required|min:10|max:100",
-        language_required: "required|min:10|max:100",
+        position_type: "required|min:3|max:100",
+        position_location: "required|min:2|max:100",
+        language_required: "required|min:2|max:100",
         positions_number: "required",
         salary: "required",
         position_experience: "",
-        job_description: "required|min:100|max:1000",
+        job_description: "required|min:1|max:1000",
         remote: "",
       },
 
@@ -253,7 +267,7 @@ export default {
       languageRequired: "",
       positionsNumber: "",
       salary: "",
-      positionExperienceRequired: "",
+      positionExperience: "",
       jobDescription: "",
       remote: false,
     };
@@ -269,6 +283,55 @@ export default {
       this.alert = false;
       this.alertBackgroundColor = "";
       this.alertMessage = "";
+    },
+    createJob() {
+      const token = `Bearer ${this.authenticationStore.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        // eslint-disable-next-line prettier/prettier
+          "Authorization": token,
+      };
+      const create_job_url = API.jobs;
+
+      const data = new FormData();
+
+      data.append("title", this.positionTitle);
+      data.append("type", this.positionType);
+      data.append("location", this.positionLocation);
+      data.append("language", this.languageRequired);
+      console.log(this.positionsNumber);
+      data.append("number_of_positions", this.positionsNumber);
+      data.append("salary", this.salary);
+      data.append("experience", this.positionExperience);
+      data.append("description", this.jobDescription);
+      if (this.remote) {
+        data.append("remote", this.remote);
+      }
+
+      console.log(data);
+
+      axios
+        .post(create_job_url, data, { headers: headers })
+        .then((response) => {
+          if (response.status === 201) {
+            this.alert = true;
+            this.alertMessage = "Job created successfully";
+            this.alertBackgroundColor = "bg-green-500";
+            // this.$router.push({ name: "Jobs" });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.alert = true;
+          this.alertMessage = "Error creating job";
+          this.alertBackgroundColor = "bg-red-500";
+        });
+    },
+  },
+  computed: {
+    remoteChecked() {
+      console.log(this.remote);
+      return this.remote === true;
     },
   },
 };
