@@ -291,7 +291,7 @@ export default {
         // eslint-disable-next-line prettier/prettier
           "Authorization": token,
       };
-      const create_job_url = API.jobs;
+      const createJobUrl = API.jobs;
 
       const data = new FormData();
 
@@ -299,7 +299,6 @@ export default {
       data.append("type", this.positionType);
       data.append("location", this.positionLocation);
       data.append("language", this.languageRequired);
-      console.log(this.positionsNumber);
       data.append("number_of_positions", this.positionsNumber);
       data.append("salary", this.salary);
       data.append("experience", this.positionExperience);
@@ -311,13 +310,15 @@ export default {
       console.log(data);
 
       axios
-        .post(create_job_url, data, { headers: headers })
+        .post(createJobUrl, data, { headers: headers })
         .then((response) => {
           if (response.status === 201) {
             this.alert = true;
             this.alertMessage = "Job created successfully";
             this.alertBackgroundColor = "bg-green-500";
-            // this.$router.push({ name: "Jobs" });
+            setTimeout(() => {
+              this.$router.push({ name: "Company", params: { slug: "jobs" } });
+            }, 2000);
           }
         })
         .catch((error) => {
@@ -326,12 +327,6 @@ export default {
           this.alertMessage = "Error creating job";
           this.alertBackgroundColor = "bg-red-500";
         });
-    },
-  },
-  computed: {
-    remoteChecked() {
-      console.log(this.remote);
-      return this.remote === true;
     },
   },
 };

@@ -94,11 +94,38 @@
 
 <script>
 import JobRowTableItem from "@/components/JobRowTableItem.vue";
+import useAuthenticationStore from "@/stores/authentication";
+import axios from "axios";
+import { API } from "@/api";
 
 export default {
   name: "JobsForm",
+  setup() {
+    // init the store
+    const authenticationStore = useAuthenticationStore();
+    return { authenticationStore };
+  },
+  created() {
+    this.getJobsList();
+  },
   components: {
     JobRowTableItem,
+  },
+  methods: {
+    // get jobs list
+    getJobsList() {
+      const token = `Bearer ${this.authenticationStore.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        // eslint-disable-next-line prettier/prettier
+          "Authorization": token,
+      };
+      const jobsListUrl = API.jobs;
+
+      axios.get(jobsListUrl, { headers: headers }).then((response) => {
+        console.log(response.data[1]);
+      });
+    },
   },
 };
 </script>
