@@ -25,10 +25,21 @@ class JobListView(ListAPIView):
 
         qs = super().get_queryset()
         qs = qs.filter(user=self.request.user)
-        if table_variant == 'active':
-            qs = qs.filter(is_active=True)
-        elif table_variant == 'inactive':
-            qs = qs.filter(is_active=False)
+        # filter queryset based on table variant
+        if table_variant != 'all':
+            if table_variant == 'active':
+                qs = qs.filter(is_active=True)
+            elif table_variant == 'inactive':
+                qs = qs.filter(is_active=False)
+
+        # order queryset by sorting option selected
+        sorting_option = request.GET.get('sorting_option')
+        if sorting_option != "None":
+            if sorting_option == "Latest":
+                qs = qs.order_by('-date_created')
+            elif sorting_option == "Oldest":
+                qs = qs.order_by('date_created')
+
         return qs
 
 

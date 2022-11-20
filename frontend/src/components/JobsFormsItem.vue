@@ -11,17 +11,22 @@
           Jobs
         </p>
         <div
-          class="py-3 px-4 flex items-center text-sm font-medium leading-none text-gray-600 bg-gray-200 hover:bg-gray-300 cursor-pointer rounded"
+          class="py-3 px-4 flex items-center text-sm font-medium leading-none text-gray-600 bg-gray-200 hover:bg-gray-300 rounded"
         >
           <p>Sort By:</p>
           <select
             aria-label="select"
-            class="focus:text-indigo-600 focus:outline-none bg-transparent ml-1"
+            class="focus:text-indigo-600 focus:outline-none bg-transparent ml-1 cursor-pointer"
+            v-model="selectedSort"
+            @change.prevent="sortJobs(selectedSort)"
           >
-            <option class="text-sm text-indigo-800">Latest</option>
-            <option class="text-sm text-indigo-800">Oldest</option>
-            <option class="text-sm text-indigo-800">
-              Highest Applications
+            <option
+              class="text-sm text-indigo-800"
+              v-for="option in SortByOptions"
+              v-bind:key="option.id"
+              :selected="option.selected"
+            >
+              {{ option.name }}
             </option>
           </select>
         </div>
@@ -137,6 +142,24 @@ export default {
     return {
       jobsList: [],
       tableVariant: "all",
+      selectedSort: "None",
+      SortByOptions: [
+        {
+          id: 1,
+          name: "None",
+          selected: true,
+        },
+        {
+          id: 2,
+          name: "Latest",
+          selected: false,
+        },
+        {
+          id: 3,
+          name: "Oldest",
+          selected: false,
+        },
+      ],
     };
   },
   components: {
@@ -153,9 +176,14 @@ export default {
       };
       const jobsListUrl = API.jobs.list;
 
+      const params = {
+        table_variant: this.tableVariant,
+        sorting_option: this.selectedSort,
+      };
+
       axios
         .get(jobsListUrl, {
-          params: { table_variant: this.tableVariant },
+          params: params,
           headers: headers,
         })
         .then((response) => {
@@ -171,6 +199,18 @@ export default {
     },
     changeTableVariant(variant) {
       this.tableVariant = variant;
+      this.getJobsList();
+    },
+    sortJobs(sortOption) {
+      // get the selected sort option
+      for (const option in this.SortByOptions) {
+        if (this.SortByOptions[option].name === sortOption) {
+          this.SortByOptions[option].selected = true;
+          this.selectedSort = sortOption;
+        } else {
+          this.SortByOptions[option].selected = false;
+        }
+      }
       this.getJobsList();
     },
   },
