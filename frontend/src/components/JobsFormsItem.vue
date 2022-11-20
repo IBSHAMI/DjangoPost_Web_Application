@@ -83,7 +83,12 @@
             </tr>
           </thead>
           <tbody>
-            <job-row-table-item></job-row-table-item>
+            <job-row-table-item
+              v-for="job in jobsList"
+              :key="job.pk"
+              :job="job"
+            ></job-row-table-item>
+
             <tr class="h-3"></tr>
           </tbody>
         </table>
@@ -108,6 +113,11 @@ export default {
   created() {
     this.getJobsList();
   },
+  data() {
+    return {
+      jobsList: [],
+    };
+  },
   components: {
     JobRowTableItem,
   },
@@ -120,11 +130,18 @@ export default {
         // eslint-disable-next-line prettier/prettier
           "Authorization": token,
       };
-      const jobsListUrl = API.jobs;
+      const jobsListUrl = API.jobs.list;
 
-      axios.get(jobsListUrl, { headers: headers }).then((response) => {
-        console.log(response.data[1]);
-      });
+      axios
+        .get(jobsListUrl, { headers: headers })
+        .then((response) => {
+          for (const job of response.data) {
+            this.jobsList.push(job);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

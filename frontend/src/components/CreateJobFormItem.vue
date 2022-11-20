@@ -291,7 +291,7 @@ export default {
         // eslint-disable-next-line prettier/prettier
           "Authorization": token,
       };
-      const createJobUrl = API.jobs;
+      const createJobUrl = API.jobs.create;
 
       const data = new FormData();
 

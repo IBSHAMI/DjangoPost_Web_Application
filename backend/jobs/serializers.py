@@ -5,11 +5,8 @@ from .models import Job
 from .validators import validate_title, unique_job_validator
 
 
-class JobSerializer(serializers.ModelSerializer):
-    title = serializers.CharField(max_length=100, validators=[validate_title, unique_job_validator])
-    user = serializers.SerializerMethodField(read_only=True)
-    detail_url = serializers.SerializerMethodField(read_only=True)
-
+# Create a Serializer class for job create
+class JobCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
         fields = [
@@ -24,26 +21,26 @@ class JobSerializer(serializers.ModelSerializer):
             'number_of_positions',
             'remote',
             'salary',
-            'user',
-            'detail_url',
         ]
-        read_only_fields = ['date_created', 'user']
-
-    def get_user(self, obj):
-        return {
-            'username': obj.user.username,
-            'email': obj.user.email,
-        }
-
-    def get_detail_url(self, obj):
-        # Acess the request object from the serializer context
-        request = self.context.get('request')
-        if request is None:
-            return None
-        return reverse('api:jobs:job_detail', kwargs={'pk': obj.pk}, request=request)
 
 
-class JobDetailSerializer(JobSerializer):
+# Create a Serializer class for job list
+class JobListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Job
+        fields = [
+            'pk',
+            'title',
+            'type',
+            'salary',
+            'language',
+            'date_created',
+            'is_active',
+        ]
+
+
+class JobDetailSerializer(JobCreateSerializer):
     user = serializers.SerializerMethodField(read_only=True)
     update_url = serializers.SerializerMethodField(read_only=True)
     delete_url = serializers.SerializerMethodField(read_only=True)

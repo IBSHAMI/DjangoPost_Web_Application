@@ -14,5 +14,8 @@ export const API = {
     details: `${baseURL}/api/users/company/data/`,
     contact_support: `${baseURL}/api/users/company/contact-support/`,
   },
-  jobs: `${baseURL}/api/jobs/`,
+  jobs: {
+    list: `${baseURL}/api/jobs/`,
+    create: `${baseURL}/api/jobs/create/`,
+  },
 };

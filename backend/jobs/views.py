@@ -1,23 +1,33 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from rest_framework.generics import (
-    ListCreateAPIView,
+    ListAPIView,
+    CreateAPIView,
     RetrieveAPIView,
     DestroyAPIView,
     UpdateAPIView,
 )
 
 from .models import Job
-from .serializers import JobSerializer, JobDetailSerializer
+from .serializers import JobCreateSerializer, JobListSerializer
 from company.models import CompanyProfile
 
 
-class JobListView(ListCreateAPIView):
-    serializer_class = JobSerializer
-    lookup_field = 'pk'
+# Create a class listAPIView to list all jobs
+class JobListView(ListAPIView):
+    queryset = Job.objects.all()
+    serializer_class = JobListSerializer
 
     def get_queryset(self):
-        return Job.objects.filter(is_active=True)
+        qs = super().get_queryset()
+        qs = qs.filter(user=self.request.user)
+        return qs
+
+
+# List all jobs for a specific company
+class JobCreateView(CreateAPIView):
+    serializer_class = JobCreateSerializer
+    lookup_field = 'pk'
 
     def perform_create(self, serializer):
         # get authenticated user
@@ -33,12 +43,12 @@ class JobListView(ListCreateAPIView):
 
 class JobDetailView(RetrieveAPIView):
     queryset = Job.objects.filter(is_active=True)
-    serializer_class = JobDetailSerializer
+    serializer_class = JobListSerializer
     lookup_field = 'pk'
 
 
 class JobUpdateView(UpdateAPIView):
-    serializer_class = JobSerializer
+    serializer_class = JobListSerializer
     lookup_field = 'pk'
 
     def get_queryset(self):
@@ -57,7 +67,7 @@ class JobUpdateView(UpdateAPIView):
 
 
 class JobDeleteView(DestroyAPIView):
-    serializer_class = JobSerializer
+    serializer_class = JobListSerializer
     lookup_field = 'pk'
 
     def get_queryset(self):
