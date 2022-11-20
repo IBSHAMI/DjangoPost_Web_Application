@@ -19,8 +19,16 @@ class JobListView(ListAPIView):
     serializer_class = JobListSerializer
 
     def get_queryset(self):
+        # get request and extract table variant to filter queryset
+        request = self.request
+        table_variant = request.GET.get('table_variant')
+
         qs = super().get_queryset()
         qs = qs.filter(user=self.request.user)
+        if table_variant == 'active':
+            qs = qs.filter(is_active=True)
+        elif table_variant == 'inactive':
+            qs = qs.filter(is_active=False)
         return qs
 
 

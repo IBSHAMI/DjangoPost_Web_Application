@@ -154,8 +154,13 @@ export default {
       const jobsListUrl = API.jobs.list;
 
       axios
-        .get(jobsListUrl, { headers: headers })
+        .get(jobsListUrl, {
+          params: { table_variant: this.tableVariant },
+          headers: headers,
+        })
         .then((response) => {
+          // empty the jobs list
+          this.jobsList = [];
           for (const job of response.data) {
             this.jobsList.push(job);
           }
@@ -165,8 +170,8 @@ export default {
         });
     },
     changeTableVariant(variant) {
-      console.log(variant);
       this.tableVariant = variant;
+      this.getJobsList();
     },
   },
 };
