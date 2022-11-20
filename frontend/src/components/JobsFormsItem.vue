@@ -30,34 +30,54 @@
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <div class="sm:flex items-center justify-between">
         <div class="flex items-center">
-          <a
+          <div
             class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800"
-            href=" javascript:void(0)"
-          >
-            <div class="py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full">
-              <p>All</p>
-            </div>
-          </a>
-          <a
-            class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8"
-            href="javascript:void(0)"
+            style="cursor: pointer"
+            @click="changeTableVariant('all')"
           >
             <div
-              class="py-2 px-8 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full"
+              class="py-2 px-8 rounded-full"
+              :class="{
+                'bg-indigo-100 text-indigo-700': tableVariant === 'all',
+                'text-gray-600 hover:text-indigo-700 hover:bg-indigo-100':
+                  tableVariant !== 'all',
+              }"
+            >
+              <p>All</p>
+            </div>
+          </div>
+          <div
+            class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8"
+            style="cursor: pointer"
+            @click="changeTableVariant('active')"
+          >
+            <div
+              class="py-2 px-8 rounded-full"
+              :class="{
+                'bg-indigo-100 text-indigo-700': tableVariant === 'active',
+                'text-gray-600 hover:text-indigo-700 hover:bg-indigo-100':
+                  tableVariant !== 'active',
+              }"
             >
               <p>Active</p>
             </div>
-          </a>
-          <a
+          </div>
+          <div
             class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8"
-            href="javascript:void(0)"
+            style="cursor: pointer"
+            @click="changeTableVariant('inactive')"
           >
             <div
-              class="py-2 px-8 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full"
+              class="py-2 px-8 rounded-full"
+              :class="{
+                'bg-indigo-100 text-indigo-700': tableVariant === 'inactive',
+                'text-gray-600 hover:text-indigo-700 hover:bg-indigo-100':
+                  tableVariant !== 'inactive',
+              }"
             >
               <p>Inactive</p>
             </div>
-          </a>
+          </div>
         </div>
         <router-link
           :to="{ name: 'Company', params: { slug: 'create-job' } }"
@@ -116,6 +136,7 @@ export default {
   data() {
     return {
       jobsList: [],
+      tableVariant: "all",
     };
   },
   components: {
@@ -142,6 +163,10 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    changeTableVariant(variant) {
+      console.log(variant);
+      this.tableVariant = variant;
     },
   },
 };
