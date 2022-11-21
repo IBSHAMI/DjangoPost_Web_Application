@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 
 BASE_DIR_ENV = os.path.join(Path(__file__).resolve(
-).parent.parent, 'JobPost')
+).parent.parent, 'DjangoPost')
 
 env = environ.Env(
     # set casting, default value
@@ -87,7 +87,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'JobPost.urls'
+ROOT_URLCONF = 'DjangoPost.urls'
 
 TEMPLATES = [
     {
@@ -111,7 +111,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-WSGI_APPLICATION = 'JobPost.wsgi.application'
+WSGI_APPLICATION = 'DjangoPost.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
