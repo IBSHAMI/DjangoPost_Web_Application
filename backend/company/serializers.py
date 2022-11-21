@@ -1,6 +1,5 @@
 from rest_framework import serializers
 
-from backend.users.serializers import UserSerializer
 from .models import CompanyProfile
 
 

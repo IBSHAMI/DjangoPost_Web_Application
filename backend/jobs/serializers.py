@@ -2,11 +2,22 @@ from rest_framework import serializers
 from rest_framework.reverse import reverse
 
 from .models import Job
-from .validators import validate_title, unique_job_validator
+from .choices_fields_data import (
+    JOB_TYPE_CHOICES,
+    JOB_LANGUAGE_CHOICES,
+    JOB_EXPERIENCE_CHOICES,
+    JOB_LOCATION_CHOICES,
+)
 
 
 # Create a Serializer class for job create
 class JobCreateSerializer(serializers.ModelSerializer):
+    # Add choices fields
+    type = serializers.MultipleChoiceField(choices=JOB_TYPE_CHOICES)
+    language = serializers.MultipleChoiceField(choices=JOB_LANGUAGE_CHOICES)
+    experience = serializers.MultipleChoiceField(choices=JOB_EXPERIENCE_CHOICES)
+    location = serializers.MultipleChoiceField(choices=JOB_LOCATION_CHOICES)
+
     class Meta:
         model = Job
         fields = [
@@ -26,7 +37,6 @@ class JobCreateSerializer(serializers.ModelSerializer):
 
 # Create a Serializer class for job list
 class JobListSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Job
         fields = [

@@ -17,5 +17,6 @@ export const API = {
   jobs: {
     list: `${baseURL}/api/jobs/`,
     create: `${baseURL}/api/jobs/create/`,
+    get_choices_data: `${baseURL}/api/jobs/job_choices/`,
   },
 };

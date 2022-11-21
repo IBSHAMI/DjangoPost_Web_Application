@@ -240,6 +240,9 @@ export default {
     const authenticationStore = useAuthenticationStore();
     return { authenticationStore };
   },
+  created() {
+    this.getChoicesData();
+  },
   data() {
     return {
       // Alert varaibles
@@ -276,8 +279,24 @@ export default {
     AlertItem,
   },
   methods: {
-    getCompanyDescription() {
-      this.companyDescription = this.$store.state.user.company_description;
+    getChoicesData() {
+      const token = `Bearer ${this.authenticationStore.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        // eslint-disable-next-line prettier/prettier
+          "Authorization": token,
+      };
+
+      const getChoicesData = API.jobs.get_choices_data;
+
+      axios
+        .get(getChoicesData, { headers })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     closeAlert() {
       this.alert = false;

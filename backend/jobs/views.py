@@ -1,16 +1,38 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from rest_framework.generics import (
+    GenericAPIView,
     ListAPIView,
     CreateAPIView,
     RetrieveAPIView,
     DestroyAPIView,
     UpdateAPIView,
 )
+from rest_framework.response import Response
 
 from .models import Job
-from .serializers import JobCreateSerializer, JobListSerializer
+from .serializers import JobCreateSerializer, JobListSerializer, JobChoicesSerializer
 from company.models import CompanyProfile
+from .choices_fields_data import (
+    JOB_TYPE_CHOICES,
+    JOB_LANGUAGE_CHOICES,
+    JOB_EXPERIENCE_CHOICES,
+    JOB_LOCATION_CHOICES,
+)
+
+
+# Create a view that send the choices fields data to the frontend
+class JobChoicesView(GenericAPIView):
+
+    def get(self, request, *args, **kwargs):
+        content = {
+            'job_type_choices': JOB_TYPE_CHOICES,
+            'job_language_choices': JOB_LANGUAGE_CHOICES,
+            'job_experience_choices': JOB_EXPERIENCE_CHOICES,
+            'job_location_choices': JOB_LOCATION_CHOICES,
+        }
+        return Response(content)
+
 
 
 # Create a class listAPIView to list all jobs
