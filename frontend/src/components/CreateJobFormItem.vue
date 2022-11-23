@@ -153,9 +153,14 @@
               <label
                 for="salary"
                 class="block text-base font-medium text-gray-700"
-                >Salary
+                >Salary (USD)
               </label>
               <div class="w-full h-full relative mt-1 py-2">
+                <div
+                  class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+                >
+                  <span class="text-gray-500 sm:text-sm">$</span>
+                </div>
                 <vee-field
                   type="number"
                   name="salary"
