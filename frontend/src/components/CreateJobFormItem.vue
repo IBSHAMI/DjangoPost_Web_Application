@@ -45,12 +45,20 @@
               >
               <div class="w-full h-full relative mt-1 py-2">
                 <vee-field
-                  type="text"
+                  as="select"
                   name="position_type"
                   id="position_type"
                   class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   v-model="positionType"
-                />
+                >
+                  <option
+                    v-for="(type, index) in JobTypes"
+                    :key="index"
+                    :value="type"
+                  >
+                    {{ type }}
+                  </option>
+                </vee-field>
                 <ErrorMessage
                   name="position_type"
                   class="text-red-500 text-xs italic"
@@ -67,12 +75,20 @@
               >
               <div class="w-full h-full relative mt-1 py-2">
                 <vee-field
-                  type="text"
+                  as="select"
                   name="position_location"
                   id="position_location"
                   class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   v-model="positionLocation"
-                />
+                >
+                  <option
+                    v-for="(type, index) in JobLocations"
+                    :key="index"
+                    :value="type"
+                  >
+                    {{ type }}
+                  </option>
+                </vee-field>
                 <ErrorMessage
                   name="position_location"
                   class="text-red-500 text-xs italic"
@@ -89,12 +105,20 @@
               >
               <div class="w-full h-full relative mt-1 py-2">
                 <vee-field
-                  type="text"
+                  as="select"
                   name="language_required"
                   id="language_required"
                   class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   v-model="languageRequired"
-                />
+                >
+                  <option
+                    v-for="(type, index) in Languages"
+                    :key="index"
+                    :value="type"
+                  >
+                    {{ type }}
+                  </option>
+                </vee-field>
                 <ErrorMessage
                   name="language_required"
                   class="text-red-500 text-xs italic"
@@ -155,12 +179,20 @@
               >
               <div class="w-full h-full relative mt-1 py-2">
                 <vee-field
-                  type="text"
+                  as="select"
                   name="position_experience"
                   id="position_experience"
                   class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   v-model="positionExperience"
-                />
+                >
+                  <option
+                    v-for="(type, index) in JobExperience"
+                    :key="index"
+                    :value="type"
+                  >
+                    {{ type }}
+                  </option>
+                </vee-field>
                 <ErrorMessage
                   name="position_experience"
                   class="text-red-500 text-xs italic"
@@ -265,14 +297,20 @@ export default {
 
       // form data
       positionTitle: "",
-      positionType: "",
-      positionLocation: "",
-      languageRequired: "",
+      positionType: null,
+      positionLocation: null,
+      languageRequired: null,
       positionsNumber: "",
       salary: "",
-      positionExperience: "",
+      positionExperience: null,
       jobDescription: "",
       remote: false,
+
+      // choices data
+      JobTypes: [],
+      JobLocations: [],
+      Languages: [],
+      JobExperience: [],
     };
   },
   components: {
@@ -292,7 +330,10 @@ export default {
       axios
         .get(getChoicesData, { headers })
         .then((response) => {
-          console.log(response.data);
+          this.JobTypes = response.data.job_type_choices;
+          this.JobLocations = response.data.job_location_choices;
+          this.Languages = response.data.job_language_choices;
+          this.JobExperience = response.data.job_experience_choices;
         })
         .catch((error) => {
           console.log(error);

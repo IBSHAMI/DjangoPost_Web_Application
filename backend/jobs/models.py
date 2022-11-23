@@ -14,7 +14,7 @@ class Job(models.Model):
     location = models.CharField(max_length=100, blank=True, null=True)
     type = models.CharField(max_length=100, blank=True, null=True)
     language = models.CharField(max_length=100, blank=True, null=True)
-    experience = models.PositiveIntegerField(blank=True, null=True)
+    experience = models.CharField(max_length=100, blank=True, null=True)
     number_of_positions = models.PositiveIntegerField(blank=True, null=True)
 
     date_created = models.DateTimeField(auto_now_add=True)

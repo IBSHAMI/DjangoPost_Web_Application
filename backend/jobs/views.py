@@ -9,9 +9,10 @@ from rest_framework.generics import (
     UpdateAPIView,
 )
 from rest_framework.response import Response
+from django.contrib.auth import get_user_model
 
 from .models import Job
-from .serializers import JobCreateSerializer, JobListSerializer, JobChoicesSerializer
+from .serializers import JobCreateSerializer, JobListSerializer
 from company.models import CompanyProfile
 from .choices_fields_data import (
     JOB_TYPE_CHOICES,
@@ -20,19 +21,24 @@ from .choices_fields_data import (
     JOB_LOCATION_CHOICES,
 )
 
+User = get_user_model()
+
+
+def get_choices_name(choices):
+    return [choice[1] for choice in choices]
+
 
 # Create a view that send the choices fields data to the frontend
 class JobChoicesView(GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         content = {
-            'job_type_choices': JOB_TYPE_CHOICES,
-            'job_language_choices': JOB_LANGUAGE_CHOICES,
-            'job_experience_choices': JOB_EXPERIENCE_CHOICES,
-            'job_location_choices': JOB_LOCATION_CHOICES,
+            'job_type_choices': get_choices_name(JOB_TYPE_CHOICES),
+            'job_language_choices': get_choices_name(JOB_LANGUAGE_CHOICES),
+            'job_experience_choices': get_choices_name(JOB_EXPERIENCE_CHOICES),
+            'job_location_choices': get_choices_name(JOB_LOCATION_CHOICES),
         }
         return Response(content)
-
 
 
 # Create a class listAPIView to list all jobs
@@ -65,12 +71,13 @@ class JobListView(ListAPIView):
         return qs
 
 
-# List all jobs for a specific company
+# create job for a specific company
 class JobCreateView(CreateAPIView):
+    queryset = Job.objects.all()
     serializer_class = JobCreateSerializer
     lookup_field = 'pk'
 
-    def perform_create(self, serializer):
+    def create(self, request, *args, **kwargs):
         # get authenticated user
         user = self.request.user
 
@@ -78,8 +85,22 @@ class JobCreateView(CreateAPIView):
         company = get_object_or_404(CompanyProfile, user=user)
         company_description = company.company_description
 
-        # create job
-        serializer.save(user=user, company_description=company_description)
+        # get data from request
+        data = request.data.copy()
+        data['user'] = User.objects.get(email=user).pk
+        data['company_description'] = company_description
+
+        serializer = self.get_serializer(data=data)
+
+        # add user and company description to the serializer
+        serializer.user = user
+        serializer.company_description = company_description
+
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        from rest_framework import status
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class JobDetailView(RetrieveAPIView):

@@ -32,6 +32,7 @@ class JobCreateSerializer(serializers.ModelSerializer):
             'number_of_positions',
             'remote',
             'salary',
+            'user'
         ]
 
 
