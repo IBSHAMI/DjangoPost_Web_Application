@@ -9,6 +9,7 @@ export const API = {
   employee: {
     details: `${baseURL}/api/users/employee/data/`,
     contact_support: `${baseURL}/api/users/employee/contact-support/`,
+    get_choices_data: `${baseURL}/api/users/employee/employee_choices/`,
   },
   company: {
     details: `${baseURL}/api/users/company/data/`,

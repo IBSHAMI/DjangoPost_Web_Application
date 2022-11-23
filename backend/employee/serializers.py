@@ -11,10 +11,10 @@ class EmployeeProfileSerializer(serializers.ModelSerializer):
         model = EmployeeProfile
         fields = [
             'user',
-            'software_field',
             'expected_salary',
             'linkedin_url',
             'portfolio_url',
+            'experience',
             'about',
             'resume',
             'profile_picture',

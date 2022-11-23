@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.reverse import reverse
 
 from .models import Job
-from .choices_fields_data import (
+from .choices_fields_data_job import (
     JOB_TYPE_CHOICES,
     JOB_LANGUAGE_CHOICES,
     JOB_EXPERIENCE_CHOICES,

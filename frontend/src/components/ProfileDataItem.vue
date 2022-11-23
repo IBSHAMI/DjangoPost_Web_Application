@@ -88,25 +88,31 @@
                       />
                     </div>
                   </div>
-                </div>
-                <div class="grid grid-cols-4 gap-6 py-5">
                   <div class="col-span-3 sm:col-span-2">
                     <label
-                      for="software_field"
+                      for="position_experience"
                       class="block text-base font-medium text-gray-700"
-                      >Software Field</label
+                      >Years of Experience Required</label
                     >
-                    <ErrorMessage
-                      name="software_field"
-                      class="text-red-500 text-xs italic"
-                    />
                     <div class="w-full h-full relative mt-1 py-2">
                       <vee-field
-                        type="text"
-                        name="software_field"
-                        id="software_field"
+                        as="select"
+                        name="position_experience"
+                        id="position_experience"
                         class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        v-model="softwareField"
+                        v-model="employeeExperience"
+                      >
+                        <option
+                          v-for="(type, index) in JobExperience"
+                          :key="index"
+                          :value="type"
+                        >
+                          {{ type }}
+                        </option>
+                      </vee-field>
+                      <ErrorMessage
+                        name="position_experience"
+                        class="text-red-500 text-xs italic"
                       />
                     </div>
                   </div>
@@ -296,6 +302,7 @@ export default {
   name: "ProfileDataItem",
   created() {
     this.getEmployeeData();
+    this.getChoicesData();
   },
   setup() {
     // init the store
@@ -309,7 +316,6 @@ export default {
         first_name: "min:5|max:20",
         last_name: "min:5|max:20",
         email: "required|email",
-        software_field: "max:25",
         expected_salary: "max:25",
         linkedin_profile: "required|url",
         portfolio_website: "required|url",
@@ -328,13 +334,16 @@ export default {
       firstName: "",
       lastName: "",
       email: "",
-      softwareField: "",
       expectedSalary: null,
+      employeeExperience: null,
       linkedinProfile: "",
       portfolioWebsite: "",
       about: "",
       resume: "",
       profilePicture: "",
+
+      // choices data
+      JobExperience: [],
     };
   },
   components: {
@@ -345,6 +354,26 @@ export default {
   methods: {
     getFileBaseName(path) {
       return path.split("/").reverse()[0];
+    },
+    getChoicesData() {
+      const token = `Bearer ${this.authenticationStore.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        // eslint-disable-next-line prettier/prettier
+          "Authorization": token,
+      };
+
+      const getChoicesData = API.jobs.get_choices_data;
+
+      axios
+        .get(getChoicesData, { headers })
+        .then((response) => {
+          this.JobExperience = response.data.job_experience_choices;
+          console.log(this.JobExperience);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     getEmployeeData() {
       const token = `Bearer ${this.authenticationStore.token}`;
@@ -361,8 +390,8 @@ export default {
           this.firstName = response.data.first_name;
           this.lastName = response.data.last_name;
           this.email = response.data.email;
-          this.softwareField = response.data.software_field;
           this.expectedSalary = response.data.expected_salary;
+          this.employeeExperience = response.data.experience;
           this.linkedinProfile = response.data.linkedin_url;
           this.portfolioWebsite = response.data.portfolio_url;
           this.about = response.data.about;
@@ -423,8 +452,8 @@ export default {
       data.append("first_name", this.firstName);
       data.append("last_name", this.lastName);
       data.append("email", this.email);
-      data.append("software_field", this.softwareField);
       data.append("expected_salary", this.expectedSalary);
+      data.append("experience", this.employeeExperience);
       data.append("linkedin_url", this.linkedinProfile);
       data.append("portfolio_url", this.portfolioWebsite);
       data.append("about", this.about);

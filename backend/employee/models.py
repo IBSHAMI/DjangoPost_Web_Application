@@ -10,7 +10,6 @@ User = settings.AUTH_USER_MODEL
 # Create employee profile after user is created
 class EmployeeProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='employee_profile')
-    software_field = models.CharField(max_length=100, blank=True, null=True)
     experience = models.CharField(max_length=100, blank=True, null=True)
     expected_salary = models.IntegerField(default=0)
     linkedin_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])

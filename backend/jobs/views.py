@@ -14,7 +14,7 @@ from django.contrib.auth import get_user_model
 from .models import Job
 from .serializers import JobCreateSerializer, JobListSerializer
 from company.models import CompanyProfile
-from .choices_fields_data import (
+from .choices_fields_data_job import (
     JOB_TYPE_CHOICES,
     JOB_LANGUAGE_CHOICES,
     JOB_EXPERIENCE_CHOICES,
