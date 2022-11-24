@@ -51,6 +51,7 @@
       <div
         tabindex="0"
         class="focus:outline-none focus:text-indigo-600 text-xs w-full hover:bg-indigo-700 py-4 px-4 cursor-pointer hover:text-white"
+        @click.prevent="deleteJob"
       >
         <p>Delete</p>
       </div>
@@ -59,12 +60,40 @@
 </template>
 
 <script>
+import useAuthenticationStore from "@/stores/authentication";
+import axios from "axios";
+import { API } from "@/api";
+
 export default {
   name: "JobsDropdownItem",
+  props: ["jobId"],
+  setup() {
+    // init the store
+    const authenticationStore = useAuthenticationStore();
+    return { authenticationStore };
+  },
   data() {
     return {
       showDropdown: false,
     };
+  },
+  methods: {
+    deleteJob() {
+      const token = `Bearer ${this.authenticationStore.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        // eslint-disable-next-line prettier/prettier
+          "Authorization": token,
+      };
+      const jobDeleteUrl = API.jobs.list + `${this.jobId}/delete/`;
+
+      axios.delete(jobDeleteUrl, { headers }).then((response) => {
+        console.log(response);
+        setTimeout(() => {
+          this.$router.go();
+        }, 1000);
+      });
+    },
   },
 };
 </script>

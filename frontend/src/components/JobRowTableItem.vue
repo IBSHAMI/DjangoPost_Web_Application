@@ -176,7 +176,7 @@
       </a>
     </td>
     <div class="grid place-items-center px-5 pt-5">
-      <jobs-dropdown-item />
+      <jobs-dropdown-item :jobId="job.pk" />
     </div>
   </tr>
 </template>

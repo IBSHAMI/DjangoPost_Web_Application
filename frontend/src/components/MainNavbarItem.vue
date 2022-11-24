@@ -57,8 +57,21 @@
             <a
               href="#"
               class="text-base font-medium text-gray-500 hover:text-gray-900"
-              >Notifications</a
-            >
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                name="notification"
+                focusable="false"
+                role="img"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                class="h-6 w-6"
+              >
+                <path
+                  d="M12 2a1.5 1.5 0 00-1.5 1.5v.161A7.003 7.003 0 005 10.5V16l-1.854 1.854a.5.5 0 00-.146.353v.293a.5.5 0 00.5.5h17a.5.5 0 00.5-.5v-.293a.5.5 0 00-.146-.353L19 16v-5.5a7.003 7.003 0 00-5.5-6.839V3.5A1.5 1.5 0 0012 2zm0 20a3.001 3.001 0 01-2.83-2h5.66A3.001 3.001 0 0112 22z"
+                ></path>
+              </svg>
+            </a>
 
             <div class="relative" @click.prevent="toggleDropdown">
               <!-- Item active: "text-gray-900", Item inactive: "text-gray-500" -->
@@ -67,19 +80,19 @@
                 class="text-gray-500 group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 aria-expanded="false"
               >
-                <span>Profile</span>
                 <svg
-                  class="text-gray-400 ml-2 h-5 w-5 group-hover:text-gray-500"
+                  class="h-6 w-6"
+                  name="profile"
                   xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
+                  focusable="false"
+                  role="img"
                   fill="currentColor"
+                  viewBox="0 0 24 24"
                   aria-hidden="true"
                 >
                   <path
-                    fill-rule="evenodd"
-                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                    clip-rule="evenodd"
-                  />
+                    d="M12 12c2.486 0 4.5-2.014 4.5-4.5S14.486 3 12 3a4.499 4.499 0 00-4.5 4.5C7.5 9.986 9.514 12 12 12zm0 2.25c-3.004 0-9 1.508-9 4.5v1.75a.5.5 0 00.5.5h17a.5.5 0 00.5-.5v-1.75c0-2.992-5.996-4.5-9-4.5z"
+                  ></path>
                 </svg>
               </button>
               <div
