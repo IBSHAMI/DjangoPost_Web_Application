@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import SignupItem from "@/components/SignupItem.vue";
-import LoginItem from "@/components/LoginItem.vue";
+import SignupItem from "@/components/authentication/Signup.vue";
+import LoginItem from "@/components/authentication/Login.vue";
 
 export default {
   name: "AuthView",
