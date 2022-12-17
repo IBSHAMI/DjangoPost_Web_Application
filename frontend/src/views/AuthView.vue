@@ -1,13 +1,15 @@
 <template>
   <div>
-    <main class="container bg-[#6b7280]">
-      <div v-if="!signup">
-        <login-item @signupPageShow="signupPageShow" />
+    <div class="container d-flex justify-content-center py-5">
+      <div class="card mx-auto col-lg-5 col-md-7">
+        <div class="card-header bg-transparent pb-5" v-if="!signup">
+          <login-item @signupPageShow="signupPageShow" />
+        </div>
+        <div v-else-if="signup">
+          <signup-item @signupPageShow="signupPageShow" />
+        </div>
       </div>
-      <div v-else-if="signup">
-        <signup-item @signupPageShow="signupPageShow" />
-      </div>
-    </main>
+    </div>
   </div>
 </template>
 
