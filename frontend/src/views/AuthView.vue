@@ -2,10 +2,13 @@
   <div>
     <div class="container d-flex justify-content-center py-5">
       <div class="card mx-auto col-lg-5 col-md-7">
-        <div class="card-header bg-transparent pb-5" v-if="!signup">
+        <div class="card-header bg-transparent pb-5" v-if="slug == 'signin'">
           <login-item @signupPageShow="signupPageShow" />
         </div>
-        <div v-else-if="signup" class="card-header bg-transparent pb-5">
+        <div
+          v-else-if="slug == 'signup'"
+          class="card-header bg-transparent pb-5"
+        >
           <signup-item @signupPageShow="signupPageShow" />
         </div>
       </div>
@@ -20,11 +23,11 @@ import LoginItem from "@/components/LoginItem.vue";
 export default {
   name: "AuthView",
   created() {
-    this.signup = this.$route.params.signup;
+    this.slug = this.$route.params.slug;
   },
   data() {
     return {
-      signup: this.signup,
+      slug: this.slug,
     };
   },
   components: {
@@ -33,7 +36,11 @@ export default {
   },
   methods: {
     signupPageShow() {
-      this.signup = !this.signup;
+      if (this.slug == "signup") {
+        this.slug = "signin";
+      } else {
+        this.slug = "signup";
+      }
     },
   },
 };

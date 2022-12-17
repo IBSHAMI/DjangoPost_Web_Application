@@ -42,14 +42,14 @@
         <div class="d-flex align-items-center">
           <div v-if="!authenticationStore.isAuthenticated">
             <router-link
-              :to="{ name: 'Auth', params: { signup: false } }"
+              :to="{ name: 'Auth', params: { slug: 'signin' } }"
               target="_blank"
               class="btn btn-outline-gray-100 d-none d-lg-inline me-md-3"
             >
               Login</router-link
             >
             <router-link
-              :to="{ name: 'Auth', params: { signup: true } }"
+              :to="{ name: 'Auth', params: { slug: 'signup' } }"
               target="_blank"
               class="btn btn-primary"
               >SignUp</router-link
