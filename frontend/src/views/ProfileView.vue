@@ -5,14 +5,14 @@
       :employeeProfile="employeeProfile"
       :pageType="jobsPage"
     />
-    <profile-data-item v-if="passedSlug === 'data'" />
+    <profile-data v-if="passedSlug === 'data'" />
     <profile-contact-item v-else-if="passedSlug === 'contact'" />
   </div>
 </template>
 
 <script>
 import Navbar from "../components/sharedComponents/Navbar.vue";
-import ProfileDataItem from "@/components/ProfileDataItem.vue";
+import ProfileData from "@/components/ProfileData.vue";
 import ProfileContactItem from "@/components/ProfileContactItem.vue";
 import useAuthenticationStore from "@/stores/authentication";
 
@@ -38,7 +38,7 @@ export default {
   },
   components: {
     Navbar,
-    ProfileDataItem,
+    ProfileData,
     ProfileContactItem,
   },
   watch: {
