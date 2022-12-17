@@ -1,6 +1,10 @@
 <template>
-  <div class="relative bg-white mx-auto max-w-7xl px-4 sm:px-6">
-    <main-navbar-item class="pb-8" :companyProfile="companyProfile" />
+  <div>
+    <Navbar
+      class="pb-8"
+      :companyProfile="companyProfile"
+      :pageType="jobsPage"
+    />
     <company-data-item v-if="passedSlug === 'data'" />
     <jobs-forms-item v-else-if="passedSlug === 'jobs'" />
     <create-job-form-item v-else-if="passedSlug === 'create-job'" />
@@ -8,7 +12,7 @@
 </template>
 
 <script>
-import MainNavbarItem from "@/components/MainNavbarItem.vue";
+import Navbar from "../components/sharedComponents/Navbar.vue";
 import CompanyDataItem from "../components/CompanyDataItem.vue";
 import JobsFormsItem from "../components/JobsFormsItem.vue";
 import CreateJobFormItem from "../components/CreateJobFormItem.vue";
@@ -19,10 +23,11 @@ export default {
     return {
       companyProfile: true,
       passedSlug: this.$route.params.slug,
+      jobsPage: "jobs",
     };
   },
   components: {
-    MainNavbarItem,
+    Navbar,
     CompanyDataItem,
     JobsFormsItem,
     CreateJobFormItem,

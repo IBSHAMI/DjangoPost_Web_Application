@@ -1,15 +1,20 @@
 <template>
   <div>
-    <HomeNavbar></HomeNavbar>
+    <Navbar :pageType="homePage" />
   </div>
 </template>
 
 <script>
-import HomeNavbar from "../components/HomeNavbar.vue";
+import Navbar from "../components/sharedComponents/Navbar.vue";
 export default {
   name: "landing-page",
+  data() {
+    return {
+      homePage: "home",
+    };
+  },
   components: {
-    HomeNavbar,
+    Navbar,
   },
 };
 </script>

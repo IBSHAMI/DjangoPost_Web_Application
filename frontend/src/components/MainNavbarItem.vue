@@ -210,11 +210,6 @@
               class="text-base font-medium text-gray-500 hover:text-gray-900"
               >Company Profile</router-link
             >
-            <!-- <router-link
-              to=""
-              class="text-base font-medium text-gray-500 hover:text-gray-900"
-              >Create Job</router-link
-            > -->
             <router-link
               :to="{ name: 'Company', params: { slug: 'jobs' } }"
               class="text-base font-medium text-gray-500 hover:text-gray-900"

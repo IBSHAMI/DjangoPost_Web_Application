@@ -31,11 +31,81 @@
             </div>
           </div>
           <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
-            <li class="nav-item dropdown">
-              <a href="#" class="nav-link">Pages</a>
+            <li
+              class="nav-item"
+              v-show="authenticationStore.isAuthenticated && companyProfile"
+            >
+              <router-link
+                :to="{ name: 'Company', params: { slug: 'data' } }"
+                class="dropdown-item"
+                >Company Profile</router-link
+              >
             </li>
-            <li class="nav-item dropdown">
-              <a href="#" class="nav-link">Dashboard</a>
+            <li
+              class="nav-item"
+              v-show="authenticationStore.isAuthenticated && companyProfile"
+            >
+              <router-link
+                :to="{ name: 'Company', params: { slug: 'jobs' } }"
+                class="dropdown-item"
+                >Jobs</router-link
+              >
+            </li>
+            <li
+              class="nav-item dropdown"
+              v-show="authenticationStore.isAuthenticated && employeeProfile"
+            >
+              <a
+                href="#"
+                class="nav-link dropdown-toggle"
+                id="dashboardDropdown"
+                aria-expanded="false"
+                data-bs-toggle="dropdown"
+              >
+                Notifications
+              </a>
+              <div
+                class="dropdown-menu dropdown-megamenu-sm px-0 py-2 p-lg-4"
+                aria-labelledby="dashboardDropdown"
+              >
+                <a class="dropdown-item rounded-top" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item rounded-bottom" href="#"
+                  >Separated link</a
+                >
+              </div>
+            </li>
+            <li
+              class="nav-item dropdown"
+              v-show="authenticationStore.isAuthenticated && employeeProfile"
+            >
+              <a
+                href="#"
+                class="nav-link dropdown-toggle"
+                id="dashboardDropdown"
+                aria-expanded="false"
+                data-bs-toggle="dropdown"
+              >
+                Profile
+              </a>
+              <div
+                class="dropdown-menu dropdown-megamenu-sm text-start"
+                aria-labelledby="dashboardDropdown"
+              >
+                <router-link to="/profile/data" class="dropdown-item">
+                  Your Profile
+                </router-link>
+                <div class="dropdown-divider"></div>
+                <router-link to="/profile/data" class="dropdown-item">
+                  Jobs History
+                </router-link>
+                <div class="dropdown-divider"></div>
+                <router-link to="/profile/contact" class="dropdown-item"
+                  >Contact Us
+                </router-link>
+              </div>
             </li>
           </ul>
         </div>
@@ -65,11 +135,23 @@
               logout</a
             >
             <router-link
-              v-if="authenticationStore.isAuthenticated"
+              v-if="pageType === 'home'"
               :to="{ name: 'Profile', params: { slug: 'data' } }"
               target="_blank"
               class="btn btn-primary"
               >Job Board</router-link
+            >
+            <router-link
+              v-if="employeeProfile && pageType === 'jobs'"
+              :to="{ name: 'Company', params: { slug: 'data' } }"
+              class="btn btn-primary"
+              >{{ "Post Jobs" }}</router-link
+            >
+            <router-link
+              v-if="companyProfile && pageType === 'jobs'"
+              :to="{ name: 'Profile', params: { slug: 'data' } }"
+              class="btn btn-primary"
+              >{{ "Find Jobs" }}</router-link
             >
           </div>
           <button
@@ -96,6 +178,7 @@ import { API } from "@/api";
 
 export default {
   name: "HomeNavbar",
+  props: ["pageType", "companyProfile", "employeeProfile"],
   setup() {
     // initialize the authentification store
     const authenticationStore = useAuthenticationStore();

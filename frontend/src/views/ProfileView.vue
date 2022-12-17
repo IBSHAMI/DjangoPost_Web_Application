@@ -1,15 +1,17 @@
 <template>
   <div>
-    <div class="relative bg-white mx-auto max-w-7xl px-4 sm:px-6">
-      <main-navbar-item class="pb-8" :employeeProfile="employeeProfile" />
-      <profile-data-item v-if="passedSlug === 'data'" />
-      <profile-contact-item v-else-if="passedSlug === 'contact'" />
-    </div>
+    <Navbar
+      class="pb-8"
+      :employeeProfile="employeeProfile"
+      :pageType="jobsPage"
+    />
+    <profile-data-item v-if="passedSlug === 'data'" />
+    <profile-contact-item v-else-if="passedSlug === 'contact'" />
   </div>
 </template>
 
 <script>
-import MainNavbarItem from "@/components/MainNavbarItem.vue";
+import Navbar from "../components/sharedComponents/Navbar.vue";
 import ProfileDataItem from "@/components/ProfileDataItem.vue";
 import ProfileContactItem from "@/components/ProfileContactItem.vue";
 import useAuthenticationStore from "@/stores/authentication";
@@ -31,10 +33,11 @@ export default {
     return {
       passedSlug: this.$route.params.slug,
       employeeProfile: true,
+      jobsPage: "jobs",
     };
   },
   components: {
-    MainNavbarItem,
+    Navbar,
     ProfileDataItem,
     ProfileContactItem,
   },

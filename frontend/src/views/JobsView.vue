@@ -1,21 +1,22 @@
 <template>
   <div>
-    <main-navbar-item :employeeProfile="employeeProfile" />
+    <Navbar :employeeProfile="employeeProfile" :pageType="jobsPage" />
   </div>
 </template>
 
 <script>
-import MainNavbarItem from "@/components/MainNavbarItem.vue";
+import Navbar from "../components/sharedComponents/Navbar.vue";
 
 export default {
   name: "JobsView",
   data() {
     return {
       employeeProfile: true,
+      jobsPage: "jobs",
     };
   },
   components: {
-    MainNavbarItem,
+    Navbar,
   },
 };
 </script>
