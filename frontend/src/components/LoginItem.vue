@@ -2,70 +2,59 @@
   <!-- Sign in-->
   <div>
     <div>
-      <div class="">
-        <div>
-          <div v-if="login_show_alert" class="" :class="login_alert_variant">
-            <span class="text-xl inline-block mr-5 align-middle">
-              <i class="fas fa-bell" />
-            </span>
-            <span class="inline-block align-middle mr-8">
-              {{ login_alert_message }}
-            </span>
+      <div v-if="login_show_alert" :class="login_alert_variant">
+        <span>
+          {{ login_alert_message }}
+        </span>
+      </div>
+      <div class="text-center mt-2 mb-3"><h3>Sign in</h3></div>
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <vee-form action="#" :validation-schema="schema_login" @submit="login">
+          <div class="form-group mb-3">
+            <label for="email" class="py-1">Email Address:</label>
+            <vee-field
+              class="form-control"
+              type="email"
+              name="email"
+              id="email"
+              placeholder="name@company.com"
+            />
+            <ErrorMessage name="email" class="form-text text-red" />
           </div>
-          <div class="text-center mt-2 mb-3"><h3>Sign in with</h3></div>
-          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <vee-form
-              action="#"
-              :validation-schema="schema_login"
-              @submit="login"
+          <div class="form-group mb-3">
+            <label for="password" class="py-1">Password</label>
+            <vee-field
+              class="form-control"
+              type="password"
+              name="password"
+              id="password"
+              placeholder="••••••••"
+              required=""
+            />
+            <ErrorMessage name="password" class="form-text text-red" />
+          </div>
+          <div class="flex items-center justify-between">
+            <a href="#" class="form-text pb-3">Forgot password?</a>
+          </div>
+          <div class="d-grid py-3">
+            <button
+              type="submit"
+              :disabled="login_in_process"
+              class="btn btn-primary"
             >
-              <div class="form-group mb-3">
-                <label for="email" class="py-1">Email Address:</label>
-                <vee-field
-                  class="form-control"
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="name@company.com"
-                />
-                <ErrorMessage name="email" class="form-text text-red" />
-              </div>
-              <div class="form-group mb-3">
-                <label for="password" class="py-1">Password</label>
-                <vee-field
-                  class="form-control"
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="••••••••"
-                  required=""
-                />
-                <ErrorMessage name="password" class="form-text text-red" />
-              </div>
-              <div class="flex items-center justify-between">
-                <a href="#" class="form-text pb-3">Forgot password?</a>
-              </div>
-              <div class="d-grid py-3">
-                <button
-                  type="submit"
-                  :disabled="login_in_process"
-                  class="btn btn-primary"
-                >
-                  Sign In
-                </button>
-              </div>
-              <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                Don’t have an account yet?
-                <a
-                  href="#"
-                  class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                  @click.prevent="signupPageShow"
-                  >Sign up</a
-                >
-              </p>
-            </vee-form>
+              Sign In
+            </button>
           </div>
-        </div>
+          <p class="">
+            Don’t have an account yet?
+            <a
+              href="#"
+              class="fw-bold text-underline"
+              @click.prevent="signupPageShow"
+              >Sign up</a
+            >
+          </p>
+        </vee-form>
       </div>
     </div>
   </div>

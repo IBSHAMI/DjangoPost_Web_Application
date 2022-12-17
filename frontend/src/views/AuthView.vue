@@ -5,7 +5,7 @@
         <div class="card-header bg-transparent pb-5" v-if="!signup">
           <login-item @signupPageShow="signupPageShow" />
         </div>
-        <div v-else-if="signup">
+        <div v-else-if="signup" class="card-header bg-transparent pb-5">
           <signup-item @signupPageShow="signupPageShow" />
         </div>
       </div>
