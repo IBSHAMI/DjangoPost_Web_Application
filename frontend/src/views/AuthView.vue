@@ -17,14 +17,17 @@ import LoginItem from "@/components/LoginItem.vue";
 
 export default {
   name: "AuthView",
-  components: {
-    SignupItem,
-    LoginItem,
+  created() {
+    this.signup = this.$route.params.signup;
   },
   data() {
     return {
-      signup: false,
+      signup: this.signup,
     };
+  },
+  components: {
+    SignupItem,
+    LoginItem,
   },
   methods: {
     signupPageShow() {

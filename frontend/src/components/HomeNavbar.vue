@@ -40,14 +40,38 @@
           </ul>
         </div>
         <div class="d-flex align-items-center">
-          <a
-            href=""
-            target="_blank"
-            class="btn btn-outline-gray-100 d-none d-lg-inline me-md-3"
-          >
-            Docs</a
-          >
-          <a href="" target="_blank" class="btn btn-primary">Download</a>
+          <div v-if="!authenticationStore.isAuthenticated">
+            <router-link
+              :to="{ name: 'Auth', params: { signup: false } }"
+              target="_blank"
+              class="btn btn-outline-gray-100 d-none d-lg-inline me-md-3"
+            >
+              Login</router-link
+            >
+            <router-link
+              :to="{ name: 'Auth', params: { signup: true } }"
+              target="_blank"
+              class="btn btn-primary"
+              >SignUp</router-link
+            >
+          </div>
+          <div v-else-if="authenticationStore.isAuthenticated">
+            <a
+              href=""
+              target="_blank"
+              @click.prevent="logout"
+              class="btn btn-outline-gray-100 d-none d-lg-inline me-md-3"
+            >
+              logout</a
+            >
+            <router-link
+              v-if="authenticationStore.isAuthenticated"
+              :to="{ name: 'Profile', params: { slug: 'data' } }"
+              target="_blank"
+              class="btn btn-primary"
+              >Job Board</router-link
+            >
+          </div>
           <button
             class="navbar-toggler ms-2"
             type="button"
@@ -66,8 +90,48 @@
 </template>
 
 <script>
+import useAuthenticationStore from "@/stores/authentication";
+import axios from "axios";
+import { API } from "@/api";
+
 export default {
   name: "HomeNavbar",
+  setup() {
+    // initialize the authentification store
+    const authenticationStore = useAuthenticationStore();
+
+    // return the computed properties
+    return {
+      authenticationStore,
+    };
+  },
+  methods: {
+    logout() {
+      console.log("logout");
+      const token = `Bearer ${this.authenticationStore.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        "content-type": "application/json",
+        // eslint-disable-next-line prettier/prettier
+        Authorization: token,
+      };
+
+      // Send the request to the backend to logout
+      axios
+        .post(API.auth.logout, token, {
+          headers: headers,
+        })
+        .then((response) => {
+          // If the logout was successful, remove the token from the store
+          console.log(response);
+          this.authenticationStore.logout();
+          this.$router.go();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
 };
 </script>
 

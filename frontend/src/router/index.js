@@ -15,8 +15,9 @@ const routes = [
     component: HomeView, // the component to render when the route is matched
   },
   {
-    path: "/authentication",
+    path: "/authentication/:signup",
     name: "Auth",
+    props: true,
     component: AuthView,
   },
   {
