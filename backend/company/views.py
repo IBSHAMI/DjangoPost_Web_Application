@@ -60,27 +60,3 @@ class CompanyDetailsAPIView(generics.RetrieveUpdateAPIView):
         self.perform_update(serializer)
 
         return Response(serializer.data)
-
-# #  Create a view to recieve and send customer messages
-# class EmployeeContactSupportAPIView(APIView):
-#
-#     def post(self, request, *args, **kwargs):
-#         admin_email = 'admin@admin.com'
-#
-#         # get the sent request data
-#         data = request.data
-#
-#         first_name = data['first_name']
-#         last_name = data['last_name']
-#         email = data['email']
-#         message = data['message']
-#
-#         # send the message to the customer support email
-#         send_mail(
-#             subject=f'Customer Support request from {first_name} {last_name}',
-#             message=message + f'customer email: {email}',
-#             from_email=admin_email,
-#             recipient_list=[admin_email],
-#         )
-#
-#         return Response({'message': 'Message sent successfully'})

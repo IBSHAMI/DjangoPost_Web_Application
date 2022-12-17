@@ -285,7 +285,7 @@ export default {
       const headers = {
         "content-type": "application/json",
         // eslint-disable-next-line prettier/prettier
-        "Authorization": token,
+        Authorization: token,
       };
 
       // Send the request to the backend to logout

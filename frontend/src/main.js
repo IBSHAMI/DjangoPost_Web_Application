@@ -6,7 +6,8 @@ import router from "./router";
 import veeValidatePlugin from "@/includes/validation";
 import axios from "axios";
 
-import "./assets/base.css";
+import "bootstrap/dist/css/bootstrap.css";
+import "@/assets/css/main.css";
 
 const app = createApp(App);
 
@@ -21,3 +22,5 @@ app.use(router, axios);
 app.use(veeValidatePlugin);
 
 app.mount("#app");
+
+import "bootstrap/dist/js/bootstrap.js";
