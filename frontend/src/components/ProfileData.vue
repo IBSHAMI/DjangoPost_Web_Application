@@ -1,109 +1,97 @@
 <template>
-  <div class="container">
-    <div class="row mt-6">
-      <div class="container-fluid d-flex align-items-center">
-        <div class="col-lg-7 col-md-10">
-          <h3 class="display-4">
-            Hello <span>{{ firstName }}</span>
-          </h3>
-          <p class="mt-0 mb-5">
-            This is your profile page. You can view and edit your profile here.
-          </p>
-        </div>
-      </div>
-      <div class="row">
+  <div class="container py-4 my-4">
+    <div class="row">
+      <div class="row pb-3">
         <div class="container-fluid">
           <div class="row">
-            <profile-card :fullName="firstName + ' ' + lastName" />
+            <profile-card :fullName="getDisplayName()" />
             <div class="col-xl-8 order-xl-1">
               <vee-form
                 action="#"
                 :validation-schema="schema"
                 @submit="updateUserData"
+                class="card shadow border-0 text-center text-md-start"
               >
-                <div class="shadow sm:overflow-hidden sm:rounded-md">
+                <div class="card-body">
                   <alert-item
                     :alert="alert"
                     :alertBackgroundColor="alertBackgroundColor"
                     :alertMessage="alertMessage"
                     @closeAlert="closeAlert"
                   />
-                  <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
-                    <div class="grid grid-cols-4 gap-6 py-5">
-                      <div class="col-span-3 sm:col-span-2">
-                        <label
-                          for="first_name"
-                          class="block text-base font-medium text-gray-700"
+                  <h2 class="text-start h5 mb-2 px-2">Profile Information</h2>
+                  <div class="card-body px-2">
+                    <div class="row py-2">
+                      <div class="form-group col-md-6 mb-3">
+                        <label for="first_name" class="form-label fst-italic"
                           >First Name</label
                         >
-                        <ErrorMessage
-                          name="first_name"
-                          class="text-red-500 text-xs italic"
-                        />
-                        <div class="w-full h-full relative mt-1 py-2">
+                        <div>
                           <vee-field
                             type="text"
                             name="first_name"
                             id="first_name"
-                            class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-800 focus:ring-indigo-800 sm:text-sm"
+                            class="form-control"
                             v-model="firstName"
+                          />
+                          <ErrorMessage
+                            name="first_name"
+                            class="text-danger small font-italic"
                           />
                         </div>
                       </div>
-                      <div class="col-span-3 sm:col-span-2">
+                      <div class="form-group col-md-6 mb-3">
                         <label
                           for="company-website"
-                          class="block text-base font-medium text-gray-700"
+                          class="form-label fst-italic"
                           >Last Name</label
                         >
-                        <ErrorMessage
-                          name="last_name"
-                          class="text-red-500 text-xs italic"
-                        />
-                        <div class="mt-1 w-full h-full flex py-2">
+                        <div>
                           <vee-field
                             type="text"
                             name="last_name"
                             id="last_name"
-                            class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            class="form-control"
                             v-model="lastName"
+                          />
+                          <ErrorMessage
+                            name="last_name"
+                            class="text-danger small font-italic"
                           />
                         </div>
                       </div>
                     </div>
-                    <div class="grid grid-cols-4 gap-6 py-5">
-                      <div class="col-span-3 sm:col-span-2">
-                        <label
-                          for="email"
-                          class="block text-base font-medium text-gray-700"
+                    <div class="row py-2">
+                      <div class="form-group col-md-4 mb-2">
+                        <label for="email" class="form-label fst-italic"
                           >Email</label
                         >
-                        <div class="w-full h-full relative mt-1 py-2">
+                        <div class="">
                           <vee-field
                             type="text"
                             name="email"
                             id="email"
-                            class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            class="form-control"
                             v-model="email"
                           />
                           <ErrorMessage
                             name="email"
-                            class="text-red-500 text-xs italic"
+                            class="text-danger small font-italic"
                           />
                         </div>
                       </div>
-                      <div class="col-span-3 sm:col-span-2">
+                      <div class="form-group col-md-4 mb-2">
                         <label
                           for="position_experience"
-                          class="block text-base font-medium text-gray-700"
-                          >Years of Experience Required</label
+                          class="form-label fst-italic"
+                          >Years of Experience</label
                         >
-                        <div class="w-full h-full relative mt-1 py-2">
+                        <div>
                           <vee-field
                             as="select"
                             name="position_experience"
                             id="position_experience"
-                            class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            class="form-select"
                             v-model="employeeExperience"
                           >
                             <option
@@ -116,170 +104,150 @@
                           </vee-field>
                           <ErrorMessage
                             name="position_experience"
-                            class="text-red-500 text-xs italic"
+                            class="text-danger small font-italic"
                           />
                         </div>
                       </div>
-                    </div>
-                    <div class="grid grid-cols-4 gap-6 py-5">
-                      <div class="col-span-3 sm:col-span-2">
-                        <label
-                          for="price"
-                          class="block text-base font-medium text-gray-700"
+                      <div class="form-group col-md-4 mb-2">
+                        <label for="price" class="form-label fst-italic"
                           >Expected Salary (USD)</label
                         >
-                        <ErrorMessage
-                          name="expected_salary"
-                          class="text-red-500 text-xs italic"
-                        />
-                        <div class="w-full h-full relative mt-1 py-2">
-                          <div
-                            class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
-                          >
-                            <span class="text-gray-500 sm:text-sm">$</span>
-                          </div>
+                        <div>
                           <vee-field
                             type="number"
                             name="expected_salary"
                             id="expected_salary"
-                            class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            class="form-control"
                             v-model="expectedSalary"
+                          />
+                          <ErrorMessage
+                            name="expected_salary"
+                            class="text-danger small font-italic"
                           />
                         </div>
                       </div>
                     </div>
-                    <div class="grid grid-cols-4 gap-6 py-5">
-                      <div class="col-span-3 sm:col-span-2">
+                    <div class="row py-2">
+                      <div class="form-group col-md-6 mb-3">
                         <label
                           for="company-website"
-                          class="block text-base font-medium text-gray-700"
+                          class="form-label fst-italic"
                           >Linkedin Profile</label
                         >
-                        <ErrorMessage
-                          name="linkedin_profile"
-                          class="text-red-500 text-xs italic"
-                        />
-                        <div class="mt-1 w-full h-full flex py-2">
+                        <div>
                           <vee-field
                             type="text"
                             name="linkedin_profile"
                             id="linkedin_profile"
-                            class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            class="form-control"
                             v-model="linkedinProfile"
+                          />
+                          <ErrorMessage
+                            name="linkedin_profile"
+                            class="text-danger small font-italic"
                           />
                         </div>
                       </div>
-                      <div class="col-span-3 sm:col-span-2">
+                      <div class="form-group col-md-6 mb-3">
                         <label
                           for="company-website"
-                          class="block text-base font-medium text-gray-700"
+                          class="form-label fst-italic"
                           >Portfolio Website</label
                         >
-                        <ErrorMessage
-                          name="portfolio_website"
-                          class="text-red-500 text-xs italic"
-                        />
-                        <div class="mt-1 w-full h-full flex py-2">
+                        <div>
                           <vee-field
                             type="text"
                             name="portfolio_website"
                             id="profile_website"
-                            class="block w-full h-full rounded-md border-2 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            class="form-control"
                             v-model="portfolioWebsite"
+                          />
+                          <ErrorMessage
+                            name="portfolio_website"
+                            class="text-danger small font-italic"
                           />
                         </div>
                       </div>
                     </div>
-                    <div>
-                      <div class="col-span-3 sm:col-span-2">
-                        <label
-                          for="about"
-                          class="block text-base font-medium text-gray-700"
+                    <div class="row py-2">
+                      <div class="form-group col-md-12 mb-6">
+                        <label for="about" class="form-label fst-italic"
                           >About</label
                         >
                         <ErrorMessage
                           name="about"
-                          class="text-red-500 text-xs italic"
+                          class="text-danger small font-italic"
                         />
-                        <div class="w-full h-full relative mt-1 py-2">
+                        <div>
                           <vee-field
                             as="textarea"
                             id="about"
                             name="about"
                             rows="3"
-                            class="mt-1 block w-full rounded-md border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            class="form-control"
                             v-model="about"
                           ></vee-field>
+                          <ErrorMessage
+                            name="about"
+                            class="text-danger small font-italic"
+                          />
                         </div>
                       </div>
                     </div>
-                    <div>
-                      <label
-                        class="block text-sm text-base font-medium text-gray-700"
-                        >Upload Resume</label
-                      >
-                      <div class="mt-1 py-2">
-                        <!--Show the name of the already uploaded file if any -->
-                        <div
-                          v-show="!resumeUploadShow"
-                          class="flex items-center justify-between pb-4"
+                    <div class="row py-2">
+                      <div class="form-group col-md-12 mb-6">
+                        <label class="form-label fst-italic"
+                          >Upload Resume</label
                         >
-                          {{ resume }}
+                        <div class="mt-1 py-2">
+                          <div v-show="!resumeUploadShow">
+                            {{ resume }}
+                          </div>
+                          <button
+                            class="btn btn-outline-primary my-3"
+                            type="button"
+                            v-if="!resumeUploadShow"
+                            @click.prevent="resumeUploadShow = true"
+                          >
+                            Upload Resume
+                          </button>
+                          <profile-resume-upload
+                            v-else
+                            @upload="upload"
+                            @closeUploadModel="CloseUploadModel"
+                          />
                         </div>
-                        <button
-                          class="text-sky-500 border border-sky-500 hover:bg-sky-500 hover:text-white active:bg-sky-600 font-bold uppercase px-8 py-3 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                          type="button"
-                          v-if="!resumeUploadShow"
-                          @click.prevent="resumeUploadShow = true"
-                        >
-                          Upload Resume
-                        </button>
-                        <profile-resume-upload
-                          v-else
-                          @upload="upload"
-                          @closeUploadModel="CloseUploadModel"
-                        />
                       </div>
                     </div>
-
-                    <div>
-                      <label
-                        class="block text-sm text-base font-medium text-gray-700"
-                        >Upload Profile Photo</label
-                      >
-                      <div class="mt-1 py-2">
-                        <div
-                          v-show="!PictureUploadShow"
-                          class="flex items-center justify-between pb-4"
+                    <div class="row py-2">
+                      <div class="form-group col-md-12 mb-6">
+                        <label class="form-label fst-italic"
+                          >Upload Profile Photo</label
                         >
-                          {{ profilePicture }}
+                        <div class="mt-1 py-2">
+                          <div v-show="!PictureUploadShow">
+                            {{ profilePicture }}
+                          </div>
+                          <button
+                            class="btn btn-outline-primary my-3"
+                            type="button"
+                            v-if="!PictureUploadShow"
+                            @click.prevent="PictureUploadShow = true"
+                          >
+                            Upload Profile Photo
+                          </button>
+                          <profile-picture-upload
+                            v-else
+                            @upload="upload"
+                            @closeUploadModel="CloseUploadModel"
+                          />
                         </div>
-                        <button
-                          class="text-sky-500 border border-sky-500 hover:bg-sky-500 hover:text-white active:bg-sky-600 font-bold uppercase px-8 py-3 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                          type="button"
-                          v-if="!PictureUploadShow"
-                          @click.prevent="PictureUploadShow = true"
-                        >
-                          Upload Profile Photo
-                        </button>
-                        <profile-picture-upload
-                          v-else
-                          @upload="upload"
-                          @closeUploadModel="CloseUploadModel"
-                        />
                       </div>
                     </div>
-
-                    <!-- <profile-upload @upload="upload" /> -->
                   </div>
-                  <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                    <button
-                      type="submit"
-                      class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                      Save
-                    </button>
-                  </div>
+                  <button type="submit" class="btn btn-primary">
+                    Save all
+                  </button>
                 </div>
               </vee-form>
             </div>
@@ -292,9 +260,9 @@
 
 <script>
 import useAuthenticationStore from "@/stores/authentication";
-import ProfileCard from "@/components/profileComponents/profileCard.vue";
-import ProfileResumeUpload from "@/components/ProfileResumeUpload.vue";
-import ProfilePictureUpload from "@/components/ProfilePictureUpload.vue";
+import ProfileCard from "@/components/profileComponents/ProfileCard.vue";
+import ProfileResumeUpload from "@/components/profileComponents/ProfileResumeUpload.vue";
+import ProfilePictureUpload from "@/components/profileComponents/ProfilePictureUpload.vue";
 import AlertItem from "@/components/AlertItem.vue";
 import axios from "axios";
 import { API } from "@/api";
@@ -354,6 +322,9 @@ export default {
     AlertItem,
   },
   methods: {
+    getDisplayName() {
+      return this.firstName + " " + this.lastName;
+    },
     getFileBaseName(path) {
       return path.split("/").reverse()[0];
     },
@@ -415,7 +386,7 @@ export default {
           console.log(error);
           this.alert = true;
           this.alertMessage = " Error occur while fetching data";
-          this.alertBackgroundColor = "bg-red-500";
+          this.alertBackgroundColor = "alert alert-danger";
         });
     },
     upload(file, type) {
@@ -485,13 +456,13 @@ export default {
           // show that the data is updated
           this.alert = true;
           this.alertMessage = "Data updated successfully";
-          this.alertBackgroundColor = "bg-green-500";
+          this.alertBackgroundColor = "alert alert-success";
         })
         // eslint-disable-next-line no-unused-vars
         .catch((error) => {
           this.alert = true;
           this.alertMessage = " Error occur while updating data";
-          this.alertBackgroundColor = "bg-red-500";
+          this.alertBackgroundColor = "alert alert-danger";
         });
     },
   },
