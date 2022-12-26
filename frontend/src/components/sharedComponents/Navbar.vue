@@ -3,7 +3,7 @@
     <nav
       id="navbar-main"
       aria-label="Primary navigation"
-      class="navbar navbar-main navbar-expand-lg navbar-theme-primary headroom navbar-light"
+      class="navbar navbar-main navbar-expand-lg navbar-theme-primary headroom navbar-light mt-1"
     >
       <div class="container position-relative">
         <a class="navbar-brand me-lg-5" href="../../index.html">
@@ -37,7 +37,7 @@
             >
               <router-link
                 :to="{ name: 'Company', params: { slug: 'data' } }"
-                class="dropdown-item"
+                class="nav-link"
                 >Company Profile</router-link
               >
             </li>
@@ -47,7 +47,7 @@
             >
               <router-link
                 :to="{ name: 'Company', params: { slug: 'jobs' } }"
-                class="dropdown-item"
+                class="nav-link"
                 >Jobs</router-link
               >
             </li>
@@ -101,11 +101,14 @@
                 <router-link to="/profile/data" class="dropdown-item">
                   Jobs History
                 </router-link>
-                <div class="dropdown-divider"></div>
-                <router-link to="/profile/contact" class="dropdown-item"
-                  >Contact Us
-                </router-link>
               </div>
+            </li>
+            <li class="nav-item" v-show="authenticationStore.isAuthenticated">
+              <router-link
+                :to="{ name: 'Profile', params: { slug: 'contact' } }"
+                class="nav-link"
+                >Contact Us</router-link
+              >
             </li>
           </ul>
         </div>

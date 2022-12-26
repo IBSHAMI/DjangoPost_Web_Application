@@ -7,14 +7,14 @@
     />
     <hr />
     <profile-data v-if="passedSlug === 'data'" />
-    <profile-contact-item v-else-if="passedSlug === 'contact'" />
+    <contact-us-form v-else-if="passedSlug === 'contact'" />
   </div>
 </template>
 
 <script>
 import Navbar from "../components/sharedComponents/Navbar.vue";
 import ProfileData from "@/components/ProfileData.vue";
-import ProfileContactItem from "@/components/ProfileContactItem.vue";
+import ContactUsForm from "@/components/ContactUsForm.vue";
 import useAuthenticationStore from "@/stores/authentication";
 
 export default {
@@ -40,7 +40,7 @@ export default {
   components: {
     Navbar,
     ProfileData,
-    ProfileContactItem,
+    ContactUsForm,
   },
   watch: {
     $route(to) {
