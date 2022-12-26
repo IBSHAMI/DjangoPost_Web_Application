@@ -1,22 +1,19 @@
 <template>
-  <section class="text-gray-600 body-font relative">
-    <div class="container px-5 py-12 mx-auto">
-      <div class="flex flex-col text-center w-full mb-12">
-        <h1
-          class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
-        >
-          Contact Us
-        </h1>
-        <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-          Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
-          gentrify.
+  <section class="container d-flex justify-content-center py-4 my-4">
+    <div class="card w-75 shadow border-0 text-center text-md-start">
+      <div class="row card-title text-center">
+        <h5 class="my-4">Contact Us</h5>
+        <p>
+          Please contact us for any inqueries or questions you may have. We will
+          get back to you as soon as possible.
         </p>
       </div>
-      <div class="lg:w-1/2 md:w-2/3 mx-auto">
+      <div>
         <vee-form
           action="#"
           :validation-schema="schema"
           @submit="contactSupport"
+          class=""
         >
           <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
             <alert-item
@@ -25,102 +22,86 @@
               :alertMessage="alertMessage"
               @closeAlert="closeAlert"
             />
-            <div class="flex flex-wrap -m-2">
-              <div class="p-2 w-1/2">
-                <div class="relative">
-                  <label for="name" class="leading-7 text-sm text-gray-600"
+            <div class="card-body">
+              <div class="row py-2">
+                <div class="form-group col-md-4 mb-3">
+                  <label for="first_name" class="form-label fst-italic"
                     >First Name</label
                   >
-                  <ErrorMessage
-                    name="first_name"
-                    class="text-red-500 text-xs italic"
-                  />
                   <div>
                     <vee-field
                       type="text"
-                      id="first_name"
                       name="first_name"
+                      id="first_name"
                       v-model="firstName"
-                      class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      class="form-control"
+                    />
+                    <ErrorMessage
+                      name="first_name"
+                      class="text-danger small font-italic"
                     />
                   </div>
                 </div>
-              </div>
-              <div class="p-2 w-1/2">
-                <div class="relative">
-                  <label for="last_name" class="leading-7 text-sm text-gray-600"
+                <div class="form-group col-md-4 mb-3">
+                  <label for="last_name" class="form-label fst-italic"
                     >Last name</label
                   >
-                  <ErrorMessage
-                    name="last_name"
-                    class="text-red-500 text-xs italic"
-                  />
                   <div>
                     <vee-field
                       type="text"
                       id="last_name"
                       name="last_name"
                       v-model="lastName"
-                      class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      class="form-control"
+                    />
+                    <ErrorMessage
+                      name="last_name"
+                      class="text-danger small font-italic"
                     />
                   </div>
                 </div>
-              </div>
-              <div class="p-2 w-1/2">
-                <div class="relative">
-                  <label for="email" class="leading-7 text-sm text-gray-600"
-                    >Email</label
-                  >
-                  <ErrorMessage
-                    name="email"
-                    class="text-red-500 text-xs italic"
-                  />
+                <div class="form-group col-md-4 mb-3">
+                  <label for="email" class="form-label fst-italic">Email</label>
                   <div>
                     <vee-field
                       type="text"
                       id="email"
                       name="email"
                       v-model="email"
-                      class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      class="form-control"
+                    />
+                    <ErrorMessage
+                      name="email"
+                      class="text-danger small font-italic"
                     />
                   </div>
                 </div>
               </div>
-              <div class="p-2 w-full">
+              <div class="form-group col-md-12 mb-3">
                 <div class="relative">
-                  <label for="message" class="leading-7 text-sm text-gray-600"
+                  <label for="message" class="form-label fst-itali"
                     >Message</label
                   >
-                  <ErrorMessage
-                    name="message"
-                    class="text-red-500 text-xs italic"
-                  />
                   <vee-field
                     as="textarea"
                     id="message"
                     name="message"
+                    rows="5"
                     v-model="message"
-                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                    class="form-control"
                   ></vee-field>
+                  <ErrorMessage
+                    name="message"
+                    class="text-danger small font-italic"
+                  />
                 </div>
               </div>
             </div>
-            <div class="pt-3">
-              <button
-                type="submit"
-                class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-              >
-                Submit
-              </button>
-            </div>
+            <button type="submit" class="btn btn-lg btn-primary mx-4">
+              Submit
+            </button>
           </div>
         </vee-form>
-      </div>
-      <div class="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">
-        <a class="text-indigo-500">example@email.com</a>
-        <p class="leading-normal my-5">
-          49 Smith St. <br />Saint Cloud, MN 56301
-        </p>
       </div>
     </div>
   </section>
