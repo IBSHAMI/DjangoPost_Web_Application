@@ -5,6 +5,7 @@
       :employeeProfile="employeeProfile"
       :pageType="jobsPage"
     />
+    <hr />
     <profile-data v-if="passedSlug === 'data'" />
     <profile-contact-item v-else-if="passedSlug === 'contact'" />
   </div>

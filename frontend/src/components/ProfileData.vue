@@ -263,7 +263,7 @@ import useAuthenticationStore from "@/stores/authentication";
 import ProfileCard from "@/components/profileComponents/ProfileCard.vue";
 import ProfileResumeUpload from "@/components/profileComponents/ProfileResumeUpload.vue";
 import ProfilePictureUpload from "@/components/profileComponents/ProfilePictureUpload.vue";
-import AlertItem from "@/components/AlertItem.vue";
+import AlertItem from "@/components/sharedComponents/AlertItem.vue";
 import axios from "axios";
 import { API } from "@/api";
 

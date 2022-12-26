@@ -266,7 +266,7 @@
 
 <script>
 import useAuthenticationStore from "@/stores/authentication";
-import AlertItem from "@/components/AlertItem.vue";
+import AlertItem from "@/components/sharedComponents/AlertItem.vue";
 import axios from "axios";
 import { API } from "@/api";
 
@@ -327,7 +327,7 @@ export default {
       // Add the token to the header as Bearer token
       const headers = {
         // eslint-disable-next-line prettier/prettier
-          "Authorization": token,
+        Authorization: token,
       };
 
       const getChoicesData = API.jobs.get_choices_data;
@@ -354,7 +354,7 @@ export default {
       // Add the token to the header as Bearer token
       const headers = {
         // eslint-disable-next-line prettier/prettier
-          "Authorization": token,
+        Authorization: token,
       };
       const createJobUrl = API.jobs.create;
 
@@ -380,7 +380,7 @@ export default {
           if (response.status === 201) {
             this.alert = true;
             this.alertMessage = "Job created successfully";
-            this.alertBackgroundColor = "bg-green-500";
+            this.alertBackgroundColor = "alert alert-success";
             setTimeout(() => {
               this.$router.push({ name: "Company", params: { slug: "jobs" } });
             }, 2000);
@@ -390,7 +390,7 @@ export default {
           console.log(error);
           this.alert = true;
           this.alertMessage = "Error creating job";
-          this.alertBackgroundColor = "bg-red-500";
+          this.alertBackgroundColor = "alert alert-danger";
         });
     },
   },

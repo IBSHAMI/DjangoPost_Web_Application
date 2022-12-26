@@ -5,7 +5,8 @@
       :companyProfile="companyProfile"
       :pageType="jobsPage"
     />
-    <company-data-item v-if="passedSlug === 'data'" />
+    <hr />
+    <company-data v-if="passedSlug === 'data'" />
     <jobs-forms-item v-else-if="passedSlug === 'jobs'" />
     <create-job-form-item v-else-if="passedSlug === 'create-job'" />
   </div>
@@ -13,7 +14,7 @@
 
 <script>
 import Navbar from "../components/sharedComponents/Navbar.vue";
-import CompanyDataItem from "../components/CompanyDataItem.vue";
+import CompanyData from "../components/CompanyData.vue";
 import JobsFormsItem from "../components/JobsFormsItem.vue";
 import CreateJobFormItem from "../components/CreateJobFormItem.vue";
 
@@ -28,7 +29,7 @@ export default {
   },
   components: {
     Navbar,
-    CompanyDataItem,
+    CompanyData,
     JobsFormsItem,
     CreateJobFormItem,
   },

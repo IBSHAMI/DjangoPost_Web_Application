@@ -1,6 +1,7 @@
 <template>
   <div>
     <Navbar :pageType="homePage" />
+    <hr />
   </div>
 </template>
 

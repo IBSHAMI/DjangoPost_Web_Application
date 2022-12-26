@@ -128,7 +128,7 @@
 
 <script>
 import useAuthenticationStore from "@/stores/authentication";
-import AlertItem from "@/components/AlertItem.vue";
+import AlertItem from "@/components/sharedComponents/AlertItem.vue";
 import axios from "axios";
 import { API } from "@/api";
 
@@ -172,7 +172,7 @@ export default {
       const headers = {
         "content-type": "application/json",
         // eslint-disable-next-line prettier/prettier
-        "Authorization": token,
+        Authorization: token,
       };
 
       axios
@@ -197,7 +197,7 @@ export default {
       // Add the token to the header as Bearer token
       const headers = {
         // eslint-disable-next-line prettier/prettier
-        "Authorization": token,
+        Authorization: token,
       };
 
       const data = {
@@ -212,13 +212,13 @@ export default {
         // eslint-disable-next-line no-unused-vars
         .then((response) => {
           this.alert = true;
-          this.alertBackgroundColor = "bg-green-500";
+          this.alertBackgroundColor = "alert alert-success";
           this.alertMessage = "Message sent successfully";
         })
         // eslint-disable-next-line no-unused-vars
         .catch((error) => {
           this.alert = true;
-          this.alertBackgroundColor = "bg-red-500";
+          this.alertBackgroundColor = "alert alert-danger";
           this.alertMessage = "Something went wrong, try again later";
         });
     },
