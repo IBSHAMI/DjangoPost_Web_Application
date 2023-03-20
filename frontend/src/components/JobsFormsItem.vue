@@ -6,30 +6,15 @@
         <div class="d-flex justify-content-between py-4">
           <div class="d-block mb-4 mb-md-0">
             <h2 class="h3">Jobs</h2>
-            <p class="mb-0">
+            <p class="para mb-0">
               Here you can view all the jobs that is posted under your company.
             </p>
           </div>
-          <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="">
             <router-link
               :to="{ name: 'Company', params: { slug: 'create-job' } }"
-              class="btn btn-primary btn-lg d-flex align-items-center"
+              class="btn button button-primary btn-lg"
             >
-              <svg
-                class="icon mx-2"
-                style="width: 1.5rem; height: 1.5rem"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                ></path>
-              </svg>
               Add Job
             </router-link>
           </div>
@@ -39,7 +24,7 @@
       <div class="row justify-content-between align-items-center">
         <div class="col-9 col-lg-8 d-md-flex">
           <div class="form-group col-md-4 mb-3">
-            <p>Search by Name:</p>
+            <p class="form-label">Search by Name:</p>
             <input
               type="text"
               name="search-job"
@@ -49,7 +34,7 @@
             />
           </div>
           <div class="form-group col-md-4 mb-3 mx-3">
-            <p>Sort By:</p>
+            <p class="form-label">Sort By:</p>
             <select
               aria-label="select"
               class="form-control"
@@ -68,54 +53,51 @@
           </div>
         </div>
       </div>
-      <div
-        class="row card card-body shadow border-0 table-wrapper table-responsive"
-      >
-        <div class="btn-group" role="group">
-          <div style="cursor: pointer" @click="changeTableVariant('all')">
-            <div
-              class="btn"
-              :class="{
-                'btn-primary': tableVariant === 'all',
-                'btn-outline-primary': tableVariant !== 'all',
-              }"
-            >
-              All
-            </div>
-          </div>
+      <div class="btn-group d-flex justify-content-center py-4" role="group">
+        <div style="cursor: pointer" @click="changeTableVariant('all')">
           <div
-            style="cursor: pointer"
-            @click="changeTableVariant('active')"
-            class="mx-2"
+            class="btn button btn-lg"
+            :class="{
+              'button-primary': tableVariant === 'all',
+              'button-outline-primary': tableVariant !== 'all',
+            }"
           >
-            <div
-              class="btn"
-              :class="{
-                'btn-primary': tableVariant === 'active',
-                'btn-outline-primary': tableVariant !== 'active',
-              }"
-            >
-              Active
-            </div>
-          </div>
-          <div
-            style="cursor: pointer"
-            @click="changeTableVariant('inactive')"
-            class="mx-2"
-          >
-            <div
-              class="btn"
-              :class="{
-                'btn-primary': tableVariant === 'inactive',
-                'btn-outline-primary': tableVariant !== 'inactive',
-              }"
-            >
-              Inactive
-            </div>
+            All
           </div>
         </div>
-
-        <table class="table align-items-center">
+        <div
+          style="cursor: pointer"
+          @click="changeTableVariant('active')"
+          class="mx-2"
+        >
+          <div
+            class="btn button btn-lg"
+            :class="{
+              'button-primary': tableVariant === 'active',
+              'button-outline-primary': tableVariant !== 'active',
+            }"
+          >
+            Active
+          </div>
+        </div>
+        <div
+          style="cursor: pointer"
+          @click="changeTableVariant('inactive')"
+          class="mx-2"
+        >
+          <div
+            class="btn button btn-lg"
+            :class="{
+              'button-primary': tableVariant === 'inactive',
+              'button-outline-primary': tableVariant !== 'inactive',
+            }"
+          >
+            Inactive
+          </div>
+        </div>
+      </div>
+      <div class="row card card-body border-0 table-wrapper table-responsive">
+        <table class="table shadow-soft rounded">
           <thead>
             <tr>
               <th scope="col" class="border-bottom">Tile</th>

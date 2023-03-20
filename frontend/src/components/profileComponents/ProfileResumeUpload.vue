@@ -11,7 +11,7 @@
           <div class="d-flex justify-content-between p-2 mx-2">
             <span class="ml-auto">Upload Resume</span>
             <button
-              class="btn btn-close ml-auto"
+              class="btn button btn-close ml-auto"
               style="cursor: pointer"
               @click.prevent="CloseUploadModel"
             ></button>

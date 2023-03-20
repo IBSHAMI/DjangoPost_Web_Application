@@ -2,16 +2,22 @@
   <!-- Sign in-->
   <div>
     <div>
-      <div v-if="login_show_alert" :class="login_alert_variant">
+      <div
+        v-if="login_show_alert"
+        class="text-center"
+        :class="login_alert_variant"
+      >
         <span>
           {{ login_alert_message }}
         </span>
       </div>
-      <div class="text-center mt-2 mb-3"><h3>Sign in</h3></div>
+      <div class="text-center mt-2 mb-3">
+        <h3 class="sign-in-header">Sign in</h3>
+      </div>
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
         <vee-form action="#" :validation-schema="schema_login" @submit="login">
           <div class="form-group mb-3">
-            <label for="email" class="py-1">Email Address:</label>
+            <label for="email" class="py-1 form-label">Email Address:</label>
             <vee-field
               class="form-control"
               type="email"
@@ -19,10 +25,10 @@
               id="email"
               placeholder="name@company.com"
             />
-            <ErrorMessage name="email" class="form-text text-red" />
+            <ErrorMessage name="email" class="form-text error-message" />
           </div>
           <div class="form-group mb-3">
-            <label for="password" class="py-1">Password</label>
+            <label for="password" class="py-1 form-label">Password</label>
             <vee-field
               class="form-control"
               type="password"
@@ -31,25 +37,25 @@
               placeholder="••••••••"
               required=""
             />
-            <ErrorMessage name="password" class="form-text text-red" />
+            <ErrorMessage name="password" class="form-text error-message" />
           </div>
           <div class="flex items-center justify-between">
-            <a href="#" class="form-text pb-3">Forgot password?</a>
+            <a href="#" class="form-text pb-3 forget-pass">Forgot password?</a>
           </div>
           <div class="d-grid py-3">
             <button
               type="submit"
               :disabled="login_in_process"
-              class="btn btn-primary"
+              class="btn button-primary"
             >
               Sign In
             </button>
           </div>
-          <p class="">
+          <p class="para">
             Don’t have an account yet?
             <a
               href="#"
-              class="fw-bold text-underline"
+              class="fw-bold text-underline forget-pass"
               @click.prevent="signupPageShow"
               >Sign up</a
             >
@@ -128,3 +134,19 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.forget-pass {
+  color: #11ab7c;
+  font-weight: 400;
+  transition: all 0.2s ease;
+  font: 400 0.875rem/1.5rem var(--font-family);
+}
+
+.sign-in-header {
+  font: 600 1.5rem/2rem var(--font-family);
+  color: var(--text-color);
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+</style>

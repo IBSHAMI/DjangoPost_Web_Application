@@ -10,7 +10,7 @@
                 action="#"
                 :validation-schema="schema"
                 @submit="updateCompanyData"
-                class="card shadow border-0 text-center text-md-start"
+                class="card border-0 text-center text-md-start"
               >
                 <div class="card-body">
                   <alert-item
@@ -36,7 +36,7 @@
                           />
                           <ErrorMessage
                             name="company_name"
-                            class="text-danger small font-italic"
+                            class="error-message small font-italic"
                           />
                         </div>
                       </div>
@@ -54,7 +54,7 @@
                           />
                           <ErrorMessage
                             name="company_size"
-                            class="text-danger small font-italic"
+                            class="error-message small font-italic"
                           />
                         </div>
                       </div>
@@ -76,7 +76,7 @@
                           />
                           <ErrorMessage
                             name="company_location"
-                            class="text-danger small font-italic"
+                            class="error-message small font-italic"
                           />
                         </div>
                       </div>
@@ -96,7 +96,7 @@
                           />
                           <ErrorMessage
                             name="company_website"
-                            class="text-danger small font-italic"
+                            class="error-message small font-italic"
                           />
                         </div>
                       </div>
@@ -115,12 +115,12 @@
                             id="company_description"
                             name="company_description"
                             rows="6"
-                            class="form-control"
+                            class="form-control textarea"
                             v-model="companyDescription"
                           ></vee-field>
                           <ErrorMessage
                             name="company_description"
-                            class="text-danger small font-italic"
+                            class="error-message small font-italic"
                           />
                         </div>
                       </div>
@@ -135,7 +135,7 @@
                             {{ companyLogo }}
                           </div>
                           <button
-                            class="btn btn-outline-primary my-3"
+                            class="btn button btn-outline-primary my-3"
                             type="button"
                             v-if="!logoUploadShow"
                             @click.prevent="logoUploadShow = true"
@@ -151,7 +151,9 @@
                       </div>
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-primary">Save</button>
+                  <button type="submit" class="btn button button-primary">
+                    Save
+                  </button>
                 </div>
               </vee-form>
             </div>

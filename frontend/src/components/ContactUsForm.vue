@@ -1,9 +1,9 @@
 <template>
   <section class="container d-flex justify-content-center py-4 my-4">
-    <div class="card w-75 shadow border-0 text-center text-md-start">
+    <div class="card w-75 border-0 text-center text-md-start">
       <div class="row card-title text-center">
-        <h5 class="my-4">Contact Us</h5>
-        <p>
+        <h5 class="my-4 form-header">Contact Us</h5>
+        <p class="para">
           Please contact us for any inqueries or questions you may have. We will
           get back to you as soon as possible.
         </p>
@@ -38,7 +38,7 @@
                     />
                     <ErrorMessage
                       name="first_name"
-                      class="text-danger small font-italic"
+                      class="error-message small font-italic"
                     />
                   </div>
                 </div>
@@ -56,7 +56,7 @@
                     />
                     <ErrorMessage
                       name="last_name"
-                      class="text-danger small font-italic"
+                      class="error-message small font-italic"
                     />
                   </div>
                 </div>
@@ -72,7 +72,7 @@
                     />
                     <ErrorMessage
                       name="email"
-                      class="text-danger small font-italic"
+                      class="error-message small font-italic"
                     />
                   </div>
                 </div>
@@ -88,16 +88,16 @@
                     name="message"
                     rows="5"
                     v-model="message"
-                    class="form-control"
+                    class="form-control textarea"
                   ></vee-field>
                   <ErrorMessage
                     name="message"
-                    class="text-danger small font-italic"
+                    class="error-message small font-italic"
                   />
                 </div>
               </div>
             </div>
-            <button type="submit" class="btn btn-lg btn-primary mx-4">
+            <button type="submit" class="btn button btn-lg button-primary mx-4">
               Submit
             </button>
           </div>

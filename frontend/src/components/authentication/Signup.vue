@@ -3,13 +3,19 @@
   <div class="">
     <div class="">
       <div>
-        <div v-if="sub_show_alert" :class="sub_alert_variant">
+        <div
+          v-if="sub_show_alert"
+          class="text-center"
+          :class="sub_alert_variant"
+        >
           <span>
             {{ sub_alert_message }}
           </span>
         </div>
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <div class="text-center mt-2 mb-3"><h3>Register new account</h3></div>
+          <div class="text-center mt-2 mb-3">
+            <h3 class="sign-up-header">Register new account</h3>
+          </div>
           <vee-form action="#" :validation-schema="schema" @submit="register">
             <div class="form-group mb-3">
               <label for="email" class="py-1">Username</label>
@@ -68,24 +74,20 @@
               <ErrorMessage name="confirm_password" class="invalid-input" />
             </div>
             <div class="form-group mb-3">
-              <div class="flex items-center h-5">
-                <vee-field
-                  class="form-check-input"
-                  id="terms"
-                  aria-describedby="terms"
-                  type="checkbox"
-                  name="terms"
-                  value="1"
-                />
-              </div>
-              <div class="ml-3 text-sm">
-                <label for="terms" class="form-check-label"
-                  >I accept the
-                  <a class="form-check-label" href="#"
-                    >Terms and Conditions</a
-                  ></label
-                >
-              </div>
+              <vee-field
+                class="form-check-input"
+                id="terms"
+                aria-describedby="terms"
+                type="checkbox"
+                name="terms"
+                value="1"
+              />
+
+              <label for="terms" class="para form-check-label mx-2"
+                >I accept the
+                <a class="small-text" href="#">Terms and Conditions</a></label
+              >
+
               <div>
                 <ErrorMessage name="terms" class="invalid-input" />
               </div>
@@ -93,21 +95,21 @@
             <div class="d-grid py-3">
               <button
                 type="submit"
-                class="btn btn-primary"
+                class="btn button-primary"
                 :disabled="sub_in_process"
               >
                 Create an account
               </button>
             </div>
-            <p>
+            <label class="para">
               Already have an account?
               <a
-                href="#"
-                class="fw-bold text-underline"
+                class="fw-bold text-underline small-text"
                 @click.prevent="signupPageShow"
+                style="color: #11ab7c"
                 >Login here</a
               >
-            </p>
+            </label>
           </vee-form>
         </div>
       </div>
@@ -180,3 +182,19 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.small-text {
+  color: #11ab7c;
+  font-weight: 400;
+  transition: all 0.2s ease;
+  font: 400 0.875rem/1.5rem var(--font-family);
+}
+
+.sign-up-header {
+  font: 600 1.5rem/2rem var(--font-family);
+  color: var(--text-color);
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+</style>

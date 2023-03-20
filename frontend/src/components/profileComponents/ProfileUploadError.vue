@@ -5,7 +5,7 @@
   >
     <span class="ml-auto"> <b>Error!</b> {{ uploadErrorMessage }} </span>
     <button
-      class="btn btn-close ml-auto"
+      class="btn button btn-close ml-auto"
       style="cursor: pointer"
       @click.prevent="closeErrorAlert"
     ></button>

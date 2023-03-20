@@ -6,7 +6,7 @@
 
 body {
   background-color: var(--window-background-color);
-  font-family: var(--Nunito);
+  font-family: var(--Nunito) !important;
 }
 
 /* upload file input */

@@ -25,6 +25,10 @@ body {
   --box-shadow: 3px 3px 6px #96979e, -3px -3px 6px #fff;
   --box-shadow-hover: inset 2px 2px 5px #808185, inset -3px -3px 7px #fff;
 
+  /* card */
+  --card-shadow: 6px 6px 12px #b8b9be, -6px -6px 12px #fff !important;
+  --form-font-color: rgba(11, 11, 12, 0.7) !important;
+
   /* font family */
   --Nunito: "Nunito Sans", sans-serif;
 }

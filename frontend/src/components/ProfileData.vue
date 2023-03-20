@@ -10,7 +10,7 @@
                 action="#"
                 :validation-schema="schema"
                 @submit="updateUserData"
-                class="card shadow border-0 text-center text-md-start"
+                class="card border-0 text-center text-md-start"
               >
                 <div class="card-body">
                   <alert-item
@@ -19,7 +19,7 @@
                     :alertMessage="alertMessage"
                     @closeAlert="closeAlert"
                   />
-                  <h2 class="text-start h5 mb-2 px-2">Profile Information</h2>
+                  <h2 class="text-center form-header">Profile Information</h2>
                   <div class="card-body px-2">
                     <div class="row py-2">
                       <div class="form-group col-md-6 mb-3">
@@ -36,7 +36,7 @@
                           />
                           <ErrorMessage
                             name="first_name"
-                            class="text-danger small font-italic"
+                            class="error-message small font-italic"
                           />
                         </div>
                       </div>
@@ -56,7 +56,7 @@
                           />
                           <ErrorMessage
                             name="last_name"
-                            class="text-danger small font-italic"
+                            class="error-message small font-italic"
                           />
                         </div>
                       </div>
@@ -76,7 +76,7 @@
                           />
                           <ErrorMessage
                             name="email"
-                            class="text-danger small font-italic"
+                            class="error-message small font-italic"
                           />
                         </div>
                       </div>
@@ -104,7 +104,7 @@
                           </vee-field>
                           <ErrorMessage
                             name="position_experience"
-                            class="text-danger small font-italic"
+                            class="error-message small font-italic"
                           />
                         </div>
                       </div>
@@ -122,7 +122,7 @@
                           />
                           <ErrorMessage
                             name="expected_salary"
-                            class="text-danger small font-italic"
+                            class="error-message small font-italic"
                           />
                         </div>
                       </div>
@@ -144,7 +144,7 @@
                           />
                           <ErrorMessage
                             name="linkedin_profile"
-                            class="text-danger small font-italic"
+                            class="error-message small font-italic"
                           />
                         </div>
                       </div>
@@ -164,7 +164,7 @@
                           />
                           <ErrorMessage
                             name="portfolio_website"
-                            class="text-danger small font-italic"
+                            class="error-message small font-italic"
                           />
                         </div>
                       </div>
@@ -176,7 +176,7 @@
                         >
                         <ErrorMessage
                           name="about"
-                          class="text-danger small font-italic"
+                          class="error-message small font-italic"
                         />
                         <div>
                           <vee-field
@@ -184,12 +184,12 @@
                             id="about"
                             name="about"
                             rows="3"
-                            class="form-control"
+                            class="form-control textarea"
                             v-model="about"
                           ></vee-field>
                           <ErrorMessage
                             name="about"
-                            class="text-danger small font-italic"
+                            class="error-message small error-message"
                           />
                         </div>
                       </div>
@@ -204,7 +204,7 @@
                             {{ resume }}
                           </div>
                           <button
-                            class="btn btn-outline-primary my-3"
+                            class="btn button btn-outline-primary my-3"
                             type="button"
                             v-if="!resumeUploadShow"
                             @click.prevent="resumeUploadShow = true"
@@ -245,7 +245,7 @@
                       </div>
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-primary">
+                  <button type="submit" class="btn button button-primary">
                     Save all
                   </button>
                 </div>
