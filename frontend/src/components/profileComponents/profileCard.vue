@@ -1,6 +1,6 @@
 <template>
   <div class="col-xl-4 order-xl-1">
-    <div class="card shadow border-0 text-center p-0">
+    <div class="card border-0 text-center p-0">
       <div class="card-body pb-5">
         <img
           src="/../public/assets/img/auth_page.jpg"
@@ -12,7 +12,7 @@
         <h5 class="fw-normal">Senior Software Engineer</h5>
         <p class="text-gray mb-4">New York, USA</p>
         <a
-          class="btn btn-sm btn-gray-800 d-inline-flex align-items-center me-2"
+          class="btn button btn-sm btn-gray-800 d-inline-flex align-items-center me-2"
           href="#"
           ><svg
             class="icon icon-xs me-1"
@@ -25,7 +25,7 @@
             ></path>
           </svg>
           Connect </a
-        ><a class="btn btn-sm btn-secondary" href="#">Send Message</a>
+        ><a class="btn button btn-sm btn-secondary" href="#">Send Message</a>
       </div>
     </div>
   </div>

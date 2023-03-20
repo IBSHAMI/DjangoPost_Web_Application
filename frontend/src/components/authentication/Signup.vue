@@ -95,7 +95,7 @@
             <div class="d-grid py-3">
               <button
                 type="submit"
-                class="btn button-primary"
+                class="btn button btn-lg button-primary"
                 :disabled="sub_in_process"
               >
                 Create an account

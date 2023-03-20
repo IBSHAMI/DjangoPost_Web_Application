@@ -1,5 +1,5 @@
 <template>
-  <div class="container py-4 my-4">
+  <div class="container p-4">
     <div class="row">
       <div class="row pb-3">
         <div class="container-fluid">
@@ -109,7 +109,7 @@
                           >Company Description</label
                         >
 
-                        <div class="w-full h-full relative mt-1 py-2">
+                        <div>
                           <vee-field
                             as="textarea"
                             id="company_description"

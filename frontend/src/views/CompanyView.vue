@@ -17,7 +17,7 @@
 import Navbar from "../components/sharedComponents/Navbar.vue";
 import CompanyData from "../components/CompanyData.vue";
 import JobsFormsItem from "../components/JobsFormsItem.vue";
-import CreateJobFormItem from "../components/CreateJobFormItem.vue";
+import CreateJobFormItem from "../components/companyComponents/CreateJobFormItem.vue";
 
 export default {
   name: "CompanyView",

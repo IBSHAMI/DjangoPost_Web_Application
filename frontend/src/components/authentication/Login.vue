@@ -46,7 +46,7 @@
             <button
               type="submit"
               :disabled="login_in_process"
-              class="btn button-primary"
+              class="btn button btn-lg button-primary"
             >
               Sign In
             </button>
