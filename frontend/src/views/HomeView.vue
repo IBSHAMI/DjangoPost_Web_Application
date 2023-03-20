@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <section class="min-vh-100 h-100">
     <Navbar :pageType="homePage" />
-  </div>
+  </section>
 </template>
 
 <script>

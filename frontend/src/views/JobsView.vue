@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <section>
     <Navbar :employeeProfile="employeeProfile" :pageType="jobsPage" />
-  </div>
+  </section>
 </template>
 
 <script>

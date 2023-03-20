@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <section class="min-vh-100 h-100">
     <div>
       <Navbar
         class="pb-8"
@@ -10,7 +10,7 @@
     <company-data v-if="passedSlug === 'data'" />
     <jobs-forms-item v-else-if="passedSlug === 'jobs'" />
     <create-job-form-item v-else-if="passedSlug === 'create-job'" />
-  </div>
+  </section>
 </template>
 
 <script>

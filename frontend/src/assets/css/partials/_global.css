@@ -78,6 +78,26 @@ th {
   vertical-align: top;
 }
 
+.table thead th {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-top: 0;
+}
+
+.table td,
+.table th {
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+th {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
 .form-control {
   display: block;
   width: 100%;

@@ -1,61 +1,104 @@
 <template>
-  <tr tabindex="0" class="">
-    <td class="">
-      <div class="flex items-center pl-5">
-        <p class="text-base font-medium leading-none text-gray-700 mr-2">
-          {{ job.title }}
-        </p>
-      </div>
+  <tr>
+    <td class="fw-normal text-center">
+      {{ job.title }}
     </td>
-    <td class="pl-5">
-      <div class="flex items-center">
-        <p class="text-sm leading-none text-gray-600 ml-2">{{ job.type }}</p>
-      </div>
+    <td class="fw-normal text-center">
+      {{ job.type }}
     </td>
-    <td class="pl-5">
-      <div class="flex items-center">
-        <p class="text-sm leading-none text-gray-600 ml-2">{{ job.salary }}</p>
-      </div>
+    <td class="fw-normal text-center">
+      {{ job.salary }}
     </td>
-    <td class="pl-5">
-      <div class="flex items-center">
-        <p class="text-sm leading-none text-gray-600 ml-2">
-          {{ job.language }}
-        </p>
-      </div>
+    <td class="fw-normal text-center">
+      {{ job.language }}
     </td>
-    <td class="pl-5">
-      <div class="flex items-center">
-        <p class="text-sm leading-none text-gray-600 ml-2">{{ dateCreated }}</p>
-      </div>
+    <td class="fw-normal text-center">
+      {{ dateCreated }}
     </td>
-    <td class="pl-5">
-      <button
-        class="py-3 px-3 text-sm focus:outline-none leading-none text-red-700 bg-red-100 rounded"
-        :class="{
-          'bg-red-100 text-red-700': job.is_active === false,
-          'bg-green-100 text-green-700': job.is_active === true,
-        }"
-      >
-        {{ job.is_active ? "Active" : "Inactive" }}
-      </button>
+    <td
+      class="fw-normal text-center font-weight-bold"
+      :class="job.is_active ? 'text-success' : 'text-danger'"
+    >
+      {{ job.is_active ? "Active" : "Inactive" }}
     </td>
-    <td class="pl-4">
-      <a
-        class="focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none"
+    <td class="fw-normal text-center">View</td>
+    <td class="fw-normal text-center">
+      <span
+        class="fw-normal text-info"
+        hx-get="/dashboard/notifications/view_notification_modal/1/"
+        hx-target="#modalNotification"
+        hx-trigger="click"
+        data-bs-toggle="modal"
+        data-bs-target="#modalNotification"
+        style="cursor: pointer"
       >
         View
-      </a>
+      </span>
+
+      <!-- Modal Content -->
+      <div
+        class="modal fade"
+        id="modalNotification"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="modalTitleNotify"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <p class="modal-title" id="modalTitleNotify">
+                Welcome to StudentDiary Nov. 26, 2022, 12:17 p.m..
+              </p>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="py-3 text-center">
+                <svg
+                  class="icon icon-xl text-primary"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                  ></path>
+                </svg>
+                <h2 class="h4 modal-title my-3">Product Added!</h2>
+                <p class="text-justify">
+                  Welcome to StudentDiary, We are pleased you decided to join
+                  us. We hope you enjoy our services.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- End of Modal Content -->
+      |
+      <span
+        class="fw-normal text-danger"
+        style="cursor: pointer"
+        hx-delete="/dashboard/notifications/delete_notification/1/1/"
+        hx-confirm="Are you sure you want to delete this notification?"
+        hx-target="#notifications-table"
+        >Delete</span
+      >
     </td>
-    <div class="grid place-items-center px-5 pt-5">
-      <jobs-dropdown-item :jobId="job.pk" />
-    </div>
   </tr>
 </template>
 
 <script>
-import JobsDropdownItem from "./JobsDropdownItem.vue";
-
 export default {
   name: "JobRowTableItem",
   props: ["job"],
@@ -65,10 +108,16 @@ export default {
       dateCreated: new Date(this.job.date_created).toLocaleDateString(),
     };
   },
-  components: {
-    JobsDropdownItem,
-  },
 };
 </script>
 
-<style></style>
+<style scoped>
+.custom-switch .custom-control-label {
+  left: -4.25rem;
+  width: 2.5rem;
+  pointer-events: all;
+  border: 0;
+  border-radius: 0.625rem;
+  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
+}
+</style>

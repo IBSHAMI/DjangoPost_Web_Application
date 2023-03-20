@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <section class="min-vh-100 h-100">
     <div>
       <Navbar
         class="pb-8"
@@ -9,7 +9,7 @@
     </div>
     <profile-data v-if="passedSlug === 'data'" />
     <contact-us-form v-else-if="passedSlug === 'contact'" />
-  </div>
+  </section>
 </template>
 
 <script>

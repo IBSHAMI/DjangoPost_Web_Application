@@ -1,13 +1,13 @@
 <template>
   <div>
     <button
-      class="focus:ring-2 rounded-md focus:outline-none"
+      class="btn button button-outline-primary"
       role="button"
       aria-label="option"
       @click="showDropdown = !showDropdown"
     >
       <svg
-        class="dropbtn"
+        class=""
         onclick=""
         xmlns="http://www.w3.org/2000/svg"
         width="20"
@@ -83,7 +83,7 @@ export default {
       // Add the token to the header as Bearer token
       const headers = {
         // eslint-disable-next-line prettier/prettier
-          "Authorization": token,
+        Authorization: token,
       };
       const jobDeleteUrl = API.jobs.list + `${this.jobId}/delete/`;
 

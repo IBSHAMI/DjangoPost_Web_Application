@@ -96,18 +96,20 @@
           </div>
         </div>
       </div>
-      <div class="row card card-body border-0 table-wrapper table-responsive">
-        <table class="table shadow-soft rounded">
+      <div class="bg-white table-responsive">
+        <table class="table">
           <thead>
             <tr>
-              <th scope="col" class="border-bottom">Tile</th>
-              <th scope="col" class="border-bottom">Type</th>
-              <th scope="col" class="border-bottom">Salary</th>
-              <th scope="col" class="border-bottom">Language</th>
-              <th scope="col" class="border-bottom">Created at</th>
-              <th scope="col" class="border-bottom">Active/Inactive</th>
-              <th scope="col" class="border-bottom">View</th>
-              <th scope="col" class="border-bottom">Action</th>
+              <th scope="col" class="border-bottom text-center">Title</th>
+              <th scope="col" class="border-bottom text-center">Type</th>
+              <th scope="col" class="border-bottom text-center">Salary</th>
+              <th scope="col" class="border-bottom text-center">Language</th>
+              <th scope="col" class="border-bottom text-center">Created at</th>
+              <th scope="col" class="border-bottom text-center">
+                Active/Inactive
+              </th>
+              <th scope="col" class="border-bottom text-center">View</th>
+              <th scope="col" class="border-bottom text-center">Action</th>
             </tr>
           </thead>
           <tbody>
