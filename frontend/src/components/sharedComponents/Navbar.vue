@@ -1,176 +1,155 @@
 <template>
-  <header class="header-global">
-    <nav
-      id="navbar-main"
-      aria-label="Primary navigation"
-      class="navbar navbar-main navbar-expand-lg navbar-theme-primary headroom navbar-light mt-1"
-    >
-      <div class="container position-relative">
-        <a class="navbar-brand me-lg-5" href="../../index.html">
-          <img
-            class="navbar-brand-light"
-            src="../../assets/img/brand/dark.svg"
-            alt="Logo dark"
-          />
-        </a>
-        <div class="navbar-collapse collapse me-auto" id="navbar_global">
-          <div class="navbar-collapse-header">
-            <div class="row">
-              <div class="col-6 collapse-close">
-                <a
-                  href="#navbar_global"
-                  class="fas fa-times"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#navbar_global"
-                  aria-controls="navbar_global"
-                  aria-expanded="false"
-                  title="close"
-                  aria-label="Toggle navigation"
-                ></a>
-              </div>
-            </div>
-          </div>
-          <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
-            <li
-              class="nav-item"
-              v-show="authenticationStore.isAuthenticated && companyProfile"
-            >
-              <router-link
-                :to="{ name: 'Company', params: { slug: 'data' } }"
-                class="nav-link"
-                >Company Profile</router-link
-              >
-            </li>
-            <li
-              class="nav-item"
-              v-show="authenticationStore.isAuthenticated && companyProfile"
-            >
-              <router-link
-                :to="{ name: 'Company', params: { slug: 'jobs' } }"
-                class="nav-link"
-                >Jobs</router-link
-              >
-            </li>
-            <li
-              class="nav-item dropdown"
-              v-show="authenticationStore.isAuthenticated && employeeProfile"
-            >
-              <a
-                href="#"
-                class="nav-link dropdown-toggle"
-                id="dashboardDropdown"
-                aria-expanded="false"
-                data-bs-toggle="dropdown"
-              >
-                Notifications
-              </a>
-              <div
-                class="dropdown-menu dropdown-megamenu-sm px-0 py-2 p-lg-4"
-                aria-labelledby="dashboardDropdown"
-              >
-                <a class="dropdown-item rounded-top" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item rounded-bottom" href="#"
-                  >Separated link</a
-                >
-              </div>
-            </li>
-            <li
-              class="nav-item dropdown"
-              v-show="authenticationStore.isAuthenticated && employeeProfile"
-            >
-              <a
-                href="#"
-                class="nav-link dropdown-toggle"
-                id="dashboardDropdown"
-                aria-expanded="false"
-                data-bs-toggle="dropdown"
-              >
-                Profile
-              </a>
-              <div
-                class="dropdown-menu dropdown-megamenu-sm text-start"
-                aria-labelledby="dashboardDropdown"
-              >
-                <router-link to="/profile/data" class="dropdown-item">
-                  Your Profile
-                </router-link>
-                <div class="dropdown-divider"></div>
-                <router-link to="/profile/data" class="dropdown-item">
-                  Jobs History
-                </router-link>
-              </div>
-            </li>
-            <li class="nav-item" v-show="authenticationStore.isAuthenticated">
-              <router-link
-                :to="{ name: 'Profile', params: { slug: 'contact' } }"
-                class="nav-link"
-                >Contact Us</router-link
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="d-flex align-items-center">
-          <div v-if="!authenticationStore.isAuthenticated">
-            <router-link
-              :to="{ name: 'Auth', params: { slug: 'signin' } }"
-              target="_blank"
-              class="btn btn-outline-gray-100 d-none d-lg-inline me-md-3"
-            >
-              Login</router-link
-            >
-            <router-link
-              :to="{ name: 'Auth', params: { slug: 'signup' } }"
-              target="_blank"
-              class="btn btn-primary"
-              >SignUp</router-link
-            >
-          </div>
-          <div v-else-if="authenticationStore.isAuthenticated">
-            <a
-              href=""
-              target="_blank"
-              @click.prevent="logout"
-              class="btn btn-outline-gray-100 d-none d-lg-inline me-md-3"
-            >
-              logout</a
-            >
-            <router-link
-              v-if="pageType === 'home'"
-              :to="{ name: 'Profile', params: { slug: 'data' } }"
-              target="_blank"
-              class="btn btn-primary"
-              >Job Board</router-link
-            >
-            <router-link
-              v-if="employeeProfile && pageType === 'jobs'"
-              :to="{ name: 'Company', params: { slug: 'data' } }"
-              class="btn btn-primary"
-              >{{ "Post Jobs" }}</router-link
-            >
-            <router-link
-              v-if="companyProfile && pageType === 'jobs'"
-              :to="{ name: 'Profile', params: { slug: 'data' } }"
-              class="btn btn-primary"
-              >{{ "Find Jobs" }}</router-link
-            >
-          </div>
+  <header class="header-area">
+    <div class="main-menu">
+      <nav
+        id="navbar-main"
+        aria-label="Primary navigation"
+        class="navbar navbar-expand-lg navbar-light"
+      >
+        <div class="container-fluid">
+          <a class="navbar-brand" href="../../index.html"> DjangoPost </a>
           <button
-            class="navbar-toggler ms-2"
+            class="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbar_global"
-            aria-controls="navbar_global"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
             <span class="navbar-toggler-icon"></span>
           </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="mx-auto"></div>
+            <ul class="nav navbar-nav">
+              <li
+                class="nav-item"
+                v-show="authenticationStore.isAuthenticated && companyProfile"
+              >
+                <router-link
+                  :to="{ name: 'Company', params: { slug: 'data' } }"
+                  class="nav-link"
+                  >Company Profile</router-link
+                >
+              </li>
+              <li
+                class="nav-item"
+                v-show="authenticationStore.isAuthenticated && companyProfile"
+              >
+                <router-link
+                  :to="{ name: 'Company', params: { slug: 'jobs' } }"
+                  class="nav-link"
+                  >Jobs</router-link
+                >
+              </li>
+              <li
+                class="nav-item dropdown"
+                v-show="authenticationStore.isAuthenticated && employeeProfile"
+              >
+                <a
+                  href="#"
+                  class="nav-link dropdown-toggle"
+                  id="dashboardDropdown"
+                  aria-expanded="false"
+                  data-bs-toggle="dropdown"
+                >
+                  Notifications
+                </a>
+                <div
+                  class="dropdown-menu dropdown-megamenu-sm px-0 py-2 p-lg-4"
+                  aria-labelledby="dashboardDropdown"
+                >
+                  <a class="dropdown-item rounded-top" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item rounded-bottom" href="#"
+                    >Separated link</a
+                  >
+                </div>
+              </li>
+              <li
+                class="nav-item dropdown"
+                v-show="authenticationStore.isAuthenticated && employeeProfile"
+              >
+                <a
+                  href="#"
+                  class="nav-link dropdown-toggle"
+                  id="dashboardDropdown"
+                  aria-expanded="false"
+                  data-bs-toggle="dropdown"
+                >
+                  Profile
+                </a>
+                <div
+                  class="dropdown-menu dropdown-megamenu-sm text-start"
+                  aria-labelledby="dashboardDropdown"
+                >
+                  <router-link to="/profile/data" class="dropdown-item">
+                    Your Profile
+                  </router-link>
+                  <div class="dropdown-divider"></div>
+                  <router-link to="/profile/data" class="dropdown-item">
+                    Jobs History
+                  </router-link>
+                </div>
+              </li>
+              <li class="nav-item" v-show="authenticationStore.isAuthenticated">
+                <router-link
+                  :to="{ name: 'Profile', params: { slug: 'contact' } }"
+                  class="nav-link"
+                  >Contact Us</router-link
+                >
+              </li>
+              <div v-if="!authenticationStore.isAuthenticated">
+                <router-link
+                  :to="{ name: 'Auth', params: { slug: 'signin' } }"
+                  target="_blank"
+                  class="btn button primary-button"
+                >
+                  Login</router-link
+                >
+                <router-link
+                  :to="{ name: 'Auth', params: { slug: 'signup' } }"
+                  target="_blank"
+                  class="btn button primary-button"
+                  >SignUp</router-link
+                >
+              </div>
+              <div v-else-if="authenticationStore.isAuthenticated">
+                <a
+                  href=""
+                  target="_blank"
+                  @click.prevent="logout"
+                  class="btn button primary-button"
+                >
+                  logout</a
+                >
+                <router-link
+                  v-if="pageType === 'home'"
+                  :to="{ name: 'Profile', params: { slug: 'data' } }"
+                  target="_blank"
+                  class="btn button primary-button"
+                  >Job Board</router-link
+                >
+                <router-link
+                  v-if="employeeProfile && pageType === 'jobs'"
+                  :to="{ name: 'Company', params: { slug: 'data' } }"
+                  class="btn button primary-button"
+                  >{{ "Post Jobs" }}</router-link
+                >
+                <router-link
+                  v-if="companyProfile && pageType === 'jobs'"
+                  :to="{ name: 'Profile', params: { slug: 'data' } }"
+                  class="btn button primary-button"
+                  >{{ "Find Jobs" }}</router-link
+                >
+              </div>
+            </ul>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   </header>
 </template>
 
@@ -221,4 +200,52 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+/* start navigation styles */
+
+.header-area .main-menu .navbar .btn {
+  margin: 0.5rem 0.5rem;
+}
+
+.header-area .main-menu .navbar .navbar-brand {
+  padding: 0 2rem 0 0;
+  color: var(--primary-color);
+  font-family: var(--Nunito);
+  font-weight: 700;
+}
+
+.header-area .main-menu .navbar .navbar-brand:hover {
+  background: var(--gradient-color);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-area .main-menu .navbar {
+  margin: 16px 170px;
+  padding: 0 15px;
+}
+
+.header-area .main-menu .nav-item .nav-link {
+  font: normal 700 15px/2px var(--Nunito);
+  text-transform: uppercase;
+  padding: 1.9rem;
+  color: #66799e;
+}
+
+.header-area .main-menu .navbar-nav .active {
+  background: var(--gradient-color);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-area .main-menu .navbar-nav a:hover {
+  background: var(--gradient-color);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* end navigation styles */
+</style>

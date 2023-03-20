@@ -1,0 +1,25 @@
+.button.primary-button {
+  color: var(--button-color);
+  background-color: var(--button-background-color);
+}
+
+.button.primary-button:hover {
+  background-clip: padding-box;
+  color: var(--primary-color-1);
+}
+
+.btn {
+  position: relative;
+  transition: all 0.2s ease;
+  letter-spacing: 0.025em;
+  font-size: 1rem;
+  font-family: var(--Nunito);
+  border-color: var(--border-color);
+  box-shadow: var(--box-shadow);
+  border: 4px solid transparent;
+}
+
+p.para {
+  color: var(--primary-color-2);
+  font: normal 500 16px/25px var(--Nunito);
+}

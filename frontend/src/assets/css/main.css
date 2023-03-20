@@ -1,3 +1,16 @@
+/* css variables */
+@import url(./partials/_variables.css);
+
+/* global styles */
+@import url(./partials/_global.css);
+
+body {
+  background-color: var(--window-background-color);
+  font-family: var(--Nunito);
+}
+
+/* upload file input */
+
 .invalid-input {
   width: 100%;
   margin-top: 0.25rem;
