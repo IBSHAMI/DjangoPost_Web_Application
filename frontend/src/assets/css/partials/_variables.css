@@ -1,16 +1,17 @@
 html,
 body {
   margin: 0%;
+  padding: 0%;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  background-color: azure;
+  background-color: #fff;
 }
 
 /* css variables */
 
 :root {
-  --window-background-color: #f8fafb;
+  --window-background-color: #fff;
   --button-background-color: #11ab7c;
   --button-boarder-color: #11ab7c;
   --button-color: #fff;

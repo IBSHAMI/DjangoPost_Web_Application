@@ -1,5 +1,5 @@
 <template>
-  <header class="header-area">
+  <header class="header-area bg-white py-1">
     <div class="main-menu">
       <nav
         id="navbar-main"
@@ -105,14 +105,14 @@
                 <router-link
                   :to="{ name: 'Auth', params: { slug: 'signin' } }"
                   target="_blank"
-                  class="btn button primary-button"
+                  class="btn button button-primary"
                 >
                   Login</router-link
                 >
                 <router-link
                   :to="{ name: 'Auth', params: { slug: 'signup' } }"
                   target="_blank"
-                  class="btn button primary-button"
+                  class="btn button button-primary"
                   >SignUp</router-link
                 >
               </div>
@@ -121,7 +121,7 @@
                   href=""
                   target="_blank"
                   @click.prevent="logout"
-                  class="btn button primary-button"
+                  class="btn button button-primary"
                 >
                   logout</a
                 >
@@ -129,19 +129,19 @@
                   v-if="pageType === 'home'"
                   :to="{ name: 'Profile', params: { slug: 'data' } }"
                   target="_blank"
-                  class="btn button primary-button"
+                  class="btn button button-primary"
                   >Job Board</router-link
                 >
                 <router-link
                   v-if="employeeProfile && pageType === 'jobs'"
                   :to="{ name: 'Company', params: { slug: 'data' } }"
-                  class="btn button primary-button"
+                  class="btn button button-primary"
                   >{{ "Post Jobs" }}</router-link
                 >
                 <router-link
                   v-if="companyProfile && pageType === 'jobs'"
                   :to="{ name: 'Profile', params: { slug: 'data' } }"
-                  class="btn button primary-button"
+                  class="btn button button-primary"
                   >{{ "Find Jobs" }}</router-link
                 >
               </div>

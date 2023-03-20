@@ -1,9 +1,9 @@
-.button.primary-button {
+.button.button-primary {
   color: var(--button-color);
   background-color: var(--button-background-color);
 }
 
-.button.primary-button:hover {
+.button.button-primary:hover {
   background-clip: padding-box;
   color: var(--primary-color-1);
 }

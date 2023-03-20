@@ -1,7 +1,6 @@
 <template>
-  <div class="bg-white">
+  <div>
     <Navbar :pageType="homePage" />
-    <hr />
   </div>
 </template>
 

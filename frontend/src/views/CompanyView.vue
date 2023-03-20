@@ -1,12 +1,11 @@
 <template>
   <div>
-    <div class="bg-white">
+    <div>
       <Navbar
         class="pb-8"
         :companyProfile="companyProfile"
         :pageType="jobsPage"
       />
-      <hr />
     </div>
     <company-data v-if="passedSlug === 'data'" />
     <jobs-forms-item v-else-if="passedSlug === 'jobs'" />

@@ -1,7 +1,6 @@
 <template>
-  <div class="bg-white">
+  <div>
     <Navbar :employeeProfile="employeeProfile" :pageType="jobsPage" />
-    <hr />
   </div>
 </template>
 
