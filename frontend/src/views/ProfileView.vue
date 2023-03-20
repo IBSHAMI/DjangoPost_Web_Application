@@ -1,11 +1,13 @@
 <template>
   <div>
-    <Navbar
-      class="pb-8"
-      :employeeProfile="employeeProfile"
-      :pageType="jobsPage"
-    />
-    <hr />
+    <div class="bg-white">
+      <Navbar
+        class="pb-8"
+        :employeeProfile="employeeProfile"
+        :pageType="jobsPage"
+      />
+      <hr />
+    </div>
     <profile-data v-if="passedSlug === 'data'" />
     <contact-us-form v-else-if="passedSlug === 'contact'" />
   </div>

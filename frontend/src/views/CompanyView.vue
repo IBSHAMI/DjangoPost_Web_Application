@@ -1,11 +1,13 @@
 <template>
   <div>
-    <Navbar
-      class="pb-8"
-      :companyProfile="companyProfile"
-      :pageType="jobsPage"
-    />
-    <hr />
+    <div class="bg-white">
+      <Navbar
+        class="pb-8"
+        :companyProfile="companyProfile"
+        :pageType="jobsPage"
+      />
+      <hr />
+    </div>
     <company-data v-if="passedSlug === 'data'" />
     <jobs-forms-item v-else-if="passedSlug === 'jobs'" />
     <create-job-form-item v-else-if="passedSlug === 'create-job'" />

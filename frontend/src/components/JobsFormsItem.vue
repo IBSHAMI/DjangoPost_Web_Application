@@ -1,110 +1,131 @@
 <template>
   <!-- component -->
-  <div class="sm:px-6 w-full">
-    <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
-    <div class="px-4 md:px-10 py-4 md:py-7">
-      <div class="flex items-center justify-between">
-        <p
-          tabindex="0"
-          class="focus:outline-none text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-800"
-        >
-          Jobs
-        </p>
-        <div
-          class="py-3 px-4 flex items-center text-sm font-medium leading-none text-gray-600 bg-gray-200 hover:bg-gray-300 rounded"
-        >
-          <p>Sort By:</p>
-          <select
-            aria-label="select"
-            class="focus:text-indigo-600 focus:outline-none bg-transparent ml-1 cursor-pointer"
-            v-model="selectedSort"
-            @change.prevent="sortJobs(selectedSort)"
-          >
-            <option
-              class="text-sm text-indigo-800"
-              v-for="option in SortByOptions"
-              v-bind:key="option.id"
-              :selected="option.selected"
+  <section class="container d-flex justify-content-center py-4 my-4">
+    <div class="w-100 text-center text-md-start">
+      <div class="row">
+        <div class="d-flex justify-content-between py-4">
+          <div class="d-block mb-4 mb-md-0">
+            <h2 class="h3">Jobs</h2>
+            <p class="mb-0">
+              Here you can view all the jobs that is posted under your company.
+            </p>
+          </div>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <router-link
+              :to="{ name: 'Company', params: { slug: 'create-job' } }"
+              class="btn btn-primary btn-lg d-flex align-items-center"
             >
-              {{ option.name }}
-            </option>
-          </select>
+              <svg
+                class="icon mx-2"
+                style="width: 1.5rem; height: 1.5rem"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                ></path>
+              </svg>
+              Add Job
+            </router-link>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
-      <div class="sm:flex items-center justify-between">
-        <div class="flex items-center">
-          <div
-            class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800"
-            style="cursor: pointer"
-            @click="changeTableVariant('all')"
-          >
+
+      <div class="row justify-content-between align-items-center">
+        <div class="col-9 col-lg-8 d-md-flex">
+          <div class="form-group col-md-4 mb-3">
+            <p>Search by Name:</p>
+            <input
+              type="text"
+              name="search-job"
+              id="search-job"
+              class="form-control"
+              placeholder="Search Jobs"
+            />
+          </div>
+          <div class="form-group col-md-4 mb-3 mx-3">
+            <p>Sort By:</p>
+            <select
+              aria-label="select"
+              class="form-control"
+              v-model="selectedSort"
+              @change.prevent="sortJobs(selectedSort)"
+            >
+              <option
+                class="text-sm text-indigo-800"
+                v-for="option in SortByOptions"
+                v-bind:key="option.id"
+                :selected="option.selected"
+              >
+                {{ option.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div
+        class="row card card-body shadow border-0 table-wrapper table-responsive"
+      >
+        <div class="btn-group" role="group">
+          <div style="cursor: pointer" @click="changeTableVariant('all')">
             <div
-              class="py-2 px-8 rounded-full"
+              class="btn"
               :class="{
-                'bg-indigo-100 text-indigo-700': tableVariant === 'all',
-                'text-gray-600 hover:text-indigo-700 hover:bg-indigo-100':
-                  tableVariant !== 'all',
+                'btn-primary': tableVariant === 'all',
+                'btn-outline-primary': tableVariant !== 'all',
               }"
             >
-              <p>All</p>
+              All
             </div>
           </div>
           <div
-            class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8"
             style="cursor: pointer"
             @click="changeTableVariant('active')"
+            class="mx-2"
           >
             <div
-              class="py-2 px-8 rounded-full"
+              class="btn"
               :class="{
-                'bg-indigo-100 text-indigo-700': tableVariant === 'active',
-                'text-gray-600 hover:text-indigo-700 hover:bg-indigo-100':
-                  tableVariant !== 'active',
+                'btn-primary': tableVariant === 'active',
+                'btn-outline-primary': tableVariant !== 'active',
               }"
             >
-              <p>Active</p>
+              Active
             </div>
           </div>
           <div
-            class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8"
             style="cursor: pointer"
             @click="changeTableVariant('inactive')"
+            class="mx-2"
           >
             <div
-              class="py-2 px-8 rounded-full"
+              class="btn"
               :class="{
-                'bg-indigo-100 text-indigo-700': tableVariant === 'inactive',
-                'text-gray-600 hover:text-indigo-700 hover:bg-indigo-100':
-                  tableVariant !== 'inactive',
+                'btn-primary': tableVariant === 'inactive',
+                'btn-outline-primary': tableVariant !== 'inactive',
               }"
             >
-              <p>Inactive</p>
+              Inactive
             </div>
           </div>
         </div>
-        <router-link
-          :to="{ name: 'Company', params: { slug: 'create-job' } }"
-          class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded"
-        >
-          <p class="text-sm font-medium leading-none text-white">Add Job</p>
-        </router-link>
-      </div>
-      <div class="mt-7 overflow-x-auto">
-        <table class="w-full whitespace-nowrap">
-          <thead
-            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-          >
+
+        <table class="table align-items-center">
+          <thead>
             <tr>
-              <th scope="col" class="py-3 px-6">Tile</th>
-              <th scope="col" class="py-3 px-6">Type</th>
-              <th scope="col" class="py-3 px-6">Salary</th>
-              <th scope="col" class="py-3 px-6">Language</th>
-              <th scope="col" class="py-3 px-6">Created at</th>
-              <th scope="col" class="py-3 px-6">Active/Inactive</th>
-              <th scope="col" class="py-3 px-6">View</th>
-              <th scope="col" class="py-3 px-6">Action</th>
+              <th scope="col" class="border-bottom">Tile</th>
+              <th scope="col" class="border-bottom">Type</th>
+              <th scope="col" class="border-bottom">Salary</th>
+              <th scope="col" class="border-bottom">Language</th>
+              <th scope="col" class="border-bottom">Created at</th>
+              <th scope="col" class="border-bottom">Active/Inactive</th>
+              <th scope="col" class="border-bottom">View</th>
+              <th scope="col" class="border-bottom">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -119,7 +140,7 @@
         </table>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -172,7 +193,7 @@ export default {
       // Add the token to the header as Bearer token
       const headers = {
         // eslint-disable-next-line prettier/prettier
-          "Authorization": token,
+        Authorization: token,
       };
       const jobsListUrl = API.jobs.list;
 

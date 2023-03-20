@@ -1,10 +1,8 @@
 from rest_framework import generics
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
 
 from .models import CompanyProfile
 from .serializers import CompanyProfileSerializer
