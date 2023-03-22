@@ -9,8 +9,15 @@ export default defineStore("authentication", {
     user: null,
     employeeProfilePicture: null,
     companyProfileLogo: null,
+    resumePathToDownload: null,
     isAuthenticated: false,
   }),
+  // getters is like computed properties in Vue
+  getters: {
+    getResumePathToDownloadUrl() {
+      return this.resumePathToDownload;
+    },
+  },
   // actions is like methods in Vue
   actions: {
     // initialize is called when the store is created
@@ -40,6 +47,9 @@ export default defineStore("authentication", {
     setCompanyProfileLogo(companyProfileLogo) {
       this.$patch({ companyProfileLogo: companyProfileLogo });
     },
+    setResumePathToDownload(resumePathToDownload) {
+      this.$patch({ resumePathToDownload: resumePathToDownload });
+    },
     getAccountPictures() {
       // headers to retieve the account pictures
       const token = `Bearer ${this.token}`;
@@ -65,6 +75,26 @@ export default defineStore("authentication", {
         .get(API.company.company_profile_logo, { headers: headers })
         .then((response) => {
           this.setCompanyProfileLogo(response.data.company_logo);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getResumePathToDownload() {
+      // headers to retieve the account pictures
+      const token = `Bearer ${this.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        "content-type": "application/json",
+        // eslint-disable-next-line prettier/prettier
+        Authorization: token,
+      };
+
+      // get the resume path to download
+      axios
+        .get(API.employee.employee_profile_resume, { headers: headers })
+        .then((response) => {
+          this.setResumePathToDownload(response.data.resume);
         })
         .catch((error) => {
           console.log(error);

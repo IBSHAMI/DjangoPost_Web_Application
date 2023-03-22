@@ -221,7 +221,7 @@
                             v-if="!resumeUploadShow"
                             @click.prevent="resumeUploadShow = true"
                           >
-                            Upload New Resume
+                            Click to Drag New Resume
                           </button>
                           <profile-resume-upload
                             v-else
@@ -246,7 +246,7 @@
                             v-if="!PictureUploadShow"
                             @click.prevent="PictureUploadShow = true"
                           >
-                            Change Profile Picture
+                            Click to Drag Profile Picture
                           </button>
                           <profile-picture-upload
                             v-else
@@ -259,6 +259,13 @@
                           @click.prevent="uploadFiles"
                         >
                           Upload Files
+                        </button>
+                        <button
+                          v-show="resume && resumeuploadedCheck"
+                          class="btn button button-primary my-2 mx-2"
+                          @click.prevent="downloadResume"
+                        >
+                          Download Resume
                         </button>
                       </div>
                     </div>
@@ -326,6 +333,12 @@ export default {
       resume: "",
       profilePicture: "",
 
+      // this value is used to help show download resume button
+      // since resume value is updated even tho the user did not
+      // upload the resume to the server yet, resume value is updated
+      // hence resume value alone cant be used to show the download resume button
+      resumeuploadedCheck: false,
+
       // choices data
       JobExperience: [],
     };
@@ -385,6 +398,7 @@ export default {
           this.about = response.data.about;
           if (response.data.resume) {
             this.resume = this.getFileBaseName(response.data.resume);
+            this.resumeuploadedCheck = true;
           }
           if (response.data.profile_picture) {
             this.profilePicture = this.getFileBaseName(
@@ -482,6 +496,7 @@ export default {
       } else if (typeof this.resume === "object") {
         data.append("resume", this.resume);
         uploadResume = true;
+        this.resumeuploadedCheck = true;
       } else {
         data.append("resume", "");
       }
@@ -548,6 +563,20 @@ export default {
 
             console.log(error);
           });
+      }
+    },
+    downloadResume() {
+      // get the download link from server
+      this.authenticationStore.getResumePathToDownload();
+      console.log(
+        "resumePath : ",
+        this.authenticationStore.resumePathToDownload
+      );
+      const downloadUrl = this.authenticationStore.getResumePathToDownloadUrl;
+
+      if (downloadUrl) {
+        // download the file
+        window.open(downloadUrl, "_blank");
       }
     },
   },

@@ -17,6 +17,10 @@ export default {
     // from the authentication store
     this.authenticationStore.initializeStore();
   },
+  mounted() {
+    // load profile pictures
+    this.authenticationStore.getAccountPictures();
+  },
 };
 </script>
 

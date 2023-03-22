@@ -22,7 +22,7 @@
                     :alertMessage="alertMessage"
                     @closeAlert="closeAlert"
                   />
-                  <h2 class="text-start h5 mb-2 px-2">Company Information</h2>
+                  <h2 class="text-center form-header">Company Information</h2>
                   <div class="card-body px-2">
                     <div class="row py-2">
                       <div class="form-group col-md-6 mb-3">
