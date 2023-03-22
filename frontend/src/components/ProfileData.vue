@@ -463,7 +463,10 @@ export default {
       this.authenticationStore.getAccountPictures();
     },
     async uploadFiles() {
-      console.log("updateUserData");
+      // Upload Resume and Profile Picture varaibles
+      let uploadResume = false;
+      let uploadProfilePicture = false;
+
       const token = `Bearer ${this.authenticationStore.token}`;
       // Add the token to the header as Bearer token
       const headers = {
@@ -478,6 +481,7 @@ export default {
         data.append("resume", "");
       } else if (typeof this.resume === "object") {
         data.append("resume", this.resume);
+        uploadResume = true;
       } else {
         data.append("resume", "");
       }
@@ -487,32 +491,64 @@ export default {
         data.append("profile_picture", "");
       } else if (typeof this.profilePicture === "object") {
         data.append("profile_picture", this.profilePicture);
+        uploadProfilePicture = true;
       } else {
         data.append("profile_picture", "");
       }
 
-      console.log(data);
+      if (uploadResume) {
+        await axios
+          .put(API.employee.employee_profile_resume, data, { headers: headers })
+          .then((response) => {
+            // show that the data is updated
+            this.alert = true;
+            this.alertMessage = "Files uploaded successfully";
+            this.alertBackgroundColor = "alert alert-success";
 
-      await axios
-        .put(API.employee.employee_profile_picture, data, { headers: headers })
-        .then((response) => {
-          // show that the data is updated
-          this.alert = true;
-          this.alertMessage = "Files uploaded successfully";
-          this.alertBackgroundColor = "alert alert-success";
+            console.log(response.data);
+            this.resumeUploadShow = false;
+            if (response.data.resume) {
+              this.resume = this.getFileBaseName(response.data.resume);
+            }
+          })
+          .catch((error) => {
+            this.alert = true;
+            this.alertMessage = " Error occur while uploading files";
+            this.alertBackgroundColor = "alert alert-danger";
 
-          console.log(response.data);
+            console.log(error);
+          });
+      }
+      if (uploadProfilePicture) {
+        await axios
+          .put(API.employee.employee_profile_picture, data, {
+            headers: headers,
+          })
+          .then((response) => {
+            // show that the data is updated
+            this.alert = true;
+            this.alertMessage = "Files uploaded successfully";
+            this.alertBackgroundColor = "alert alert-success";
 
-          this.PictureUploadShow = false;
-          this.authenticationStore.getAccountPictures();
-        })
-        .catch((error) => {
-          this.alert = true;
-          this.alertMessage = " Error occur while uploading files";
-          this.alertBackgroundColor = "alert alert-danger";
+            console.log(response.data);
 
-          console.log(error);
-        });
+            this.PictureUploadShow = false;
+            this.authenticationStore.getAccountPictures();
+
+            if (response.data.profile_picture) {
+              this.profilePicture = this.getFileBaseName(
+                response.data.profile_picture
+              );
+            }
+          })
+          .catch((error) => {
+            this.alert = true;
+            this.alertMessage = " Error occur while uploading files";
+            this.alertBackgroundColor = "alert alert-danger";
+
+            console.log(error);
+          });
+      }
     },
   },
 };

@@ -45,3 +45,11 @@ class EmployeeProfileResumeSerializer(serializers.ModelSerializer):
         fields = [
             'resume',
         ]
+
+    def update(self, instance, validated_data):
+        print('validated_data: ', validated_data)
+        resume = validated_data.get('resume', None)
+        if resume is not None:
+            instance.resume = resume
+            instance.save()
+        return instance

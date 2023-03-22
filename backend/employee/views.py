@@ -111,7 +111,6 @@ class EmployeeProfilePictureAPIView(generics.RetrieveUpdateAPIView):
     queryset = EmployeeProfile.objects.all()
     serializer_class = EmployeeProfilePictureSerializer
 
-
     def get_object(self):
         # get the sent request
         request = self.request
