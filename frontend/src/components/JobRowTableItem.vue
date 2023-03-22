@@ -91,7 +91,12 @@
         >{{ job.is_active ? "Deactive Job" : "Active Job" }}</span
       >
       |
-      <span class="fw-normal text-danger" style="cursor: pointer">Delete</span>
+      <span
+        class="fw-normal text-danger"
+        style="cursor: pointer"
+        @click.prevent="deleteJob"
+        >Delete</span
+      >
     </td>
   </tr>
 </template>
@@ -130,6 +135,27 @@ export default {
 
       axios
         .get(changeJobStatusUrl, { headers: headers })
+        .then((response) => {
+          console.log(response);
+          this.$emit("reloadJobsList");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    deleteJob() {
+      const deleteJobUrl = API.jobs.delete_job + this.job.pk + "/";
+
+      const token = `Bearer ${this.authenticationStore.token}`;
+      console.log(token);
+      // Add the token to the header as Bearer token
+      const headers = {
+        // eslint-disable-next-line prettier/prettier
+        Authorization: token,
+      };
+
+      axios
+        .delete(deleteJobUrl, { headers: headers })
         .then((response) => {
           console.log(response);
           this.$emit("reloadJobsList");
