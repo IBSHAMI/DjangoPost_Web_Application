@@ -104,32 +104,30 @@ export default {
       };
 
       // send the login credentials to the server
-      setTimeout(() => {
-        axios
-          .post(API.auth.login, loginCredentials)
-          .then((response) => {
-            this.login_in_process = false;
-            this.login_alert_variant = "alert alert-success";
-            this.login_alert_message = "Login successful, redirecting...";
-            // save the token in the store
-            const token = response.data.auth_token;
-            this.authenticationStore.setToken(token);
-            this.authenticationStore.setUser(loginCredentials.email);
-            setTimeout(() => {
-              this.$router.push({ name: "Jobs" });
-            }, 1000);
-          })
-          // eslint-disable-next-line no-unused-vars
-          .catch((error) => {
-            this.login_in_process = false;
-            this.login_alert_variant = "alert alert-danger";
-            this.login_alert_message = "Login failed, please try again";
-            console.log(error);
-          });
-      }, 1000);
-    },
-    signupPageShow() {
-      this.$emit("signupPageShow");
+      axios
+        .post(API.auth.login, loginCredentials)
+        .then((response) => {
+          this.login_in_process = false;
+          this.login_alert_variant = "alert alert-success";
+          this.login_alert_message = "Login successful, redirecting...";
+          // save the token in the store
+          const token = response.data.auth_token;
+          this.authenticationStore.setToken(token);
+          this.authenticationStore.setUser(loginCredentials.email);
+
+          this.authenticationStore.getAccountPictures();
+
+          setTimeout(() => {
+            this.$router.push({ name: "Jobs" });
+          }, 3000);
+        })
+        // eslint-disable-next-line no-unused-vars
+        .catch((error) => {
+          this.login_in_process = false;
+          this.login_alert_variant = "alert alert-danger";
+          this.login_alert_message = "Login failed, please try again";
+          console.log(error);
+        });
     },
   },
 };

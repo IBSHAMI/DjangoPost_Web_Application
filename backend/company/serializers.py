@@ -4,7 +4,6 @@ from .models import CompanyProfile
 
 
 class CompanyProfileSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = CompanyProfile
         fields = [
@@ -13,5 +12,13 @@ class CompanyProfileSerializer(serializers.ModelSerializer):
             'company_location',
             'company_website',
             'company_size',
+            'company_logo',
+        ]
+
+
+class CompanyProfileLogoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompanyProfile
+        fields = [
             'company_logo',
         ]

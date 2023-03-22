@@ -1,10 +1,14 @@
 import { defineStore } from "pinia";
+import { API } from "@/api";
+import axios from "axios";
 
 export default defineStore("authentication", {
   // We use state object to create gloabl state
   state: () => ({
     token: null,
     user: null,
+    employeeProfilePicture: null,
+    companyProfileLogo: null,
     isAuthenticated: false,
   }),
   // actions is like methods in Vue
@@ -29,6 +33,42 @@ export default defineStore("authentication", {
     setUser(user) {
       this.$patch({ user: user });
       localStorage.setItem("user", user);
+    },
+    setEmployeeProfilePicture(employeeProfilePicture) {
+      this.$patch({ employeeProfilePicture: employeeProfilePicture });
+    },
+    setCompanyProfileLogo(companyProfileLogo) {
+      this.$patch({ companyProfileLogo: companyProfileLogo });
+    },
+    getAccountPictures() {
+      // headers to retieve the account pictures
+      const token = `Bearer ${this.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        "content-type": "application/json",
+        // eslint-disable-next-line prettier/prettier
+        Authorization: token,
+      };
+
+      // get the employee profile picture
+      axios
+        .get(API.employee.get_employee_profile_picture, { headers: headers })
+        .then((response) => {
+          this.setEmployeeProfilePicture(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      // get the company logo
+      axios
+        .get(API.company.get_company_profile_logo, { headers: headers })
+        .then((response) => {
+          this.setCompanyProfileLogo(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     logout() {
       localStorage.removeItem("Bearer");

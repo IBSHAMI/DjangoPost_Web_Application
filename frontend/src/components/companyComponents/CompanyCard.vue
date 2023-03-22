@@ -3,9 +3,9 @@
     <div class="card shadow border-0 text-center p-0">
       <div class="card-body pb-5">
         <img
-          src="/../public/assets/img/auth_page.jpg"
+          :src="companyProfileLogo"
           class="img-fluid avatar-xl rounded-circle mx-auto mt-n7 mb-4"
-          alt="employee picture"
+          alt="company logo"
           style="width: 200px; height: 200px"
         />
         <h4 class="h3">{{ company }}</h4>
@@ -32,9 +32,31 @@
 </template>
 
 <script>
+import useAuthenticationStore from "@/stores/authentication";
+
 export default {
-  name: "ProfileCard",
+  name: "CompanyCard",
   props: ["company"],
+  setup() {
+    const authenticationStore = useAuthenticationStore();
+    return { authenticationStore };
+  },
+  data() {
+    return {
+      companyProfileLogo: "",
+    };
+  },
+  mounted() {
+    this.getCompanyLogo();
+  },
+  methods: {
+    getCompanyLogo() {
+      if (this.authenticationStore.companyProfileLogo.company_logo) {
+        this.companyProfileLogo =
+          this.authenticationStore.companyProfileLogo.company_logo;
+      }
+    },
+  },
 };
 </script>
 

@@ -10,10 +10,12 @@ export const API = {
     details: `${baseURL}/api/users/employee/data/`,
     contact_support: `${baseURL}/api/users/employee/contact-support/`,
     get_choices_data: `${baseURL}/api/users/employee/employee_choices/`,
+    get_employee_profile_picture: `${baseURL}/api/users/employee/employee_profile_picture/`,
   },
   company: {
     details: `${baseURL}/api/users/company/data/`,
     contact_support: `${baseURL}/api/users/company/contact-support/`,
+    get_company_profile_logo: `${baseURL}/api/users/company/company_profile_logo/`,
   },
   jobs: {
     list: `${baseURL}/api/jobs/`,

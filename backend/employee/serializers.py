@@ -19,3 +19,11 @@ class EmployeeProfileSerializer(serializers.ModelSerializer):
             'resume',
             'profile_picture',
         ]
+
+
+class EmployeeProfilePictureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmployeeProfile
+        fields = [
+            'profile_picture',
+        ]

@@ -194,6 +194,13 @@
                         </div>
                       </div>
                     </div>
+                    <button
+                      type="submit"
+                      class="btn button button-primary my-2"
+                    >
+                      Save all
+                    </button>
+                    <hr />
                     <div class="row py-2">
                       <div class="form-group col-md-12 mb-6">
                         <label class="form-label fst-italic"
@@ -209,7 +216,7 @@
                             v-if="!resumeUploadShow"
                             @click.prevent="resumeUploadShow = true"
                           >
-                            Upload Resume
+                            Upload New Resume
                           </button>
                           <profile-resume-upload
                             v-else
@@ -234,7 +241,7 @@
                             v-if="!PictureUploadShow"
                             @click.prevent="PictureUploadShow = true"
                           >
-                            Upload Profile Photo
+                            Change Profile Picture
                           </button>
                           <profile-picture-upload
                             v-else
@@ -242,12 +249,12 @@
                             @closeUploadModel="CloseUploadModel"
                           />
                         </div>
+                        <button class="btn button button-primary my-2">
+                          Upload Files
+                        </button>
                       </div>
                     </div>
                   </div>
-                  <button type="submit" class="btn button button-primary">
-                    Save all
-                  </button>
                 </div>
               </vee-form>
             </div>
@@ -376,10 +383,6 @@ export default {
               response.data.profile_picture
             );
           }
-          // this.resume = this.getFileBaseName(response.data.resume);
-          // this.profilePicture = this.getFileBaseName(
-          //   response.data.profile_picture
-          // );
         })
         // eslint-disable-next-line no-unused-vars
         .catch((error) => {
@@ -464,6 +467,8 @@ export default {
           this.alertMessage = " Error occur while updating data";
           this.alertBackgroundColor = "alert alert-danger";
         });
+
+      this.authenticationStore.getAccountPictures();
     },
   },
 };

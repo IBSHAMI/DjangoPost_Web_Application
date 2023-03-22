@@ -104,14 +104,12 @@
               <div v-if="!authenticationStore.isAuthenticated">
                 <router-link
                   :to="{ name: 'Auth', params: { slug: 'signin' } }"
-                  target="_blank"
                   class="btn button button-primary"
                 >
                   Login</router-link
                 >
                 <router-link
                   :to="{ name: 'Auth', params: { slug: 'signup' } }"
-                  target="_blank"
                   class="btn button button-primary"
                   >SignUp</router-link
                 >
@@ -119,7 +117,6 @@
               <div v-else-if="authenticationStore.isAuthenticated">
                 <a
                   href=""
-                  target="_blank"
                   @click.prevent="logout"
                   class="btn button button-primary"
                 >

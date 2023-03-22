@@ -5,7 +5,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
 
 from .models import CompanyProfile
-from .serializers import CompanyProfileSerializer
+from .serializers import CompanyProfileSerializer, CompanyProfileLogoSerializer
 
 User = get_user_model()
 
@@ -58,3 +58,24 @@ class CompanyDetailsAPIView(generics.RetrieveUpdateAPIView):
         self.perform_update(serializer)
 
         return Response(serializer.data)
+
+
+class CompanyProfileLogoAPIView(generics.RetrieveAPIView):
+    queryset = CompanyProfile.objects.all()
+    serializer_class = CompanyProfileLogoSerializer
+
+    def get_object(self):
+        # get the sent request
+        request = self.request
+
+        # get the user Token
+        token = request.headers.get('Authorization').split(' ')[1]  # get the token from the header
+        user_email = Token.objects.get(key=token).user
+        user = User.objects.get(email=user_email)
+
+        # get the employee profile
+        employee = CompanyProfile.objects.get(user=user)
+
+        get_object = employee
+
+        return get_object
