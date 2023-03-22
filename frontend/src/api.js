@@ -10,7 +10,8 @@ export const API = {
     details: `${baseURL}/api/users/employee/data/`,
     contact_support: `${baseURL}/api/users/employee/contact-support/`,
     get_choices_data: `${baseURL}/api/users/employee/employee_choices/`,
-    get_employee_profile_picture: `${baseURL}/api/users/employee/employee_profile_picture/`,
+    employee_profile_picture: `${baseURL}/api/users/employee/employee_profile_picture/`,
+    employee_profile_resume: `${baseURL}/api/users/employee/employee_profile_resume/`,
   },
   company: {
     details: `${baseURL}/api/users/company/data/`,

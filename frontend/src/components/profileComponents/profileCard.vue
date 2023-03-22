@@ -3,7 +3,7 @@
     <div class="card border-0 text-center p-0">
       <div class="card-body pb-5">
         <img
-          :src="employeeProfilePicture"
+          :src="profilePicturePath"
           class="img-fluid avatar-xl rounded-circle mx-auto mt-n7 mb-4"
           alt="employee picture"
           style="width: 200px; height: 200px"
@@ -32,31 +32,9 @@
 </template>
 
 <script>
-import useAuthenticationStore from "@/stores/authentication";
-
 export default {
   name: "ProfileCard",
-  props: ["fullName"],
-  setup() {
-    const authenticationStore = useAuthenticationStore();
-    return { authenticationStore };
-  },
-  data() {
-    return {
-      employeeProfilePicture: "",
-    };
-  },
-  mounted() {
-    this.getEmployeeProfilePicture();
-  },
-  methods: {
-    getEmployeeProfilePicture() {
-      if (this.authenticationStore.employeeProfilePicture.profile_picture) {
-        this.employeeProfilePicture =
-          this.authenticationStore.employeeProfilePicture.profile_picture;
-      }
-    },
-  },
+  props: ["fullName", "profilePicturePath"],
 };
 </script>
 

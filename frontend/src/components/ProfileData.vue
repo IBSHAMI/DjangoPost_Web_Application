@@ -4,7 +4,12 @@
       <div class="row pb-3">
         <div class="container-fluid">
           <div class="row">
-            <profile-card :fullName="getDisplayName()" />
+            <profile-card
+              :fullName="getDisplayName()"
+              :profilePicturePath="
+                this.authenticationStore.employeeProfilePicture
+              "
+            />
             <div class="col-xl-8 order-xl-1">
               <vee-form
                 action="#"
@@ -249,7 +254,10 @@
                             @closeUploadModel="CloseUploadModel"
                           />
                         </div>
-                        <button class="btn button button-primary my-2">
+                        <button
+                          class="btn button button-primary my-2"
+                          @click.prevent="uploadFiles"
+                        >
                           Upload Files
                         </button>
                       </div>
@@ -434,23 +442,7 @@ export default {
       data.append("portfolio_url", this.portfolioWebsite);
       data.append("about", this.about);
 
-      // Check if resume is typeof file
-      if (this.resume === null) {
-        data.append("resume", "");
-      } else if (typeof this.resume === "object") {
-        data.append("resume", this.resume);
-      } else {
-        data.append("resume", "");
-      }
-
-      // Check if profile picture is typeof file
-      if (this.profilePicture === null) {
-        data.append("profile_picture", "");
-      } else if (typeof this.profilePicture === "object") {
-        data.append("profile_picture", this.profilePicture);
-      } else {
-        data.append("profile_picture", "");
-      }
+      console.log(data);
 
       axios
         .patch(API.employee.details, data, { headers: headers })
@@ -469,6 +461,58 @@ export default {
         });
 
       this.authenticationStore.getAccountPictures();
+    },
+    async uploadFiles() {
+      console.log("updateUserData");
+      const token = `Bearer ${this.authenticationStore.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        // eslint-disable-next-line prettier/prettier
+        Authorization: token,
+      };
+
+      const data = new FormData();
+
+      // Check if resume is typeof file
+      if (this.resume === null) {
+        data.append("resume", "");
+      } else if (typeof this.resume === "object") {
+        data.append("resume", this.resume);
+      } else {
+        data.append("resume", "");
+      }
+
+      // Check if profile picture is typeof file
+      if (this.profilePicture === null) {
+        data.append("profile_picture", "");
+      } else if (typeof this.profilePicture === "object") {
+        data.append("profile_picture", this.profilePicture);
+      } else {
+        data.append("profile_picture", "");
+      }
+
+      console.log(data);
+
+      await axios
+        .put(API.employee.employee_profile_picture, data, { headers: headers })
+        .then((response) => {
+          // show that the data is updated
+          this.alert = true;
+          this.alertMessage = "Files uploaded successfully";
+          this.alertBackgroundColor = "alert alert-success";
+
+          console.log(response.data);
+
+          this.PictureUploadShow = false;
+          this.authenticationStore.getAccountPictures();
+        })
+        .catch((error) => {
+          this.alert = true;
+          this.alertMessage = " Error occur while uploading files";
+          this.alertBackgroundColor = "alert alert-danger";
+
+          console.log(error);
+        });
     },
   },
 };

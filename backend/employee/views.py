@@ -9,7 +9,11 @@ from django.core.mail import send_mail
 
 from .models import EmployeeProfile
 from .choices_fields_data_employee import JOB_EXPERIENCE_CHOICES
-from .serializers import EmployeeProfileSerializer, EmployeeProfilePictureSerializer
+from .serializers import (
+    EmployeeProfileSerializer,
+    EmployeeProfilePictureSerializer,
+    EmployeeProfileResumeSerializer
+)
 
 User = get_user_model()
 
@@ -31,7 +35,6 @@ class EmployeeChoicesView(GenericAPIView):
 class EmployeeDetailsAPIView(generics.RetrieveUpdateAPIView):
     queryset = EmployeeProfile.objects.all()
     serializer_class = EmployeeProfileSerializer
-    parser_classes = (MultiPartParser, FormParser)
 
     def get_object(self):
         # get the sent request
@@ -89,14 +92,11 @@ class EmployeeDetailsAPIView(generics.RetrieveUpdateAPIView):
         data.pop('first_name')
         data.pop('last_name')
         data.pop('email')
-        resume = request.data.get('resume')
-        if not resume:
-            data.pop('resume')
 
-        profile_picture = request.data.get('profile_picture')
-        if not profile_picture:
-            data.pop('profile_picture')
+        print(data)
 
+        # update the employee profile data fields without profile picture or resume
+        # because they are handled in a different view
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=data, partial=partial)
@@ -107,9 +107,31 @@ class EmployeeDetailsAPIView(generics.RetrieveUpdateAPIView):
         return Response(data)
 
 
-class EmployeeProfilePictureAPIView(generics.RetrieveAPIView):
+class EmployeeProfilePictureAPIView(generics.RetrieveUpdateAPIView):
     queryset = EmployeeProfile.objects.all()
     serializer_class = EmployeeProfilePictureSerializer
+
+
+    def get_object(self):
+        # get the sent request
+        request = self.request
+
+        # get the user Token
+        token = request.headers.get('Authorization').split(' ')[1]  # get the token from the header
+        user_email = Token.objects.get(key=token).user
+        user = User.objects.get(email=user_email)
+
+        # get the employee profile
+        employee = EmployeeProfile.objects.get(user=user)
+
+        get_object = employee
+
+        return get_object
+
+
+class EmployeeProfileResumeAPIView(generics.RetrieveUpdateAPIView):
+    queryset = EmployeeProfile.objects.all()
+    serializer_class = EmployeeProfileResumeSerializer
 
     def get_object(self):
         # get the sent request

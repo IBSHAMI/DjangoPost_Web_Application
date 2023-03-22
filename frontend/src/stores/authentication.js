@@ -52,9 +52,9 @@ export default defineStore("authentication", {
 
       // get the employee profile picture
       axios
-        .get(API.employee.get_employee_profile_picture, { headers: headers })
+        .get(API.employee.employee_profile_picture, { headers: headers })
         .then((response) => {
-          this.setEmployeeProfilePicture(response.data);
+          this.setEmployeeProfilePicture(response.data.profile_picture);
         })
         .catch((error) => {
           console.log(error);
