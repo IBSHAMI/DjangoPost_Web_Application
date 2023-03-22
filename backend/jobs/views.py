@@ -1,5 +1,8 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import (
     GenericAPIView,
     ListAPIView,
@@ -145,3 +148,20 @@ class JobDeleteView(DestroyAPIView):
             super().perform_destroy(instance)
         else:
             raise serializers.ValidationError('You are not the owner of this job')
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def change_job_status(request, pk):
+    # get job
+    job = get_object_or_404(Job, pk=pk)
+    print(request.user)
+
+    # check if job is under user
+    if job.user == request.user:
+        # update job status
+        job.is_active = not job.is_active
+        job.save()
+        return Response(status=status.HTTP_200_OK)
+    else:
+        raise serializers.ValidationError('You are not the owner of this job')

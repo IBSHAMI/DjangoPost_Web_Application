@@ -117,6 +117,7 @@
               v-for="job in jobsList"
               :key="job.pk"
               :job="job"
+              @reloadJobsList="getJobsList"
             ></job-row-table-item>
 
             <tr class="h-3"></tr>

@@ -21,13 +21,9 @@
     >
       {{ job.is_active ? "Active" : "Inactive" }}
     </td>
-    <td class="fw-normal text-center">View</td>
     <td class="fw-normal text-center">
       <span
         class="fw-normal text-info"
-        hx-get="/dashboard/notifications/view_notification_modal/1/"
-        hx-target="#modalNotification"
-        hx-trigger="click"
         data-bs-toggle="modal"
         data-bs-target="#modalNotification"
         style="cursor: pointer"
@@ -85,20 +81,26 @@
       </div>
 
       <!-- End of Modal Content -->
-      |
+    </td>
+    <td class="fw-normal text-center">
       <span
         class="fw-normal text-danger"
+        :class="job.is_active ? 'text-success' : 'text-danger'"
         style="cursor: pointer"
-        hx-delete="/dashboard/notifications/delete_notification/1/1/"
-        hx-confirm="Are you sure you want to delete this notification?"
-        hx-target="#notifications-table"
-        >Delete</span
+        @click.prevent="ChangeJobStatus"
+        >{{ job.is_active ? "Deactive Job" : "Active Job" }}</span
       >
+      |
+      <span class="fw-normal text-danger" style="cursor: pointer">Delete</span>
     </td>
   </tr>
 </template>
 
 <script>
+import useAuthenticationStore from "@/stores/authentication";
+import axios from "axios";
+import { API } from "@/api";
+
 export default {
   name: "JobRowTableItem",
   props: ["job"],
@@ -107,6 +109,35 @@ export default {
       jobDropdown: false,
       dateCreated: new Date(this.job.date_created).toLocaleDateString(),
     };
+  },
+  setup() {
+    const authenticationStore = useAuthenticationStore();
+    return {
+      authenticationStore,
+    };
+  },
+  methods: {
+    ChangeJobStatus() {
+      const changeJobStatusUrl = API.jobs.change_job_status + this.job.pk + "/";
+
+      const token = `Bearer ${this.authenticationStore.token}`;
+      console.log(token);
+      // Add the token to the header as Bearer token
+      const headers = {
+        // eslint-disable-next-line prettier/prettier
+        Authorization: token,
+      };
+
+      axios
+        .get(changeJobStatusUrl, { headers: headers })
+        .then((response) => {
+          console.log(response);
+          this.$emit("reloadJobsList");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
