@@ -22,3 +22,11 @@ class CompanyProfileLogoSerializer(serializers.ModelSerializer):
         fields = [
             'company_logo',
         ]
+
+    def update(self, instance, validated_data):
+        print('validated_data: ', validated_data)
+        company_logo = validated_data.get('company_logo', None)
+        if company_logo is not None:
+            instance.company_logo = company_logo
+            instance.save()
+        return instance

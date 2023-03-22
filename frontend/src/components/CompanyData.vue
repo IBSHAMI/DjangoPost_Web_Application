@@ -4,7 +4,10 @@
       <div class="row pb-3">
         <div class="container-fluid">
           <div class="row">
-            <company-card :company="companyName" />
+            <company-card
+              :company="companyName"
+              :companyLogoPath="this.authenticationStore.companyProfileLogo"
+            />
             <div class="col-xl-8 order-xl-1">
               <vee-form
                 action="#"
@@ -125,6 +128,10 @@
                         </div>
                       </div>
                     </div>
+                    <button type="submit" class="btn button button-primary">
+                      Save all
+                    </button>
+                    <hr />
                     <div class="row py-2">
                       <div class="form-group col-md-12 mb-6">
                         <label class="form-label fst-italic"
@@ -140,7 +147,7 @@
                             v-if="!logoUploadShow"
                             @click.prevent="logoUploadShow = true"
                           >
-                            Upload Company logo
+                            Click to drag your Company logo
                           </button>
                           <company-logo-upload
                             v-else
@@ -148,12 +155,15 @@
                             @closeUploadModel="CloseUploadModel"
                           />
                         </div>
+                        <button
+                          class="btn button button-primary my-2"
+                          @click.prevent="uploadCompanyLogo"
+                        >
+                          Upload Company Logo
+                        </button>
                       </div>
                     </div>
                   </div>
-                  <button type="submit" class="btn button button-primary">
-                    Save
-                  </button>
                 </div>
               </vee-form>
             </div>
@@ -276,15 +286,6 @@ export default {
       data.append("company_website", this.companyWebsite);
       data.append("company_description", this.companyDescription);
 
-      // Check if resume is typeof file
-      if (this.companyLogo === null) {
-        data.append("company_logo", "");
-      } else if (typeof this.companyLogo === "object") {
-        data.append("company_logo", this.companyLogo);
-      } else {
-        data.append("company_logo", "");
-      }
-
       axios
         .patch(API.company.details, data, { headers: headers })
         // eslint-disable-next-line no-unused-vars
@@ -300,6 +301,58 @@ export default {
           this.alertMessage = " Error occur while updating data";
           this.alertBackgroundColor = "alert alert-danger";
         });
+    },
+    async uploadCompanyLogo() {
+      // varaiable to check if logo is uploaded
+      let uploadLogo = false;
+
+      const token = `Bearer ${this.authenticationStore.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        // eslint-disable-next-line prettier/prettier
+        Authorization: token,
+      };
+
+      const data = new FormData();
+
+      // Check if resume is typeof file
+      if (this.companyLogo === null) {
+        data.append("company_logo", "");
+      } else if (typeof this.companyLogo === "object") {
+        data.append("company_logo", this.companyLogo);
+        uploadLogo = true;
+      } else {
+        data.append("company_logo", "");
+      }
+
+      if (uploadLogo) {
+        console.log("uploadLogoStart");
+        await axios
+          .put(API.company.company_profile_logo, data, {
+            headers: headers,
+          })
+          .then((response) => {
+            // show that the data is updated
+            this.alert = true;
+            this.alertMessage = "Logo uploaded successfully";
+            this.alertBackgroundColor = "alert alert-success";
+
+            console.log(response.data);
+            this.logoUploadShow = false;
+            this.authenticationStore.getAccountPictures();
+            if (response.data.company_logo) {
+              this.companyLogo = this.getFileBaseName(
+                response.data.company_logo
+              );
+            }
+          })
+          // eslint-disable-next-line no-unused-vars
+          .catch((error) => {
+            this.alert = true;
+            this.alertMessage = " Error occur while updating data";
+            this.alertBackgroundColor = "alert alert-danger";
+          });
+      }
     },
   },
 };

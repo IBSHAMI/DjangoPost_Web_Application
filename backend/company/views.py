@@ -46,10 +46,6 @@ class CompanyDetailsAPIView(generics.RetrieveUpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         data = request.data.copy()
-        # Check if company logo is being updated
-        company_logo = request.data.get('company_logo')
-        if not company_logo:
-            data.pop('company_logo')
 
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
@@ -60,7 +56,7 @@ class CompanyDetailsAPIView(generics.RetrieveUpdateAPIView):
         return Response(serializer.data)
 
 
-class CompanyProfileLogoAPIView(generics.RetrieveAPIView):
+class CompanyProfileLogoAPIView(generics.RetrieveUpdateAPIView):
     queryset = CompanyProfile.objects.all()
     serializer_class = CompanyProfileLogoSerializer
 

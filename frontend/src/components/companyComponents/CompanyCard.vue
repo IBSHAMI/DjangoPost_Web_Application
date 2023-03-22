@@ -3,7 +3,7 @@
     <div class="card shadow border-0 text-center p-0">
       <div class="card-body pb-5">
         <img
-          :src="companyProfileLogo"
+          :src="companyLogoPath"
           class="img-fluid avatar-xl rounded-circle mx-auto mt-n7 mb-4"
           alt="company logo"
           style="width: 200px; height: 200px"
@@ -32,31 +32,9 @@
 </template>
 
 <script>
-import useAuthenticationStore from "@/stores/authentication";
-
 export default {
   name: "CompanyCard",
-  props: ["company"],
-  setup() {
-    const authenticationStore = useAuthenticationStore();
-    return { authenticationStore };
-  },
-  data() {
-    return {
-      companyProfileLogo: "",
-    };
-  },
-  mounted() {
-    this.getCompanyLogo();
-  },
-  methods: {
-    getCompanyLogo() {
-      if (this.authenticationStore.companyProfileLogo.company_logo) {
-        this.companyProfileLogo =
-          this.authenticationStore.companyProfileLogo.company_logo;
-      }
-    },
-  },
+  props: ["company", "companyLogoPath"],
 };
 </script>
 

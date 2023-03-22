@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import ProfileUploadError from "@/components/profileComponents/ProfileUploadError.vue";
+
 export default {
   name: "CompanyLogoUpload",
   data() {
@@ -58,6 +60,9 @@ export default {
       uploadErrorMessage: "",
       fileName: "",
     };
+  },
+  components: {
+    ProfileUploadError,
   },
   methods: {
     dragStart() {

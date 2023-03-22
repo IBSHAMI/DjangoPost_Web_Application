@@ -16,7 +16,7 @@ export const API = {
   company: {
     details: `${baseURL}/api/users/company/data/`,
     contact_support: `${baseURL}/api/users/company/contact-support/`,
-    get_company_profile_logo: `${baseURL}/api/users/company/company_profile_logo/`,
+    company_profile_logo: `${baseURL}/api/users/company/company_profile_logo/`,
   },
   jobs: {
     list: `${baseURL}/api/jobs/`,

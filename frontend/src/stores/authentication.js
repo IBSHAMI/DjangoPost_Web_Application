@@ -62,9 +62,9 @@ export default defineStore("authentication", {
 
       // get the company logo
       axios
-        .get(API.company.get_company_profile_logo, { headers: headers })
+        .get(API.company.company_profile_logo, { headers: headers })
         .then((response) => {
-          this.setCompanyProfileLogo(response.data);
+          this.setCompanyProfileLogo(response.data.company_logo);
         })
         .catch((error) => {
           console.log(error);
