@@ -118,7 +118,7 @@ export default {
           this.authenticationStore.getAccountPictures();
 
           setTimeout(() => {
-            this.$router.push({ name: "Jobs" });
+            this.$router.push({ name: "Jobs", params: { slug: "jobs" } });
           }, 3000);
         })
         // eslint-disable-next-line no-unused-vars
@@ -128,6 +128,9 @@ export default {
           this.login_alert_message = "Login failed, please try again";
           console.log(error);
         });
+    },
+    signupPageShow() {
+      this.$emit("signup-page-show");
     },
   },
 };

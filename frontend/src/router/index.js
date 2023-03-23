@@ -21,7 +21,7 @@ const routes = [
     component: AuthView,
   },
   {
-    path: "/jobs",
+    path: "/jobs/:slug",
     name: "Jobs",
     component: JobsView,
     meta: {},

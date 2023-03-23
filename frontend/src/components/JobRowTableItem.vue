@@ -21,71 +21,11 @@
     >
       {{ job.is_active ? "Active" : "Inactive" }}
     </td>
+    <td class="fw-normal text-center">view</td>
     <td class="fw-normal text-center">
       <span
-        class="fw-normal text-info"
-        data-bs-toggle="modal"
-        data-bs-target="#modalNotification"
-        style="cursor: pointer"
-      >
-        View
-      </span>
-
-      <!-- Modal Content -->
-      <div
-        class="modal fade"
-        id="modalNotification"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="modalTitleNotify"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <p class="modal-title" id="modalTitleNotify">
-                Welcome to StudentDiary Nov. 26, 2022, 12:17 p.m..
-              </p>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <div class="py-3 text-center">
-                <svg
-                  class="icon icon-xl text-primary"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                  ></path>
-                </svg>
-                <h2 class="h4 modal-title my-3">Product Added!</h2>
-                <p class="text-justify">
-                  Welcome to StudentDiary, We are pleased you decided to join
-                  us. We hope you enjoy our services.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- End of Modal Content -->
-    </td>
-    <td class="fw-normal text-center">
-      <span
-        class="fw-normal text-danger"
-        :class="job.is_active ? 'text-success' : 'text-danger'"
+        class="fw-normal"
+        :class="job.is_active ? 'text-danger' : 'text-success'"
         style="cursor: pointer"
         @click.prevent="ChangeJobStatus"
         >{{ job.is_active ? "Deactive Job" : "Active Job" }}</span

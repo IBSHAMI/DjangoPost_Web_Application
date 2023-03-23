@@ -106,7 +106,7 @@
               <a
                 class="fw-bold text-underline small-text"
                 @click.prevent="signupPageShow"
-                style="color: #11ab7c"
+                style="color: #11ab7c; cursor: pointer"
                 >Login here</a
               >
             </label>
