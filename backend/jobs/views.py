@@ -15,7 +15,7 @@ from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 
 from .models import Job
-from .serializers import JobCreateSerializer, JobListSerializer
+from .serializers import JobCreateSerializer, JobListSerializer, JobDetailSerializer
 from company.models import CompanyProfile
 from .choices_fields_data_job import (
     JOB_TYPE_CHOICES,
@@ -108,7 +108,7 @@ class JobCreateView(CreateAPIView):
 
 class JobDetailView(RetrieveAPIView):
     queryset = Job.objects.filter(is_active=True)
-    serializer_class = JobListSerializer
+    serializer_class = JobDetailSerializer
     lookup_field = 'pk'
 
 

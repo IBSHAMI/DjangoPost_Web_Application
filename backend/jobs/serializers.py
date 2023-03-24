@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.reverse import reverse
 
 from .models import Job
+from company.models import CompanyProfile
 from .choices_fields_data_job import (
     JOB_TYPE_CHOICES,
     JOB_LANGUAGE_CHOICES,
@@ -52,9 +53,7 @@ class JobListSerializer(serializers.ModelSerializer):
 
 
 class JobDetailSerializer(JobCreateSerializer):
-    user = serializers.SerializerMethodField(read_only=True)
-    update_url = serializers.SerializerMethodField(read_only=True)
-    delete_url = serializers.SerializerMethodField(read_only=True)
+    company_data = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Job
@@ -75,10 +74,10 @@ class JobDetailSerializer(JobCreateSerializer):
         ]
 
     def get_company_data(self, obj):
+        company_profile = CompanyProfile.objects.get(user=obj.user)
         return {
-            'company_name': obj.user.company_profile.company_name,
-            'company_logo': obj.user.company_profile.company_logo,
-            'company_location': obj.user.company_profile.company_location,
-            'company_website': obj.user.company_profile.company_website,
-            'company_size': obj.user.company_profile.company_size,
+            'company_name': company_profile.company_name,
+            'company_location': company_profile.company_location,
+            'company_website': company_profile.company_website,
+            'company_size': company_profile.company_size,
         }
