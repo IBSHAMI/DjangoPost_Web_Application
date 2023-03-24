@@ -16,12 +16,12 @@ from django.contrib.auth import get_user_model
 
 from .models import Job
 from .serializers import JobCreateSerializer, JobListSerializer, JobDetailSerializer
-from company.models import CompanyProfile
 from .choices_fields_data_job import (
     JOB_TYPE_CHOICES,
     JOB_LANGUAGE_CHOICES,
     JOB_EXPERIENCE_CHOICES,
     JOB_LOCATION_CHOICES,
+    JOB_SALARY_CHOICES,
 )
 
 User = get_user_model()
@@ -40,6 +40,7 @@ class JobChoicesView(GenericAPIView):
             'job_language_choices': get_choices_name(JOB_LANGUAGE_CHOICES),
             'job_experience_choices': get_choices_name(JOB_EXPERIENCE_CHOICES),
             'job_location_choices': get_choices_name(JOB_LOCATION_CHOICES),
+            'job_salary_choices': get_choices_name(JOB_SALARY_CHOICES),
         }
         return Response(content)
 

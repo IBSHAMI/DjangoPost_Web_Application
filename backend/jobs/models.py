@@ -19,7 +19,7 @@ class Job(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
 
     remote = models.BooleanField(default=False)
-    salary = models.PositiveIntegerField(blank=True, null=True)
+    salary = models.CharField(max_length=100, blank=True, null=True)
 
     internal = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

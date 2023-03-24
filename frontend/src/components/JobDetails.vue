@@ -6,8 +6,8 @@
           <div class="row">
             <div class="col-xl-8 order-xl-1">
               <div class="card overflow-hidden">
-                <job-details-header />
-                <job-details-body />
+                <job-details-header :headerData="getJobHeaderData" />
+                <job-details-body :bodyData="getJobBodyData" />
               </div>
             </div>
             <company-card
@@ -95,6 +95,30 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+  },
+  computed: {
+    getJobHeaderData() {
+      return {
+        title: this.title,
+        type: this.type,
+        dateCreated: this.dateCreated,
+      };
+    },
+    getJobBodyData() {
+      return {
+        description: this.description,
+        type: this.type,
+        dateCreated: this.dateCreated,
+        location: this.location,
+        language: this.language,
+        experience: this.experience,
+        numberOfPositions: this.numberOfPositions,
+        remote: this.remote,
+        salary: this.salary,
+        internal: this.internal,
+        companyName: this.companyData.company_name,
+      };
     },
   },
 };

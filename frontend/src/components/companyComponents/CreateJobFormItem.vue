@@ -151,16 +151,24 @@
                       </div>
                       <div class="form-group col-md-6 mb-3">
                         <label for="salary" class="form-label fst-italic"
-                          >Salary (USD)
+                          >Monthly Salary (USD)
                         </label>
                         <div class="input-group-prepend">
                           <vee-field
-                            type="number"
+                            as="select"
                             name="salary"
                             id="salary"
                             class="form-control"
                             v-model="salary"
-                          />
+                          >
+                            <option
+                              v-for="(type, index) in JobsSalary"
+                              :key="index"
+                              :value="type"
+                            >
+                              {{ type }}
+                            </option>
+                          </vee-field>
 
                           <ErrorMessage
                             name="salary"
@@ -316,6 +324,7 @@ export default {
       JobLocations: [],
       Languages: [],
       JobExperience: [],
+      JobsSalary: [],
     };
   },
   components: {
@@ -340,6 +349,7 @@ export default {
           this.JobLocations = response.data.job_location_choices;
           this.Languages = response.data.job_language_choices;
           this.JobExperience = response.data.job_experience_choices;
+          this.JobsSalary = response.data.job_salary_choices;
         })
         .catch((error) => {
           console.log(error);

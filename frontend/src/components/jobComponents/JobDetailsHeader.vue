@@ -4,12 +4,15 @@
       <div class="row mt-10">
         <div class="col-lg-8 col-md-12">
           <h3 class="job-title">
-            Senior Full Stack Engineer, Creator Success Full Time
+            {{ headerData.title }}
           </h3>
           <div class="mt-0 mb-15">
-            <span class="form-label fst-italic card-briefcase mx-2"
-              >Fulltime</span
-            ><span class="form-label fst-italic card-time">3 mins ago</span>
+            <span class="form-label fst-italic card-briefcase mx-2">{{
+              headerData.type
+            }}</span
+            ><span class="form-label fst-italic card-time">{{
+              formattedDate()
+            }}</span>
           </div>
         </div>
         <div class="col-lg-4 col-md-12 text-lg-end">
@@ -27,8 +30,17 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   name: "JobDetailsHeader",
+  props: ["headerData"],
+  methods: {
+    formattedDate() {
+      const createdDate = moment(this.headerData.dateCreated);
+      return createdDate.fromNow();
+    },
+  },
 };
 </script>
 

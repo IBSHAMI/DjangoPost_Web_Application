@@ -2,9 +2,7 @@
   <div class="card-body border-top">
     <h4 class="mb-4 card-title">Job Description</h4>
     <p class="mb-4 para">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos unde ratione
-      ut velit eos ducimus, cupiditate, magni, ipsum labore ab quidem quasi
-      illum illo quo tempora dolorem quibusdam quisquam delectus.
+      {{ bodyData.description }}
     </p>
     <div class="job-overview">
       <h4 class="mb-4 card-title">Employment Information</h4>
@@ -16,72 +14,93 @@
                 <span class="font-weight-semibold">Job Type</span>
               </td>
               <td><span class="separator">:</span></td>
-              <td><span class="property"> Full Time</span></td>
+              <td>
+                <span class="property"> {{ bodyData.type }}</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="w-150 px-0">
+                <span class="font-weight-semibold">Montly Salary (USD)</span>
+              </td>
+              <td><span class="separator">:</span></td>
+              <td>
+                <span class="property"> {{ bodyData.salary }}</span>
+              </td>
             </tr>
             <tr>
               <td class="w-150 px-0">
-                <span class="font-weight-semibold">Role</span>
+                <span class="font-weight-semibold">Application Type</span>
               </td>
               <td><span class="separator">:</span></td>
-              <td><span class="property"> Hard ware Technician</span></td>
+              <td>
+                <span class="property"> {{ getApplicationType }}</span>
+              </td>
             </tr>
             <tr>
               <td class="w-150 px-0">
-                <span class="font-weight-semibold">Min Salary</span>
+                <span class="font-weight-semibold">Posted date</span>
               </td>
               <td><span class="separator">:</span></td>
-              <td><span class="property"> $12,000</span></td>
+              <td>
+                <span class="property">{{ formattedDate }}</span>
+              </td>
             </tr>
             <tr>
               <td class="w-150 px-0">
-                <span class="font-weight-semibold">Max Salary</span>
+                <span class="font-weight-semibold">Remote</span>
               </td>
               <td><span class="separator">:</span></td>
-              <td><span class="property"> $15,000</span></td>
-            </tr>
-            <tr>
-              <td class="w-150 px-0">
-                <span class="font-weight-semibold">Min Exp</span>
+              <td>
+                <span class="property">{{ checkRemote }}</span>
               </td>
-              <td><span class="separator">:</span></td>
-              <td><span class="property">0yrs</span></td>
             </tr>
           </tbody>
           <tbody class="col-lg-12 col-xl-6 p-0">
             <tr>
               <td class="w-150 px-0">
-                <span class="font-weight-semibold">Max Exp</span>
+                <span class="font-weight-semibold">Experience</span>
               </td>
               <td><span class="separator">:</span></td>
-              <td><span class="property"> 2yrs</span></td>
+              <td>
+                <span class="property"> {{ bodyData.experience }}</span>
+              </td>
             </tr>
             <tr>
               <td class="w-150 px-0">
                 <span class="font-weight-semibold">Languages</span>
               </td>
               <td><span class="separator">:</span></td>
-              <td><span class="property"> English , Hindi</span></td>
+              <td>
+                <span class="property"> {{ bodyData.language }}</span>
+              </td>
             </tr>
             <tr>
               <td class="w-150 px-0">
-                <span class="font-weight-semibold">Locality</span>
+                <span class="font-weight-semibold">Location</span>
               </td>
               <td><span class="separator">:</span></td>
-              <td><span class="property"> USA , UK , India</span></td>
+              <td>
+                <span class="property"> {{ bodyData.location }}</span>
+              </td>
             </tr>
             <tr>
               <td class="w-150 px-0">
-                <span class="font-weight-semibold">Eligibility</span>
+                <span class="font-weight-semibold">Number of positions</span>
               </td>
               <td><span class="separator">:</span></td>
-              <td><span class="property"> Any Graduate</span></td>
+              <td>
+                <span class="property"> {{ bodyData.numberOfPositions }}</span>
+              </td>
             </tr>
             <tr>
               <td class="w-150 px-0">
                 <span class="font-weight-semibold">Company</span>
               </td>
               <td><span class="separator">:</span></td>
-              <td><span class="property"> Acme Corporation pvt ltd</span></td>
+              <td>
+                <span class="property"> {{ bodyData.companyName }}</span>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -91,8 +110,22 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   name: "JobDetailsBody",
+  props: ["bodyData"],
+  computed: {
+    formattedDate() {
+      return moment(this.bodyData.created_at).format("DD MMM YYYY");
+    },
+    getApplicationType() {
+      return this.bodyData.internal ? "Easy Apply" : "External Apply";
+    },
+    checkRemote() {
+      return this.bodyData.remote ? "Yes" : "No";
+    },
+  },
 };
 </script>
 
