@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
-from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
 from rest_framework.generics import (
     GenericAPIView,
     ListAPIView,
@@ -84,9 +84,6 @@ class JobCreateView(CreateAPIView):
         # get authenticated user
         user = self.request.user
 
-        # get company description
-        company = get_object_or_404(CompanyProfile, user=user)
-
         # get data from request
         data = request.data.copy()
         data['user'] = User.objects.get(email=user).pk
@@ -99,7 +96,6 @@ class JobCreateView(CreateAPIView):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
-        from rest_framework import status
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 

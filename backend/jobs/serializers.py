@@ -18,7 +18,6 @@ class JobCreateSerializer(serializers.ModelSerializer):
         fields = [
             'pk',
             'title',
-            'company_description',
             'description',
             'location',
             'type',
