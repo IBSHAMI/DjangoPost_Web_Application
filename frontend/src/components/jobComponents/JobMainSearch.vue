@@ -1,0 +1,84 @@
+<template>
+  <div
+    class="cover-image sptb-1 bg-background"
+    data-image-src="../src/assets/img/jobs_search/job_search_bg_img.jpg"
+    style="
+      background: url('../src/assets/img/jobs_search/job_search_bg_img.jpg')
+        center center;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-size: cover;
+      padding-top: 4.5rem;
+      padding-bottom: 4.5rem;
+    "
+  >
+    <div class="header-text1 mb-0">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-8 col-lg-12 col-md-12 d-block mx-auto">
+            <div class="text-center text-white">
+              <h1 class="text-center form-header">
+                <span class="font-weight-bold">16,25,365</span>
+                Jobs Available In Hyderabad
+              </h1>
+            </div>
+            <div class="search-background">
+              <div class="form row no-gutters">
+                <div class="col-xl-6 col-lg-5 col-md-12 mb-0 form-group">
+                  <input
+                    type="text"
+                    class="form-control input-lg border-end-0 br-tr-md-0 br-br-md-0 form-control"
+                    id="text"
+                    placeholder="Search Jobs"
+                  />
+                </div>
+                <div
+                  class="col-xl-4 col-lg-4 select2-lg col-md-12 mb-0 form-group"
+                >
+                  <select
+                    class="form-control select2-show-search border-bottom-0 w-100 select2-hidden-accessible"
+                    data-placeholder="Select"
+                    data-select2-id="select2-data-1-v645"
+                    tabindex="-1"
+                    aria-hidden="true"
+                  >
+                    <optgroup label="Categories">
+                      <option data-select2-id="select2-data-3-bm82">
+                        All Categories
+                      </option>
+                      <option value="1">Accountant</option>
+                      <option value="2">IT Software</option>
+                      <option value="3">Banking</option>
+                      <option value="4">Finaces</option>
+                      <option value="5">Cook/Chef</option>
+                      <option value="6">Driveing</option>
+                      <option value="7">HR Recruiter</option>
+                      <option value="8">IT Hardware</option>
+                      <option value="9">Sales</option>
+                    </optgroup>
+                  </select>
+                </div>
+                <div class="col-xl-2 col-lg-3 col-md-12 mb-0 form-group">
+                  <a
+                    href="javascript:void(0);"
+                    class="btn btn-lg btn-block btn-secondary br-bl-0 br-tl-0"
+                    >Search</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /header-text -->
+  </div>
+</template>
+
+<script>
+export default {
+  name: "JobMainSearch",
+};
+</script>
+
+<style scoped></style>

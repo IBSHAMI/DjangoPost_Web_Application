@@ -3,6 +3,7 @@
     <div>
       <Navbar :employeeProfile="employeeProfile" :pageType="jobsPage" />
     </div>
+    <job-main-search />
     <jobs-list v-if="passedSlug === 'jobs'" />
     <job-details v-else-if="checkIfJobDetails" :jobId="jobId" />
   </section>
@@ -10,6 +11,7 @@
 
 <script>
 import Navbar from "@/components/sharedComponents/Navbar.vue";
+import JobMainSearch from "@/components/jobComponents/JobMainSearch.vue";
 import JobDetails from "@/components/jobComponents/JobDetails.vue";
 import JobsList from "@/components/jobComponents/JobsList.vue";
 
@@ -24,6 +26,7 @@ export default {
   },
   components: {
     Navbar,
+    JobMainSearch,
     JobDetails,
     JobsList,
   },
