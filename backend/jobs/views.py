@@ -86,18 +86,15 @@ class JobCreateView(CreateAPIView):
 
         # get company description
         company = get_object_or_404(CompanyProfile, user=user)
-        company_description = company.company_description
 
         # get data from request
         data = request.data.copy()
         data['user'] = User.objects.get(email=user).pk
-        data['company_description'] = company_description
 
         serializer = self.get_serializer(data=data)
 
         # add user and company description to the serializer
         serializer.user = user
-        serializer.company_description = company_description
 
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)

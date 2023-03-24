@@ -9,7 +9,6 @@ user = settings.AUTH_USER_MODEL
 class Job(models.Model):
     user = models.ForeignKey(user, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
-    company_description = models.TextField(blank=True, null=True)
     description = models.TextField(max_length=1000, blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     type = models.CharField(max_length=100, blank=True, null=True)
