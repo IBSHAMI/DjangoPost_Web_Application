@@ -13,12 +13,6 @@ from .choices_fields_data_job import (
 
 # Create a Serializer class for job create
 class JobCreateSerializer(serializers.ModelSerializer):
-    # Add choices fields
-    type = serializers.MultipleChoiceField(choices=JOB_TYPE_CHOICES)
-    language = serializers.MultipleChoiceField(choices=JOB_LANGUAGE_CHOICES)
-    experience = serializers.MultipleChoiceField(choices=JOB_EXPERIENCE_CHOICES)
-    location = serializers.MultipleChoiceField(choices=JOB_LOCATION_CHOICES)
-
     class Meta:
         model = Job
         fields = [
@@ -75,6 +69,8 @@ class JobDetailSerializer(JobCreateSerializer):
 
     def get_company_data(self, obj):
         company_profile = CompanyProfile.objects.get(user=obj.user)
+        print(obj.type)
+        print(obj.language)
         return {
             'company_name': company_profile.company_name,
             'company_location': company_profile.company_location,
