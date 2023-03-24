@@ -1,10 +1,11 @@
 <template>
-  <div>hdfhdfhfd</div>
+  <div>{{ jobId }}</div>
 </template>
 
 <script>
 export default {
   name: "JobDetails",
+  props: ["jobId"],
 };
 </script>
 

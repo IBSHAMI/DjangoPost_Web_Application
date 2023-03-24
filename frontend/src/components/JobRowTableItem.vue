@@ -21,7 +21,14 @@
     >
       {{ job.is_active ? "Active" : "Inactive" }}
     </td>
-    <td class="fw-normal text-center">view</td>
+    <td class="fw-normal text-center">
+      <span
+        class="fw-normal text-primary"
+        style="cursor: pointer"
+        @click.prevent="openJobDetails"
+        >view</span
+      >
+    </td>
     <td class="fw-normal text-center">
       <span
         class="fw-normal"
@@ -103,6 +110,12 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    openJobDetails() {
+      this.$router.push({
+        name: "Jobs",
+        params: { slug: `jobDetails-${this.job.pk}` },
+      });
     },
   },
 };

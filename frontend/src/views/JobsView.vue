@@ -4,7 +4,7 @@
       <Navbar :employeeProfile="employeeProfile" :pageType="jobsPage" />
     </div>
     <jobs-list v-if="passedSlug === 'jobs'" />
-    <job-details v-else-if="passedSlug === 'jobDetails'" />
+    <job-details v-else-if="checkIfJobDetails" :jobId="jobId" />
   </section>
 </template>
 
@@ -26,6 +26,17 @@ export default {
     Navbar,
     JobDetails,
     JobsList,
+  },
+  computed: {
+    jobId() {
+      console.log(this.passedSlug);
+      return this.passedSlug.split("-")[1];
+    },
+  },
+  methods: {
+    checkIfJobDetails() {
+      return this.passedSlug.includes("jobDetails");
+    },
   },
 };
 </script>
