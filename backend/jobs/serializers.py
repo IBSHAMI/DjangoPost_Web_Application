@@ -63,43 +63,22 @@ class JobDetailSerializer(JobCreateSerializer):
             'title',
             'description',
             'location',
+            'type',
+            'language',
+            'experience',
+            'number_of_positions',
             'date_created',
             'remote',
             'salary',
-            'user',
-            'update_url',
-            'delete_url',
+            'internal',
+            'company_data',
         ]
-        read_only_fields = ['date_created', 'user']
 
-    def get_user(self, obj):
+    def get_company_data(self, obj):
         return {
-            'username': obj.user.username,
-            'email': obj.user.email,
+            'company_name': obj.user.company_profile.company_name,
+            'company_logo': obj.user.company_profile.company_logo,
+            'company_location': obj.user.company_profile.company_location,
+            'company_website': obj.user.company_profile.company_website,
+            'company_size': obj.user.company_profile.company_size,
         }
-
-    def get_update_url(self, obj):
-        # Acess the request object from the serializer context
-        request = self.context.get('request')
-        if request is None:
-            return None
-
-        # get user from request
-        user = request.user
-        if obj.user == user:
-            return reverse('api:jobs:job_update', kwargs={'pk': obj.pk}, request=request)
-        else:
-            return None
-
-    def get_delete_url(self, obj):
-        # Access the request object from the serializer context
-        request = self.context.get('request')
-        if request is None:
-            return None
-
-        # get user from request
-        user = request.user
-        if obj.user == user:
-            return reverse('api:jobs:job_delete', kwargs={'pk': obj.pk}, request=request)
-        else:
-            return None

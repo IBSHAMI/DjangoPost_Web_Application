@@ -20,5 +20,4 @@ urlpatterns = [
     path('delete_job/<int:pk>/', JobDeleteView.as_view(), name='job_delete'),
     path('job_choices/', JobChoicesView.as_view(), name='job_choices'),
     path('change_job_status/<int:pk>/', change_job_status, name='update_job_status')
-
 ]
