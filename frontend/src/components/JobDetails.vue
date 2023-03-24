@@ -7,6 +7,7 @@
             <div class="col-xl-8 order-xl-1">
               <div class="card overflow-hidden">
                 <job-details-header />
+                <job-details-body />
               </div>
             </div>
           </div>
@@ -18,12 +19,14 @@
 
 <script>
 import JobDetailsHeader from "@/components/jobComponents/JobDetailsHeader.vue";
+import JobDetailsBody from "@/components/jobComponents/JobDetailsBody.vue";
 
 export default {
   name: "JobDetails",
   props: ["jobId"],
   components: {
     JobDetailsHeader,
+    JobDetailsBody,
   },
 };
 </script>
