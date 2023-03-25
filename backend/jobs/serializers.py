@@ -28,6 +28,7 @@ class JobCreateSerializer(serializers.ModelSerializer):
 class JobListSerializer(serializers.ModelSerializer):
     # create a company logo as an image field
     company_logo = serializers.SerializerMethodField(read_only=True)
+    company_name = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Job
@@ -42,11 +43,16 @@ class JobListSerializer(serializers.ModelSerializer):
             'date_created',
             'internal',
             'company_logo',
+            'company_name',
         ]
 
     def get_company_logo(self, obj):
         company_profile = CompanyProfile.objects.get(user=obj.user)
         return company_profile.company_logo.url
+
+    def get_company_name(self, obj):
+        company_profile = CompanyProfile.objects.get(user=obj.user)
+        return company_profile.company_name
 
 
 # Create a Serializer class for job list for company

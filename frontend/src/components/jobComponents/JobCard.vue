@@ -11,7 +11,7 @@
         </div>
         <div class="job-card_info">
           <h6 class="text-start">
-            <p class="paragraph">Google</p>
+            <p class="paragraph">{{ job.company_name }}</p>
             <a href="#!" class="float-right">
               <i class="fa fa-heart-o"></i>
             </a>
