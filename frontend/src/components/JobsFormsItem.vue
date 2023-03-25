@@ -180,7 +180,7 @@ export default {
         // eslint-disable-next-line prettier/prettier
         Authorization: token,
       };
-      const jobsListUrl = API.jobs.list;
+      const jobsListUrl = API.jobs.company_list;
 
       const params = {
         table_variant: this.tableVariant,

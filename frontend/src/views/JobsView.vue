@@ -13,7 +13,7 @@
 import Navbar from "@/components/sharedComponents/Navbar.vue";
 import JobMainSearch from "@/components/jobComponents/JobMainSearch.vue";
 import JobDetails from "@/components/JobDetails.vue";
-import JobsList from "@/components/jobComponents/JobsList.vue";
+import JobsList from "@/components/JobsList.vue";
 
 export default {
   name: "JobsView",

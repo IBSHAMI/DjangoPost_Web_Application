@@ -4,7 +4,6 @@
       <div class="row pb-3">
         <div class="container-fluid">
           <div class="row">
-            <company-card :company="hello" />
             <div class="col-xl-8 order-xl-1">
               <vee-form
                 action="#"
@@ -274,7 +273,6 @@
 <script>
 import useAuthenticationStore from "@/stores/authentication";
 import AlertItem from "@/components/sharedComponents/AlertItem.vue";
-import CompanyCard from "@/components/companyComponents/CompanyCard.vue";
 import axios from "axios";
 import { API } from "@/api";
 
@@ -329,7 +327,6 @@ export default {
   },
   components: {
     AlertItem,
-    CompanyCard,
   },
   methods: {
     getChoicesData() {

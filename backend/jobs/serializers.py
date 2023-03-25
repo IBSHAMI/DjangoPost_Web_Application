@@ -3,12 +3,6 @@ from rest_framework.reverse import reverse
 
 from .models import Job
 from company.models import CompanyProfile
-from .choices_fields_data_job import (
-    JOB_TYPE_CHOICES,
-    JOB_LANGUAGE_CHOICES,
-    JOB_EXPERIENCE_CHOICES,
-    JOB_LOCATION_CHOICES,
-)
 
 
 # Create a Serializer class for job create
@@ -32,6 +26,31 @@ class JobCreateSerializer(serializers.ModelSerializer):
 
 # Create a Serializer class for job list
 class JobListSerializer(serializers.ModelSerializer):
+    # create a company logo as an image field
+    company_logo = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Job
+        fields = [
+            'pk',
+            'title',
+            'type',
+            'salary',
+            'location',
+            'experience',
+            'language',
+            'date_created',
+            'internal',
+            'company_logo',
+        ]
+
+    def get_company_logo(self, obj):
+        company_profile = CompanyProfile.objects.get(user=obj.user)
+        return company_profile.company_logo.url
+
+
+# Create a Serializer class for job list for company
+class CompanyJobListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
         fields = [
@@ -68,8 +87,6 @@ class JobDetailSerializer(JobCreateSerializer):
 
     def get_company_data(self, obj):
         company_profile = CompanyProfile.objects.get(user=obj.user)
-        print(obj.type)
-        print(obj.language)
         return {
             'company_name': company_profile.company_name,
             'company_location': company_profile.company_location,

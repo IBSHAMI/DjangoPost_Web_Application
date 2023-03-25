@@ -15,7 +15,12 @@ from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 
 from .models import Job
-from .serializers import JobCreateSerializer, JobListSerializer, JobDetailSerializer
+from .serializers import (
+    JobListSerializer,
+    JobCreateSerializer,
+    CompanyJobListSerializer,
+    JobDetailSerializer
+)
 from .choices_fields_data_job import (
     JOB_TYPE_CHOICES,
     JOB_LANGUAGE_CHOICES,
@@ -45,10 +50,24 @@ class JobChoicesView(GenericAPIView):
         return Response(content)
 
 
-# Create a class listAPIView to list all jobs
+# Create a view that get list of all jobs for main page
 class JobListView(ListAPIView):
     queryset = Job.objects.all()
     serializer_class = JobListSerializer
+
+    def get_queryset(self):
+        # get all jobs except inactive jobs
+        qs = super().get_queryset()
+        qs = qs.filter(is_active=True)
+        return qs
+
+
+
+
+# Create a class listAPIView to list all jobs
+class CompanyJobListView(ListAPIView):
+    queryset = Job.objects.all()
+    serializer_class = CompanyJobListSerializer
 
     def get_queryset(self):
         # get request and extract table variant to filter queryset
@@ -107,7 +126,7 @@ class JobDetailView(RetrieveAPIView):
 
 
 class JobUpdateView(UpdateAPIView):
-    serializer_class = JobListSerializer
+    serializer_class = CompanyJobListSerializer
     lookup_field = 'pk'
 
     def get_queryset(self):
@@ -126,7 +145,7 @@ class JobUpdateView(UpdateAPIView):
 
 
 class JobDeleteView(DestroyAPIView):
-    serializer_class = JobListSerializer
+    serializer_class = CompanyJobListSerializer
     lookup_field = 'pk'
 
     def get_queryset(self):

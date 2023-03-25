@@ -20,6 +20,7 @@ export const API = {
   },
   jobs: {
     list: `${baseURL}/api/jobs/`,
+    company_list: `${baseURL}/api/jobs/company_job_list/`,
     detail: `${baseURL}/api/jobs/job_details/`,
     create: `${baseURL}/api/jobs/create/`,
     get_choices_data: `${baseURL}/api/jobs/job_choices/`,

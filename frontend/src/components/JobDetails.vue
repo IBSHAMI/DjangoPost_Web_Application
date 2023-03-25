@@ -11,7 +11,7 @@
               </div>
             </div>
             <company-card
-              :company="companyData.company_name"
+              :company="companyData"
               :companyLogoPath="this.authenticationStore.companyProfileLogo"
             />
           </div>
