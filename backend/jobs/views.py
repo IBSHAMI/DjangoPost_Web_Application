@@ -62,8 +62,6 @@ class JobListView(ListAPIView):
         return qs
 
 
-
-
 # Create a class listAPIView to list all jobs
 class CompanyJobListView(ListAPIView):
     queryset = Job.objects.all()

@@ -41,6 +41,11 @@ export default {
       return this.passedSlug.includes("jobDetails");
     },
   },
+  watch: {
+    $route(to) {
+      this.passedSlug = to.params.slug;
+    },
+  },
 };
 </script>
 

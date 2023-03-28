@@ -16,7 +16,13 @@
               <i class="fa fa-heart-o"></i>
             </a>
           </h6>
-          <h4 class="job-title">{{ job.title }}</h4>
+          <h4
+            class="job-title"
+            @click.prevent="openJobDetails"
+            style="cursor: pointer"
+          >
+            {{ job.title }}
+          </h4>
           <p class="text-start paragraph mb-0">${{ job.salary }}</p>
           <p class="text-start mb-0 paragraph">
             Posted {{ formattedDate(job.date_created) }}
@@ -29,8 +35,11 @@
           <span class="job-label">{{ job.location }}</span>
           <span class="job-label">{{ job.experience }}</span>
         </div>
-        <button class="btn button btn-lg button-primary">
-          {{ job.internal ? "Easy Apply" : "Apply" }}
+        <button
+          class="btn button btn-lg button-primary"
+          @click.prevent="openJobDetails"
+        >
+          Apply
         </button>
       </div>
     </div>
@@ -52,6 +61,12 @@ export default {
     formattedDate(data) {
       const createdDate = moment(data);
       return createdDate.fromNow();
+    },
+    openJobDetails() {
+      this.$router.push({
+        name: "Jobs",
+        params: { slug: `jobDetails-${this.job.pk}` },
+      });
     },
   },
 };

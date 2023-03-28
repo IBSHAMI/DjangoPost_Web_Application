@@ -21,7 +21,7 @@
             data-bs-toggle="modal"
             data-bs-target="#ModalApplyJobForm"
           >
-            Apply now
+            {{ headerData.internal ? "Apply" : "Easy Apply" }}
           </div>
         </div>
       </div>

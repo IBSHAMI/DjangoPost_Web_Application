@@ -103,6 +103,7 @@ export default {
         title: this.title,
         type: this.type,
         dateCreated: this.dateCreated,
+        internal: this.internal,
       };
     },
     getJobBodyData() {
