@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    "django_celery_beat",
+    "django_celery_results",
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
@@ -190,6 +192,11 @@ DJOSER = {
         'user_create': 'users.serializers.UserRegistrationSerializer',
     },
 }
+
+# Celery settings
+CELERY_BROKER_URL = env('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND')
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
