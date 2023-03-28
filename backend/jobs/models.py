@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 # import user model from settings
 from django.conf import settings
@@ -6,8 +7,33 @@ from django.conf import settings
 user = settings.AUTH_USER_MODEL
 
 
+class JobManager(models.Manager):
+    # function that create jobs from the scraped data
+    def create_jobs(self, jobs_data, searched_location):
+        for job in jobs_data:
+            job_instance, created = self.get_or_create(
+                title=job['title'],
+                job_id=job['id'],
+                defaults={
+                    'job_company': job['company'],
+                    'description': job['description'],
+                    'location': searched_location,
+                    'date_created': timezone.now(),
+                    'salary': job['salary'],
+                    'internal': True,
+                    'job_link': job['job_url'],
+                    'is_active': True
+                }
+            )
+
+            if created:
+                print(f"Created job with id: {job_instance.id}")
+            else:
+                print(f"Job with id: {job_instance.id} already exists")
+
+
 class Job(models.Model):
-    user = models.ForeignKey(user, on_delete=models.CASCADE)
+    user = models.ForeignKey(user, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=1000, blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
@@ -22,7 +48,15 @@ class Job(models.Model):
     salary = models.CharField(max_length=100, blank=True, null=True)
 
     internal = models.BooleanField(default=False)
+
+    # special fields for jobs that are scraped from indeed
+    job_id = models.CharField(max_length=100, blank=True, null=True)
+    job_link = models.CharField(max_length=1000, blank=True, null=True)
+    job_company = models.CharField(max_length=300, blank=True, null=True)
+
     is_active = models.BooleanField(default=True)
+
+    objects = JobManager()
 
     def __str__(self):
         return self.title

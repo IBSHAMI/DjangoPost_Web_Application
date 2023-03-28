@@ -1,9 +1,7 @@
 <template>
   <div class="card-body border-top">
     <h4 class="mb-4 card-title">Job Description</h4>
-    <p class="mb-4 para">
-      {{ bodyData.description }}
-    </p>
+    <p class="mb-4" v-html="bodyData.description"></p>
     <div class="job-overview">
       <h4 class="mb-4 card-title">Employment Information</h4>
       <div class="table-responsive">

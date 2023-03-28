@@ -47,10 +47,14 @@ class JobListSerializer(serializers.ModelSerializer):
         ]
 
     def get_company_logo(self, obj):
+        if obj.internal:
+            return None
         company_profile = CompanyProfile.objects.get(user=obj.user)
         return company_profile.company_logo.url
 
     def get_company_name(self, obj):
+        if obj.internal:
+            return obj.job_company
         company_profile = CompanyProfile.objects.get(user=obj.user)
         return company_profile.company_name
 
@@ -92,6 +96,13 @@ class JobDetailSerializer(JobCreateSerializer):
         ]
 
     def get_company_data(self, obj):
+        if obj.internal:
+            return {
+            'company_name': obj.job_company,
+            'company_location': None,
+            'company_website': None,
+            'company_size': None,
+            }
         company_profile = CompanyProfile.objects.get(user=obj.user)
         return {
             'company_name': company_profile.company_name,
