@@ -35,6 +35,8 @@
       </div>
       <div class="job-card__footer">
         <div class="job-card_job-type">
+          <!-- Special label for easy apply jobs-->
+          <span class="job-label" v-show="!job.internal"> Easy Apply </span>
           <span class="job-label">{{ job.type }}</span>
           <span class="job-label">{{ job.location }}</span>
           <span class="job-label">{{ job.number_of_positions }} Position</span>
