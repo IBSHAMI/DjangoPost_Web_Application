@@ -49,6 +49,7 @@ export default {
       remote: "",
       salary: "",
       internal: "",
+      jobLink: "",
       // company details
       companyData: {},
     };
@@ -84,6 +85,7 @@ export default {
           this.remote = response.data.remote;
           this.salary = response.data.salary;
           this.internal = response.data.internal;
+          this.jobLink = response.data.job_link;
           this.companyData = response.data.company_data;
         })
         .catch((error) => {
@@ -98,6 +100,7 @@ export default {
         type: this.type,
         dateCreated: this.dateCreated,
         internal: this.internal,
+        jobLink: this.jobLink,
       };
     },
     getJobBodyData() {

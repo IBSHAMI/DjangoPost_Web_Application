@@ -93,6 +93,7 @@ class JobDetailSerializer(JobCreateSerializer):
             'remote',
             'salary',
             'internal',
+            'job_link',
             'company_data',
         ]
 

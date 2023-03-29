@@ -20,6 +20,7 @@
             class="btn button button-primary"
             data-bs-toggle="modal"
             data-bs-target="#ModalApplyJobForm"
+            @click.prevent="applyJob"
           >
             {{ headerData.internal ? "Apply" : "Easy Apply" }}
           </div>
@@ -39,6 +40,16 @@ export default {
     formattedDate() {
       const createdDate = moment(this.headerData.dateCreated);
       return createdDate.fromNow();
+    },
+    applyJob() {
+      // check if the job is internal
+      if (this.headerData.internal) {
+        // if internal, redirect to the job details page in indeed
+        window.open(this.headerData.jobLink, "_blank");
+      } else {
+        // if not internal, open the easy apply modal
+        console.log("easy apply");
+      }
     },
   },
 };
