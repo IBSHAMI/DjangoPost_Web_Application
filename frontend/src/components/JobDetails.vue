@@ -4,16 +4,12 @@
       <div class="row pb-3">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-xl-8 order-xl-1">
+            <div class="col-xl-8 mx-auto">
               <div class="card overflow-hidden">
                 <job-details-header :headerData="getJobHeaderData" />
                 <job-details-body :bodyData="getJobBodyData" />
               </div>
             </div>
-            <company-card
-              :company="companyData"
-              :companyLogoPath="this.authenticationStore.companyProfileLogo"
-            />
           </div>
         </div>
       </div>
@@ -23,7 +19,6 @@
 
 <script>
 import useAuthenticationStore from "@/stores/authentication";
-import CompanyCard from "@/components/companyComponents/CompanyCard.vue";
 import JobDetailsHeader from "@/components/jobComponents/JobDetailsHeader.vue";
 import JobDetailsBody from "@/components/jobComponents/JobDetailsBody.vue";
 import axios from "axios";
@@ -61,7 +56,6 @@ export default {
   components: {
     JobDetailsHeader,
     JobDetailsBody,
-    CompanyCard,
   },
   methods: {
     getJobDetails() {

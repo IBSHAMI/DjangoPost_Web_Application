@@ -13,7 +13,7 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property">
+                <span class="property text-wrap">
                   {{ bodyData.type ? bodyData.type : "-" }}</span
                 >
               </td>
@@ -25,7 +25,7 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property">
+                <span class="property text-wrap">
                   {{ bodyData.salary ? bodyData.salary : "-" }}</span
                 >
               </td>
@@ -36,7 +36,7 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property">
+                <span class="property text-wrap">
                   {{ getApplicationType ? getApplicationType : "-" }}</span
                 >
               </td>
@@ -47,7 +47,7 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property">{{
+                <span class="property text-wrap">{{
                   formattedDate ? formattedDate : "-"
                 }}</span>
               </td>
@@ -58,7 +58,7 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property">{{ checkRemote }}</span>
+                <span class="property text-wrap">{{ checkRemote }}</span>
               </td>
             </tr>
           </tbody>
@@ -69,7 +69,7 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property">
+                <span class="property text-wrap">
                   {{ bodyData.experience ? bodyData.experience : "-" }}</span
                 >
               </td>
@@ -80,7 +80,7 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property">
+                <span class="property text-wrap">
                   {{ bodyData.language ? bodyData.language : "-" }}</span
                 >
               </td>
@@ -91,7 +91,7 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property">
+                <span class="property text-wrap">
                   {{ bodyData.location ? bodyData.location : "-" }}</span
                 >
               </td>
@@ -102,7 +102,7 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property">
+                <span class="property text-wrap">
                   {{
                     bodyData.numberOfPositions
                       ? bodyData.numberOfPositions
@@ -117,7 +117,7 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property">
+                <span class="property text-wrap">
                   {{ bodyData.companyName ? bodyData.companyName : "-" }}</span
                 >
               </td>

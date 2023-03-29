@@ -69,10 +69,12 @@ export default {
       return createdDate.fromNow();
     },
     openJobDetails() {
-      this.$router.push({
+      // make the details page open in a new tab
+      const url = this.$router.resolve({
         name: "Jobs",
         params: { slug: `jobDetails-${this.job.pk}` },
-      });
+      }).href;
+      window.open(url, "_blank");
     },
   },
 };
