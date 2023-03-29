@@ -41,6 +41,7 @@ class JobListSerializer(serializers.ModelSerializer):
             'experience',
             'language',
             'date_created',
+            'number_of_positions',
             'internal',
             'company_logo',
             'company_name',

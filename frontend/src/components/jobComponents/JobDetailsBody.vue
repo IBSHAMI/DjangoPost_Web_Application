@@ -13,7 +13,9 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property"> {{ bodyData.type }}</span>
+                <span class="property">
+                  {{ bodyData.type ? bodyData.type : "-" }}</span
+                >
               </td>
             </tr>
 
@@ -23,7 +25,9 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property"> {{ bodyData.salary }}</span>
+                <span class="property">
+                  {{ bodyData.salary ? bodyData.salary : "-" }}</span
+                >
               </td>
             </tr>
             <tr>
@@ -32,7 +36,9 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property"> {{ getApplicationType }}</span>
+                <span class="property">
+                  {{ getApplicationType ? getApplicationType : "-" }}</span
+                >
               </td>
             </tr>
             <tr>
@@ -41,7 +47,9 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property">{{ formattedDate }}</span>
+                <span class="property">{{
+                  formattedDate ? formattedDate : "-"
+                }}</span>
               </td>
             </tr>
             <tr>
@@ -61,7 +69,9 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property"> {{ bodyData.experience }}</span>
+                <span class="property">
+                  {{ bodyData.experience ? bodyData.experience : "-" }}</span
+                >
               </td>
             </tr>
             <tr>
@@ -70,7 +80,9 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property"> {{ bodyData.language }}</span>
+                <span class="property">
+                  {{ bodyData.language ? bodyData.language : "-" }}</span
+                >
               </td>
             </tr>
             <tr>
@@ -79,7 +91,9 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property"> {{ bodyData.location }}</span>
+                <span class="property">
+                  {{ bodyData.location ? bodyData.location : "-" }}</span
+                >
               </td>
             </tr>
             <tr>
@@ -88,7 +102,13 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property"> {{ bodyData.numberOfPositions }}</span>
+                <span class="property">
+                  {{
+                    bodyData.numberOfPositions
+                      ? bodyData.numberOfPositions
+                      : "-"
+                  }}</span
+                >
               </td>
             </tr>
             <tr>
@@ -97,7 +117,9 @@
               </td>
               <td><span class="separator">:</span></td>
               <td>
-                <span class="property"> {{ bodyData.companyName }}</span>
+                <span class="property">
+                  {{ bodyData.companyName ? bodyData.companyName : "-" }}</span
+                >
               </td>
             </tr>
           </tbody>

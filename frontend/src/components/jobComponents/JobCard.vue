@@ -2,28 +2,32 @@
   <div class="col-md-12 col-lg-6">
     <div class="job-card card overflow-hidden m-3">
       <div class="job-card__content">
-        <div class="job-card_img">
-          <img
-            :src="getLogoPath"
-            class="img-fluid company-logo"
-            alt="Company Logo"
-          />
-        </div>
         <div class="job-card_info">
-          <h6 class="text-start">
+          <h6 class="d-flex justify-content-between">
             <p class="paragraph">{{ job.company_name }}</p>
-            <a href="#!" class="float-right">
-              <i class="fa fa-heart-o"></i>
+            <a
+              href="#!"
+              class="float-right"
+              style="position: absolute; top: 15px; right: 10px"
+            >
+              <img
+                src="../../../src/assets/img/icons/icons-heart.svg"
+                alt="save job icon"
+                class="img-fluid"
+                style="width: 25px; height: 25px"
+              />
             </a>
           </h6>
           <h4
-            class="job-title"
+            class="job-title text-start"
             @click.prevent="openJobDetails"
             style="cursor: pointer"
           >
             {{ job.title }}
           </h4>
-          <p class="text-start paragraph mb-0">${{ job.salary }}</p>
+          <p class="text-start paragraph mb-0" v-show="job.salary">
+            ${{ job.salary }}
+          </p>
           <p class="text-start mb-0 paragraph">
             Posted {{ formattedDate(job.date_created) }}
           </p>
@@ -33,7 +37,7 @@
         <div class="job-card_job-type">
           <span class="job-label">{{ job.type }}</span>
           <span class="job-label">{{ job.location }}</span>
-          <span class="job-label">{{ job.experience }}</span>
+          <span class="job-label">{{ job.number_of_positions }} Position</span>
         </div>
         <button
           class="btn button btn-lg button-primary"

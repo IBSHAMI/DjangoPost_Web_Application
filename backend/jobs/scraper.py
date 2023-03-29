@@ -14,7 +14,8 @@ def get_jobs_data(job_title, location, num_pages=1):
     DRIVER_PATH = './chromedriver'
     options = webdriver.ChromeOptions()
     # set incognito mode
-    options.add_argument('- incognito')
+    # options.add_argument('--incognito')
+    # options.add_argument('--headless')
     # create new instance of chrome in incognito mode
     driver = webdriver.Chrome(executable_path=DRIVER_PATH, options=options)
 
@@ -54,26 +55,33 @@ def get_jobs_data(job_title, location, num_pages=1):
     # Scrape job data
     for page_number in range(1, num_pages + 1):
         soup = BeautifulSoup(driver.page_source, 'html.parser')
-        job_posts = soup.find_all('table', class_='jobCard_mainContent')
+        job_posts_main = soup.find_all('table', class_='jobCard_mainContent')
+        job_posts_shelf = soup.find_all('table', class_='jobCardShelfContainer')
+        
 
-        for job_post in job_posts:
-            job_link = job_post.find('a', class_='jcs-JobTitle')['id']
+        for (job_post_main, job_post_shelf) in zip(job_posts_main, job_posts_shelf):
+            job_link = job_post_main.find('a', class_='jcs-JobTitle')['id']
             job_id = job_link.split('_')[1]
             job_url = f"https://www.indeed.com/jobs?q=django&l=Malaysia&from=searchOnHP&vjk={job_id}"
 
-            title = job_post.find('a', class_='jcs-JobTitle').text.strip()
-            company = job_post.find('span', class_='companyName').text.strip()
-            location = job_post.find('div', class_='companyLocation').text.strip()
-            salary = job_post.find('div', class_='attribute_snippet')
-            salary = salary.text.strip() if salary else None
+            title = job_post_main.find('a', class_='jcs-JobTitle').text.strip()
+            company = job_post_main.find('span', class_='companyName').text.strip()
+            location = job_post_main.find('div', class_='companyLocation').text.strip()
+    
+            
+            # get data from job shelf if it exists
+            # date is in format of "Posted 1 day ago" or "Active 1 day ago"
+            # remove the "Posted" or "Active" part
+            date = job_post_shelf.find('span', class_='date')
+            date = date.text.strip() if date else None
 
             job_data.append({
                 'id': job_id,
                 'title': title,
                 'company': company,
                 'location': location,
-                'salary': salary,
-                'job_url': job_url
+                'job_url': job_url,
+                'date': date
             })
 
             print(job_data)
@@ -87,7 +95,6 @@ def get_jobs_data(job_title, location, num_pages=1):
                 job_description = str(job_description_soup.find('div', id='jobDescriptionText'))
                 job['description'] = job_description
 
-                print(job['description'])
 
                 # Avoid bot detection
                 sleep_time = random.uniform(0.5, 1.0)
@@ -109,7 +116,7 @@ def get_jobs_data(job_title, location, num_pages=1):
                     break
 
             except TimeoutException:
-                print(f"Timed out waiting for job description to load, skipping job (jobId: {job.id})...")
+                print(f"Timed out waiting for job description to load, skipping job...")
                 # drop job from list
                 job_data.remove(job)
 
