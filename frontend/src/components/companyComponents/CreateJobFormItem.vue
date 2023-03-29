@@ -4,7 +4,8 @@
       <div class="row pb-3">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-xl-8 order-xl-1">
+            <!-- center the div on screen-->
+            <div class="col-xl-8 mx-auto">
               <vee-form
                 action="#"
                 :validation-schema="schema"
@@ -18,7 +19,11 @@
                     :alertMessage="alertMessage"
                     @closeAlert="closeAlert"
                   />
-                  <h2 class="text-start h5 mb-2 px-2">Post a Job</h2>
+                  <h2 class="text-center h2 fw-bold my-2 px-2">Post a Job</h2>
+                  <p class="text-center py-3 mx-4 paragraph">
+                    You know what you are looking for. We help you find them.
+                    Post your open positions and hire fast the best talent.
+                  </p>
                   <div class="card-body px-2">
                     <div class="row py-2">
                       <div class="form-group col-md-6 mb-3">
@@ -427,5 +432,12 @@ export default {
   position: relative;
   display: block;
   padding-left: 1.25rem;
+}
+
+.paragraph {
+  font: italic 500 20px/2em var(--Nunito);
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: var(--primary-color-1);
 }
 </style>
