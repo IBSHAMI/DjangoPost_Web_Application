@@ -56,7 +56,11 @@
           </div>
         </div>
       </div>
-      <pagination-item />
+      <pagination-item
+        :currentPage="currentPage"
+        :totalPages="totalPages"
+        @navigatePages="navigator"
+      />
     </div>
   </div>
 </template>
@@ -87,6 +91,8 @@ export default {
       jobsList: [],
       tableVariant: "All Jobs",
       page: 1,
+      currentPage: 1,
+      totalPages: 0,
       nextPageLink: null,
       previousPageLink: null,
     };
@@ -116,6 +122,8 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.jobsList = response.data.results;
+          this.currentPage = response.data.page;
+          this.totalPages = response.data.total_pages;
         })
         .catch((error) => {
           console.log(error);
@@ -123,6 +131,11 @@ export default {
     },
     changeTableVariant(variant) {
       this.tableVariant = variant;
+      this.getJobsList();
+    },
+    navigator(page) {
+      console.log(page);
+      this.page = page;
       this.getJobsList();
     },
   },

@@ -1,20 +1,21 @@
 <template>
   <div class="mx-auto py-auto">
     <ul class="pagination m-3 pb-5">
-      <li class="page-item page-prev disabled">
-        <a class="page-link" href="javascript:void(0);" tabindex="-1">Prev</a>
+      <li class="page-item page-prev disabled" style="cursor: pointer">
+        <span class="page-link" tabindex="-1">Prev</span>
       </li>
-      <li class="page-item active">
-        <a class="page-link" href="javascript:void(0);">1</a>
+      <li
+        v-for="page in totalPages"
+        class="page-item"
+        :key="page"
+        :class="{ active: page === currentPage }"
+        style="cursor: pointer"
+        @click.prevent="navigatePages(page)"
+      >
+        <span class="page-link">{{ page }}</span>
       </li>
-      <li class="page-item">
-        <a class="page-link" href="javascript:void(0);">2</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="javascript:void(0);">3</a>
-      </li>
-      <li class="page-item page-next">
-        <a class="page-link" href="javascript:void(0);">Next</a>
+      <li class="page-item page-next" style="cursor: pointer">
+        <span class="page-link">Next</span>
       </li>
     </ul>
   </div>
@@ -23,6 +24,12 @@
 <script>
 export default {
   name: "PaginationItem",
+  props: ["currentPage", "totalPages"],
+  methods: {
+    navigatePages(page) {
+      this.$emit("navigatePages", page);
+    },
+  },
 };
 </script>
 
