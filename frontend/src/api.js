@@ -27,5 +27,7 @@ export const API = {
     get_choices_data: `${baseURL}/api/jobs/job_choices/`,
     change_job_status: `${baseURL}/api/jobs/change_job_status/`,
     delete_job: `${baseURL}/api/jobs/delete_job/`,
+    save_job: `${baseURL}/api/jobs/save_job/`,
+    delete_saved_job: `${baseURL}/api/jobs/delete_saved_job/`,
   },
 };

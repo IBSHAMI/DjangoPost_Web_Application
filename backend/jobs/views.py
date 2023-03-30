@@ -14,13 +14,15 @@ from rest_framework.generics import (
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 
-from .models import Job
+from .models import Job, SavedJob
 from company.models import CompanyProfile
+from employee.models import EmployeeProfile
 from .serializers import (
     JobListSerializer,
     JobCreateSerializer,
     CompanyJobListSerializer,
-    JobDetailSerializer
+    JobDetailSerializer,
+    SavedJobSerializer,
 )
 from .choices_fields_data_job import (
     JOB_TYPE_CHOICES,
@@ -165,6 +167,53 @@ class JobDeleteView(DestroyAPIView):
             super().perform_destroy(instance)
         else:
             raise serializers.ValidationError('You are not the owner of this job')
+        
+
+
+class SavedJobCreateView(CreateAPIView):
+    queryset = SavedJob.objects.all()
+    serializer_class = SavedJobSerializer
+
+    def create(self, request, *args, **kwargs):
+        # get job id
+        job_id = request.data.get('job_id')
+        
+        # get authenticated user
+        user = self.request.user
+        
+        # get the employee profile
+        employee = EmployeeProfile.objects.get(user=user).pk
+        job = Job.objects.get(pk=job_id).pk
+        
+        data = {}
+        data['employee'] = employee
+        data['job'] = job
+                
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
+
+class SavedJobDeleteView(DestroyAPIView):
+    serializer_class = SavedJobSerializer
+
+    def get_queryset(self):
+        # get authenticated user
+        user = self.request.user
+
+        queryset = SavedJob.objects.filter(employee__user=user)
+        return queryset
+    
+    def get_object(self):
+        job = Job.objects.get(pk=self.request.data.get('job_id'))
+        employee = EmployeeProfile.objects.get(user=self.request.user)
+        
+        obj = SavedJob.objects.get(job=job, employee=employee)
+        
+        return obj
+
 
 
 @api_view(['GET'])

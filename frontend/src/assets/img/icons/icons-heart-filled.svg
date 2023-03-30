@@ -1,5 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="24" height="24" fill="white"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M5.36129 3.46995C6.03579 3.16081 6.76287 3 7.50002 3C8.23718 3 8.96425 3.16081 9.63875 3.46995C10.3129 3.77893 10.9185 4.22861 11.4239 4.78788C11.7322 5.12902 12.2678 5.12902 12.5761 4.78788C13.5979 3.65726 15.0068 3.00001 16.5 3.00001C17.9932 3.00001 19.4021 3.65726 20.4239 4.78788C21.4427 5.91515 22 7.42425 22 8.9792C22 10.5342 21.4427 12.0433 20.4239 13.1705L14.2257 20.0287C13.0346 21.3467 10.9654 21.3467 9.77429 20.0287L3.57613 13.1705C3.07086 12.6115 2.67474 11.9531 2.40602 11.2353C2.13731 10.5175 2 9.75113 2 8.9792C2 8.20728 2.13731 7.44094 2.40602 6.72315C2.67474 6.00531 3.07086 5.34694 3.57613 4.78788C4.08157 4.22861 4.68716 3.77893 5.36129 3.46995Z" fill="#323232"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000" xml:space="preserve">
+<desc>Created with Fabric.js 3.5.0</desc>
+<defs>
+</defs>
+<rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+<g transform="matrix(1.1364 0 0 1.1364 500.0145 500.0145)" id="212890">
+<g style="" vector-effect="non-scaling-stroke">
+		<g transform="matrix(33.3333 0 0 33.3333 -0.0005 -0.0005)">
+<rect style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; is-custom-font: none; font-file-url: none; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" x="-12" y="-12" rx="0" ry="0" width="24" height="24"/>
+</g>
+		<g transform="matrix(33.3333 0 0 33.3333 -0.0003 0.2863)">
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; is-custom-font: none; font-file-url: none; fill: rgb(17,171,124); fill-rule: evenodd; opacity: 1;" transform=" translate(-12, -12.0086)" d="M 5.36129 3.46995 C 6.03579 3.16081 6.76287 3 7.50002 3 C 8.23718 3 8.96425 3.16081 9.63875 3.46995 C 10.3129 3.77893 10.9185 4.22861 11.4239 4.78788 C 11.7322 5.12902 12.2678 5.12902 12.5761 4.78788 C 13.5979 3.65726 15.0068 3.00001 16.5 3.00001 C 17.9932 3.00001 19.4021 3.65726 20.4239 4.78788 C 21.4427 5.91515 22 7.42425 22 8.9792 C 22 10.5342 21.4427 12.0433 20.4239 13.1705 L 14.2257 20.0287 C 13.0346 21.3467 10.9654 21.3467 9.77429 20.0287 L 3.57613 13.1705 C 3.07086 12.6115 2.67474 11.9531 2.40602 11.2353 C 2.13731 10.5175 2 9.75113 2 8.9792 C 2 8.20728 2.13731 7.44094 2.40602 6.72315 C 2.67474 6.00531 3.07086 5.34694 3.57613 4.78788 C 4.08157 4.22861 4.68716 3.77893 5.36129 3.46995 Z" stroke-linecap="round"/>
+</g>
+</g>
+</g>
 </svg>

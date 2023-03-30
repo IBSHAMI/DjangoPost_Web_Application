@@ -65,7 +65,6 @@ export default {
       const token = `Bearer ${this.authenticationStore.token}`;
       // Add the token to the header as Bearer token
       const headers = {
-        "content-type": "application/json",
         // eslint-disable-next-line prettier/prettier
         Authorization: token,
       };

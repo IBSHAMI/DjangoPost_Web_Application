@@ -11,9 +11,12 @@
               style="position: absolute; top: 15px; right: 10px"
             >
               <img
-                src="../../../src/assets/img/icons/icons-heart.svg"
+                :src="heartSvgPath"
                 alt="save job icon"
                 class="img-fluid"
+                @click.prevent="
+                  !isSaved ? addToSavedJobs() : deleteFromSavedJobs()
+                "
                 style="width: 25px; height: 25px"
               />
             </a>
@@ -53,15 +56,26 @@
 </template>
 
 <script>
+import useAuthenticationStore from "@/stores/authentication";
 import moment from "moment";
+import axios from "axios";
+import { API } from "@/api";
 
 export default {
   name: "JobCard",
   props: ["job"],
-  computed: {
-    getLogoPath() {
-      return "http://127.0.0.1:8000" + this.job.company_logo;
-    },
+  setup() {
+    // init the store
+    const authenticationStore = useAuthenticationStore();
+    return { authenticationStore };
+  },
+  data() {
+    return {
+      heartSvgPath: this.job.is_saved_job
+        ? "../../../src/assets/img/icons/icons-heart-filled.svg"
+        : "../../../src/assets/img/icons/icons-heart.svg",
+      isSaved: this.job.is_saved_job,
+    };
   },
   methods: {
     formattedDate(data) {
@@ -75,6 +89,53 @@ export default {
         params: { slug: `jobDetails-${this.job.pk}` },
       }).href;
       window.open(url, "_blank");
+    },
+    addToSavedJobs() {
+      console.log("add saved job");
+      const saveJobUrl = API.jobs.save_job;
+      const token = `Bearer ${this.authenticationStore.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        // eslint-disable-next-line prettier/prettier
+        Authorization: token,
+      };
+
+      axios
+        .post(saveJobUrl, { job_id: this.job.pk }, { headers })
+        .then((res) => {
+          console.log(res.status);
+          if (res.status === 201) {
+            this.heartSvgPath =
+              "../../../src/assets/img/icons/icons-heart-filled.svg";
+            this.isSaved = true;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    deleteFromSavedJobs() {
+      console.log("delete saved job");
+      const deleteJobUrl = API.jobs.delete_saved_job;
+      const token = `Bearer ${this.authenticationStore.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        // eslint-disable-next-line prettier/prettier
+        Authorization: token,
+      };
+
+      axios
+        .delete(deleteJobUrl, { headers, data: { job_id: this.job.pk } })
+        .then((res) => {
+          console.log(res.status);
+          if (res.status === 204) {
+            this.heartSvgPath = "../../../src/assets/img/icons/icons-heart.svg";
+            this.isSaved = false;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

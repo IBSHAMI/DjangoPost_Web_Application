@@ -1,9 +1,12 @@
 from rest_framework import serializers
 from rest_framework.reverse import reverse
+from django.contrib.auth import get_user_model
 
-from .models import Job
-# from company.models import CompanyProfile
+from .models import Job, SavedJob
+from employee.models import EmployeeProfile
 
+
+User = get_user_model()
 
 # Create a Serializer class for job create
 class JobCreateSerializer(serializers.ModelSerializer):
@@ -26,9 +29,8 @@ class JobCreateSerializer(serializers.ModelSerializer):
 
 # Create a Serializer class for job list
 class JobListSerializer(serializers.ModelSerializer):
-    # create a company logo as an image field
-    company_logo = serializers.SerializerMethodField(read_only=True)
     company_name = serializers.SerializerMethodField(read_only=True)
+    is_saved_job = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Job
@@ -43,21 +45,27 @@ class JobListSerializer(serializers.ModelSerializer):
             'date_created',
             'number_of_positions',
             'internal',
-            'company_logo',
             'company_name',
+            'is_saved_job',
         ]
-
-    def get_company_logo(self, obj):
-        if obj.internal:
-            return None
-        company = obj.company
-        return company.company_logo.url
 
     def get_company_name(self, obj):
         if obj.internal:
             return obj.job_company
         company = obj.company
         return company.company_name
+    
+    def get_is_saved_job(self, obj):
+        user = self.context['request'].user
+        employee = EmployeeProfile.objects.get(user=user)
+        job = obj
+        
+        if SavedJob.objects.filter(employee=employee, job=job).exists():
+            return True
+        
+        return False
+
+    
 
 
 # Create a Serializer class for job list for company
@@ -112,3 +120,14 @@ class JobDetailSerializer(JobCreateSerializer):
             'company_website': company.company_website,
             'company_size': company.company_size,
         }
+
+
+class SavedJobSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SavedJob
+        fields = [
+            'employee', 
+            'job',
+        ]
+
+
