@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.reverse import reverse
 
 from .models import Job
-from company.models import CompanyProfile
+# from company.models import CompanyProfile
 
 
 # Create a Serializer class for job create
@@ -20,7 +20,7 @@ class JobCreateSerializer(serializers.ModelSerializer):
             'number_of_positions',
             'remote',
             'salary',
-            'user'
+            'company',
         ]
 
 
@@ -50,14 +50,14 @@ class JobListSerializer(serializers.ModelSerializer):
     def get_company_logo(self, obj):
         if obj.internal:
             return None
-        company_profile = CompanyProfile.objects.get(user=obj.user)
-        return company_profile.company_logo.url
+        company = obj.company
+        return company.company_logo.url
 
     def get_company_name(self, obj):
         if obj.internal:
             return obj.job_company
-        company_profile = CompanyProfile.objects.get(user=obj.user)
-        return company_profile.company_name
+        company = obj.company
+        return company.company_name
 
 
 # Create a Serializer class for job list for company
@@ -105,10 +105,10 @@ class JobDetailSerializer(JobCreateSerializer):
             'company_website': None,
             'company_size': None,
             }
-        company_profile = CompanyProfile.objects.get(user=obj.user)
+        company = obj.company
         return {
-            'company_name': company_profile.company_name,
-            'company_location': company_profile.company_location,
-            'company_website': company_profile.company_website,
-            'company_size': company_profile.company_size,
+            'company_name': company.company_name,
+            'company_location': company.company_location,
+            'company_website': company.company_website,
+            'company_size': company.company_size,
         }

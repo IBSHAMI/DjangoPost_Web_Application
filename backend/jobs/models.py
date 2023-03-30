@@ -1,11 +1,12 @@
 from django.db import models
 from django.utils import timezone
 from datetime import datetime, timedelta
-
-# import user model from settings
 from django.conf import settings
 
+from company.models import CompanyProfile
+
 user = settings.AUTH_USER_MODEL
+
 
 class JobManager(models.Manager):
     # function that create jobs from the scraped data
@@ -33,7 +34,7 @@ class JobManager(models.Manager):
 
 
 class Job(models.Model):
-    user = models.ForeignKey(user, on_delete=models.CASCADE, null=True)
+    company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=1000, blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
@@ -60,4 +61,3 @@ class Job(models.Model):
 
     def __str__(self):
         return self.title
-    

@@ -212,7 +212,7 @@ export default {
 }
 
 .header-area .main-menu .navbar .navbar-brand:hover {
-  background: var(--gradient-color);
+  background: var(--button-background-color);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

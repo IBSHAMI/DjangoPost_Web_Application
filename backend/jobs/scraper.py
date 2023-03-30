@@ -119,6 +119,8 @@ def get_jobs_data(job_title, location, num_pages=1):
                 print(f"Timed out waiting for job description to load, skipping job...")
                 # drop job from list
                 job_data.remove(job)
+                # go back to search results page for next job
+                driver.back()
 
         if num_pages > 1 and page_number < num_pages:
             try:

@@ -18,8 +18,8 @@
           <div class="col-xl-8 col-lg-12 col-md-12 d-block mx-auto">
             <div class="text-center text-white">
               <h1 class="text-center form-header">
-                <span class="font-weight-bold">16,25,365</span>
-                Jobs Available In Hyderabad
+                <span class="font-weight-bold">{{ totalJobsCount }}</span>
+                Jobs Available In DjangoPost
               </h1>
             </div>
             <div class="search-background">
@@ -76,8 +76,34 @@
 </template>
 
 <script>
+import axios from "axios";
+import { API } from "@/api";
+
 export default {
   name: "JobMainSearch",
+  data() {
+    return {
+      totalJobsCount: 0,
+    };
+  },
+  created() {
+    this.get_total_jobs_count();
+  },
+  methods: {
+    get_total_jobs_count() {
+      const Url = API.jobs.get_total_jobs;
+
+      axios
+        .get(Url)
+        .then((response) => {
+          console.log(response.data);
+          this.totalJobsCount = Number(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
 };
 </script>
 

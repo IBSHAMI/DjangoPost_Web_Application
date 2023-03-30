@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
 from rest_framework.generics import (
     GenericAPIView,
@@ -15,6 +15,7 @@ from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 
 from .models import Job
+from company.models import CompanyProfile
 from .serializers import (
     JobListSerializer,
     JobCreateSerializer,
@@ -71,9 +72,10 @@ class CompanyJobListView(ListAPIView):
         # get request and extract table variant to filter queryset
         request = self.request
         table_variant = request.GET.get('table_variant')
+        company = CompanyProfile.objects.get(user=request.user)
 
         qs = super().get_queryset()
-        qs = qs.filter(user=self.request.user)
+        qs = qs.filter(company=company)
         # filter queryset based on table variant
         if table_variant != 'all':
             if table_variant == 'active':
@@ -104,7 +106,7 @@ class JobCreateView(CreateAPIView):
 
         # get data from request
         data = request.data.copy()
-        data['user'] = User.objects.get(email=user).pk
+        data['company'] = CompanyProfile.objects.get(user=user).pk
 
         serializer = self.get_serializer(data=data)
 
@@ -135,8 +137,10 @@ class JobUpdateView(UpdateAPIView):
         return queryset
 
     def perform_update(self, serializer):
+        # get company profile
+        company = CompanyProfile.objects.get(user=self.request.user)
         # check if job is under user
-        if serializer.instance.user == self.request.user:
+        if serializer.instance.company == company:
             super().perform_update(serializer)
         else:
             raise serializers.ValidationError('You are not the owner of this job')
@@ -148,17 +152,26 @@ class JobDeleteView(DestroyAPIView):
 
     def get_queryset(self):
         # get authenticated user
-        user = self.request.user
+        company = CompanyProfile.objects.get(user=self.request.user)
 
-        queryset = Job.objects.filter(user=user)
+        queryset = Job.objects.filter(company=company)
         return queryset
 
     def perform_destroy(self, instance):
+        # get company profile
+        company = CompanyProfile.objects.get(user=self.request.user)
         # check if job is under user
-        if instance.user == self.request.user:
+        if instance.company == company:
             super().perform_destroy(instance)
         else:
             raise serializers.ValidationError('You are not the owner of this job')
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_total_jobs(request):
+    total_jobs = Job.objects.filter(is_active=True).count()
+    return Response(total_jobs)
 
 
 @api_view(['GET'])
@@ -166,10 +179,12 @@ class JobDeleteView(DestroyAPIView):
 def change_job_status(request, pk):
     # get job
     job = get_object_or_404(Job, pk=pk)
-    print(request.user)
+    
+    # get company profile
+    company = CompanyProfile.objects.get(user=request.user)
 
     # check if job is under user
-    if job.user == request.user:
+    if job.company == company:
         # update job status
         job.is_active = not job.is_active
         job.save()
