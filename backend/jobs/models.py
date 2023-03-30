@@ -71,3 +71,16 @@ class SavedJob(models.Model):
 
     class Meta:
         unique_together = ('employee', 'job')
+        
+        
+class AppliedJob(models.Model):
+    employee           = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE)
+    job                = models.ForeignKey(Job, on_delete=models.CASCADE)
+    application_status = models.CharField(max_length=100, blank=True, null=True, default='Applied')
+    date_applied       = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.employee} applied to {self.job.title}"
+
+    class Meta:
+        unique_together = ('employee', 'job')

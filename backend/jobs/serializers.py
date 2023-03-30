@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.reverse import reverse
 from django.contrib.auth import get_user_model
 
-from .models import Job, SavedJob
+from .models import Job, SavedJob, AppliedJob
 from employee.models import EmployeeProfile
 
 
@@ -129,5 +129,21 @@ class SavedJobSerializer(serializers.ModelSerializer):
             'employee', 
             'job',
         ]
+        
+
+class SavedJobSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SavedJob
+        fields = [
+            'employee', 
+            'job',
+        ]
 
 
+class AppliedJobSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AppliedJob
+        fields = [
+            'employee', 
+            'job',
+        ]
