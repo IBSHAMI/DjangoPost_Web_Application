@@ -108,9 +108,7 @@
               <th scope="col" class="border-bottom text-center">
                 Active/Inactive
               </th>
-              <th scope="col" class="border-bottom text-center">
-                Applications
-              </th>
+              <th scope="col" class="border-bottom text-center">Applicants</th>
               <th scope="col" class="border-bottom text-center">Action</th>
             </tr>
           </thead>

@@ -27,12 +27,9 @@
       {{ job.is_active ? "Active" : "Inactive" }}
     </td>
     <td class="fw-normal text-center">
-      <span
-        class="fw-normal text-primary"
-        style="cursor: pointer"
-        @click.prevent="openJobDetails"
-        >view</span
-      >
+      <span class="fw-normal text-primary" style="cursor: pointer">{{
+        job.number_of_applications
+      }}</span>
     </td>
     <td class="fw-normal text-center">
       <span
@@ -117,10 +114,12 @@ export default {
         });
     },
     openJobDetails() {
-      this.$router.push({
+      // make the details page open in a new tab
+      const url = this.$router.resolve({
         name: "Jobs",
         params: { slug: `jobDetails-${this.job.pk}` },
-      });
+      }).href;
+      window.open(url, "_blank");
     },
   },
 };

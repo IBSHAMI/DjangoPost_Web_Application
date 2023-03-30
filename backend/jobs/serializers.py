@@ -32,6 +32,7 @@ class JobListSerializer(serializers.ModelSerializer):
     company_name = serializers.SerializerMethodField(read_only=True)
     is_saved_job = serializers.SerializerMethodField(read_only=True)
 
+
     class Meta:
         model = Job
         fields = [
@@ -64,12 +65,14 @@ class JobListSerializer(serializers.ModelSerializer):
             return True
         
         return False
+        
 
     
 
 
 # Create a Serializer class for job list for company
 class CompanyJobListSerializer(serializers.ModelSerializer):
+    number_of_applications = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Job
         fields = [
@@ -80,7 +83,14 @@ class CompanyJobListSerializer(serializers.ModelSerializer):
             'language',
             'date_created',
             'is_active',
+            'number_of_applications',
         ]
+    
+    def get_number_of_applications(self, obj):
+        job = obj 
+        number_of_applications = AppliedJob.objects.filter(job=job).count()
+        
+        return number_of_applications
 
 
 class JobDetailSerializer(JobCreateSerializer):
