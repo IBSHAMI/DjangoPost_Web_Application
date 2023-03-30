@@ -143,7 +143,11 @@ export default {
         });
     },
     changeTableVariant(variant) {
+      if (this.tableVariant === variant) {
+        return;
+      }
       this.tableVariant = variant;
+      this.page = 1;
       this.getJobsList();
     },
     navigator(page) {
