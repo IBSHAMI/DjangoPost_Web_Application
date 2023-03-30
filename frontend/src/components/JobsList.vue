@@ -1,7 +1,7 @@
 <template>
   <div class="mt-4">
     <div class="container">
-      <div class="job-tab text-center">
+      <div class="job-tab text-center my-4 py-4">
         <div class="btn-group d-flex justify-content-center py-4" role="group">
           <div
             style="cursor: pointer"

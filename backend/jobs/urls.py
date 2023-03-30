@@ -10,6 +10,7 @@ from .views import (
     JobChoicesView,
     SavedJobCreateView,
     SavedJobDeleteView,
+    AppliedJobCreateView,
     get_total_jobs,
     change_job_status
 )
@@ -28,4 +29,5 @@ urlpatterns = [
     path('company_job_list/', CompanyJobListView.as_view(), name='company_job_list_create'),
     path('save_job/', SavedJobCreateView.as_view(), name='save_job'),
     path('delete_saved_job/', SavedJobDeleteView.as_view(), name='delete_saved_job'),
+    path('apply_job/', AppliedJobCreateView.as_view(), name='apply_job'),
 ]

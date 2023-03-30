@@ -18,12 +18,12 @@
         <div class="col-lg-4 col-md-12 text-lg-end">
           <div
             class="btn button button-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#ModalApplyJobForm"
+            v-if="!isApplied"
             @click.prevent="applyJob"
           >
             {{ headerData.internal ? "Apply" : "Easy Apply" }}
           </div>
+          <div class="btn button btn-secondary" v-else disabled>Applied</div>
         </div>
       </div>
     </div>
@@ -31,11 +31,24 @@
 </template>
 
 <script>
+import useAuthenticationStore from "@/stores/authentication";
 import moment from "moment";
+import axios from "axios";
+import { API } from "@/api";
 
 export default {
   name: "JobDetailsHeader",
   props: ["headerData"],
+  data() {
+    return {
+      isApplied: this.headerData.isApplied,
+    };
+  },
+  setup() {
+    // init the store
+    const authenticationStore = useAuthenticationStore();
+    return { authenticationStore };
+  },
   methods: {
     formattedDate() {
       const createdDate = moment(this.headerData.dateCreated);
@@ -49,6 +62,23 @@ export default {
       } else {
         // if not internal, open the easy apply modal
         console.log("easy apply");
+        const applyUrl = API.jobs.apply_job;
+        const token = `Bearer ${this.authenticationStore.token}`;
+        // Add the token to the header as Bearer token
+        const headers = {
+          // eslint-disable-next-line prettier/prettier
+          Authorization: token,
+        };
+
+        axios
+          .post(applyUrl, { job_id: this.headerData.pk }, { headers })
+          .then((res) => {
+            console.log(res);
+            this.isApplied = true;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     },
   },

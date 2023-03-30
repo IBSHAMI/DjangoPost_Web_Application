@@ -38,6 +38,7 @@ export default {
   data() {
     return {
       // job details
+      pk: "",
       title: "",
       description: "",
       location: "",
@@ -50,6 +51,7 @@ export default {
       salary: "",
       internal: "",
       jobLink: "",
+      isApplied: "",
       // company details
       companyData: {},
     };
@@ -73,6 +75,7 @@ export default {
         .get(jobDetailsUrl, { headers })
         .then((response) => {
           console.log(response.data);
+          this.pk = response.data.pk;
           this.title = response.data.title;
           this.description = response.data.description;
           this.location = response.data.location;
@@ -85,6 +88,7 @@ export default {
           this.salary = response.data.salary;
           this.internal = response.data.internal;
           this.jobLink = response.data.job_link;
+          this.isApplied = response.data.is_applied;
           this.companyData = response.data.company_data;
         })
         .catch((error) => {
@@ -95,11 +99,13 @@ export default {
   computed: {
     getJobHeaderData() {
       return {
+        pk: this.pk,
         title: this.title,
         type: this.type,
         dateCreated: this.dateCreated,
         internal: this.internal,
         jobLink: this.jobLink,
+        isApplied: this.isApplied,
       };
     },
     getJobBodyData() {

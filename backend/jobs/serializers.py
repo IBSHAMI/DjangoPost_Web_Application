@@ -85,6 +85,7 @@ class CompanyJobListSerializer(serializers.ModelSerializer):
 
 class JobDetailSerializer(JobCreateSerializer):
     company_data = serializers.SerializerMethodField(read_only=True)
+    is_applied = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Job
@@ -103,6 +104,7 @@ class JobDetailSerializer(JobCreateSerializer):
             'internal',
             'job_link',
             'company_data',
+            'is_applied',
         ]
 
     def get_company_data(self, obj):
@@ -120,6 +122,16 @@ class JobDetailSerializer(JobCreateSerializer):
             'company_website': company.company_website,
             'company_size': company.company_size,
         }
+        
+    def get_is_applied(self, obj):
+        user = self.context['request'].user
+        employee = EmployeeProfile.objects.get(user=user)
+        job = obj
+        
+        if AppliedJob.objects.filter(employee=employee, job=job).exists():
+            return True
+        
+        return False
 
 
 class SavedJobSerializer(serializers.ModelSerializer):

@@ -29,5 +29,6 @@ export const API = {
     delete_job: `${baseURL}/api/jobs/delete_job/`,
     save_job: `${baseURL}/api/jobs/save_job/`,
     delete_saved_job: `${baseURL}/api/jobs/delete_saved_job/`,
+    apply_job: `${baseURL}/api/jobs/apply_job/`,
   },
 };

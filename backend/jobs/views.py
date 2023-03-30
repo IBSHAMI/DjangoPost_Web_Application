@@ -14,7 +14,7 @@ from rest_framework.generics import (
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 
-from .models import Job, SavedJob
+from .models import Job, SavedJob, AppliedJob
 from company.models import CompanyProfile
 from employee.models import EmployeeProfile
 from .serializers import (
@@ -23,6 +23,7 @@ from .serializers import (
     CompanyJobListSerializer,
     JobDetailSerializer,
     SavedJobSerializer,
+    AppliedJobSerializer,
 )
 from .choices_fields_data_job import (
     JOB_TYPE_CHOICES,
@@ -73,6 +74,13 @@ class JobListView(ListAPIView):
             saved_jobs = SavedJob.objects.filter(employee=employee).select_related('job')
             
             qs = [saved_job.job for saved_job in saved_jobs]
+            
+        elif table_variant == 'Applied Jobs':
+            user = self.request.user
+            employee = EmployeeProfile.objects.get(user=user)
+            applied_jobs = AppliedJob.objects.filter(employee=employee).select_related('job')
+            
+            qs = [applied_job.job for applied_job in applied_jobs]
 
         
         return qs
@@ -226,6 +234,36 @@ class SavedJobDeleteView(DestroyAPIView):
         obj = SavedJob.objects.get(job=job, employee=employee)
         
         return obj
+
+
+class AppliedJobCreateView(CreateAPIView):
+    queryset = AppliedJob.objects.all()
+    serializer_class = AppliedJobSerializer
+
+    def create(self, request, *args, **kwargs):
+        # get job id
+        job_id = request.data.get('job_id')
+        
+        # get authenticated user
+        user = self.request.user
+        
+        # get the employee profile
+        employee = EmployeeProfile.objects.get(user=user).pk
+        job = Job.objects.get(pk=job_id)
+        
+        
+        if job.is_active == False or job.internal:
+            raise serializers.ValidationError('This job is not available')
+        
+        data = {}
+        data['employee'] = employee
+        data['job'] = job.pk
+                
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 
