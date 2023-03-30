@@ -1,7 +1,12 @@
 <template>
   <tr>
-    <td class="fw-normal text-center">
-      {{ job.title }}
+    <td class="fw-normal text-left">
+      <span
+        class="fw-normal text-primary"
+        style="cursor: pointer"
+        @click.prevent="openJobDetails"
+        >{{ job.title }}</span
+      >
     </td>
     <td class="fw-normal text-center">
       {{ job.type }}

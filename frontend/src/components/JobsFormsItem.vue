@@ -100,7 +100,7 @@
         <table class="table table-hover table-nowrap">
           <thead class="table-light">
             <tr>
-              <th scope="col" class="border-bottom text-center">Title</th>
+              <th scope="col" class="border-bottom text-left">Title</th>
               <th scope="col" class="border-bottom text-center">Type</th>
               <th scope="col" class="border-bottom text-center">Salary</th>
               <th scope="col" class="border-bottom text-center">Language</th>
@@ -108,7 +108,9 @@
               <th scope="col" class="border-bottom text-center">
                 Active/Inactive
               </th>
-              <th scope="col" class="border-bottom text-center">View</th>
+              <th scope="col" class="border-bottom text-center">
+                Applications
+              </th>
               <th scope="col" class="border-bottom text-center">Action</th>
             </tr>
           </thead>
