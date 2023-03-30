@@ -34,7 +34,7 @@ class JobManager(models.Manager):
 class Job(models.Model):
     company             = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, null=True)
     title               = models.CharField(max_length=100)
-    description         = models.TextField(max_length=1000, blank=True, null=True)
+    description         = models.TextField(max_length=10000, blank=True, null=True)
     location            = models.CharField(max_length=100, blank=True, null=True)
     type                = models.CharField(max_length=100, blank=True, null=True, default='Full Time')
     language            = models.CharField(max_length=100, blank=True, null=True, default='English')

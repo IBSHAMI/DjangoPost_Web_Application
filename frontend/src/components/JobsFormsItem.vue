@@ -97,8 +97,8 @@
         </div>
       </div>
       <div class="bg-white table-responsive">
-        <table class="table">
-          <thead>
+        <table class="table table-hover table-nowrap">
+          <thead class="table-light">
             <tr>
               <th scope="col" class="border-bottom text-center">Title</th>
               <th scope="col" class="border-bottom text-center">Type</th>
@@ -124,12 +124,20 @@
           </tbody>
         </table>
       </div>
+      <pagination-item
+        :currentPage="currentPage"
+        :totalPages="totalPages"
+        @navigatePages="navigator"
+        @navigateNext="getJobsList(true, 'Next')"
+        @navigatePrevious="getJobsList(true, 'Previous')"
+      ></pagination-item>
     </div>
   </section>
 </template>
 
 <script>
 import JobRowTableItem from "@/components/JobRowTableItem.vue";
+import PaginationItem from "./sharedComponents/PaginationItem.vue";
 import useAuthenticationStore from "@/stores/authentication";
 import axios from "axios";
 import { API } from "@/api";
@@ -149,6 +157,11 @@ export default {
       jobsList: [],
       tableVariant: "all",
       selectedSort: "None",
+      page: 1,
+      currentPage: 1,
+      totalPages: 0,
+      nextPageLink: null,
+      previousPageLink: null,
       SortByOptions: [
         {
           id: 1,
@@ -170,22 +183,32 @@ export default {
   },
   components: {
     JobRowTableItem,
+    PaginationItem,
   },
   methods: {
     // get jobs list
-    getJobsList() {
+    getJobsList(handleNextAndPrevious, NavigateType) {
       const token = `Bearer ${this.authenticationStore.token}`;
       // Add the token to the header as Bearer token
       const headers = {
         // eslint-disable-next-line prettier/prettier
         Authorization: token,
       };
-      const jobsListUrl = API.jobs.company_list;
 
       const params = {
         table_variant: this.tableVariant,
-        sorting_option: this.selectedSort,
       };
+      let jobsListUrl = API.jobs.company_list;
+
+      if (handleNextAndPrevious) {
+        if (NavigateType === "Next") {
+          jobsListUrl = this.nextPageLink;
+        } else if (NavigateType === "Previous") {
+          jobsListUrl = this.previousPageLink;
+        }
+      } else {
+        params.page = this.page;
+      }
 
       axios
         .get(jobsListUrl, {
@@ -193,18 +216,32 @@ export default {
           headers: headers,
         })
         .then((response) => {
+          console.log(response.data);
           // empty the jobs list
           this.jobsList = [];
-          for (const job of response.data) {
+          for (const job of response.data.results) {
             this.jobsList.push(job);
           }
+          this.currentPage = response.data.page;
+          this.totalPages = response.data.total_pages;
+          this.nextPageLink = response.data.links.next;
+          this.previousPageLink = response.data.links.previous;
         })
         .catch((error) => {
           console.log(error);
         });
     },
     changeTableVariant(variant) {
+      if (this.tableVariant === variant) {
+        return;
+      }
       this.tableVariant = variant;
+      this.page = 1;
+      this.getJobsList();
+    },
+    navigator(page) {
+      console.log(page);
+      this.page = page;
       this.getJobsList();
     },
     sortJobs(sortOption) {
