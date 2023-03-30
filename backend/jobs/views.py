@@ -94,6 +94,7 @@ class CompanyJobListView(ListAPIView):
     def get_queryset(self):
         # get request and extract table variant to filter queryset
         request = self.request
+        search_term = request.GET.get('search_term')
         table_variant = request.GET.get('table_variant')
         company = CompanyProfile.objects.get(user=request.user)
 
@@ -113,6 +114,10 @@ class CompanyJobListView(ListAPIView):
                 qs = qs.order_by('-date_created')
             elif sorting_option == "Oldest":
                 qs = qs.order_by('date_created')
+                
+        # filter queryset based on search term
+        if search_term != 'None':
+            qs = qs.filter(title__icontains=search_term)
 
         return qs
 

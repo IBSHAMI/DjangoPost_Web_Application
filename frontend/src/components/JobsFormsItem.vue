@@ -26,6 +26,7 @@
           <div class="form-group col-md-4 mb-3">
             <p class="form-label">Search by Name:</p>
             <input
+              v-model.lazy="searchTerm"
               type="text"
               name="search-job"
               id="search-job"
@@ -156,6 +157,7 @@ export default {
     return {
       jobsList: [],
       tableVariant: "all",
+      searchTerm: "",
       selectedSort: "None",
       page: 1,
       currentPage: 1,
@@ -185,6 +187,12 @@ export default {
     JobRowTableItem,
     PaginationItem,
   },
+  watch: {
+    searchTerm() {
+      // search through the jobs list titles
+      this.getJobsList();
+    },
+  },
   methods: {
     // get jobs list
     getJobsList(handleNextAndPrevious, NavigateType) {
@@ -197,6 +205,7 @@ export default {
 
       const params = {
         table_variant: this.tableVariant,
+        search_term: this.searchTerm,
       };
       let jobsListUrl = API.jobs.company_list;
 
