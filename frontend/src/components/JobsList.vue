@@ -60,6 +60,8 @@
         :currentPage="currentPage"
         :totalPages="totalPages"
         @navigatePages="navigator"
+        @navigateNext="getJobsList(true, 'Next')"
+        @navigatePrevious="getJobsList(true, 'Previous')"
       />
     </div>
   </div>
@@ -98,7 +100,7 @@ export default {
     };
   },
   methods: {
-    getJobsList() {
+    getJobsList(handleNextAndPrevious, NavigateType) {
       const token = `Bearer ${this.authenticationStore.token}`;
       // Add the token to the header as Bearer token
       const headers = {
@@ -107,12 +109,21 @@ export default {
         Authorization: token,
       };
 
+      let url = API.jobs.list;
+
       const params = {
         table_variant: this.tableVariant,
-        page: this.page,
       };
 
-      const url = API.jobs.list;
+      if (handleNextAndPrevious) {
+        if (NavigateType === "Next") {
+          url = this.nextPageLink;
+        } else if (NavigateType === "Previous") {
+          url = this.previousPageLink;
+        }
+      } else {
+        params.page = this.page;
+      }
 
       axios
         .get(url, {
@@ -124,6 +135,8 @@ export default {
           this.jobsList = response.data.results;
           this.currentPage = response.data.page;
           this.totalPages = response.data.total_pages;
+          this.nextPageLink = response.data.links.next;
+          this.previousPageLink = response.data.links.previous;
         })
         .catch((error) => {
           console.log(error);

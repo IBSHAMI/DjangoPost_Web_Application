@@ -1,7 +1,12 @@
 <template>
   <div class="mx-auto py-auto">
     <ul class="pagination m-3 pb-5">
-      <li class="page-item page-prev disabled" style="cursor: pointer">
+      <li
+        class="page-item page-prev"
+        :class="{ disabled: currentPage === 1 }"
+        style="cursor: pointer"
+        @click="navigatePrevious"
+      >
         <span class="page-link" tabindex="-1">Prev</span>
       </li>
       <li
@@ -11,10 +16,16 @@
         :class="{ active: page === currentPage }"
         style="cursor: pointer"
         @click.prevent="navigatePages(page)"
+        :disabled="page === currentPage"
       >
         <span class="page-link">{{ page }}</span>
       </li>
-      <li class="page-item page-next" style="cursor: pointer">
+      <li
+        class="page-item page-next"
+        :class="{ disabled: currentPage === totalPages }"
+        style="cursor: pointer"
+        @click.prevent="navigateNext"
+      >
         <span class="page-link">Next</span>
       </li>
     </ul>
@@ -28,6 +39,12 @@ export default {
   methods: {
     navigatePages(page) {
       this.$emit("navigatePages", page);
+    },
+    navigateNext() {
+      this.$emit("navigateNext");
+    },
+    navigatePrevious() {
+      this.$emit("navigatePrevious");
     },
   },
 };
