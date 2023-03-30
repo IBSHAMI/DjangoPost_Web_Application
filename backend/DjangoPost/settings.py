@@ -183,7 +183,9 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticatedOrReadOnly", # Read only for non-authenticated users (GET requests)
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS':    
+         'DjangoPost.pagination.CustomPagination'
 }
 
 DJOSER = {

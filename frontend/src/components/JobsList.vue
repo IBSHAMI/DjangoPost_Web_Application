@@ -1,7 +1,7 @@
 <template>
   <div class="mt-4">
     <div class="container">
-      <div class="job-tab text-center my-4 py-4">
+      <div class="row job-tab text-center my-4 py-4">
         <div class="btn-group d-flex justify-content-center py-4" role="group">
           <div
             style="cursor: pointer"
@@ -48,7 +48,7 @@
             </div>
           </div>
         </div>
-        <div class="tab-content text-left">
+        <div class="row tab-content text-left">
           <div role="tabpanel" class="tab-pane fade active show" id="hot-jobs">
             <div class="row">
               <job-card v-for="job in jobsList" :job="job" :key="job.pk" />
@@ -56,12 +56,14 @@
           </div>
         </div>
       </div>
+      <pagination-item />
     </div>
   </div>
 </template>
 
 <script>
 import JobCard from "@/components/jobComponents/JobCard.vue";
+import PaginationItem from "./sharedComponents/PaginationItem.vue";
 import useAuthenticationStore from "@/stores/authentication";
 import axios from "axios";
 import { API } from "@/api";
@@ -75,6 +77,7 @@ export default {
   },
   components: {
     JobCard,
+    PaginationItem,
   },
   created() {
     this.getJobsList();
@@ -83,6 +86,9 @@ export default {
     return {
       jobsList: [],
       tableVariant: "All Jobs",
+      page: 1,
+      nextPageLink: null,
+      previousPageLink: null,
     };
   },
   methods: {
@@ -97,6 +103,7 @@ export default {
 
       const params = {
         table_variant: this.tableVariant,
+        page: this.page,
       };
 
       const url = API.jobs.list;
@@ -108,7 +115,7 @@ export default {
         })
         .then((response) => {
           console.log(response.data);
-          this.jobsList = response.data;
+          this.jobsList = response.data.results;
         })
         .catch((error) => {
           console.log(error);
@@ -121,7 +128,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* Tr Job Post */
-</style>
