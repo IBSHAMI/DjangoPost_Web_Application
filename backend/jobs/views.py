@@ -59,9 +59,22 @@ class JobListView(ListAPIView):
     serializer_class = JobListSerializer
 
     def get_queryset(self):
-        # get all jobs except inactive jobs
-        qs = super().get_queryset()
-        qs = qs.filter(is_active=True)
+        request = self.request
+        table_variant = request.GET.get('table_variant')
+        
+        
+        if table_variant == 'All Jobs':
+            qs = super().get_queryset()
+            qs = qs.filter(is_active=True)
+            
+        elif table_variant == 'Saved Jobs':
+            user = self.request.user
+            employee = EmployeeProfile.objects.get(user=user)
+            saved_jobs = SavedJob.objects.filter(employee=employee).select_related('job')
+            
+            qs = [saved_job.job for saved_job in saved_jobs]
+
+        
         return qs
 
 

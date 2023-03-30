@@ -3,17 +3,48 @@
     <div class="container">
       <div class="job-tab text-center">
         <div class="btn-group d-flex justify-content-center py-4" role="group">
-          <div style="cursor: pointer">
-            <div class="btn button btn-lg button-primary">Hot Jobs</div>
-          </div>
-          <div style="cursor: pointer" class="mx-2">
-            <div class="btn button button-outline-primary btn-lg">
-              Recent Jobs
+          <div
+            style="cursor: pointer"
+            @click.prevent="changeTableVariant('All Jobs')"
+          >
+            <div
+              class="btn button btn-lg"
+              :class="{
+                'button-primary': tableVariant === 'All Jobs',
+                'button-outline-primary': tableVariant !== 'All Jobs',
+              }"
+            >
+              All Jobs
             </div>
           </div>
-          <div style="cursor: pointer" class="mx-2">
-            <div class="btn button button-outline-primary btn-lg">
-              Popular Jobs
+          <div
+            style="cursor: pointer"
+            class="mx-2"
+            @click.prevent="changeTableVariant('Saved Jobs')"
+          >
+            <div
+              class="btn button btn-lg"
+              :class="{
+                'button-primary': tableVariant === 'Saved Jobs',
+                'button-outline-primary': tableVariant !== 'Saved Jobs',
+              }"
+            >
+              Saved Jobs
+            </div>
+          </div>
+          <div
+            style="cursor: pointer"
+            class="mx-2"
+            @click.prevent="changeTableVariant('Applied Jobs')"
+          >
+            <div
+              class="btn button btn-lg"
+              :class="{
+                'button-primary': tableVariant === 'Applied Jobs',
+                'button-outline-primary': tableVariant !== 'Applied Jobs',
+              }"
+            >
+              Applied Jobs
             </div>
           </div>
         </div>
@@ -22,14 +53,10 @@
             <div class="row">
               <job-card v-for="job in jobsList" :job="job" :key="job.pk" />
             </div>
-            <!-- /.row -->
           </div>
-          <!-- /.tab-pane -->
         </div>
       </div>
-      <!-- /.job-tab -->
     </div>
-    <!-- /.container -->
   </div>
 </template>
 
@@ -55,7 +82,7 @@ export default {
   data() {
     return {
       jobsList: [],
-      tableVariant: "active",
+      tableVariant: "All Jobs",
     };
   },
   methods: {
@@ -68,10 +95,17 @@ export default {
         Authorization: token,
       };
 
+      const params = {
+        table_variant: this.tableVariant,
+      };
+
       const url = API.jobs.list;
 
       axios
-        .get(url, { headers })
+        .get(url, {
+          params: params,
+          headers: headers,
+        })
         .then((response) => {
           console.log(response.data);
           this.jobsList = response.data;
@@ -82,6 +116,7 @@ export default {
     },
     changeTableVariant(variant) {
       this.tableVariant = variant;
+      this.getJobsList();
     },
   },
 };
