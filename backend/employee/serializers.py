@@ -15,7 +15,6 @@ class EmployeeProfileSerializer(serializers.ModelSerializer):
             'linkedin_url',
             'portfolio_url',
             'experience',
-            'about',
             # resume and profile picture are used to return
             # the file name of the resume and profile picture
             'resume',

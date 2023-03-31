@@ -163,10 +163,6 @@ def get_applicant_resume(request, pk):
     return Response(resume.data)
 
 
-
-
-
-
 #  Create a view to recieve and send customer messages
 class EmployeeContactSupportAPIView(APIView):
 

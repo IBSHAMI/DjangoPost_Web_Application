@@ -174,31 +174,6 @@
                         </div>
                       </div>
                     </div>
-                    <div class="row py-2">
-                      <div class="form-group col-md-12 mb-6">
-                        <label for="about" class="form-label fst-italic"
-                          >About</label
-                        >
-                        <ErrorMessage
-                          name="about"
-                          class="error-message small font-italic"
-                        />
-                        <div>
-                          <vee-field
-                            as="textarea"
-                            id="about"
-                            name="about"
-                            rows="3"
-                            class="form-control textarea"
-                            v-model="about"
-                          ></vee-field>
-                          <ErrorMessage
-                            name="about"
-                            class="error-message small error-message"
-                          />
-                        </div>
-                      </div>
-                    </div>
                     <button
                       type="submit"
                       class="btn button button-primary my-2"
@@ -310,7 +285,6 @@ export default {
         expected_salary: "max:25",
         linkedin_profile: "required|url",
         portfolio_website: "required|url",
-        about: "max:500|min:30",
       },
 
       // Upload Resume and Profile Picture varaibles
@@ -329,7 +303,6 @@ export default {
       employeeExperience: null,
       linkedinProfile: "",
       portfolioWebsite: "",
-      about: "",
       resume: "",
       profilePicture: "",
 
@@ -395,7 +368,6 @@ export default {
           this.employeeExperience = response.data.experience;
           this.linkedinProfile = response.data.linkedin_url;
           this.portfolioWebsite = response.data.portfolio_url;
-          this.about = response.data.about;
           if (response.data.resume) {
             this.resume = this.getFileBaseName(response.data.resume);
             this.resumeuploadedCheck = true;
@@ -454,7 +426,6 @@ export default {
       data.append("experience", this.employeeExperience);
       data.append("linkedin_url", this.linkedinProfile);
       data.append("portfolio_url", this.portfolioWebsite);
-      data.append("about", this.about);
 
       console.log(data);
 

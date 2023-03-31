@@ -46,7 +46,12 @@
         >Download Resume</span
       >
       |
-      <span class="fw-normal text-danger" style="cursor: pointer">Delete</span>
+      <span
+        class="fw-normal text-danger"
+        style="cursor: pointer"
+        @click.prevent="deleteApplication"
+        >Reject</span
+      >
     </td>
   </tr>
 </template>
