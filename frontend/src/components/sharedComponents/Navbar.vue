@@ -43,56 +43,15 @@
                 >
               </li>
               <li
-                class="nav-item dropdown"
+                class="nav-item"
                 v-show="authenticationStore.isAuthenticated && employeeProfile"
               >
-                <a
-                  href="#"
-                  class="nav-link dropdown-toggle"
-                  id="dashboardDropdown"
-                  aria-expanded="false"
-                  data-bs-toggle="dropdown"
-                >
-                  Notifications
-                </a>
-                <div
-                  class="dropdown-menu dropdown-megamenu-sm px-0 py-2 p-lg-4"
-                  aria-labelledby="dashboardDropdown"
-                >
-                  <a class="dropdown-item rounded-top" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item rounded-bottom" href="#"
-                    >Separated link</a
-                  >
-                </div>
-              </li>
-              <li
-                class="nav-item dropdown"
-                v-show="authenticationStore.isAuthenticated && employeeProfile"
-              >
-                <a
-                  href="#"
-                  class="nav-link dropdown-toggle"
-                  id="dashboardDropdown"
-                  aria-expanded="false"
-                  data-bs-toggle="dropdown"
+                <router-link
+                  :to="{ name: 'Profile', params: { slug: 'data' } }"
+                  class="nav-link"
                 >
                   Profile
-                </a>
-                <div
-                  class="dropdown-menu dropdown-megamenu-sm text-start"
-                  aria-labelledby="dashboardDropdown"
-                >
-                  <router-link to="/profile/data" class="dropdown-item">
-                    Your Profile
-                  </router-link>
-                  <div class="dropdown-divider"></div>
-                  <router-link to="/profile/data" class="dropdown-item">
-                    Jobs History
-                  </router-link>
-                </div>
+                </router-link>
               </li>
               <li class="nav-item" v-show="authenticationStore.isAuthenticated">
                 <router-link
@@ -226,7 +185,7 @@ export default {
 .header-area .main-menu .nav-item .nav-link {
   font: normal 700 15px/2px var(--Nunito);
   text-transform: uppercase;
-  padding: 1.9rem;
+  padding: 2rem 1rem;
   color: #66799e;
 }
 
