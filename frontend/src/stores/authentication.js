@@ -7,6 +7,8 @@ export default defineStore("authentication", {
   state: () => ({
     token: null,
     user: null,
+    employeeProfileCompleted: false,
+    companyProfileCompleted: false,
     employeeProfilePicture: null,
     companyProfileLogo: null,
     resumePathToDownload: null,
@@ -40,6 +42,12 @@ export default defineStore("authentication", {
     setUser(user) {
       this.$patch({ user: user });
       localStorage.setItem("user", user);
+    },
+    setIfEmployeeProfileCompleted(employeeProfileCompleted) {
+      this.$patch({ employeeProfileCompleted: employeeProfileCompleted });
+    },
+    setIfCompanyProfileCompleted(companyProfileCompleted) {
+      this.$patch({ companyProfileCompleted: companyProfileCompleted });
     },
     setEmployeeProfilePicture(employeeProfilePicture) {
       this.$patch({ employeeProfilePicture: employeeProfilePicture });
@@ -80,6 +88,30 @@ export default defineStore("authentication", {
           console.log(error);
         });
     },
+    checkIfProfileComplete() {
+      const token = `Bearer ${this.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        "content-type": "application/json",
+        // eslint-disable-next-line prettier/prettier
+        Authorization: token,
+      };
+
+      axios
+        .get(API.auth.checkIfProfileComplete, { headers: headers })
+        .then((response) => {
+          this.setIfEmployeeProfileCompleted(
+            response.data.employee_profile_complete
+          );
+          this.setIfCompanyProfileCompleted(
+            response.data.company_profile_complete
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     getResumePathToDownload() {
       // headers to retieve the account pictures
       const token = `Bearer ${this.token}`;

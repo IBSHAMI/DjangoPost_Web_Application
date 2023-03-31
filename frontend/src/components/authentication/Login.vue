@@ -116,6 +116,7 @@ export default {
           this.authenticationStore.setUser(loginCredentials.email);
 
           this.authenticationStore.getAccountPictures();
+          this.authenticationStore.checkIfProfileComplete();
 
           setTimeout(() => {
             this.$router.push({ name: "Jobs", params: { slug: "jobs" } });
