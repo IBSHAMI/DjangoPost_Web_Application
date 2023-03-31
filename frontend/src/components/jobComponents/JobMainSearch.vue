@@ -16,14 +16,14 @@
       <div class="container">
         <div class="row">
           <div class="col-xl-8 col-lg-12 col-md-12 d-block mx-auto">
-            <div class="text-center text-white">
+            <div class="text-center text-white mx-auto">
               <h1 class="text-center form-header">
                 <span class="font-weight-bold">{{ totalJobsCount }}</span>
                 Jobs Available In DjangoPost
               </h1>
             </div>
             <div class="search-background py-4 text-center mx-auto">
-              <div class="form row no-gutters">
+              <div class="form row no-gutters d-flex justify-content-center">
                 <div class="col-xl-6 col-lg-5 col-md-12 mb-0 form-group">
                   <input
                     type="text"

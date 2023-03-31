@@ -66,35 +66,40 @@ class JobListView(ListAPIView):
         user = request.user
         table_variant = request.GET.get('table_variant')
         search_term = request.GET.get('search_term')
-        print('search_term', search_term)
+        qs = super().get_queryset()
 
         if user.is_authenticated:
             print('user is authenticated')
             if table_variant == 'All Jobs':
-                qs = super().get_queryset()
-                qs = qs.filter(is_active=True).exclude(company__user=user)
+                qs = qs.exclude(company__user=user)
 
             elif table_variant == 'Saved Jobs':
                 employee = EmployeeProfile.objects.get(user=user)
                 saved_jobs = SavedJob.objects.filter(employee=employee).select_related('job')
 
-                qs = [saved_job.job for saved_job in saved_jobs]
+                saved_jobs_ids = [saved_job.job.id for saved_job in saved_jobs]
+                
+                qs = qs.filter(id__in=saved_jobs_ids)
 
             elif table_variant == 'Applied Jobs':
                 employee = EmployeeProfile.objects.get(user=user)
                 applied_jobs = AppliedJob.objects.filter(employee=employee).select_related('job')
 
-                qs = [applied_job.job for applied_job in applied_jobs]
+                applied_jobs_ids = [applied_job.job.id for applied_job in applied_jobs]
                 
+                qs = qs.filter(id__in=applied_jobs_ids)
+                
+            if search_term is not None:
+                qs = qs.filter(title__icontains=search_term, is_active=True)
+                return qs
+                
+                
+             
                 
         else:
-            qs = super().get_queryset()
             qs = qs.filter(is_active=True)
-            
-        
-        # filter queryset based on search term
-        if search_term is not None:
-            qs = qs.filter(title__icontains=search_term)
+
+
 
         return qs
 
