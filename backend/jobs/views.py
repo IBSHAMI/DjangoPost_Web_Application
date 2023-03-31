@@ -242,7 +242,7 @@ class SavedJobCreateView(CreateAPIView):
     # however, this is a double check to make sure the user cannot save a job they posted
     def perform_create(self, serializer):
         # check if the job is under the company user
-        if serializer.validated_data['job'].company.user == self.request.user:
+        if not serializer.validated_data['job'].internal and serializer.validated_data['job'].company.user == self.request.user:
             raise serializers.ValidationError('You cannot save a job you posted')
         
         serializer.save()
