@@ -3,8 +3,11 @@
     <div>
       <Navbar :employeeProfile="employeeProfile" :pageType="jobsPage" />
     </div>
-    <job-main-search />
-    <jobs-list v-if="passedSlug === 'jobs'" />
+    <job-main-search @searchByJobTitle="searchByJobTitle" />
+    <jobs-list
+      v-if="passedSlug === 'jobs'"
+      :searchTitleTerm="searchTitleTerm"
+    />
     <job-details v-else-if="checkIfJobDetails" :jobId="jobId" />
   </section>
 </template>
@@ -22,6 +25,7 @@ export default {
       employeeProfile: true,
       jobsPage: "jobs",
       passedSlug: this.$route.params.slug,
+      searchTitleTerm: "",
     };
   },
   components: {
@@ -39,6 +43,10 @@ export default {
   methods: {
     checkIfJobDetails() {
       return this.passedSlug.includes("jobDetails");
+    },
+    searchByJobTitle(searchTerm) {
+      this.searchTitleTerm = searchTerm;
+      this.passedSlug = "jobs";
     },
   },
   watch: {

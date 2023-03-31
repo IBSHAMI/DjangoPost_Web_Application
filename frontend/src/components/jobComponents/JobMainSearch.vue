@@ -22,17 +22,18 @@
                 Jobs Available In DjangoPost
               </h1>
             </div>
-            <div class="search-background">
+            <div class="search-background py-4 text-center mx-auto">
               <div class="form row no-gutters">
                 <div class="col-xl-6 col-lg-5 col-md-12 mb-0 form-group">
                   <input
                     type="text"
                     class="form-control input-lg border-end-0 br-tr-md-0 br-br-md-0 form-control"
                     id="text"
+                    v-model="searchTerm"
                     placeholder="Search Jobs"
                   />
                 </div>
-                <div
+                <!-- <div
                   class="col-xl-4 col-lg-4 select2-lg col-md-12 mb-0 form-group"
                 >
                   <select
@@ -57,10 +58,10 @@
                       <option value="9">Sales</option>
                     </optgroup>
                   </select>
-                </div>
+                </div> -->
                 <div class="col-xl-2 col-lg-3 col-md-12 mb-0 form-group">
                   <a
-                    href="javascript:void(0);"
+                    @click.prevent="searchByJobTitle"
                     class="btn btn-lg btn-block btn-secondary br-bl-0 br-tl-0"
                     >Search</a
                   >
@@ -83,6 +84,7 @@ export default {
   name: "JobMainSearch",
   data() {
     return {
+      searchTerm: "",
       totalJobsCount: 0,
     };
   },
@@ -102,6 +104,9 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    searchByJobTitle() {
+      this.$emit("searchByJobTitle", this.searchTerm);
     },
   },
 };

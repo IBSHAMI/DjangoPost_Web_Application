@@ -65,6 +65,8 @@ class JobListView(ListAPIView):
         request = self.request
         user = request.user
         table_variant = request.GET.get('table_variant')
+        search_term = request.GET.get('search_term')
+        print('search_term', search_term)
 
         if user.is_authenticated:
             print('user is authenticated')
@@ -84,9 +86,15 @@ class JobListView(ListAPIView):
 
                 qs = [applied_job.job for applied_job in applied_jobs]
                 
+                
         else:
             qs = super().get_queryset()
             qs = qs.filter(is_active=True)
+            
+        
+        # filter queryset based on search term
+        if search_term is not None:
+            qs = qs.filter(title__icontains=search_term)
 
         return qs
 
@@ -121,7 +129,7 @@ class CompanyJobListView(ListAPIView):
                 qs = qs.order_by('date_created')
 
         # filter queryset based on search term
-        if search_term != 'None':
+        if search_term is not None:
             qs = qs.filter(title__icontains=search_term)
 
         return qs

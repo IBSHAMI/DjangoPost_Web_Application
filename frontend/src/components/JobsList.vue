@@ -84,6 +84,7 @@ import { API } from "@/api";
 
 export default {
   name: "JobsList",
+  props: ["searchTitleTerm"],
   setup() {
     // init the store
     const authenticationStore = useAuthenticationStore();
@@ -123,6 +124,7 @@ export default {
 
       const params = {
         table_variant: this.tableVariant,
+        search_term: this.searchTitleTerm,
       };
 
       if (handleNextAndPrevious) {
@@ -165,6 +167,12 @@ export default {
     navigator(page) {
       console.log(page);
       this.page = page;
+      this.getJobsList();
+    },
+  },
+  watch: {
+    searchTitleTerm() {
+      console.log(this.searchTitleTerm);
       this.getJobsList();
     },
   },
