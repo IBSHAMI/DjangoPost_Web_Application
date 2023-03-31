@@ -104,30 +104,6 @@
                         </div>
                       </div>
                     </div>
-                    <div class="row py-2">
-                      <div class="form-group col-md-12 mb-6">
-                        <label
-                          for="company_description"
-                          class="form-label fst-italic"
-                          >Company Description</label
-                        >
-
-                        <div>
-                          <vee-field
-                            as="textarea"
-                            id="company_description"
-                            name="company_description"
-                            rows="6"
-                            class="form-control textarea"
-                            v-model="companyDescription"
-                          ></vee-field>
-                          <ErrorMessage
-                            name="company_description"
-                            class="error-message small font-italic"
-                          />
-                        </div>
-                      </div>
-                    </div>
                     <button type="submit" class="btn button button-primary">
                       Save all
                     </button>
@@ -199,7 +175,6 @@ export default {
         company_name: "required|min:5|max:40",
         company_size: "required|min:1|max:40",
         company_website: "required|url",
-        company_description: "required|min:5|max:1000",
         company_location: "required|min:2|max:40",
       },
 
@@ -215,7 +190,6 @@ export default {
       companySize: "",
       companyLocation: "",
       companyWebsite: "",
-      companyDescription: "",
       companyLogo: "",
     };
   },
@@ -244,7 +218,6 @@ export default {
           this.companySize = response.data.company_size;
           this.companyLocation = response.data.company_location;
           this.companyWebsite = response.data.company_website;
-          this.companyDescription = response.data.company_description;
           if (response.data.company_logo) {
             this.companyLogo = this.getFileBaseName(response.data.company_logo);
           }
@@ -284,7 +257,6 @@ export default {
       data.append("company_size", this.companySize);
       data.append("company_location", this.companyLocation);
       data.append("company_website", this.companyWebsite);
-      data.append("company_description", this.companyDescription);
 
       axios
         .patch(API.company.details, data, { headers: headers })

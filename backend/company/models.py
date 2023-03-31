@@ -10,7 +10,6 @@ User = settings.AUTH_USER_MODEL
 class CompanyProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='company_profile')
     company_name = models.CharField(max_length=100, blank=True, null=True)
-    company_description = models.TextField(blank=True, null=True)
     company_website = models.URLField(max_length=200, blank=True, null=True)
     company_size = models.CharField(max_length=10, blank=True, null=True)
     company_logo = models.ImageField(upload_to='users/company/logos', blank=True, null=True)
