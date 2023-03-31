@@ -2,7 +2,9 @@ from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.decorators import api_view, permission_classes
+from django.shortcuts import get_object_or_404
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
@@ -147,6 +149,22 @@ class EmployeeProfileResumeAPIView(generics.RetrieveUpdateAPIView):
         get_object = employee
 
         return get_object
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticatedOrReadOnly])
+def get_applicant_resume(request, pk):
+    # get the applicant profile
+    applicant = get_object_or_404(EmployeeProfile, pk=pk)
+
+    resume = EmployeeProfileResumeSerializer(applicant)
+
+    # send the resume file to the frontend
+    return Response(resume.data)
+
+
+
+
 
 
 #  Create a view to recieve and send customer messages

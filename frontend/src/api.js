@@ -12,6 +12,7 @@ export const API = {
     get_choices_data: `${baseURL}/api/users/employee/employee_choices/`,
     employee_profile_picture: `${baseURL}/api/users/employee/employee_profile_picture/`,
     employee_profile_resume: `${baseURL}/api/users/employee/employee_profile_resume/`,
+    get_applicant_resume: `${baseURL}/api/users/employee/get_applicant_resume/`,
   },
   company: {
     details: `${baseURL}/api/users/company/data/`,
@@ -30,5 +31,6 @@ export const API = {
     save_job: `${baseURL}/api/jobs/save_job/`,
     delete_saved_job: `${baseURL}/api/jobs/delete_saved_job/`,
     apply_job: `${baseURL}/api/jobs/apply_job/`,
+    applicants_list: `${baseURL}/api/jobs/applicants_list/`,
   },
 };

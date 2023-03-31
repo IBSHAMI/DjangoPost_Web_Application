@@ -6,6 +6,7 @@ from .views import (
     EmployeeChoicesView,
     EmployeeProfilePictureAPIView,
     EmployeeProfileResumeAPIView,
+    get_applicant_resume,
 )
 
 app_name = 'employee'
@@ -16,4 +17,5 @@ urlpatterns = [
     path('employee_choices/', EmployeeChoicesView.as_view(), name='employee_choices'),
     path('employee_profile_picture/', EmployeeProfilePictureAPIView.as_view(), name='employee_profile_picture'),
     path('employee_profile_resume/', EmployeeProfileResumeAPIView.as_view(), name='employee_profile_resume'),
+    path('get_applicant_resume/<int:pk>/', get_applicant_resume, name='get_applicant_resume'),
 ]

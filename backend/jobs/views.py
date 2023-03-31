@@ -24,6 +24,7 @@ from .serializers import (
     JobDetailSerializer,
     SavedJobSerializer,
     AppliedJobSerializer,
+    ApplicantsJobListSerializer,
 )
 from .choices_fields_data_job import (
     JOB_TYPE_CHOICES,
@@ -284,6 +285,31 @@ class AppliedJobCreateView(CreateAPIView):
             raise serializers.ValidationError('You can not apply to your own job')
         
         serializer.save()
+        
+
+class ApplicantsListView(ListAPIView):
+    serializer_class = ApplicantsJobListSerializer
+
+    def get_queryset(self):
+        request = self.request
+        # get job id
+        job_id = request.GET.get('job_id')
+        print(job_id)
+
+        # get the job
+        job = Job.objects.get(pk=job_id)
+        
+        # get the applied jobs
+        applied_jobs = AppliedJob.objects.filter(job=job)
+        
+        return applied_jobs
+    
+            
+        
+        
+        
+
+
         
         
 

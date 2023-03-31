@@ -169,3 +169,28 @@ class AppliedJobSerializer(serializers.ModelSerializer):
             'employee', 
             'job',
         ]
+        
+class ApplicantsJobListSerializer(serializers.ModelSerializer):
+    employee_data = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = AppliedJob
+        fields = [
+            'employee_data',
+            'date_applied',
+        ]
+    
+    def get_employee_data(self, obj):
+        employee = obj.employee
+        employee_data = {
+            'pk': employee.pk,
+            'first_name': employee.user.first_name,
+            'last_name': employee.user.last_name,
+            'email': employee.user.email,
+            'experience': employee.experience,
+            'expected_salary': employee.expected_salary,
+            'linkedin_url': employee.linkedin_url,
+            'portfolio_url': employee.portfolio_url,
+            'about': employee.about,
+        }
+           
+        return employee_data

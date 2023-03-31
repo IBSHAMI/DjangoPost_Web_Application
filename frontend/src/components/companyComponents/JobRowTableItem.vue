@@ -27,9 +27,12 @@
       {{ job.is_active ? "Active" : "Inactive" }}
     </td>
     <td class="fw-normal text-center">
-      <span class="fw-normal text-primary" style="cursor: pointer">{{
-        job.number_of_applications
-      }}</span>
+      <span
+        class="fw-normal text-primary"
+        style="cursor: pointer"
+        @click.prevent="openApplicantsTable"
+        >{{ job.number_of_applications }}</span
+      >
     </td>
     <td class="fw-normal text-center">
       <span
@@ -120,6 +123,12 @@ export default {
         params: { slug: `jobDetails-${this.job.pk}` },
       }).href;
       window.open(url, "_blank");
+    },
+    openApplicantsTable() {
+      this.$router.push({
+        name: "Company",
+        params: { slug: `ApplicantsTable-${this.job.pk}` },
+      });
     },
   },
 };
