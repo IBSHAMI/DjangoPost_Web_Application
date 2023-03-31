@@ -5,10 +5,15 @@
         <div class="job-card_info">
           <h6 class="d-flex justify-content-between">
             <p class="paragraph">{{ job.company_name }}</p>
-            <a
-              href="#!"
+            <div
               class="float-right"
-              style="position: absolute; top: 15px; right: 10px"
+              v-show="authenticationStore.isAuthenticated"
+              style="
+                position: absolute;
+                top: 15px;
+                right: 10px;
+                cursor: pointer;
+              "
             >
               <img
                 :src="heartSvgPath"
@@ -19,7 +24,7 @@
                 "
                 style="width: 25px; height: 25px"
               />
-            </a>
+            </div>
           </h6>
           <h4
             class="job-title text-start"
