@@ -57,6 +57,7 @@
         </div>
       </div>
       <pagination-item
+        v-show="jobsList.length > 0"
         :currentPage="currentPage"
         :totalPages="totalPages"
         @navigatePages="navigator"
