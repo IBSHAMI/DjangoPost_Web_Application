@@ -24,6 +24,20 @@
             <ul class="nav navbar-nav">
               <li
                 class="nav-item"
+                v-show="
+                  !authenticationStore.isAuthenticated ||
+                  (authenticationStore.isAuthenticated && employeeProfile)
+                "
+              >
+                <router-link
+                  :to="{ name: 'Jobs', params: { slug: 'jobs' } }"
+                  class="nav-link"
+                >
+                  Find Jobs
+                </router-link>
+              </li>
+              <li
+                class="nav-item"
                 v-show="authenticationStore.isAuthenticated && companyProfile"
               >
                 <router-link
@@ -41,17 +55,6 @@
                   class="nav-link"
                   >Jobs</router-link
                 >
-              </li>
-              <li
-                class="nav-item"
-                v-show="authenticationStore.isAuthenticated && employeeProfile"
-              >
-                <router-link
-                  :to="{ name: 'Jobs', params: { slug: 'jobs' } }"
-                  class="nav-link"
-                >
-                  Find Jobs
-                </router-link>
               </li>
               <li
                 class="nav-item"
