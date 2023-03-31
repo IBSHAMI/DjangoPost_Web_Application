@@ -67,6 +67,7 @@ class JobListView(ListAPIView):
         table_variant = request.GET.get('table_variant')
 
         if user.is_authenticated:
+            print('user is authenticated')
             if table_variant == 'All Jobs':
                 qs = super().get_queryset()
                 qs = qs.filter(is_active=True).exclude(company__user=user)

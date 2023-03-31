@@ -2,10 +2,15 @@
   <div class="mt-4">
     <div class="container">
       <div class="row job-tab text-center my-4 py-4">
-        <div class="btn-group d-flex justify-content-center py-4" role="group">
+        <div
+          class="btn-group d-flex justify-content-center py-4"
+          role="group"
+          v-show="authenticationStore.isAuthenticated"
+        >
           <div
             style="cursor: pointer"
             @click.prevent="changeTableVariant('All Jobs')"
+            v-show="authenticationStore.isAuthenticated"
           >
             <div
               class="btn button btn-lg"
@@ -21,6 +26,7 @@
             style="cursor: pointer"
             class="mx-2"
             @click.prevent="changeTableVariant('Saved Jobs')"
+            v-show="authenticationStore.isAuthenticated"
           >
             <div
               class="btn button btn-lg"
@@ -36,6 +42,7 @@
             style="cursor: pointer"
             class="mx-2"
             @click.prevent="changeTableVariant('Applied Jobs')"
+            v-show="authenticationStore.isAuthenticated"
           >
             <div
               class="btn button btn-lg"
@@ -102,6 +109,16 @@ export default {
   },
   methods: {
     getJobsList(handleNextAndPrevious, NavigateType) {
+      let headers = {};
+      if (this.authenticationStore.isAuthenticated) {
+        const token = `Bearer ${this.authenticationStore.token}`;
+        // Add the token to the header as Bearer token
+        headers = {
+          // eslint-disable-next-line prettier/prettier
+          Authorization: token,
+        };
+      }
+
       let url = API.jobs.list;
 
       const params = {
@@ -118,10 +135,13 @@ export default {
         params.page = this.page;
       }
 
+      const requestData = {
+        headers,
+        params,
+      };
+
       axios
-        .get(url, {
-          params: params,
-        })
+        .get(url, requestData)
         .then((response) => {
           console.log(response.data);
           this.jobsList = response.data.results;
