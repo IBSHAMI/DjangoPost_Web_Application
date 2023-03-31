@@ -47,6 +47,17 @@
                 v-show="authenticationStore.isAuthenticated && employeeProfile"
               >
                 <router-link
+                  :to="{ name: 'Jobs', params: { slug: 'jobs' } }"
+                  class="nav-link"
+                >
+                  Find Jobs
+                </router-link>
+              </li>
+              <li
+                class="nav-item"
+                v-show="authenticationStore.isAuthenticated && employeeProfile"
+              >
+                <router-link
                   :to="{ name: 'Profile', params: { slug: 'data' } }"
                   class="nav-link"
                 >
