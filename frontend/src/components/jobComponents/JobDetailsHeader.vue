@@ -16,14 +16,23 @@
           </div>
         </div>
         <div class="col-lg-4 col-md-12 text-lg-end">
-          <div
-            class="btn button button-primary"
-            v-if="!isApplied"
-            @click.prevent="applyJob"
-          >
-            {{ headerData.internal ? "Apply" : "Easy Apply" }}
+          <div v-if="authenticationStore.isAuthenticated">
+            <div
+              class="btn button button-primary"
+              v-if="!isApplied"
+              @click.prevent="applyJob"
+            >
+              {{ headerData.internal ? "Apply" : "Easy Apply" }}
+            </div>
+            <div class="btn button btn-secondary" v-else>Applied</div>
           </div>
-          <div class="btn button btn-secondary" v-else>Applied</div>
+          <div v-else>
+            <router-link
+              :to="{ name: 'Auth', params: { slug: 'signin' } }"
+              class="btn button button-primary"
+              >Login/SignUp</router-link
+            >
+          </div>
         </div>
       </div>
     </div>
