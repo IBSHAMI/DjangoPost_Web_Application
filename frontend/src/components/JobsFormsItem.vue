@@ -206,6 +206,7 @@ export default {
       const params = {
         table_variant: this.tableVariant,
         search_term: this.searchTerm,
+        sorting_option: this.selectedSort,
       };
       let jobsListUrl = API.jobs.company_list;
 

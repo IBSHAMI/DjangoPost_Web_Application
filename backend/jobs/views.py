@@ -62,27 +62,25 @@ class JobListView(ListAPIView):
     def get_queryset(self):
         request = self.request
         table_variant = request.GET.get('table_variant')
-        
-        
+
         if table_variant == 'All Jobs':
             qs = super().get_queryset()
-            qs = qs.filter(is_active=True)
-            
+            qs = qs.filter(is_active=True).exclude(company__user=request.user)
+
         elif table_variant == 'Saved Jobs':
             user = self.request.user
             employee = EmployeeProfile.objects.get(user=user)
             saved_jobs = SavedJob.objects.filter(employee=employee).select_related('job')
-            
+
             qs = [saved_job.job for saved_job in saved_jobs]
-            
+
         elif table_variant == 'Applied Jobs':
             user = self.request.user
             employee = EmployeeProfile.objects.get(user=user)
             applied_jobs = AppliedJob.objects.filter(employee=employee).select_related('job')
-            
+
             qs = [applied_job.job for applied_job in applied_jobs]
 
-        
         return qs
 
 
@@ -114,7 +112,7 @@ class CompanyJobListView(ListAPIView):
                 qs = qs.order_by('-date_created')
             elif sorting_option == "Oldest":
                 qs = qs.order_by('date_created')
-                
+
         # filter queryset based on search term
         if search_term != 'None':
             qs = qs.filter(title__icontains=search_term)
@@ -193,7 +191,6 @@ class JobDeleteView(DestroyAPIView):
             super().perform_destroy(instance)
         else:
             raise serializers.ValidationError('You are not the owner of this job')
-        
 
 
 class SavedJobCreateView(CreateAPIView):
@@ -203,24 +200,33 @@ class SavedJobCreateView(CreateAPIView):
     def create(self, request, *args, **kwargs):
         # get job id
         job_id = request.data.get('job_id')
-        
+
         # get authenticated user
         user = self.request.user
-        
+
         # get the employee profile
         employee = EmployeeProfile.objects.get(user=user).pk
         job = Job.objects.get(pk=job_id).pk
-        
+
         data = {}
         data['employee'] = employee
         data['job'] = job
-                
+
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
     
+    # the job list is updated to not return jobs that is posted by the user
+    # however, this is a double check to make sure the user cannot save a job they posted
+    def perform_create(self, serializer):
+        # check if the job is under the company user
+        if serializer.validated_data['job'].company.user == self.request.user:
+            raise serializers.ValidationError('You cannot save a job you posted')
+        
+        serializer.save()
+
 
 class SavedJobDeleteView(DestroyAPIView):
     serializer_class = SavedJobSerializer
@@ -231,13 +237,13 @@ class SavedJobDeleteView(DestroyAPIView):
 
         queryset = SavedJob.objects.filter(employee__user=user)
         return queryset
-    
+
     def get_object(self):
         job = Job.objects.get(pk=self.request.data.get('job_id'))
         employee = EmployeeProfile.objects.get(user=self.request.user)
-        
+
         obj = SavedJob.objects.get(job=job, employee=employee)
-        
+
         return obj
 
 
@@ -248,28 +254,38 @@ class AppliedJobCreateView(CreateAPIView):
     def create(self, request, *args, **kwargs):
         # get job id
         job_id = request.data.get('job_id')
-        
+
         # get authenticated user
         user = self.request.user
-        
+
         # get the employee profile
         employee = EmployeeProfile.objects.get(user=user).pk
         job = Job.objects.get(pk=job_id)
-        
-        
+
         if job.is_active == False or job.internal:
             raise serializers.ValidationError('This job is not available')
-        
+
         data = {}
         data['employee'] = employee
         data['job'] = job.pk
-                
+
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
+    
+    
+    # the job list is updated to not return jobs that is posted by the user
+    # however, this is a double check to make sure the user cannot apply a job they posted
+    def perform_create(self, serializer):
+        # check if the job is not under the user
+        if serializer.validated_data['job'].company.user == self.request.user:
+            raise serializers.ValidationError('You can not apply to your own job')
+        
+        serializer.save()
+        
+        
 
 
 @api_view(['GET'])
@@ -284,7 +300,7 @@ def get_total_jobs(request):
 def change_job_status(request, pk):
     # get job
     job = get_object_or_404(Job, pk=pk)
-    
+
     # get company profile
     company = CompanyProfile.objects.get(user=request.user)
 
