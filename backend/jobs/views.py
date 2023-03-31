@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework import status
 from rest_framework.generics import (
     GenericAPIView,
@@ -59,28 +59,33 @@ class JobChoicesView(GenericAPIView):
 class JobListView(ListAPIView):
     queryset = Job.objects.all()
     serializer_class = JobListSerializer
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         request = self.request
+        user = request.user
         table_variant = request.GET.get('table_variant')
 
-        if table_variant == 'All Jobs':
+        if user.is_authenticated:
+            if table_variant == 'All Jobs':
+                qs = super().get_queryset()
+                qs = qs.filter(is_active=True).exclude(company__user=user)
+
+            elif table_variant == 'Saved Jobs':
+                employee = EmployeeProfile.objects.get(user=user)
+                saved_jobs = SavedJob.objects.filter(employee=employee).select_related('job')
+
+                qs = [saved_job.job for saved_job in saved_jobs]
+
+            elif table_variant == 'Applied Jobs':
+                employee = EmployeeProfile.objects.get(user=user)
+                applied_jobs = AppliedJob.objects.filter(employee=employee).select_related('job')
+
+                qs = [applied_job.job for applied_job in applied_jobs]
+                
+        else:
             qs = super().get_queryset()
-            qs = qs.filter(is_active=True).exclude(company__user=request.user)
-
-        elif table_variant == 'Saved Jobs':
-            user = self.request.user
-            employee = EmployeeProfile.objects.get(user=user)
-            saved_jobs = SavedJob.objects.filter(employee=employee).select_related('job')
-
-            qs = [saved_job.job for saved_job in saved_jobs]
-
-        elif table_variant == 'Applied Jobs':
-            user = self.request.user
-            employee = EmployeeProfile.objects.get(user=user)
-            applied_jobs = AppliedJob.objects.filter(employee=employee).select_related('job')
-
-            qs = [applied_job.job for applied_job in applied_jobs]
+            qs = qs.filter(is_active=True)
 
         return qs
 

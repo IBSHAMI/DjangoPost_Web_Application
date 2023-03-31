@@ -102,14 +102,6 @@ export default {
   },
   methods: {
     getJobsList(handleNextAndPrevious, NavigateType) {
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        "content-type": "application/json",
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
-
       let url = API.jobs.list;
 
       const params = {
@@ -129,7 +121,6 @@ export default {
       axios
         .get(url, {
           params: params,
-          headers: headers,
         })
         .then((response) => {
           console.log(response.data);

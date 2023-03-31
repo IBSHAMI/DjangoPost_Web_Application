@@ -58,6 +58,10 @@ class JobListSerializer(serializers.ModelSerializer):
     
     def get_is_saved_job(self, obj):
         user = self.context['request'].user
+        
+        if not user.is_authenticated:
+            return False
+        
         employee = EmployeeProfile.objects.get(user=user)
         job = obj
         
