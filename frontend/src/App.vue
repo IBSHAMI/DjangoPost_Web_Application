@@ -20,6 +20,8 @@ export default {
   mounted() {
     // load profile pictures
     this.authenticationStore.getAccountPictures();
+    // check if the profiles information are complete for profile and company
+    this.authenticationStore.checkIfProfileComplete();
   },
 };
 </script>

@@ -279,10 +279,10 @@ export default {
     return {
       // Create schema for form validation
       schema: {
-        first_name: "min:5|max:20",
-        last_name: "min:5|max:20",
+        first_name: "required|min:5|max:20",
+        last_name: "required|min:5|max:20",
         email: "required|email",
-        expected_salary: "max:25",
+        expected_salary: "required|max:25",
         linkedin_profile: "required|url",
         portfolio_website: "required|url",
       },
@@ -437,6 +437,8 @@ export default {
           this.alert = true;
           this.alertMessage = "Data updated successfully";
           this.alertBackgroundColor = "alert alert-success";
+
+          this.authenticationStore.setIfEmployeeProfileCompleted(true);
         })
         // eslint-disable-next-line no-unused-vars
         .catch((error) => {

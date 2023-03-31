@@ -5,7 +5,10 @@
         <div class="container-fluid">
           <div class="row">
             <company-card
-              :company="companyName"
+              :companyName="companyName"
+              :companySize="companySize"
+              :companyLocation="companyLocation"
+              :companyWebsite="companyWebsite"
               :companyLogoPath="this.authenticationStore.companyProfileLogo"
             />
             <div class="col-xl-8 order-xl-1">
@@ -266,6 +269,8 @@ export default {
           this.alert = true;
           this.alertMessage = "Data updated successfully";
           this.alertBackgroundColor = "alert alert-success";
+
+          this.authenticationStore.setIfCompanyProfileCompleted(true);
         })
         // eslint-disable-next-line no-unused-vars
         .catch((error) => {

@@ -6,7 +6,11 @@
           <div class="row">
             <div class="col-xl-8 mx-auto">
               <div class="card overflow-hidden">
-                <job-details-header :headerData="getJobHeaderData" />
+                <job-details-header
+                  :headerData="getJobHeaderData"
+                  :isApplied="isApplied"
+                  @applied="applied"
+                />
                 <job-details-body :bodyData="getJobBodyData" />
               </div>
             </div>
@@ -95,6 +99,10 @@ export default {
           console.log(error);
         });
     },
+    applied() {
+      console.log("applied");
+      this.isApplied = true;
+    },
   },
   computed: {
     getJobHeaderData() {
@@ -105,7 +113,6 @@ export default {
         dateCreated: this.dateCreated,
         internal: this.internal,
         jobLink: this.jobLink,
-        isApplied: this.isApplied,
       };
     },
     getJobBodyData() {

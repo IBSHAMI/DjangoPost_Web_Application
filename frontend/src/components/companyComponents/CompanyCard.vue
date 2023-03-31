@@ -8,9 +8,9 @@
           alt="company logo"
           style="width: 200px; height: 200px"
         />
-        <h4 class="h3">{{ company.company_name }}</h4>
-        <p class="text-gray mb-2">{{ company.company_location }}</p>
-        <a class="fw-normal" :href="company.company_website" target="_blank"
+        <h4 class="h3">{{ companyName }}</h4>
+        <p class="text-gray mb-2">{{ companyLocation }}</p>
+        <a class="fw-normal" :href="companyWebsite" target="_blank"
           >Company website</a
         >
       </div>
@@ -21,7 +21,13 @@
 <script>
 export default {
   name: "CompanyCard",
-  props: ["company", "companyLogoPath"],
+  props: [
+    "companyName",
+    "companySize",
+    "companyLocation",
+    "companyWebsite",
+    "companyLogoPath",
+  ],
 };
 </script>
 

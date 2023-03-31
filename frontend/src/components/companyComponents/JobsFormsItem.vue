@@ -11,12 +11,12 @@
             </p>
           </div>
           <div class="">
-            <router-link
-              :to="{ name: 'Company', params: { slug: 'create-job' } }"
+            <div
+              @click.prevent="createJob"
               class="btn button button-primary btn-lg"
             >
-              Add Job
-            </router-link>
+              Create Job
+            </div>
           </div>
         </div>
       </div>
@@ -266,6 +266,13 @@ export default {
         }
       }
       this.getJobsList();
+    },
+    createJob() {
+      if (this.authenticationStore.companyProfileCompleted) {
+        this.$router.push({ name: "Company", params: { slug: "create-job" } });
+      } else {
+        alert("Please complete your company profile first");
+      }
     },
   },
 };

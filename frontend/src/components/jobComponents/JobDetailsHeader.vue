@@ -23,7 +23,7 @@
           >
             {{ headerData.internal ? "Apply" : "Easy Apply" }}
           </div>
-          <div class="btn button btn-secondary" v-else disabled>Applied</div>
+          <div class="btn button btn-secondary" v-else>Applied</div>
         </div>
       </div>
     </div>
@@ -38,12 +38,7 @@ import { API } from "@/api";
 
 export default {
   name: "JobDetailsHeader",
-  props: ["headerData"],
-  data() {
-    return {
-      isApplied: this.headerData.isApplied,
-    };
-  },
+  props: ["headerData", "isApplied"],
   setup() {
     // init the store
     const authenticationStore = useAuthenticationStore();
@@ -62,23 +57,28 @@ export default {
       } else {
         // if not internal, open the easy apply modal
         console.log("easy apply");
-        const applyUrl = API.jobs.apply_job;
-        const token = `Bearer ${this.authenticationStore.token}`;
-        // Add the token to the header as Bearer token
-        const headers = {
-          // eslint-disable-next-line prettier/prettier
-          Authorization: token,
-        };
+        if (this.authenticationStore.employeeProfileCompleted) {
+          const applyUrl = API.jobs.apply_job;
+          const token = `Bearer ${this.authenticationStore.token}`;
+          // Add the token to the header as Bearer token
+          const headers = {
+            // eslint-disable-next-line prettier/prettier
+            Authorization: token,
+          };
 
-        axios
-          .post(applyUrl, { job_id: this.headerData.pk }, { headers })
-          .then((res) => {
-            console.log(res);
-            this.isApplied = true;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+          axios
+            .post(applyUrl, { job_id: this.headerData.pk }, { headers })
+            .then((res) => {
+              console.log(res);
+              this.$emit("applied");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          // show alert to ask user to complete profile
+          alert("Please complete your employee profile first");
+        }
       }
     },
   },
