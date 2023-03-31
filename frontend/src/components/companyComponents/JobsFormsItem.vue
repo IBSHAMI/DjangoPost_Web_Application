@@ -138,8 +138,8 @@
 </template>
 
 <script>
-import JobRowTableItem from "@/components/JobRowTableItem.vue";
-import PaginationItem from "./sharedComponents/PaginationItem.vue";
+import JobRowTableItem from "@/components/companyComponents/JobRowTableItem.vue";
+import PaginationItem from "@/components/sharedComponents/PaginationItem.vue";
 import useAuthenticationStore from "@/stores/authentication";
 import axios from "axios";
 import { API } from "@/api";
