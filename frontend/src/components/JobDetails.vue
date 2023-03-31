@@ -66,14 +66,17 @@ export default {
   },
   methods: {
     getJobDetails() {
-      console.log(typeof Number(this.jobId));
       const jobDetailsUrl = API.jobs.detail + Number(this.jobId) + "/";
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
+
+      let headers = {};
+      if (this.authenticationStore.isAuthenticated) {
+        const token = `Bearer ${this.authenticationStore.token}`;
+        // Add the token to the header as Bearer token
+        headers = {
+          // eslint-disable-next-line prettier/prettier
+          Authorization: token,
+        };
+      }
 
       axios
         .get(jobDetailsUrl, { headers })

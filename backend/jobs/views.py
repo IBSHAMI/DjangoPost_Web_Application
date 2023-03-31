@@ -155,7 +155,7 @@ class JobCreateView(CreateAPIView):
 class JobDetailView(RetrieveAPIView):
     queryset = Job.objects.filter(is_active=True)
     serializer_class = JobDetailSerializer
-    lookup_field = 'pk'
+    permission_classes = [AllowAny]
 
 
 class JobUpdateView(UpdateAPIView):

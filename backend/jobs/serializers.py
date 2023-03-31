@@ -139,6 +139,10 @@ class JobDetailSerializer(JobCreateSerializer):
         
     def get_is_applied(self, obj):
         user = self.context['request'].user
+        
+        if not user.is_authenticated:
+            return False
+        
         employee = EmployeeProfile.objects.get(user=user)
         job = obj
         
