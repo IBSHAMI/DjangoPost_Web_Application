@@ -1,6 +1,6 @@
 <template>
-  <section class="section bg-light" id="about">
-    <div class="container py-5 my-5">
+  <section class="section bg-light pb-5" id="about">
+    <div class="container py-5">
       <div class="row justify-content-center py-5 my-5">
         <div class="col-lg-7">
           <div class="text-center">

@@ -14,10 +14,10 @@
                 it easy to find the perfect job or hire top talent.
               </p>
               <div class="mt-5">
-                <a
-                  href="path/to/registration/page"
-                  class="btn button button-primary"
-                  >Get Started</a
+                <router-link
+                  :to="{ name: 'Jobs', params: { slug: 'jobs' } }"
+                  class="btn button btn-lg button-primary"
+                  >Find Jobs</router-link
                 >
               </div>
             </div>
