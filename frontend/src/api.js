@@ -6,6 +6,7 @@ export const API = {
     logout: `${baseURL}/api/auth/token/logout/`,
     register: `${baseURL}/api/auth/users/`,
     checkIfProfileComplete: `${baseURL}/api/users/check_if_profile_complete/`,
+    get_webapp_status_data: `${baseURL}/api/users/get_webapp_status_data/`,
   },
   employee: {
     details: `${baseURL}/api/users/employee/data/`,

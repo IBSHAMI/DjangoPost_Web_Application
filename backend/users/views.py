@@ -1,10 +1,13 @@
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from django.conf import settings
 
 from employee.models import EmployeeProfile
 from company.models import CompanyProfile
+from jobs.models import Job
 
+User = settings.AUTH_USER_MODEL
 
 
 @api_view(['GET'])
@@ -24,6 +27,22 @@ def check_if_profile_complete(request):
         data['company_profile_complete'] =  False
     else: 
         data['company_profile_complete'] =  True
+    
+    return Response(data)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_webapp_status_data(request):
+    data = {}
+    # get number of jobs posted
+    data["total_jobs"] = Job.objects.all().count()
+    
+    # get number of companies
+    data["total_companies"] = CompanyProfile.objects.all().count()
+    
+    # get number of employees
+    data["total_employees"] = EmployeeProfile.objects.all().count()
+    
     
     return Response(data)
     

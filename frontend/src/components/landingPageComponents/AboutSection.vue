@@ -19,21 +19,25 @@
       <div class="row justify-content-center mt-5">
         <div class="col-md-6 col-lg-3">
           <div class="text-center mt-3">
-            <h3><span class="statistics-value">200+</span></h3>
+            <h3>
+              <span class="statistics-value">{{ totalJobs }}+</span>
+            </h3>
             <p class="text-muted">Job Listings</p>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-3">
           <div class="text-center mt-3">
-            <h3><span class="statistics-value">150+</span></h3>
-            <p class="text-muted">Registered Users</p>
+            <h3>
+              <span class="statistics-value">{{ totalEmployees }}+</span>
+            </h3>
+            <p class="text-muted">Registered Employees</p>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-3">
           <div class="text-center mt-3">
-            <h3 class="statistics-value">20</h3>
+            <h3 class="statistics-value">{{ totalCompanies }}+</h3>
             <p class="text-muted">Companies Featured</p>
           </div>
         </div>
@@ -45,6 +49,7 @@
 <script>
 export default {
   name: "AboutSection",
+  props: ["totalJobs", "totalEmployees", "totalCompanies"],
 };
 </script>
 

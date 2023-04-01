@@ -18,10 +18,12 @@ export default {
     this.authenticationStore.initializeStore();
   },
   mounted() {
-    // load profile pictures
-    this.authenticationStore.getAccountPictures();
-    // check if the profiles information are complete for profile and company
-    this.authenticationStore.checkIfProfileComplete();
+    if (this.authenticationStore.isAuthenticated) {
+      // load profile pictures
+      this.authenticationStore.getAccountPictures();
+      // check if the profiles information are complete for profile and company
+      this.authenticationStore.checkIfProfileComplete();
+    }
   },
 };
 </script>
