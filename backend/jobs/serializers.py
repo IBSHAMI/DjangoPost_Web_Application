@@ -106,7 +106,7 @@ class CompanyJobListSerializer(serializers.ModelSerializer):
     
     def get_number_of_applications(self, obj):
         job = obj 
-        number_of_applications = AppliedJob.objects.filter(job=job).count()
+        number_of_applications = AppliedJob.objects.filter(job=job).exclude(application_status="rejected").count()
         
         return number_of_applications
 

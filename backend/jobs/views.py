@@ -117,8 +117,6 @@ class JobListView(ListAPIView):
             return qs
 
 
-
-
 # Create a class listAPIView to list all jobs
 class CompanyJobListView(ListAPIView):
     queryset = Job.objects.all()
@@ -328,13 +326,12 @@ class ApplicantsListView(ListAPIView):
         request = self.request
         # get job id
         job_id = request.GET.get('job_id')
-        print(job_id)
 
         # get the job
         job = Job.objects.get(pk=job_id)
         
         # get the applied jobs
-        applied_jobs = AppliedJob.objects.filter(job=job)
+        applied_jobs = AppliedJob.objects.filter(job=job).exclude(application_status='rejected')
         
         return applied_jobs
     
