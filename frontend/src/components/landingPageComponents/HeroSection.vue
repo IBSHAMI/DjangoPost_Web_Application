@@ -1,5 +1,5 @@
 <template>
-  <section class="hero-section overflow-hidden">
+  <section class="hero-section overflow-hidden" id="home">
     <div class="container mt-5 pt-5">
       <div class="position-relative" style="z-index: 1">
         <div class="row align-items-center">

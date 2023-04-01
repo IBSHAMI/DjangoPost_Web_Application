@@ -5,6 +5,7 @@
       <hero-section />
       <features-section />
       <about-section />
+      <footer-section />
     </section>
   </div>
 </template>
@@ -14,6 +15,7 @@ import Navbar from "@/components/sharedComponents/Navbar.vue";
 import HeroSection from "@/components/landingPageComponents/HeroSection.vue";
 import FeaturesSection from "@/components/landingPageComponents/FeaturesSection.vue";
 import AboutSection from "@/components/landingPageComponents/AboutSection.vue";
+import FooterSection from "@/components/sharedComponents/FooterSection.vue";
 
 export default {
   name: "LandingPage",
@@ -27,6 +29,7 @@ export default {
     HeroSection,
     FeaturesSection,
     AboutSection,
+    FooterSection,
   },
 };
 </script>
