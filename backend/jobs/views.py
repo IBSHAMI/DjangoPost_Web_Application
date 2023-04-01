@@ -32,6 +32,7 @@ from .choices_fields_data_job import (
     JOB_EXPERIENCE_CHOICES,
     JOB_LOCATION_CHOICES,
     JOB_SALARY_CHOICES,
+    FRAMEWORK_CHOICES,
 )
 
 User = get_user_model()
@@ -51,6 +52,7 @@ class JobChoicesView(GenericAPIView):
             'job_experience_choices': get_choices_name(JOB_EXPERIENCE_CHOICES),
             'job_location_choices': get_choices_name(JOB_LOCATION_CHOICES),
             'job_salary_choices': get_choices_name(JOB_SALARY_CHOICES),
+            'framework_choices': get_choices_name(FRAMEWORK_CHOICES),
         }
         return Response(content)
 

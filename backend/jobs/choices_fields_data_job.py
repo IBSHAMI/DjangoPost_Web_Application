@@ -46,5 +46,22 @@ JOB_SALARY_CHOICES = (
     ('+5000', '+5000'),
 )
 
+# framework choices for a job
+FRAMEWORK_CHOICES = [
+    # Backend frameworks
+    ('Django', 'Django'),
+    ('Flask', 'Flask'),
+    ('FastAPI', 'FastAPI'),
+
+    # Frontend frameworks
+    ('React', 'React'),
+    ('Angular', 'Angular'),
+    ('Vue.js', 'Vue.js'),
+    ('Svelte', 'Svelte'),
+
+
+    ('Other', 'Other'),
+]
+
 
 

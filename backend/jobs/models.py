@@ -37,6 +37,7 @@ class Job(models.Model):
     description         = models.TextField(max_length=10000, blank=True, null=True)
     location            = models.CharField(max_length=100, blank=True, null=True)
     type                = models.CharField(max_length=100, blank=True, null=True, default='Full Time')
+    framework           = models.CharField(max_length=100, blank=True, null=True, default='Django')
     language            = models.CharField(max_length=100, blank=True, null=True, default='English')
     experience          = models.CharField(max_length=100, blank=True, null=True)
     number_of_positions = models.PositiveIntegerField(blank=True, null=True, default=1)
