@@ -218,7 +218,7 @@
                             name="framework"
                             id="framework"
                             class="form-control"
-                            v-model="salary"
+                            v-model="framework"
                           >
                             <option
                               v-for="(framework, index) in frameworks"
@@ -228,7 +228,6 @@
                               {{ framework }}
                             </option>
                           </vee-field>
-
                           <ErrorMessage
                             name="framework"
                             class="error-message small font-italic"
@@ -404,6 +403,7 @@ export default {
 
       data.append("title", this.positionTitle);
       data.append("type", this.positionType);
+      data.append("framework", this.framework);
       data.append("location", this.positionLocation);
       data.append("language", this.languageRequired);
       data.append("number_of_positions", this.positionsNumber);

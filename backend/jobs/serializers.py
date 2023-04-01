@@ -18,6 +18,7 @@ class JobCreateSerializer(serializers.ModelSerializer):
             'description',
             'location',
             'type',
+            'framework',
             'language',
             'experience',
             'number_of_positions',
@@ -70,8 +71,6 @@ class JobListSerializer(serializers.ModelSerializer):
         
         return False
         
-
-    
 
 
 # Create a Serializer class for job list for company
