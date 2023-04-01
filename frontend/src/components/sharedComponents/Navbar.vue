@@ -7,7 +7,9 @@
         class="navbar navbar-expand-lg navbar-light"
       >
         <div class="container-fluid">
-          <a class="navbar-brand" href="../../index.html"> DjangoPost </a>
+          <router-link class="navbar-brand" :to="{ name: 'LandingPage' }">
+            DjangoPost
+          </router-link>
           <button
             class="navbar-toggler"
             type="button"
