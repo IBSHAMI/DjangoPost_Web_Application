@@ -25,6 +25,7 @@ from .serializers import (
     SavedJobSerializer,
     AppliedJobSerializer,
     ApplicantsJobListSerializer,
+    ApplicantsJobUpdateSerializer,
 )
 from .choices_fields_data_job import (
     JOB_TYPE_CHOICES,
@@ -325,9 +326,12 @@ class ApplicantsListView(ListAPIView):
         
         return applied_jobs
     
-            
-        
-        
+
+class ApplicantsUpdateView(UpdateAPIView):
+    serializer_class = ApplicantsJobUpdateSerializer
+    queryset = AppliedJob.objects.all()
+    
+     
 
 @api_view(['GET'])
 @permission_classes([AllowAny])

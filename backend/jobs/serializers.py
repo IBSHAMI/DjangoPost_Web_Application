@@ -183,6 +183,7 @@ class ApplicantsJobListSerializer(serializers.ModelSerializer):
     class Meta:
         model = AppliedJob
         fields = [
+            'pk',
             'employee_data',
             'date_applied',
         ]
@@ -198,7 +199,29 @@ class ApplicantsJobListSerializer(serializers.ModelSerializer):
             'expected_salary': employee.expected_salary,
             'linkedin_url': employee.linkedin_url,
             'portfolio_url': employee.portfolio_url,
-            'about': employee.about,
         }
            
         return employee_data
+    
+    
+class ApplicantsJobUpdateSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = AppliedJob
+        fields = [
+            'pk',
+            'application_status',
+        ]
+        
+    def update(self, instance, validated_data):
+        request = self.context['request']
+        print(request.data)
+        update_message = request.data.get('update_message')
+        print(update_message)
+        
+        if update_message == 'rejected': 
+            instance.application_status = 'rejected'
+        elif update_message == 'resume downloaded':
+            instance.application_status = 'resume_downloaded'
+        instance.save()
+        return instance

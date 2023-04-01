@@ -34,5 +34,6 @@ export const API = {
     delete_saved_job: `${baseURL}/api/jobs/delete_saved_job/`,
     apply_job: `${baseURL}/api/jobs/apply_job/`,
     applicants_list: `${baseURL}/api/jobs/applicants_list/`,
+    update_application_status: `${baseURL}/api/jobs/update_application_status/`,
   },
 };
