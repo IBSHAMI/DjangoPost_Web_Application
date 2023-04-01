@@ -58,7 +58,12 @@
         <div class="row tab-content text-left">
           <div role="tabpanel" class="tab-pane fade active show" id="hot-jobs">
             <div class="row">
-              <job-card v-for="job in jobsList" :job="job" :key="job.pk" />
+              <job-card
+                v-for="job in jobsList"
+                :job="job"
+                :tableVariant="tableVariant"
+                :key="job.pk"
+              />
             </div>
           </div>
         </div>

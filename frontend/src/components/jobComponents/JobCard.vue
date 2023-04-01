@@ -39,6 +39,19 @@
           <p class="text-start mb-0 paragraph">
             Posted {{ formattedDate(job.date_created) }}
           </p>
+          <p
+            v-show="
+              job.job_application_status && tableVariant === 'Applied Jobs'
+            "
+            class="text-start mb-0 paragraph"
+            :class="
+              job.job_application_status === 'rejected'
+                ? 'text-danger'
+                : 'text-success'
+            "
+          >
+            Application Status: {{ job.job_application_status }}
+          </p>
         </div>
       </div>
       <div class="job-card__footer">
@@ -68,7 +81,7 @@ import { API } from "@/api";
 
 export default {
   name: "JobCard",
-  props: ["job"],
+  props: ["job", "tableVariant"],
   setup() {
     // init the store
     const authenticationStore = useAuthenticationStore();

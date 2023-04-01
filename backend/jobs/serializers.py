@@ -32,6 +32,7 @@ class JobCreateSerializer(serializers.ModelSerializer):
 class JobListSerializer(serializers.ModelSerializer):
     company_name = serializers.SerializerMethodField(read_only=True)
     is_saved_job = serializers.SerializerMethodField(read_only=True)
+    job_application_status = serializers.SerializerMethodField(read_only=True)
 
 
     class Meta:
@@ -49,6 +50,7 @@ class JobListSerializer(serializers.ModelSerializer):
             'internal',
             'company_name',
             'is_saved_job',
+            'job_application_status',
         ]
 
     def get_company_name(self, obj):
@@ -70,6 +72,19 @@ class JobListSerializer(serializers.ModelSerializer):
             return True
         
         return False
+    
+    def get_job_application_status(self, obj):
+        request = self.context['request']
+        
+        if (request.user.is_authenticated):
+            employee = EmployeeProfile.objects.get(user=request.user)
+            if AppliedJob.objects.filter(job=obj, employee=employee).exists(): 
+                application = AppliedJob.objects.get(job=obj, employee=employee)
+                print(application)
+                print(application.application_status)
+                return application.application_status
+            
+        return ""
         
 
 
