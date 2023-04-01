@@ -95,6 +95,7 @@ export default {
           console.log(response.data);
           resumePathToDownload = response.data.resume;
           if (resumePathToDownload) {
+            console.log(resumePathToDownload);
             // download the file
             window.open(resumePathToDownload, "_blank");
           }

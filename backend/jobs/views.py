@@ -373,3 +373,11 @@ def change_job_status(request, pk):
         return Response(status=status.HTTP_200_OK)
     else:
         raise serializers.ValidationError('You are not the owner of this job')
+    
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_job_title(request):
+    job_id = request.GET.get('job_id')
+    job_title = Job.objects.get(id=job_id).title
+    
+    return Response({'job_title': job_title})

@@ -5,7 +5,7 @@
       <div class="row">
         <div class="d-flex justify-content-between py-4">
           <div class="d-block mb-4 mb-md-0">
-            <h2 class="h3">title</h2>
+            <h2 class="h3">{{ jobTitle }}</h2>
             <p class="para mb-0">
               Here you can view all the applicants that applied for this job.
             </p>
@@ -104,6 +104,7 @@ export default {
   },
   created() {
     this.getApplicantsList();
+    this.getJobTitle();
   },
   data() {
     return {
@@ -146,6 +147,32 @@ export default {
     },
   },
   methods: {
+    getJobTitle() {
+      console.log("getJobTitle");
+      const token = `Bearer ${this.authenticationStore.token}`;
+      // Add the token to the header as Bearer token
+      const headers = {
+        // eslint-disable-next-line prettier/prettier
+        Authorization: token,
+      };
+
+      const params = {
+        job_id: this.jobId,
+      };
+
+      axios
+        .get(API.jobs.get_job_title, {
+          params: params,
+          headers: headers,
+        })
+        .then((response) => {
+          this.jobTitle = response.data.job_title;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     // get jobs list
     getApplicantsList(handleNextAndPrevious, NavigateType) {
       const token = `Bearer ${this.authenticationStore.token}`;

@@ -151,6 +151,13 @@ class EmployeeProfileResumeAPIView(generics.RetrieveUpdateAPIView):
 
         return get_object
 
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+
+        print(serializer.data)
+        return Response(serializer.data)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticatedOrReadOnly])
@@ -158,7 +165,7 @@ def get_applicant_resume(request, pk):
     # get the applicant profile
     applicant = get_object_or_404(EmployeeProfile, pk=pk)
 
-    resume = EmployeeProfileResumeSerializer(applicant)
+    resume = EmployeeProfileResumeSerializer(applicant, context={'request': request})
 
     # send the resume file to the frontend
     return Response(resume.data)

@@ -14,7 +14,8 @@ from .views import (
     ApplicantsListView,
     ApplicantsUpdateView,
     get_total_jobs_and_framework_choices,
-    change_job_status
+    change_job_status,
+    get_job_title
 )
 
 app_name = 'jobs'
@@ -34,4 +35,5 @@ urlpatterns = [
     path('apply_job/', AppliedJobCreateView.as_view(), name='apply_job'),
     path('applicants_list/', ApplicantsListView.as_view(), name='applicants_list'),
     path('update_application_status/<int:pk>/', ApplicantsUpdateView.as_view(), name='update_application_status'),
+    path('get_job_title/', get_job_title, name='get_job_title')
 ]
