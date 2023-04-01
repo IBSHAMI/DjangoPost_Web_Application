@@ -164,11 +164,11 @@
                             v-model="salary"
                           >
                             <option
-                              v-for="(type, index) in JobsSalary"
+                              v-for="(salary, index) in JobsSalary"
                               :key="index"
-                              :value="type"
+                              :value="salary"
                             >
-                              {{ type }}
+                              {{ salary }}
                             </option>
                           </vee-field>
 
@@ -331,7 +331,7 @@ export default {
         language: "required|min:2|max:100",
         positions_number: "required",
         salary: "required",
-        position_experience: "",
+        position_experience: "required",
         job_description: "required|min:1|max:1000",
         remote: "",
       },

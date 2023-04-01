@@ -10,7 +10,7 @@ from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 
 from .models import EmployeeProfile
-from .choices_fields_data_employee import JOB_EXPERIENCE_CHOICES
+from .choices_fields_data_employee import JOB_EXPERIENCE_CHOICES, JOB_SALARY_CHOICES
 from .serializers import (
     EmployeeProfileSerializer,
     EmployeeProfilePictureSerializer,
@@ -30,6 +30,7 @@ class EmployeeChoicesView(GenericAPIView):
     def get(self, request, *args, **kwargs):
         content = {
             'job_experience_choices': get_choices_name(JOB_EXPERIENCE_CHOICES),
+            'job_salary_choices': get_choices_name(JOB_SALARY_CHOICES),
         }
         return Response(content)
 

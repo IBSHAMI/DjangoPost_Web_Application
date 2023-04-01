@@ -11,7 +11,7 @@ User = settings.AUTH_USER_MODEL
 class EmployeeProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='employee_profile')
     experience = models.CharField(max_length=100, blank=True, null=True)
-    expected_salary = models.IntegerField(default=0)
+    expected_salary = models.CharField(max_length=100, blank=True, null=True)
     linkedin_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
     portfolio_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
     resume = models.FileField(upload_to='users/employee/resumes', blank=True, null=True)

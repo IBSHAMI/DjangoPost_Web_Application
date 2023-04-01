@@ -114,17 +114,27 @@
                         </div>
                       </div>
                       <div class="form-group col-md-4 mb-2">
-                        <label for="price" class="form-label fst-italic"
+                        <label
+                          for="expected_salary"
+                          class="form-label fst-italic"
                           >Expected Salary (USD)</label
                         >
                         <div>
                           <vee-field
-                            type="number"
+                            as="select"
                             name="expected_salary"
                             id="expected_salary"
                             class="form-control"
                             v-model="expectedSalary"
-                          />
+                          >
+                            <option
+                              v-for="(salary, index) in JobsSalary"
+                              :key="index"
+                              :value="salary"
+                            >
+                              {{ salary }}
+                            </option>
+                          </vee-field>
                           <ErrorMessage
                             name="expected_salary"
                             class="error-message small font-italic"
@@ -314,6 +324,7 @@ export default {
 
       // choices data
       JobExperience: [],
+      JobsSalary: [],
     };
   },
   components: {
@@ -343,7 +354,7 @@ export default {
         .get(getChoicesData, { headers })
         .then((response) => {
           this.JobExperience = response.data.job_experience_choices;
-          console.log(this.JobExperience);
+          this.JobsSalary = response.data.job_salary_choices;
         })
         .catch((error) => {
           console.log(error);
