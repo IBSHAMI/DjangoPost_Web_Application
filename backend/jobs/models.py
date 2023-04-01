@@ -8,7 +8,7 @@ from employee.models import EmployeeProfile
 
 class JobManager(models.Manager):
     # function that create jobs from the scraped data
-    def create_jobs(self, jobs_data, searched_location):
+    def create_jobs(self, jobs_data, job_title, searched_location):
         for job in jobs_data:
             # double check if job have a description
             if 'description' in job:
@@ -19,6 +19,7 @@ class JobManager(models.Manager):
                         'job_company': job['company'],
                         'description': job['description'],
                         'location': searched_location,
+                        'framework': job_title, # the job title used to search will be the framework
                         'date_created': timezone.now(),
                         'internal': True,
                         'job_link': job['job_url'],

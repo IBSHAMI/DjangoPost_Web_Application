@@ -33,7 +33,7 @@
                     placeholder="Search Jobs"
                   />
                 </div>
-                <!-- <div
+                <div
                   class="col-xl-4 col-lg-4 select2-lg col-md-12 mb-0 form-group"
                 >
                   <select
@@ -42,23 +42,20 @@
                     data-select2-id="select2-data-1-v645"
                     tabindex="-1"
                     aria-hidden="true"
+                    v-model="frameworkChoice"
                   >
-                    <optgroup label="Categories">
-                      <option data-select2-id="select2-data-3-bm82">
-                        All Categories
-                      </option>
-                      <option value="1">Accountant</option>
-                      <option value="2">IT Software</option>
-                      <option value="3">Banking</option>
-                      <option value="4">Finaces</option>
-                      <option value="5">Cook/Chef</option>
-                      <option value="6">Driveing</option>
-                      <option value="7">HR Recruiter</option>
-                      <option value="8">IT Hardware</option>
-                      <option value="9">Sales</option>
-                    </optgroup>
+                    <option data-select2-id="select2-data-3-bm82">
+                      All Frameworks
+                    </option>
+                    <option
+                      v-for="(framework, index) in frameworks"
+                      :value="framework"
+                      :key="index"
+                    >
+                      {{ framework }}
+                    </option>
                   </select>
-                </div> -->
+                </div>
                 <div class="col-xl-2 col-lg-3 col-md-12 mb-0 form-group">
                   <a
                     @click.prevent="searchByJobTitle"
@@ -85,28 +82,34 @@ export default {
   data() {
     return {
       searchTerm: "",
+      frameworkChoice: "All Frameworks",
       totalJobsCount: 0,
+      frameworks: [],
     };
   },
   created() {
-    this.get_total_jobs_count();
+    this.getTotalJobsAndFrameworkChoices();
   },
   methods: {
-    get_total_jobs_count() {
+    getTotalJobsAndFrameworkChoices() {
       const Url = API.jobs.get_total_jobs;
 
       axios
         .get(Url)
         .then((response) => {
           console.log(response.data);
-          this.totalJobsCount = Number(response.data);
+          this.totalJobsCount = Number(response.data.total_jobs);
+          this.frameworks = response.data.framework_choices;
         })
         .catch((error) => {
           console.log(error);
         });
     },
     searchByJobTitle() {
-      this.$emit("searchByJobTitle", this.searchTerm);
+      const frameworkChosen =
+        this.frameworkChoice !== "All Frameworks" ? this.frameworkChoice : "";
+      console.log(frameworkChosen);
+      this.$emit("searchByJobTitle", this.searchTerm, frameworkChosen);
     },
   },
 };

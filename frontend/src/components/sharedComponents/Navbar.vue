@@ -131,7 +131,7 @@ import axios from "axios";
 import { API } from "@/api";
 
 export default {
-  name: "HomeNavbar",
+  name: "MainNavbar",
   props: ["pageType", "companyProfile", "employeeProfile"],
   setup() {
     // initialize the authentification store

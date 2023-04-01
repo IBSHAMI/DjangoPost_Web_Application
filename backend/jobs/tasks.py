@@ -14,4 +14,4 @@ def scrape_jobs_data(job_title, location, num_pages):
     # get jobs data from indeed
     jobs_data = get_jobs_data(job_title, location, num_pages)
     # create jobs from the data that we got
-    Job.objects.create_jobs(jobs_data, location)
+    Job.objects.create_jobs(jobs_data, job_title, location)

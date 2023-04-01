@@ -328,18 +328,19 @@ class ApplicantsListView(ListAPIView):
             
         
         
-        
-
-
-        
-        
-
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def get_total_jobs(request):
+def get_total_jobs_and_framework_choices(request):
     total_jobs = Job.objects.filter(is_active=True).count()
-    return Response(total_jobs)
+    framework_choices = get_choices_name(FRAMEWORK_CHOICES)
+    
+    data = {
+        'total_jobs': total_jobs,
+        'framework_choices': framework_choices
+    }
+    
+    return Response(data)
 
 
 @api_view(['GET'])

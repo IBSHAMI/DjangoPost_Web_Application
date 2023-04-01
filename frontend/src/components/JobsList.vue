@@ -84,7 +84,7 @@ import { API } from "@/api";
 
 export default {
   name: "JobsList",
-  props: ["searchTitleTerm"],
+  props: ["searchTitleTerm", "frameworkChoice"],
   setup() {
     // init the store
     const authenticationStore = useAuthenticationStore();
@@ -125,6 +125,7 @@ export default {
       const params = {
         table_variant: this.tableVariant,
         search_term: this.searchTitleTerm,
+        framework_choice: this.frameworkChoice,
       };
 
       if (handleNextAndPrevious) {
@@ -172,7 +173,9 @@ export default {
   },
   watch: {
     searchTitleTerm() {
-      console.log(this.searchTitleTerm);
+      this.getJobsList();
+    },
+    frameworkChoice() {
       this.getJobsList();
     },
   },
