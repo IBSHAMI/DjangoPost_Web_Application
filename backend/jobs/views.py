@@ -69,12 +69,12 @@ class JobListView(ListAPIView):
         user = request.user
         table_variant = request.GET.get('table_variant')
         search_term = request.GET.get('search_term')
+        framework_choice = request.GET.get('framework_choice')
         qs = super().get_queryset()
 
         if user.is_authenticated:
-            print('user is authenticated')
             if table_variant == 'All Jobs':
-                qs = qs.exclude(company__user=user)
+                qs = qs.filter(is_active=True).exclude(company__user=user)
 
             elif table_variant == 'Saved Jobs':
                 employee = EmployeeProfile.objects.get(user=user)
@@ -93,18 +93,30 @@ class JobListView(ListAPIView):
                 qs = qs.filter(id__in=applied_jobs_ids)
                 
             if search_term is not None:
-                qs = qs.filter(title__icontains=search_term, is_active=True)
-                return qs
+                qs = qs.filter(title__icontains=search_term)
                 
-                
-             
+            
+            if framework_choice is not None:
+                print(framework_choice)
+                qs = qs.filter(framework__contains=framework_choice)
+            
+            return qs
+                   
                 
         else:
             qs = qs.filter(is_active=True)
+            
+            if search_term is not None:
+                qs = qs.filter(title__icontains=search_term)
+                
+            
+            if framework_choice is not None:
+                print(framework_choice)
+                qs = qs.filter(framework__contains=framework_choice)
+            
+            return qs
 
 
-
-        return qs
 
 
 # Create a class listAPIView to list all jobs
