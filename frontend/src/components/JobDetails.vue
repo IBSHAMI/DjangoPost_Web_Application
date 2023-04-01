@@ -47,6 +47,7 @@ export default {
       description: "",
       location: "",
       type: "",
+      framework: "",
       language: "",
       experience: "",
       numberOfPositions: "",
@@ -87,6 +88,7 @@ export default {
           this.description = response.data.description;
           this.location = response.data.location;
           this.type = response.data.type;
+          this.framework = response.data.framework;
           this.language = response.data.language;
           this.experience = response.data.experience;
           this.numberOfPositions = response.data.number_of_positions;
@@ -113,6 +115,7 @@ export default {
         pk: this.pk,
         title: this.title,
         type: this.type,
+        framework: this.framework,
         dateCreated: this.dateCreated,
         internal: this.internal,
         jobLink: this.jobLink,

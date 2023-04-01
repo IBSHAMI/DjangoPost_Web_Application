@@ -108,6 +108,7 @@ class JobDetailSerializer(JobCreateSerializer):
             'description',
             'location',
             'type',
+            'framework',
             'language',
             'experience',
             'number_of_positions',
