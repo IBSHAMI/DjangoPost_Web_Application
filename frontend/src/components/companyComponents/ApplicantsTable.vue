@@ -46,7 +46,7 @@
           </div>
         </div>
       </div>
-      <div class="bg-white table-responsive my-4">
+      <div class="table-responsive my-4">
         <table class="table table-hover table-nowrap">
           <thead class="table-light">
             <tr>

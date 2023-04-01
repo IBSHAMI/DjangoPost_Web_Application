@@ -97,8 +97,8 @@
           </div>
         </div>
       </div>
-      <div class="bg-white table-responsive">
-        <table class="table table-hover table-nowrap">
+      <div class="table-responsive table-nowrap">
+        <table class="table table-hover">
           <thead class="table-light">
             <tr>
               <th scope="col" class="border-bottom text-left">Title</th>
