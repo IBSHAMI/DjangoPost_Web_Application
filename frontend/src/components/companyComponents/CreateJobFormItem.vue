@@ -104,16 +104,14 @@
                       </div>
 
                       <div class="form-group col-md-6 mb-3">
-                        <label
-                          for="language_required"
-                          class="form-label fst-italic"
+                        <label for="language" class="form-label fst-italic"
                           >Language Required</label
                         >
                         <div>
                           <vee-field
                             as="select"
-                            name="language_required"
-                            id="language_required"
+                            name="language"
+                            id="language"
                             class="form-control"
                             v-model="languageRequired"
                           >
@@ -126,7 +124,7 @@
                             </option>
                           </vee-field>
                           <ErrorMessage
-                            name="language_required"
+                            name="language"
                             class="error-message small font-italic"
                           />
                         </div>
@@ -206,6 +204,33 @@
                           </vee-field>
                           <ErrorMessage
                             name="position_experience"
+                            class="error-message small font-italic"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group col-md-6 mb-3">
+                        <label for="framework" class="form-label fst-italic"
+                          >FrameWork
+                        </label>
+                        <div class="input-group-prepend">
+                          <vee-field
+                            as="select"
+                            name="framework"
+                            id="framework"
+                            class="form-control"
+                            v-model="salary"
+                          >
+                            <option
+                              v-for="(framework, index) in frameworks"
+                              :key="index"
+                              :value="framework"
+                            >
+                              {{ framework }}
+                            </option>
+                          </vee-field>
+
+                          <ErrorMessage
+                            name="framework"
                             class="error-message small font-italic"
                           />
                         </div>
@@ -302,8 +327,9 @@ export default {
       schema: {
         position_title: "required|min:10|max:100",
         position_type: "required|min:3|max:100",
+        framework: "required|min:3|max:100",
         position_location: "required|min:2|max:100",
-        language_required: "required|min:2|max:100",
+        language: "required|min:2|max:100",
         positions_number: "required",
         salary: "required",
         position_experience: "",
@@ -313,17 +339,19 @@ export default {
 
       // form data
       positionTitle: "",
-      positionType: null,
-      positionLocation: null,
-      languageRequired: null,
+      positionType: "",
+      framework: "",
+      positionLocation: "",
+      languageRequired: "",
       positionsNumber: "",
       salary: "",
-      positionExperience: null,
+      positionExperience: "",
       jobDescription: "",
       remote: false,
 
       // choices data
       JobTypes: [],
+      frameworks: [],
       JobLocations: [],
       Languages: [],
       JobExperience: [],
@@ -352,6 +380,7 @@ export default {
           this.Languages = response.data.job_language_choices;
           this.JobExperience = response.data.job_experience_choices;
           this.JobsSalary = response.data.job_salary_choices;
+          this.frameworks = response.data.framework_choices;
         })
         .catch((error) => {
           console.log(error);
