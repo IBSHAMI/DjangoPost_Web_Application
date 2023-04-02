@@ -1,11 +1,9 @@
-import axios from "axios";
+import {
+  fetchDataWithToken,
+  updateDataWithToken,
+  uploadDataWithToken,
+} from "./apiService";
 import { API } from "@/api";
-
-const setHeaders = (token) => {
-  return {
-    Authorization: `Bearer ${token}`,
-  };
-};
 
 const getAPIUrl = (profileType, isUpload) => {
   let baseURL = null;
@@ -27,48 +25,21 @@ const getAPIUrl = (profileType, isUpload) => {
 };
 
 export const getProfileData = async (token, profileType) => {
-  const headers = setHeaders(token);
   const apiUrl = getAPIUrl(profileType, false);
-
-  try {
-    const response = await axios.get(apiUrl, {
-      headers: headers,
-    });
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+  return await fetchDataWithToken(apiUrl, token);
 };
 
 export const updateProfileData = async (token, data, profileType) => {
-  const headers = setHeaders(token);
   const apiUrl = getAPIUrl(profileType, false);
-
-  try {
-    const response = await axios.put(apiUrl, data, {
-      headers: headers,
-    });
-    return response.status;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+  return await updateDataWithToken(apiUrl, data, token);
 };
 
 export const uploadProfilePicture = async (token, picture, profileType) => {
-  const headers = setHeaders(token);
   const apiUrl = getAPIUrl(profileType, true);
+  return await uploadDataWithToken(apiUrl, picture, token);
+};
 
-  console.log("apiUrl: ", apiUrl);
-
-  try {
-    const response = await axios.put(apiUrl, picture, {
-      headers: headers,
-    });
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+export const getChoicesData = async (token) => {
+  const apiUrl = API.jobs.get_choices_data;
+  return await fetchDataWithToken(apiUrl, token);
 };

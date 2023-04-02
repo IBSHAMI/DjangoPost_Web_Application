@@ -301,14 +301,15 @@
 
 <script>
 import { getAuthenticationStore } from "@/services/authService";
+import { getChoicesData } from "@/services/profileService";
 import axios from "axios";
 import { API } from "@/api";
 
 export default {
   name: "CreateJobFormItem",
-  created() {
+  async created() {
     this.authenticationStore = getAuthenticationStore();
-    this.getChoicesData();
+    await this.getChoicesData();
   },
   data() {
     return {
@@ -356,29 +357,17 @@ export default {
     };
   },
   methods: {
-    getChoicesData() {
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
+    async getChoicesData() {
+      const choicesData = await getChoicesData(this.authenticationStore.token);
 
-      const getChoicesData = API.jobs.get_choices_data;
-
-      axios
-        .get(getChoicesData, { headers })
-        .then((response) => {
-          this.JobTypes = response.data.job_type_choices;
-          this.JobLocations = response.data.job_location_choices;
-          this.Languages = response.data.job_language_choices;
-          this.JobExperience = response.data.job_experience_choices;
-          this.JobsSalary = response.data.job_salary_choices;
-          this.frameworks = response.data.framework_choices;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (choicesData) {
+        this.JobTypes = choicesData.job_type_choices;
+        this.JobLocations = choicesData.job_location_choices;
+        this.Languages = choicesData.job_language_choices;
+        this.JobExperience = choicesData.job_experience_choices;
+        this.JobsSalary = choicesData.job_salary_choices;
+        this.frameworks = choicesData.framework_choices;
+      }
     },
     closeAlert() {
       this.alert = false;

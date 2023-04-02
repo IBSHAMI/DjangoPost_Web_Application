@@ -273,11 +273,10 @@ import {
   getProfileData,
   updateProfileData,
   uploadProfilePicture,
+  getChoicesData,
 } from "@/services/profileService";
 import { uploadEmployeeResume } from "@/services/employeeSpecificService";
 import { getAuthenticationStore } from "@/services/authService";
-import axios from "axios";
-import { API } from "@/api";
 
 export default {
   name: "ProfileDataItem",
@@ -310,7 +309,7 @@ export default {
       this.alertMessage = " Error occur while fetching data";
       this.alertBackgroundColor = "alert alert-danger";
     }
-    this.getChoicesData();
+    await this.getChoicesData();
   },
   data() {
     return {
@@ -369,25 +368,13 @@ export default {
     getFileBaseName(path) {
       return path.split("/").reverse()[0];
     },
-    getChoicesData() {
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
+    async getChoicesData() {
+      const choicesData = await getChoicesData(this.authenticationStore.token);
 
-      const getChoicesData = API.jobs.get_choices_data;
-
-      axios
-        .get(getChoicesData, { headers })
-        .then((response) => {
-          this.JobExperience = response.data.job_experience_choices;
-          this.JobsSalary = response.data.job_salary_choices;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (choicesData) {
+        this.JobExperience = choicesData.job_experience_choices;
+        this.JobsSalary = choicesData.job_salary_choices;
+      }
     },
     upload(file, type) {
       // We upload the files to their respective models

@@ -46,7 +46,6 @@ export default {
       axios
         .get(Url)
         .then((response) => {
-          console.log(response.data);
           this.totalJobs = response.data.total_jobs;
           this.totalCompanies = response.data.total_companies;
           this.totalEmployees = response.data.total_employees;
