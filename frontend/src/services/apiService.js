@@ -30,6 +30,21 @@ export const fetchDataWithToken = async (url, token) => {
   }
 };
 
+export const fetchDataWithTokenAndParams = async (url, token, params) => {
+  const headers = setHeaders(token);
+  try {
+    const response = await axios.get(url, {
+      headers: headers,
+      params: params,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 export const updateDataWithToken = async (url, data, token) => {
   const headers = setHeaders(token);
   try {

@@ -140,14 +140,14 @@
 <script>
 import JobRowTableItem from "@/components/companyComponents/JobRowTableItem.vue";
 import { getAuthenticationStore } from "@/services/authService";
-import axios from "axios";
+import { fetchDataWithTokenAndParams } from "@/services/apiService";
 import { API } from "@/api";
 
 export default {
   name: "JobsForm",
-  created() {
+  async created() {
     this.authenticationStore = getAuthenticationStore();
-    this.getJobsList();
+    await this.getJobsList();
   },
   data() {
     return {
@@ -191,51 +191,38 @@ export default {
   },
   methods: {
     // get jobs list
-    getJobsList(handleNextAndPrevious, NavigateType) {
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
+    async getJobsList(handleNextAndPrevious, NavigateType) {
+      let url = API.jobs.company_list;
 
       const params = {
         table_variant: this.tableVariant,
         search_term: this.searchTerm,
         sorting_option: this.selectedSort,
       };
-      let jobsListUrl = API.jobs.company_list;
 
       if (handleNextAndPrevious) {
         if (NavigateType === "Next") {
-          jobsListUrl = this.nextPageLink;
+          url = this.nextPageLink;
         } else if (NavigateType === "Previous") {
-          jobsListUrl = this.previousPageLink;
+          url = this.previousPageLink;
         }
       } else {
         params.page = this.page;
       }
 
-      axios
-        .get(jobsListUrl, {
-          params: params,
-          headers: headers,
-        })
-        .then((response) => {
-          console.log(response.data);
-          // empty the jobs list
-          this.jobsList = [];
-          for (const job of response.data.results) {
-            this.jobsList.push(job);
-          }
-          this.currentPage = response.data.page;
-          this.totalPages = response.data.total_pages;
-          this.nextPageLink = response.data.links.next;
-          this.previousPageLink = response.data.links.previous;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const fetchJobsList = await fetchDataWithTokenAndParams(
+        url,
+        this.authenticationStore.token,
+        params
+      );
+
+      if (fetchJobsList) {
+        this.jobsList = fetchJobsList.results;
+        this.currentPage = fetchJobsList.page;
+        this.totalPages = fetchJobsList.total_pages;
+        this.nextPageLink = fetchJobsList.links.next;
+        this.previousPageLink = fetchJobsList.links.previous;
+      }
     },
     changeTableVariant(variant) {
       if (this.tableVariant === variant) {

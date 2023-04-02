@@ -83,7 +83,7 @@
 <script>
 import JobCard from "@/components/jobComponents/JobCard.vue";
 import { getAuthenticationStore } from "@/services/authService";
-import axios from "axios";
+import { fetchDataWithTokenAndParams } from "@/services/apiService";
 import { API } from "@/api";
 
 export default {
@@ -109,17 +109,7 @@ export default {
     };
   },
   methods: {
-    getJobsList(handleNextAndPrevious, NavigateType) {
-      let headers = {};
-      if (this.authenticationStore.isAuthenticated) {
-        const token = `Bearer ${this.authenticationStore.token}`;
-        // Add the token to the header as Bearer token
-        headers = {
-          // eslint-disable-next-line prettier/prettier
-          Authorization: token,
-        };
-      }
-
+    async getJobsList(handleNextAndPrevious, NavigateType) {
       let url = API.jobs.list;
 
       const params = {
@@ -127,7 +117,6 @@ export default {
         search_term: this.searchTitleTerm,
         framework_choice: this.frameworkChoice,
       };
-
       if (handleNextAndPrevious) {
         if (NavigateType === "Next") {
           url = this.nextPageLink;
@@ -138,24 +127,19 @@ export default {
         params.page = this.page;
       }
 
-      const requestData = {
-        headers,
-        params,
-      };
+      const getJobsList = await fetchDataWithTokenAndParams(
+        url,
+        this.authenticationStore.token,
+        params
+      );
 
-      axios
-        .get(url, requestData)
-        .then((response) => {
-          console.log(response.data);
-          this.jobsList = response.data.results;
-          this.currentPage = response.data.page;
-          this.totalPages = response.data.total_pages;
-          this.nextPageLink = response.data.links.next;
-          this.previousPageLink = response.data.links.previous;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (getJobsList) {
+        this.jobsList = getJobsList.results;
+        this.currentPage = getJobsList.page;
+        this.totalPages = getJobsList.total_pages;
+        this.nextPageLink = getJobsList.links.next;
+        this.previousPageLink = getJobsList.links.previous;
+      }
     },
     changeTableVariant(variant) {
       if (this.tableVariant === variant) {

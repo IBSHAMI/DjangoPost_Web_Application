@@ -91,7 +91,7 @@
 import ApplicantTableRow from "@/components/companyComponents/ApplicantTableRow.vue";
 import PaginationItem from "@/components/sharedComponents/PaginationItem.vue";
 import { getAuthenticationStore } from "@/services/authService";
-import axios from "axios";
+import { fetchDataWithTokenAndParams } from "@/services/apiService";
 import { API } from "@/api";
 
 export default {
@@ -144,80 +144,56 @@ export default {
     },
   },
   methods: {
-    getJobTitle() {
-      console.log("getJobTitle");
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
-
+    async getJobTitle() {
+      const url = API.jobs.get_job_title;
       const params = {
         job_id: this.jobId,
       };
+      const fetchJobTile = await fetchDataWithTokenAndParams(
+        url,
+        this.authenticationStore.token,
+        params
+      );
 
-      axios
-        .get(API.jobs.get_job_title, {
-          params: params,
-          headers: headers,
-        })
-        .then((response) => {
-          this.jobTitle = response.data.job_title;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (fetchJobTile) {
+        this.jobTitle = fetchJobTile.job_title;
+      }
     },
-
-    // get jobs list
-    getApplicantsList(handleNextAndPrevious, NavigateType) {
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
+    async getApplicantsList(handleNextAndPrevious, NavigateType) {
+      let url = API.jobs.applicants_list;
 
       const params = {
         search_term: this.searchTerm,
         sorting_option: this.selectedSort,
         job_id: this.jobId,
       };
-      let applicantsListUrl = API.jobs.applicants_list;
 
       if (handleNextAndPrevious) {
         if (NavigateType === "Next") {
-          applicantsListUrl = this.nextPageLink;
+          url = this.nextPageLink;
         } else if (NavigateType === "Previous") {
-          applicantsListUrl = this.previousPageLink;
+          url = this.previousPageLink;
         }
       } else {
         params.page = this.page;
       }
 
-      axios
-        .get(applicantsListUrl, {
-          params: params,
-          headers: headers,
-        })
-        .then((response) => {
-          console.log(response.data);
-          // empty the jobs list
+      const fetchApplicatsList = await fetchDataWithTokenAndParams(
+        url,
+        this.authenticationStore.token,
+        params
+      );
 
-          console.log(response.data.results);
-          this.applicantList = [];
-          for (const applicantInformation of response.data.results) {
-            this.applicantList.push(applicantInformation);
-          }
-          this.currentPage = response.data.page;
-          this.totalPages = response.data.total_pages;
-          this.nextPageLink = response.data.links.next;
-          this.previousPageLink = response.data.links.previous;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (fetchApplicatsList) {
+        this.applicantList = [];
+        for (const applicantInformation of fetchApplicatsList.results) {
+          this.applicantList.push(applicantInformation);
+        }
+        this.currentPage = fetchApplicatsList.page;
+        this.totalPages = fetchApplicatsList.total_pages;
+        this.nextPageLink = fetchApplicatsList.links.next;
+        this.previousPageLink = fetchApplicatsList.links.previous;
+      }
     },
     navigator(page) {
       console.log(page);
