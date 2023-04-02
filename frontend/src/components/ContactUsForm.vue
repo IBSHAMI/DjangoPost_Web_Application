@@ -108,13 +108,14 @@
 </template>
 
 <script>
-import useAuthenticationStore from "@/stores/authentication";
+import { getAuthenticationStore } from "@/services/authService";
 import axios from "axios";
 import { API } from "@/api";
 
 export default {
   name: "ProfileContactItem",
   created() {
+    this.authenticationStore = getAuthenticationStore();
     this.getUserDate();
   },
   data() {
@@ -129,6 +130,9 @@ export default {
       alertBackgroundColor: "",
       alertMessage: "",
 
+      // authentication store
+      authenticationStore: null,
+
       schema: {
         first_name: "required",
         last_name: "required",
@@ -136,11 +140,6 @@ export default {
         message: "required",
       },
     };
-  },
-  setup() {
-    // init the store
-    const authenticationStore = useAuthenticationStore();
-    return { authenticationStore };
   },
   methods: {
     getUserDate() {

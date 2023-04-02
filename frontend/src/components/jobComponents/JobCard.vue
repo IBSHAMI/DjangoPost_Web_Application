@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import useAuthenticationStore from "@/stores/authentication";
+import { getAuthenticationStore } from "@/services/authService";
 import moment from "moment";
 import axios from "axios";
 import { API } from "@/api";
@@ -82,17 +82,13 @@ import { API } from "@/api";
 export default {
   name: "JobCard",
   props: ["job", "tableVariant"],
-  setup() {
-    // init the store
-    const authenticationStore = useAuthenticationStore();
-    return { authenticationStore };
-  },
   data() {
     return {
       heartSvgPath: this.job.is_saved_job
         ? "../../../src/assets/img/icons/icons-heart-filled.svg"
         : "../../../src/assets/img/icons/icons-heart.svg",
       isSaved: this.job.is_saved_job,
+      authenticationStore: getAuthenticationStore(),
     };
   },
   methods: {

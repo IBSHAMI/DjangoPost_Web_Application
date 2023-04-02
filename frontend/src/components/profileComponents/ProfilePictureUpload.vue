@@ -1,7 +1,7 @@
 <template>
   <div class="col-span-1">
     <div class="bg-white rounded border border-gray-200 relative flex flex-col">
-      <profile-upload-error
+      <shared-component-profile-upload-error
         :uploadError="uploadError"
         :uploadErrorMessage="uploadErrorMessage"
         @closeErrorAlert="closeErrorAlert"
@@ -48,8 +48,6 @@
 </template>
 
 <script>
-import ProfileUploadError from "@/components/profileComponents/ProfileUploadError.vue";
-
 export default {
   name: "ProfilePictureUpload",
   data() {
@@ -59,9 +57,6 @@ export default {
       uploadErrorMessage: "",
       fileName: "",
     };
-  },
-  components: {
-    ProfileUploadError,
   },
   methods: {
     dragStart() {

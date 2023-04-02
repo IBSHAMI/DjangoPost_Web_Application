@@ -82,22 +82,18 @@
 
 <script>
 import JobCard from "@/components/jobComponents/JobCard.vue";
-import useAuthenticationStore from "@/stores/authentication";
+import { getAuthenticationStore } from "@/services/authService";
 import axios from "axios";
 import { API } from "@/api";
 
 export default {
   name: "JobsList",
   props: ["searchTitleTerm", "frameworkChoice"],
-  setup() {
-    // init the store
-    const authenticationStore = useAuthenticationStore();
-    return { authenticationStore };
-  },
   components: {
     JobCard,
   },
   created() {
+    this.authenticationStore = getAuthenticationStore();
     this.getJobsList();
   },
   data() {
@@ -109,6 +105,7 @@ export default {
       totalPages: 0,
       nextPageLink: null,
       previousPageLink: null,
+      authenticationStore: null,
     };
   },
   methods: {

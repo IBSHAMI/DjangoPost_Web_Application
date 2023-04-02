@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import useAuthenticationStore from "@/stores/authentication";
+import { getAuthenticationStore } from "@/services/authService";
 import HomeView from "@/views/HomeView.vue";
 import AuthView from "@/views/AuthView.vue";
 import JobsView from "@/views/JobsView.vue";
@@ -52,7 +52,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const authenticationStore = useAuthenticationStore();
+  const authenticationStore = getAuthenticationStore();
 
   // Check if the route requires authentication and if it is check if the user is authenticated
   if (to.meta.requireAuthentication && !authenticationStore.isAuthenticated) {

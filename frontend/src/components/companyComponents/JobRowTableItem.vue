@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import useAuthenticationStore from "@/stores/authentication";
+import { getAuthenticationStore } from "@/services/authService";
 import axios from "axios";
 import { API } from "@/api";
 
@@ -65,12 +65,7 @@ export default {
     return {
       jobDropdown: false,
       dateCreated: new Date(this.job.date_created).toLocaleDateString(),
-    };
-  },
-  setup() {
-    const authenticationStore = useAuthenticationStore();
-    return {
-      authenticationStore,
+      authenticationStore: getAuthenticationStore(),
     };
   },
   methods: {

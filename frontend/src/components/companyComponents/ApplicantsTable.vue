@@ -90,19 +90,15 @@
 <script>
 import ApplicantTableRow from "@/components/companyComponents/ApplicantTableRow.vue";
 import PaginationItem from "@/components/sharedComponents/PaginationItem.vue";
-import useAuthenticationStore from "@/stores/authentication";
+import { getAuthenticationStore } from "@/services/authService";
 import axios from "axios";
 import { API } from "@/api";
 
 export default {
   name: "ApplicantsTable",
   props: ["jobId"],
-  setup() {
-    // init the store
-    const authenticationStore = useAuthenticationStore();
-    return { authenticationStore };
-  },
   created() {
+    this.authenticationStore = getAuthenticationStore();
     this.getApplicantsList();
     this.getJobTitle();
   },
@@ -117,6 +113,7 @@ export default {
       totalPages: 0,
       nextPageLink: null,
       previousPageLink: null,
+      authenticationStore: null,
       SortByOptions: [
         {
           id: 1,

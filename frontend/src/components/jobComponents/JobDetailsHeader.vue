@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import useAuthenticationStore from "@/stores/authentication";
+import { getAuthenticationStore } from "@/services/authService";
 import moment from "moment";
 import axios from "axios";
 import { API } from "@/api";
@@ -51,10 +51,10 @@ import { API } from "@/api";
 export default {
   name: "JobDetailsHeader",
   props: ["headerData", "isApplied"],
-  setup() {
-    // init the store
-    const authenticationStore = useAuthenticationStore();
-    return { authenticationStore };
+  data() {
+    return {
+      authenticationStore: getAuthenticationStore(),
+    };
   },
   methods: {
     formattedDate() {

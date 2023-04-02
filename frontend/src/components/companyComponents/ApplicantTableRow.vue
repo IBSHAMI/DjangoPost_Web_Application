@@ -57,22 +57,17 @@
 </template>
 
 <script>
-import useAuthenticationStore from "@/stores/authentication";
+import { getAuthenticationStore } from "@/services/authService";
 import axios from "axios";
 import { API } from "@/api";
 
 export default {
   name: "ApplicantTableRow",
   props: ["applicant"],
-  setup() {
-    const authenticationStore = useAuthenticationStore();
-    return {
-      authenticationStore,
-    };
-  },
   data() {
     return {
       dateCreated: new Date(this.applicant.date_applied).toLocaleDateString(),
+      authenticationStore: getAuthenticationStore(),
     };
   },
   methods: {

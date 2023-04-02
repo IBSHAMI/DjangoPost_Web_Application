@@ -3,18 +3,17 @@
 </template>
 
 <script>
-import useAuthenticationStore from "@/stores/authentication";
+import { getAuthenticationStore } from "@/services/authService";
 
 export default {
   name: "App",
-  setup() {
-    // init the store
-    const authenticationStore = useAuthenticationStore();
-    return { authenticationStore };
+  data() {
+    return {
+      authenticationStore: null,
+    };
   },
-  beforeCreate() {
-    // init the authentication store using initializeStore function
-    // from the authentication store
+  created() {
+    this.authenticationStore = getAuthenticationStore();
     this.authenticationStore.initializeStore();
   },
   mounted() {

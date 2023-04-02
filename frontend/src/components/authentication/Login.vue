@@ -67,17 +67,12 @@
 </template>
 
 <script>
-import useAuthenticationStore from "@/stores/authentication";
+import { getAuthenticationStore } from "@/services/authService";
 import { API } from "@/api";
 import axios from "axios";
 
 export default {
   name: "LoginItem",
-  setup() {
-    // init the store
-    const authenticationStore = useAuthenticationStore();
-    return { authenticationStore };
-  },
   data() {
     return {
       schema_login: {
@@ -88,6 +83,7 @@ export default {
       login_show_alert: false,
       login_alert_variant: "alert alert-info",
       login_alert_message: "Please wait, processing your request",
+      authenticationStore: getAuthenticationStore(),
     };
   },
   methods: {

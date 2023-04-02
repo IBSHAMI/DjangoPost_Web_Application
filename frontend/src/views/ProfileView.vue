@@ -15,12 +15,12 @@
 <script>
 import ProfileData from "@/components/ProfileData.vue";
 import ContactUsForm from "@/components/ContactUsForm.vue";
-import useAuthenticationStore from "@/stores/authentication";
+import { getAuthenticationStore } from "@/services/authService";
 
 export default {
   name: "ProfileView",
   beforeRouteEnter(to, from, next) {
-    const authenticationStore = useAuthenticationStore();
+    const authenticationStore = getAuthenticationStore();
     const isauthenticated = authenticationStore.isAuthenticated;
 
     // Check if user is loggin in, otherwise redirect to auth page

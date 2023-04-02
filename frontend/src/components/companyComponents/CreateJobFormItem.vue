@@ -300,18 +300,14 @@
 </template>
 
 <script>
-import useAuthenticationStore from "@/stores/authentication";
+import { getAuthenticationStore } from "@/services/authService";
 import axios from "axios";
 import { API } from "@/api";
 
 export default {
   name: "CreateJobFormItem",
-  setup() {
-    // init the store
-    const authenticationStore = useAuthenticationStore();
-    return { authenticationStore };
-  },
   created() {
+    this.authenticationStore = getAuthenticationStore();
     this.getChoicesData();
   },
   data() {
@@ -354,6 +350,9 @@ export default {
       Languages: [],
       JobExperience: [],
       JobsSalary: [],
+
+      // authentication store
+      authenticationStore: null,
     };
   },
   methods: {

@@ -60,21 +60,17 @@
 </template>
 
 <script>
-import useAuthenticationStore from "@/stores/authentication";
+import { getAuthenticationStore } from "@/services/authService";
 import axios from "axios";
 import { API } from "@/api";
 
 export default {
   name: "JobsDropdownItem",
   props: ["jobId"],
-  setup() {
-    // init the store
-    const authenticationStore = useAuthenticationStore();
-    return { authenticationStore };
-  },
   data() {
     return {
       showDropdown: false,
+      authenticationStore: getAuthenticationStore(),
     };
   },
   methods: {

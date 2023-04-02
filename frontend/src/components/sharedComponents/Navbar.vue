@@ -126,20 +126,16 @@
 </template>
 
 <script>
-import useAuthenticationStore from "@/stores/authentication";
+import { getAuthenticationStore } from "@/services/authService";
 import axios from "axios";
 import { API } from "@/api";
 
 export default {
   name: "MainNavbar",
   props: ["pageType", "companyProfile", "employeeProfile"],
-  setup() {
-    // initialize the authentification store
-    const authenticationStore = useAuthenticationStore();
-
-    // return the computed properties
+  data() {
     return {
-      authenticationStore,
+      authenticationStore: getAuthenticationStore(),
     };
   },
   methods: {

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import useAuthenticationStore from "@/stores/authentication";
+import { getAuthenticationStore } from "@/services/authService";
 import JobDetailsHeader from "@/components/jobComponents/JobDetailsHeader.vue";
 import JobDetailsBody from "@/components/jobComponents/JobDetailsBody.vue";
 import axios from "axios";
@@ -31,12 +31,8 @@ import { API } from "@/api";
 export default {
   name: "JobDetails",
   props: ["jobId"],
-  setup() {
-    // init the store
-    const authenticationStore = useAuthenticationStore();
-    return { authenticationStore };
-  },
   created() {
+    this.authenticationStore = getAuthenticationStore();
     this.getJobDetails();
   },
   data() {
@@ -59,6 +55,9 @@ export default {
       isApplied: "",
       // company details
       companyData: {},
+
+      // authentication store
+      authenticationStore: null,
     };
   },
   components: {
