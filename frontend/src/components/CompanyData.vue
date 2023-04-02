@@ -154,21 +154,33 @@
 </template>
 
 <script>
-import useAuthenticationStore from "@/stores/authentication";
 import CompanyCard from "@/components/companyComponents/CompanyCard.vue";
 import CompanyLogoUpload from "./companyComponents/CompanyLogoUpload.vue";
+import { getCompanyData } from "@/services/companyService";
+import { getAuthenticationStore } from "@/services/authService";
 import axios from "axios";
 import { API } from "@/api";
 
 export default {
   name: "CompanyDataItem",
-  created() {
-    this.getCompanyData();
-  },
-  setup() {
-    // init the store
-    const authenticationStore = useAuthenticationStore();
-    return { authenticationStore };
+  async created() {
+    this.authenticationStore = getAuthenticationStore();
+    const companyData = await getCompanyData(this.authenticationStore.token);
+    console.log(companyData);
+
+    if (companyData) {
+      this.companyName = companyData.company_name;
+      this.companySize = companyData.company_size;
+      this.companyLocation = companyData.company_location;
+      this.companyWebsite = companyData.company_website;
+      if (companyData.company_logo) {
+        this.companyLogo = companyData.company_logo;
+      }
+    } else if (companyData == null) {
+      this.alert = true;
+      this.alertMessage = " Error occur while fetching data";
+      this.alertBackgroundColor = "alert alert-danger";
+    }
   },
   data() {
     return {
@@ -193,6 +205,9 @@ export default {
       companyLocation: "",
       companyWebsite: "",
       companyLogo: "",
+
+      // Authentication store
+      authenticationStore: {},
     };
   },
   components: {
@@ -202,34 +217,6 @@ export default {
   methods: {
     getFileBaseName(path) {
       return path.split("/").reverse()[0];
-    },
-    getCompanyData() {
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        "content-type": "application/json",
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
-
-      axios
-        .get(API.company.details, { headers: headers })
-        .then((response) => {
-          this.companyName = response.data.company_name;
-          this.companySize = response.data.company_size;
-          this.companyLocation = response.data.company_location;
-          this.companyWebsite = response.data.company_website;
-          if (response.data.company_logo) {
-            this.companyLogo = this.getFileBaseName(response.data.company_logo);
-          }
-        })
-        // eslint-disable-next-line no-unused-vars
-        .catch((error) => {
-          console.log(error);
-          this.alert = true;
-          this.alertMessage = " Error occur while fetching data";
-          this.alertBackgroundColor = "alert alert-danger";
-        });
     },
     upload(file) {
       // we save the file data to the profilePicture variable
