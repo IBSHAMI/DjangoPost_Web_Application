@@ -156,17 +156,18 @@
 <script>
 import CompanyCard from "@/components/companyComponents/CompanyCard.vue";
 import CompanyLogoUpload from "./companyComponents/CompanyLogoUpload.vue";
-import { getCompanyData } from "@/services/companyService";
+import {
+  getCompanyData,
+  updateCompanyData,
+  uploadCompanyLogo,
+} from "@/services/companyService";
 import { getAuthenticationStore } from "@/services/authService";
-import axios from "axios";
-import { API } from "@/api";
 
 export default {
   name: "CompanyDataItem",
   async created() {
     this.authenticationStore = getAuthenticationStore();
     const companyData = await getCompanyData(this.authenticationStore.token);
-    console.log(companyData);
 
     if (companyData) {
       this.companyName = companyData.company_name;
@@ -230,54 +231,35 @@ export default {
       this.alertBackgroundColor = "";
       this.alertMessage = "";
     },
-    // Send the user data to the backend
-    updateCompanyData() {
-      console.log("updateCompanyData");
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
-
+    async updateCompanyData() {
       const data = new FormData();
       data.append("company_name", this.companyName);
       data.append("company_size", this.companySize);
       data.append("company_location", this.companyLocation);
       data.append("company_website", this.companyWebsite);
 
-      axios
-        .patch(API.company.details, data, { headers: headers })
-        // eslint-disable-next-line no-unused-vars
-        .then((response) => {
-          // show that the data is updated
-          this.alert = true;
-          this.alertMessage = "Data updated successfully";
-          this.alertBackgroundColor = "alert alert-success";
+      const updateCompanyStatus = await updateCompanyData(
+        this.authenticationStore.token,
+        data
+      );
 
-          this.authenticationStore.setIfCompanyProfileCompleted(true);
-        })
-        // eslint-disable-next-line no-unused-vars
-        .catch((error) => {
-          this.alert = true;
-          this.alertMessage = " Error occur while updating data";
-          this.alertBackgroundColor = "alert alert-danger";
-        });
+      console.log(updateCompanyStatus);
+
+      if (updateCompanyStatus === 200) {
+        this.alert = true;
+        this.alertMessage = "Data updated successfully";
+        this.alertBackgroundColor = "alert alert-success";
+        this.authenticationStore.setIfCompanyProfileCompleted(true);
+      } else {
+        this.alert = true;
+        this.alertMessage = " Error occur while updating data";
+        this.alertBackgroundColor = "alert alert-danger";
+      }
     },
     async uploadCompanyLogo() {
       // varaiable to check if logo is uploaded
       let uploadLogo = false;
-
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
-
       const data = new FormData();
-
-      // Check if resume is typeof file
       if (this.companyLogo === null) {
         data.append("company_logo", "");
       } else if (typeof this.companyLogo === "object") {
@@ -288,32 +270,27 @@ export default {
       }
 
       if (uploadLogo) {
-        console.log("uploadLogoStart");
-        await axios
-          .put(API.company.company_profile_logo, data, {
-            headers: headers,
-          })
-          .then((response) => {
-            // show that the data is updated
-            this.alert = true;
-            this.alertMessage = "Logo uploaded successfully";
-            this.alertBackgroundColor = "alert alert-success";
+        const updateCompanyLogo = await uploadCompanyLogo(
+          this.authenticationStore.token,
+          data
+        );
 
-            console.log(response.data);
-            this.logoUploadShow = false;
-            this.authenticationStore.getAccountPictures();
-            if (response.data.company_logo) {
-              this.companyLogo = this.getFileBaseName(
-                response.data.company_logo
-              );
-            }
-          })
-          // eslint-disable-next-line no-unused-vars
-          .catch((error) => {
-            this.alert = true;
-            this.alertMessage = " Error occur while updating data";
-            this.alertBackgroundColor = "alert alert-danger";
-          });
+        if (updateCompanyLogo) {
+          this.alert = true;
+          this.alertMessage = "Logo uploaded successfully";
+          this.alertBackgroundColor = "alert alert-success";
+          if (updateCompanyLogo.company_logo) {
+            this.companyLogo = this.getFileBaseName(
+              updateCompanyLogo.company_logo
+            );
+          }
+          this.logoUploadShow = false;
+          this.authenticationStore.getAccountPictures();
+        } else {
+          this.alert = true;
+          this.alertMessage = " Error occur while updating data";
+          this.alertBackgroundColor = "alert alert-danger";
+        }
       }
     },
   },
