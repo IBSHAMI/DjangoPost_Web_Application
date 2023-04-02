@@ -1,7 +1,7 @@
 <template>
   <section class="min-vh-100 h-100">
     <div>
-      <Navbar
+      <shared-component-navbar
         class="pb-8"
         :companyProfile="companyProfile"
         :pageType="jobsPage"
@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import Navbar from "@/components/sharedComponents/Navbar.vue";
 import CompanyData from "@/components/CompanyData.vue";
 import JobsFormsItem from "@/components/companyComponents/JobsFormsItem.vue";
 import CreateJobFormItem from "@/components/companyComponents/CreateJobFormItem.vue";
@@ -31,7 +30,6 @@ export default {
     };
   },
   components: {
-    Navbar,
     CompanyData,
     JobsFormsItem,
     CreateJobFormItem,

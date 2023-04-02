@@ -13,7 +13,7 @@
                 class="card border-0 text-center text-md-start"
               >
                 <div class="card-body">
-                  <alert-item
+                  <shared-component-alert-item
                     :alert="alert"
                     :alertBackgroundColor="alertBackgroundColor"
                     :alertMessage="alertMessage"
@@ -301,7 +301,6 @@
 
 <script>
 import useAuthenticationStore from "@/stores/authentication";
-import AlertItem from "@/components/sharedComponents/AlertItem.vue";
 import axios from "axios";
 import { API } from "@/api";
 
@@ -356,9 +355,6 @@ export default {
       JobExperience: [],
       JobsSalary: [],
     };
-  },
-  components: {
-    AlertItem,
   },
   methods: {
     getChoicesData() {

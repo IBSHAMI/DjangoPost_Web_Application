@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="min-vh-100 h-100">
-      <Navbar :pageType="homePage" />
+      <shared-component-navbar :pageType="homePage" />
       <hero-section />
       <features-section />
       <about-section
@@ -9,17 +9,15 @@
         :totalCompanies="totalCompanies"
         :totalEmployees="totalEmployees"
       />
-      <footer-section />
+      <shared-component-footer-section />
     </section>
   </div>
 </template>
 
 <script>
-import Navbar from "@/components/sharedComponents/Navbar.vue";
 import HeroSection from "@/components/landingPageComponents/HeroSection.vue";
 import FeaturesSection from "@/components/landingPageComponents/FeaturesSection.vue";
 import AboutSection from "@/components/landingPageComponents/AboutSection.vue";
-import FooterSection from "@/components/sharedComponents/FooterSection.vue";
 import axios from "axios";
 import { API } from "@/api";
 
@@ -34,11 +32,9 @@ export default {
     };
   },
   components: {
-    Navbar,
     HeroSection,
     FeaturesSection,
     AboutSection,
-    FooterSection,
   },
   created() {
     this.getWebAppStatusData();

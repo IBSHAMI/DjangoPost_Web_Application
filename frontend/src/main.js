@@ -5,6 +5,7 @@ import App from "./App.vue";
 import router from "./router";
 import veeValidatePlugin from "@/includes/validation";
 import axios from "axios";
+import GlobalComponents from "./includes/_globals";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "@/assets/css/main.css";
@@ -20,6 +21,7 @@ app.use(router, axios);
 
 // we pass our custom plugins
 app.use(veeValidatePlugin);
+app.use(GlobalComponents);
 
 app.mount("#app");
 

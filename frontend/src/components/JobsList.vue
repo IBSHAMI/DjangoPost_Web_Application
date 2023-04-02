@@ -68,7 +68,7 @@
           </div>
         </div>
       </div>
-      <pagination-item
+      <shared-component-pagination-item
         v-show="jobsList.length > 0"
         :currentPage="currentPage"
         :totalPages="totalPages"
@@ -82,7 +82,6 @@
 
 <script>
 import JobCard from "@/components/jobComponents/JobCard.vue";
-import PaginationItem from "./sharedComponents/PaginationItem.vue";
 import useAuthenticationStore from "@/stores/authentication";
 import axios from "axios";
 import { API } from "@/api";
@@ -97,7 +96,6 @@ export default {
   },
   components: {
     JobCard,
-    PaginationItem,
   },
   created() {
     this.getJobsList();

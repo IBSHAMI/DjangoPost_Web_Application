@@ -1,7 +1,10 @@
 <template>
   <section class="min-vh-100 h-100">
     <div>
-      <Navbar :employeeProfile="employeeProfile" :pageType="jobsPage" />
+      <shared-component-navbar
+        :employeeProfile="employeeProfile"
+        :pageType="jobsPage"
+      />
     </div>
     <job-main-search @searchByJobTitle="searchByJobTitle" />
     <jobs-list
@@ -14,7 +17,6 @@
 </template>
 
 <script>
-import Navbar from "@/components/sharedComponents/Navbar.vue";
 import JobMainSearch from "@/components/jobComponents/JobMainSearch.vue";
 import JobDetails from "@/components/JobDetails.vue";
 import JobsList from "@/components/JobsList.vue";
@@ -31,7 +33,6 @@ export default {
     };
   },
   components: {
-    Navbar,
     JobMainSearch,
     JobDetails,
     JobsList,

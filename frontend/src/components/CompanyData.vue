@@ -19,7 +19,7 @@
                 class="card border-0 text-center text-md-start"
               >
                 <div class="card-body">
-                  <alert-item
+                  <shared-component-alert-item
                     :alert="alert"
                     :alertBackgroundColor="alertBackgroundColor"
                     :alertMessage="alertMessage"
@@ -157,7 +157,6 @@
 import useAuthenticationStore from "@/stores/authentication";
 import CompanyCard from "@/components/companyComponents/CompanyCard.vue";
 import CompanyLogoUpload from "./companyComponents/CompanyLogoUpload.vue";
-import AlertItem from "@/components/sharedComponents/AlertItem.vue";
 import axios from "axios";
 import { API } from "@/api";
 
@@ -198,7 +197,6 @@ export default {
   },
   components: {
     CompanyLogoUpload,
-    AlertItem,
     CompanyCard,
   },
   methods: {

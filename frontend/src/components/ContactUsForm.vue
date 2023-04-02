@@ -16,7 +16,7 @@
           class=""
         >
           <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
-            <alert-item
+            <shared-component-alert-item
               :alert="alert"
               :alertBackgroundColor="alertBackgroundColor"
               :alertMessage="alertMessage"
@@ -109,7 +109,6 @@
 
 <script>
 import useAuthenticationStore from "@/stores/authentication";
-import AlertItem from "@/components/sharedComponents/AlertItem.vue";
 import axios from "axios";
 import { API } from "@/api";
 
@@ -142,9 +141,6 @@ export default {
     // init the store
     const authenticationStore = useAuthenticationStore();
     return { authenticationStore };
-  },
-  components: {
-    AlertItem,
   },
   methods: {
     getUserDate() {

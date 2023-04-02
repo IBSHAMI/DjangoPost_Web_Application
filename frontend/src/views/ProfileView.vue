@@ -1,7 +1,7 @@
 <template>
   <section class="min-vh-100 h-100">
     <div>
-      <Navbar
+      <shared-component-navbar
         class="pb-8"
         :employeeProfile="employeeProfile"
         :pageType="jobsPage"
@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import Navbar from "../components/sharedComponents/Navbar.vue";
 import ProfileData from "@/components/ProfileData.vue";
 import ContactUsForm from "@/components/ContactUsForm.vue";
 import useAuthenticationStore from "@/stores/authentication";
@@ -39,7 +38,6 @@ export default {
     };
   },
   components: {
-    Navbar,
     ProfileData,
     ContactUsForm,
   },

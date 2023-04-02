@@ -18,7 +18,7 @@
                 class="card border-0 text-center text-md-start"
               >
                 <div class="card-body">
-                  <alert-item
+                  <shared-component-alert-item
                     :alert="alert"
                     :alertBackgroundColor="alertBackgroundColor"
                     :alertMessage="alertMessage"
@@ -270,7 +270,6 @@ import useAuthenticationStore from "@/stores/authentication";
 import ProfileCard from "@/components/profileComponents/ProfileCard.vue";
 import ProfileResumeUpload from "@/components/profileComponents/ProfileResumeUpload.vue";
 import ProfilePictureUpload from "@/components/profileComponents/ProfilePictureUpload.vue";
-import AlertItem from "@/components/sharedComponents/AlertItem.vue";
 import axios from "axios";
 import { API } from "@/api";
 
@@ -331,7 +330,6 @@ export default {
     ProfileCard,
     ProfileResumeUpload,
     ProfilePictureUpload,
-    AlertItem,
   },
   methods: {
     getDisplayName() {

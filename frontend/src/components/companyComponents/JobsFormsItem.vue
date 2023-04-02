@@ -125,21 +125,20 @@
           </tbody>
         </table>
       </div>
-      <pagination-item
+      <shared-component-pagination-item
         v-show="jobsList.length > 0"
         :currentPage="currentPage"
         :totalPages="totalPages"
         @navigatePages="navigator"
         @navigateNext="getJobsList(true, 'Next')"
         @navigatePrevious="getJobsList(true, 'Previous')"
-      ></pagination-item>
+      ></shared-component-pagination-item>
     </div>
   </section>
 </template>
 
 <script>
 import JobRowTableItem from "@/components/companyComponents/JobRowTableItem.vue";
-import PaginationItem from "@/components/sharedComponents/PaginationItem.vue";
 import useAuthenticationStore from "@/stores/authentication";
 import axios from "axios";
 import { API } from "@/api";
@@ -186,7 +185,6 @@ export default {
   },
   components: {
     JobRowTableItem,
-    PaginationItem,
   },
   watch: {
     searchTerm() {
