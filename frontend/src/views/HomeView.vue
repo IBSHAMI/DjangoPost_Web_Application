@@ -18,7 +18,7 @@
 import HeroSection from "@/components/landingPageComponents/HeroSection.vue";
 import FeaturesSection from "@/components/landingPageComponents/FeaturesSection.vue";
 import AboutSection from "@/components/landingPageComponents/AboutSection.vue";
-import axios from "axios";
+import { fetchData } from "@/services/apiService";
 import { API } from "@/api";
 
 export default {
@@ -40,19 +40,15 @@ export default {
     this.getWebAppStatusData();
   },
   methods: {
-    getWebAppStatusData() {
+    async getWebAppStatusData() {
       const Url = API.auth.get_webapp_status_data;
+      const webAppStatusData = await fetchData(Url);
 
-      axios
-        .get(Url)
-        .then((response) => {
-          this.totalJobs = response.data.total_jobs;
-          this.totalCompanies = response.data.total_companies;
-          this.totalEmployees = response.data.total_employees;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (webAppStatusData) {
+        this.totalJobs = Number(webAppStatusData.total_jobs);
+        this.totalCompanies = Number(webAppStatusData.total_companies);
+        this.totalEmployees = Number(webAppStatusData.total_employees);
+      }
     },
   },
 };

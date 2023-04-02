@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { fetchData } from "@/services/apiService";
 import { API } from "@/api";
 
 export default {
@@ -91,19 +91,14 @@ export default {
     this.getTotalJobsAndFrameworkChoices();
   },
   methods: {
-    getTotalJobsAndFrameworkChoices() {
+    async getTotalJobsAndFrameworkChoices() {
       const Url = API.jobs.get_total_jobs;
+      const totalJobs = await fetchData(Url);
 
-      axios
-        .get(Url)
-        .then((response) => {
-          console.log(response.data);
-          this.totalJobsCount = Number(response.data.total_jobs);
-          this.frameworks = response.data.framework_choices;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (totalJobs) {
+        this.totalJobsCount = Number(totalJobs.total_jobs);
+        this.frameworks = totalJobs.framework_choices;
+      }
     },
     searchByJobTitle() {
       const frameworkChosen =
