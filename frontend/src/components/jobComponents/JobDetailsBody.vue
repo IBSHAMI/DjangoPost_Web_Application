@@ -140,7 +140,7 @@ export default {
       return moment(this.bodyData.created_at).format("DD MMM YYYY");
     },
     getApplicationType() {
-      return this.bodyData.internal ? "Easy Apply" : "External Apply";
+      return this.bodyData.internal ? "External Apply Link" : "Easy Apply";
     },
     checkRemote() {
       return this.bodyData.remote ? "Yes" : "No";
