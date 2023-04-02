@@ -266,23 +266,51 @@
 </template>
 
 <script>
-import useAuthenticationStore from "@/stores/authentication";
 import ProfileCard from "@/components/profileComponents/ProfileCard.vue";
 import ProfileResumeUpload from "@/components/profileComponents/ProfileResumeUpload.vue";
 import ProfilePictureUpload from "@/components/profileComponents/ProfilePictureUpload.vue";
+import {
+  getProfileData,
+  updateProfileData,
+  uploadProfilePicture,
+} from "@/services/profileService";
+import { uploadEmployeeResume } from "@/services/employeeSpecificService";
+import { getAuthenticationStore } from "@/services/authService";
 import axios from "axios";
 import { API } from "@/api";
 
 export default {
   name: "ProfileDataItem",
-  created() {
-    this.getEmployeeData();
+  async created() {
+    this.authenticationStore = getAuthenticationStore();
+    const employeeData = await getProfileData(
+      this.authenticationStore.token,
+      "employee"
+    );
+
+    if (employeeData) {
+      this.firstName = employeeData.first_name;
+      this.lastName = employeeData.last_name;
+      this.email = employeeData.email;
+      this.expectedSalary = employeeData.expected_salary;
+      this.employeeExperience = employeeData.experience;
+      this.linkedinProfile = employeeData.linkedin_url;
+      this.portfolioWebsite = employeeData.portfolio_url;
+      if (employeeData.resume) {
+        this.resume = this.getFileBaseName(employeeData.resume);
+        this.resumeuploadedCheck = true;
+      }
+      if (employeeData.profile_picture) {
+        this.profilePicture = this.getFileBaseName(
+          employeeData.profile_picture
+        );
+      }
+    } else if (employeeData == null) {
+      this.alert = true;
+      this.alertMessage = " Error occur while fetching data";
+      this.alertBackgroundColor = "alert alert-danger";
+    }
     this.getChoicesData();
-  },
-  setup() {
-    // init the store
-    const authenticationStore = useAuthenticationStore();
-    return { authenticationStore };
   },
   data() {
     return {
@@ -324,6 +352,9 @@ export default {
       // choices data
       JobExperience: [],
       JobsSalary: [],
+
+      // Authentication store
+      authenticationStore: {},
     };
   },
   components: {
@@ -358,43 +389,6 @@ export default {
           console.log(error);
         });
     },
-    getEmployeeData() {
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        "content-type": "application/json",
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
-
-      axios
-        .get(API.employee.details, { headers: headers })
-        .then((response) => {
-          this.firstName = response.data.first_name;
-          this.lastName = response.data.last_name;
-          this.email = response.data.email;
-          this.expectedSalary = response.data.expected_salary;
-          this.employeeExperience = response.data.experience;
-          this.linkedinProfile = response.data.linkedin_url;
-          this.portfolioWebsite = response.data.portfolio_url;
-          if (response.data.resume) {
-            this.resume = this.getFileBaseName(response.data.resume);
-            this.resumeuploadedCheck = true;
-          }
-          if (response.data.profile_picture) {
-            this.profilePicture = this.getFileBaseName(
-              response.data.profile_picture
-            );
-          }
-        })
-        // eslint-disable-next-line no-unused-vars
-        .catch((error) => {
-          console.log(error);
-          this.alert = true;
-          this.alertMessage = " Error occur while fetching data";
-          this.alertBackgroundColor = "alert alert-danger";
-        });
-    },
     upload(file, type) {
       // We upload the files to their respective models
       if (type === "resume") {
@@ -417,16 +411,7 @@ export default {
       this.alertBackgroundColor = "";
       this.alertMessage = "";
     },
-    // Send the user data to the backend
-    updateUserData() {
-      console.log("updateUserData");
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
-
+    async updateUserData() {
       const data = new FormData();
       data.append("first_name", this.firstName);
       data.append("last_name", this.lastName);
@@ -436,115 +421,104 @@ export default {
       data.append("linkedin_url", this.linkedinProfile);
       data.append("portfolio_url", this.portfolioWebsite);
 
-      console.log(data);
+      const updateEmployeeStatus = await updateProfileData(
+        this.authenticationStore.token,
+        data,
+        "company"
+      );
 
-      axios
-        .patch(API.employee.details, data, { headers: headers })
-        // eslint-disable-next-line no-unused-vars
-        .then((response) => {
-          // show that the data is updated
-          this.alert = true;
-          this.alertMessage = "Data updated successfully";
-          this.alertBackgroundColor = "alert alert-success";
-
-          this.authenticationStore.setIfEmployeeProfileCompleted(true);
-        })
-        // eslint-disable-next-line no-unused-vars
-        .catch((error) => {
-          this.alert = true;
-          this.alertMessage = " Error occur while updating data";
-          this.alertBackgroundColor = "alert alert-danger";
-        });
+      if (updateEmployeeStatus === 200) {
+        this.alert = true;
+        this.alertMessage = "Data updated successfully";
+        this.alertBackgroundColor = "alert alert-success";
+        this.authenticationStore.setIfEmployeeProfileCompleted(true);
+      } else {
+        this.alert = true;
+        this.alertMessage = " Error occur while updating data";
+        this.alertBackgroundColor = "alert alert-danger";
+      }
 
       this.authenticationStore.getAccountPictures();
     },
     async uploadFiles() {
       // Upload Resume and Profile Picture varaibles
-      let uploadResume = false;
-      let uploadProfilePicture = false;
+      let uploadResumeCheck = false;
+      let uploadProfilePictureCheck = false;
 
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
-
-      const data = new FormData();
+      const Resumedata = new FormData();
+      const PictureData = new FormData();
 
       // Check if resume is typeof file
       if (this.resume === null) {
-        data.append("resume", "");
+        Resumedata.append("resume", "");
       } else if (typeof this.resume === "object") {
-        data.append("resume", this.resume);
-        uploadResume = true;
-        this.resumeuploadedCheck = true;
+        Resumedata.append("resume", this.resume);
+        uploadResumeCheck = true;
       } else {
-        data.append("resume", "");
+        Resumedata.append("resume", "");
       }
 
       // Check if profile picture is typeof file
       if (this.profilePicture === null) {
-        data.append("profile_picture", "");
+        PictureData.append("profile_picture", "");
       } else if (typeof this.profilePicture === "object") {
-        data.append("profile_picture", this.profilePicture);
-        uploadProfilePicture = true;
+        PictureData.append("profile_picture", this.profilePicture);
+        uploadProfilePictureCheck = true;
       } else {
-        data.append("profile_picture", "");
+        PictureData.append("profile_picture", "");
       }
 
-      if (uploadResume) {
-        await axios
-          .put(API.employee.employee_profile_resume, data, { headers: headers })
-          .then((response) => {
-            // show that the data is updated
-            this.alert = true;
-            this.alertMessage = "Files uploaded successfully";
-            this.alertBackgroundColor = "alert alert-success";
+      if (uploadResumeCheck) {
+        console.log("resume");
+        console.log(this.resume);
+        console.log(Resumedata);
+        const updateEmployeeResume = await uploadEmployeeResume(
+          this.authenticationStore.token,
+          Resumedata
+        );
 
-            console.log(response.data);
-            this.resumeUploadShow = false;
-            if (response.data.resume) {
-              this.resume = this.getFileBaseName(response.data.resume);
-            }
-          })
-          .catch((error) => {
-            this.alert = true;
-            this.alertMessage = " Error occur while uploading files";
-            this.alertBackgroundColor = "alert alert-danger";
+        if (updateEmployeeResume) {
+          this.alert = true;
+          this.alertMessage = "Files uploaded successfully";
+          this.alertBackgroundColor = "alert alert-success";
 
-            console.log(error);
-          });
+          if (updateEmployeeResume.resume) {
+            this.resume = this.getFileBaseName(updateEmployeeResume.resume);
+          }
+          this.resumeUploadShow = false;
+        } else {
+          this.alert = true;
+          this.alertMessage = " Error occur while uploading files";
+          this.alertBackgroundColor = "alert alert-danger";
+        }
       }
-      if (uploadProfilePicture) {
-        await axios
-          .put(API.employee.employee_profile_picture, data, {
-            headers: headers,
-          })
-          .then((response) => {
-            // show that the data is updated
-            this.alert = true;
-            this.alertMessage = "Files uploaded successfully";
-            this.alertBackgroundColor = "alert alert-success";
+      if (uploadProfilePictureCheck) {
+        console.log("picture");
+        console.log(this.profilePicture);
+        console.log(PictureData);
+        const updateEmployeePicture = await uploadProfilePicture(
+          this.authenticationStore.token,
+          PictureData,
+          "employee"
+        );
 
-            console.log(response.data);
+        if (updateEmployeePicture) {
+          this.alert = true;
+          this.alertMessage = "Files uploaded successfully";
+          this.alertBackgroundColor = "alert alert-success";
 
-            this.PictureUploadShow = false;
-            this.authenticationStore.getAccountPictures();
-
-            if (response.data.profile_picture) {
-              this.profilePicture = this.getFileBaseName(
-                response.data.profile_picture
-              );
-            }
-          })
-          .catch((error) => {
-            this.alert = true;
-            this.alertMessage = " Error occur while uploading files";
-            this.alertBackgroundColor = "alert alert-danger";
-
-            console.log(error);
-          });
+          if (updateEmployeePicture.profile_picture) {
+            this.profilePicture = this.getFileBaseName(
+              updateEmployeePicture.profile_picture
+            );
+          }
+          this.PictureUploadShow = false;
+          this.authenticationStore.getAccountPictures();
+        } else {
+          this.alert = true;
+          this.alertMessage = " Error occur while uploading files";
+          this.alertBackgroundColor = "alert alert-danger";
+        }
       }
     },
     downloadResume() {

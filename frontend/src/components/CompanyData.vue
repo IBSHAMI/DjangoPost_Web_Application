@@ -157,17 +157,20 @@
 import CompanyCard from "@/components/companyComponents/CompanyCard.vue";
 import CompanyLogoUpload from "./companyComponents/CompanyLogoUpload.vue";
 import {
-  getCompanyData,
-  updateCompanyData,
-  uploadCompanyLogo,
-} from "@/services/companyService";
+  getProfileData,
+  updateProfileData,
+  uploadProfilePicture,
+} from "@/services/profileService";
 import { getAuthenticationStore } from "@/services/authService";
 
 export default {
   name: "CompanyDataItem",
   async created() {
     this.authenticationStore = getAuthenticationStore();
-    const companyData = await getCompanyData(this.authenticationStore.token);
+    const companyData = await getProfileData(
+      this.authenticationStore.token,
+      "company"
+    );
 
     if (companyData) {
       this.companyName = companyData.company_name;
@@ -238,12 +241,11 @@ export default {
       data.append("company_location", this.companyLocation);
       data.append("company_website", this.companyWebsite);
 
-      const updateCompanyStatus = await updateCompanyData(
+      const updateCompanyStatus = await updateProfileData(
         this.authenticationStore.token,
-        data
+        data,
+        "company"
       );
-
-      console.log(updateCompanyStatus);
 
       if (updateCompanyStatus === 200) {
         this.alert = true;
@@ -258,21 +260,22 @@ export default {
     },
     async uploadCompanyLogo() {
       // varaiable to check if logo is uploaded
-      let uploadLogo = false;
+      let uploadLogoCheck = false;
       const data = new FormData();
       if (this.companyLogo === null) {
         data.append("company_logo", "");
       } else if (typeof this.companyLogo === "object") {
         data.append("company_logo", this.companyLogo);
-        uploadLogo = true;
+        uploadLogoCheck = true;
       } else {
         data.append("company_logo", "");
       }
 
-      if (uploadLogo) {
-        const updateCompanyLogo = await uploadCompanyLogo(
+      if (uploadLogoCheck) {
+        const updateCompanyLogo = await uploadProfilePicture(
           this.authenticationStore.token,
-          data
+          data,
+          "company"
         );
 
         if (updateCompanyLogo) {

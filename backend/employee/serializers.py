@@ -39,7 +39,7 @@ class EmployeeProfilePictureSerializer(serializers.ModelSerializer):
 
 
 class EmployeeProfileResumeSerializer(serializers.ModelSerializer):
-    resume = serializers.SerializerMethodField()
+
     class Meta:
         model = EmployeeProfile
         fields = [
@@ -47,15 +47,10 @@ class EmployeeProfileResumeSerializer(serializers.ModelSerializer):
         ]
 
     def update(self, instance, validated_data):
-        print('validated_data: ', validated_data)
+        print('validated_data_resume: ', validated_data)
         resume = validated_data.get('resume', None)
         if resume is not None:
             instance.resume = resume
             instance.save()
         return instance
-
-    def get_resume(self, obj):
-        if obj.resume:
-            return self.context['request'].build_absolute_uri(obj.resume.url)
-        return None
 
