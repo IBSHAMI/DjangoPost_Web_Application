@@ -16,6 +16,7 @@ export default {
     this.authenticationStore = getAuthenticationStore();
     this.authenticationStore.initializeStore();
   },
+
   mounted() {
     if (this.authenticationStore.isAuthenticated) {
       // load profile pictures
