@@ -185,10 +185,7 @@ export default {
       );
 
       if (fetchApplicatsList) {
-        this.applicantList = [];
-        for (const applicantInformation of fetchApplicatsList.results) {
-          this.applicantList.push(applicantInformation);
-        }
+        this.applicantList = fetchApplicatsList.results;
         this.currentPage = fetchApplicatsList.page;
         this.totalPages = fetchApplicatsList.total_pages;
         this.nextPageLink = fetchApplicatsList.links.next;

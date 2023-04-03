@@ -67,9 +67,8 @@
 </template>
 
 <script>
-import { getAuthenticationStore } from "@/services/authService";
+import { getAuthenticationStore, loginUser } from "@/services/authService";
 import { API } from "@/api";
-import axios from "axios";
 
 export default {
   name: "LoginItem",
@@ -87,7 +86,7 @@ export default {
     };
   },
   methods: {
-    login(values) {
+    async login(values) {
       // vales is an object with all the values from the form
       this.login_show_alert = true;
       this.login_in_process = true;
@@ -98,33 +97,21 @@ export default {
         email: values.email,
         password: values.password,
       };
+      const url = API.auth.login;
+      const loginUserResponse = await loginUser(url, loginCredentials);
 
-      // send the login credentials to the server
-      axios
-        .post(API.auth.login, loginCredentials)
-        .then((response) => {
-          this.login_in_process = false;
-          this.login_alert_variant = "alert alert-success";
-          this.login_alert_message = "Login successful, redirecting...";
-          // save the token in the store
-          const token = response.data.auth_token;
-          this.authenticationStore.setToken(token);
-          this.authenticationStore.setUser(loginCredentials.email);
-
-          this.authenticationStore.getAccountPictures();
-          this.authenticationStore.checkIfProfileComplete();
-
-          setTimeout(() => {
-            this.$router.push({ name: "Jobs", params: { slug: "jobs" } });
-          }, 3000);
-        })
-        // eslint-disable-next-line no-unused-vars
-        .catch((error) => {
-          this.login_in_process = false;
-          this.login_alert_variant = "alert alert-danger";
-          this.login_alert_message = "Login failed, please try again";
-          console.log(error);
-        });
+      if (loginUserResponse) {
+        this.login_in_process = false;
+        this.login_alert_variant = "alert alert-success";
+        this.login_alert_message = "Login successful, redirecting...";
+        setTimeout(() => {
+          this.$router.push({ name: "Jobs", params: { slug: "jobs" } });
+        }, 3000);
+      } else {
+        this.login_in_process = false;
+        this.login_alert_variant = "alert alert-danger";
+        this.login_alert_message = "Login failed, please try again";
+      }
     },
     signupPageShow() {
       this.$emit("signup-page-show");

@@ -1,6 +1,6 @@
 <template>
-  <div class="col-span-1">
-    <div class="bg-white rounded border border-gray-200 relative flex flex-col">
+  <div>
+    <div>
       <shared-component-profile-upload-error
         :uploadError="uploadError"
         :uploadErrorMessage="uploadErrorMessage"
@@ -9,9 +9,9 @@
       <div class="card">
         <div class="card-title">
           <div class="d-flex justify-content-between p-2 mx-2">
-            <span class="ml-auto">Upload Profile Picture</span>
+            <span class="ml-auto">Upload Resume</span>
             <button
-              class="btn btn-close ml-auto"
+              class="btn button btn-close ml-auto"
               style="cursor: pointer"
               @click.prevent="CloseUploadModel"
             ></button>
@@ -32,10 +32,10 @@
             @dragleave.prevent.stop="dragEnd"
             @drop.prevent.stop="upload($event)"
           >
-            <h5 v-if="!fileName">Drop your picture here</h5>
-            <h5 v-else>Picture uploaded!!</h5>
+            <h5 v-if="!fileName">Drop your resume here</h5>
+            <h5 v-else>Resume uploaded!!</h5>
           </div>
-          <hr class="my-6" />
+          <hr class="my-4" />
           <!-- Progess Bars -->
           <div class="mb-4">
             <!-- File Name -->
@@ -49,7 +49,7 @@
 
 <script>
 export default {
-  name: "ProfilePictureUpload",
+  name: "EmployeeResumeUpload",
   data() {
     return {
       isDragActive: false,
@@ -74,7 +74,7 @@ export default {
       this.uploadErrorMessage = "";
     },
     CloseUploadModel() {
-      this.$emit("closeUploadModel", "picture_model");
+      this.$emit("closeUploadModel", "resume_model");
     },
     upload($event) {
       // Disable the active drop styles
@@ -89,14 +89,13 @@ export default {
         this.uploadErrorHandle("You can only upload one pdf file");
         return;
       }
-      if (file[0].type === "image/png" || file[0].type === "image/jpeg") {
-        // Get the file name
+      if (file[0].type === "application/pdf") {
+        // Get file name
         this.fileName = file[0].name;
         this.closeErrorAlert();
-        this.$emit("upload", file, "picture");
+        this.$emit("upload", file, "resume");
       } else {
-        console.log(file[0].type);
-        this.uploadErrorHandle("You can only upload png or jpeg images");
+        this.uploadErrorHandle("You can only upload pdf files");
       }
     },
   },

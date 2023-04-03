@@ -58,7 +58,7 @@
 
 <script>
 import { getAuthenticationStore } from "@/services/authService";
-import axios from "axios";
+import { fetchData, patchDataWithToken } from "@/services/apiService";
 import { API } from "@/api";
 
 export default {
@@ -71,62 +71,40 @@ export default {
     };
   },
   methods: {
-    downloadResume() {
-      console.log("download resume");
-
-      const applicantResumeUrl =
+    async downloadResume() {
+      const url =
         API.employee.get_applicant_resume +
         this.applicant.employee_data.pk +
         "/";
 
-      console.log(applicantResumeUrl);
-
       let resumePathToDownload = "";
 
-      // get the resume path to download
-      axios
-        .get(applicantResumeUrl)
-        .then((response) => {
-          console.log(response.data);
-          resumePathToDownload = response.data.resume;
-          if (resumePathToDownload) {
-            console.log(resumePathToDownload);
-            // download the file
-            window.open(resumePathToDownload, "_blank");
-          }
-          this.updateApplicationStatus("resume downloaded");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const fetchResumePath = await fetchData(url);
+
+      if (fetchResumePath) {
+        resumePathToDownload = fetchResumePath.resume;
+      }
+
+      if (resumePathToDownload) {
+        window.open(resumePathToDownload, "_blank");
+      }
     },
-    updateApplicationStatus(updateMessage) {
-      console.log("update application");
-
-      const applicantDeleteUrl =
-        API.jobs.update_application_status + this.applicant.pk + "/";
-
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
+    async updateApplicationStatus(updateMessage) {
+      const url = API.jobs.update_application_status + this.applicant.pk + "/";
 
       const data = {
         update_message: updateMessage,
       };
 
-      // update the application
-      axios
-        .patch(applicantDeleteUrl, data, { headers: headers })
-        .then((response) => {
-          console.log(response.data);
-          this.$emit("reloadApplicantsList");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const patchApplicationStatus = await patchDataWithToken(
+        url,
+        data,
+        this.authenticationStore.token
+      );
+
+      if (patchApplicationStatus) {
+        this.$emit("reloadApplicantsList");
+      }
     },
   },
 };

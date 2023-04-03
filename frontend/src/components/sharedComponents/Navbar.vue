@@ -63,7 +63,7 @@
                 v-show="authenticationStore.isAuthenticated && employeeProfile"
               >
                 <router-link
-                  :to="{ name: 'Profile', params: { slug: 'data' } }"
+                  :to="{ name: 'Employee', params: { slug: 'data' } }"
                   class="nav-link"
                 >
                   Profile
@@ -71,7 +71,7 @@
               </li>
               <li class="nav-item" v-show="authenticationStore.isAuthenticated">
                 <router-link
-                  :to="{ name: 'Profile', params: { slug: 'contact' } }"
+                  :to="{ name: 'Employee', params: { slug: 'contact' } }"
                   class="nav-link"
                   >Contact Us</router-link
                 >
@@ -99,7 +99,7 @@
                 >
                 <router-link
                   v-if="pageType === 'home'"
-                  :to="{ name: 'Profile', params: { slug: 'data' } }"
+                  :to="{ name: 'Employee', params: { slug: 'data' } }"
                   target="_blank"
                   class="btn button button-primary"
                   >Job Board</router-link
@@ -112,7 +112,7 @@
                 >
                 <router-link
                   v-if="companyProfile && pageType === 'jobs'"
-                  :to="{ name: 'Profile', params: { slug: 'data' } }"
+                  :to="{ name: 'Employee', params: { slug: 'data' } }"
                   class="btn button button-primary"
                   >{{ "Find Jobs" }}</router-link
                 >
@@ -126,8 +126,7 @@
 </template>
 
 <script>
-import { getAuthenticationStore } from "@/services/authService";
-import axios from "axios";
+import { getAuthenticationStore, logoutUser } from "@/services/authService";
 import { API } from "@/api";
 
 export default {
@@ -139,30 +138,13 @@ export default {
     };
   },
   methods: {
-    logout() {
-      console.log("logout");
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        "content-type": "application/json",
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
-
-      // Send the request to the backend to logout
-      axios
-        .post(API.auth.logout, token, {
-          headers: headers,
-        })
-        .then((response) => {
-          // If the logout was successful, remove the token from the store
-          console.log(response);
-          this.authenticationStore.logout();
-          this.$router.go();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    async logout() {
+      const url = API.auth.logout;
+      if (await logoutUser(url)) {
+        this.$router.go();
+      } else {
+        alert("Something went wrong when logging out");
+      }
     },
   },
 };

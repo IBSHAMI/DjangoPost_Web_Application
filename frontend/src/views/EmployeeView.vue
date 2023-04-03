@@ -7,18 +7,18 @@
         :pageType="jobsPage"
       />
     </div>
-    <profile-data v-if="passedSlug === 'data'" />
+    <employee-data v-if="passedSlug === 'data'" />
     <contact-us-form v-else-if="passedSlug === 'contact'" />
   </section>
 </template>
 
 <script>
-import ProfileData from "@/components/ProfileData.vue";
+import EmployeeData from "@/components/EmployeeData.vue";
 import ContactUsForm from "@/components/ContactUsForm.vue";
 import { getAuthenticationStore } from "@/services/authService";
 
 export default {
-  name: "ProfileView",
+  name: "EmployeeView",
   beforeRouteEnter(to, from, next) {
     const authenticationStore = getAuthenticationStore();
     const isauthenticated = authenticationStore.isAuthenticated;
@@ -38,7 +38,7 @@ export default {
     };
   },
   components: {
-    ProfileData,
+    EmployeeData,
     ContactUsForm,
   },
   watch: {

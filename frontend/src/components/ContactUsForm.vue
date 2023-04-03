@@ -109,14 +109,15 @@
 
 <script>
 import { getAuthenticationStore } from "@/services/authService";
-import axios from "axios";
+import { getProfileData } from "@/services/profileService";
+import { postDataWithToken } from "@/services/apiService";
 import { API } from "@/api";
 
 export default {
-  name: "ProfileContactItem",
-  created() {
+  name: "EmployeeContactItem",
+  async created() {
     this.authenticationStore = getAuthenticationStore();
-    this.getUserDate();
+    await this.getUserDate();
   },
   data() {
     return {
@@ -142,26 +143,16 @@ export default {
     };
   },
   methods: {
-    getUserDate() {
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        "content-type": "application/json",
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
-
-      axios
-        .get(API.employee.details, { headers: headers })
-        .then((response) => {
-          this.firstName = response.data.first_name;
-          this.lastName = response.data.last_name;
-          this.email = response.data.email;
-        })
-        // eslint-disable-next-line no-unused-vars
-        .catch((error) => {
-          console.log(error);
-        });
+    async getUserDate() {
+      const employeeData = await getProfileData(
+        this.authenticationStore.token,
+        "employee"
+      );
+      if (employeeData) {
+        this.firstName = employeeData.first_name;
+        this.lastName = employeeData.last_name;
+        this.email = employeeData.email;
+      }
     },
     closeAlert() {
       this.alert = false;
@@ -169,34 +160,28 @@ export default {
       this.alertMessage = "";
     },
     contactSupport() {
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
-
+      const url = API.employee.contact_support;
       const data = {
         first_name: this.firstName,
         last_name: this.lastName,
         email: this.email,
         message: this.message,
       };
+      const contactSupport = postDataWithToken(
+        url,
+        data,
+        this.authenticationStore.token
+      );
 
-      axios
-        .post(API.employee.contact_support, data, { headers: headers })
-        // eslint-disable-next-line no-unused-vars
-        .then((response) => {
-          this.alert = true;
-          this.alertBackgroundColor = "alert alert-success";
-          this.alertMessage = "Message sent successfully";
-        })
-        // eslint-disable-next-line no-unused-vars
-        .catch((error) => {
-          this.alert = true;
-          this.alertBackgroundColor = "alert alert-danger";
-          this.alertMessage = "Something went wrong, try again later";
-        });
+      if (contactSupport) {
+        this.alert = true;
+        this.alertBackgroundColor = "alert alert-success";
+        this.alertMessage = "Message sent successfully";
+      } else {
+        this.alert = true;
+        this.alertBackgroundColor = "alert alert-danger";
+        this.alertMessage = "Something went wrong, try again later";
+      }
     },
   },
 };

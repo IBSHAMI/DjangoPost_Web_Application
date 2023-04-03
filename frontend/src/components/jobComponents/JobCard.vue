@@ -75,8 +75,11 @@
 
 <script>
 import { getAuthenticationStore } from "@/services/authService";
+import {
+  postDataWithToken,
+  deleteDataWithTokenAndData,
+} from "@/services/apiService";
 import moment from "moment";
-import axios from "axios";
 import { API } from "@/api";
 
 export default {
@@ -104,52 +107,32 @@ export default {
       }).href;
       window.open(url, "_blank");
     },
-    addToSavedJobs() {
-      console.log("add saved job");
-      const saveJobUrl = API.jobs.save_job;
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
+    async addToSavedJobs() {
+      const url = API.jobs.save_job;
+      const addJobAPI = await postDataWithToken(
+        url,
+        { job_id: this.job.pk },
+        this.authenticationStore.token
+      );
 
-      axios
-        .post(saveJobUrl, { job_id: this.job.pk }, { headers })
-        .then((res) => {
-          console.log(res.status);
-          if (res.status === 201) {
-            this.heartSvgPath =
-              "../../../src/assets/img/icons/icons-heart-filled.svg";
-            this.isSaved = true;
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      if (addJobAPI) {
+        this.heartSvgPath =
+          "../../../src/assets/img/icons/icons-heart-filled.svg";
+        this.isSaved = true;
+      }
     },
-    deleteFromSavedJobs() {
-      console.log("delete saved job");
-      const deleteJobUrl = API.jobs.delete_saved_job;
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
+    async deleteFromSavedJobs() {
+      const url = API.jobs.delete_saved_job;
+      const deleteSavedJobStatus = await deleteDataWithTokenAndData(
+        url,
+        { job_id: this.job.pk },
+        this.authenticationStore.token
+      );
 
-      axios
-        .delete(deleteJobUrl, { headers, data: { job_id: this.job.pk } })
-        .then((res) => {
-          console.log(res.status);
-          if (res.status === 204) {
-            this.heartSvgPath = "../../../src/assets/img/icons/icons-heart.svg";
-            this.isSaved = false;
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      if (deleteSavedJobStatus === 204) {
+        this.heartSvgPath = "../../../src/assets/img/icons/icons-heart.svg";
+        this.isSaved = false;
+      }
     },
   },
 };

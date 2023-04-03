@@ -3,7 +3,7 @@
     <div class="card border-0 text-center p-0">
       <div class="card-body pb-5">
         <img
-          :src="profilePicturePath"
+          :src="employeePicturePath"
           class="img-fluid avatar-xl rounded-circle mx-auto mt-n7 mb-4"
           alt="employee picture"
           style="width: 200px; height: 200px"
@@ -33,8 +33,8 @@
 
 <script>
 export default {
-  name: "ProfileCard",
-  props: ["fullName", "profilePicturePath"],
+  name: "EmployeeCard",
+  props: ["fullName", "employeePicturePath"],
 };
 </script>
 

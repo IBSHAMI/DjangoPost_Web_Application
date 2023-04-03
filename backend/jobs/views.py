@@ -370,7 +370,7 @@ def change_job_status(request, pk):
         # update job status
         job.is_active = not job.is_active
         job.save()
-        return Response(status=status.HTTP_200_OK)
+        return Response("Status changed successfully")
     else:
         raise serializers.ValidationError('You are not the owner of this job')
     

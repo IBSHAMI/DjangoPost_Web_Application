@@ -196,7 +196,7 @@ export default {
         company_location: "required|min:2|max:40",
       },
 
-      // Upload Resume and Profile Picture varaibles
+      // Upload logo
       logoUploadShow: false,
 
       // Upload alert
@@ -223,7 +223,6 @@ export default {
       return path.split("/").reverse()[0];
     },
     upload(file) {
-      // we save the file data to the profilePicture variable
       this.companyLogo = file[0];
     },
     CloseUploadModel() {

@@ -4,7 +4,7 @@ import HomeView from "@/views/HomeView.vue";
 import AuthView from "@/views/AuthView.vue";
 import JobsView from "@/views/JobsView.vue";
 import CompanyView from "@/views/CompanyView.vue";
-import ProfileView from "@/views/ProfileView.vue";
+import EmployeeView from "@/views/EmployeeView.vue";
 
 // Vue excpect this to be an array of objects with a path and a component
 // each object is called a route record
@@ -27,9 +27,9 @@ const routes = [
     meta: {},
   },
   {
-    path: "/profile/:slug",
-    name: "Profile",
-    component: ProfileView,
+    path: "/employee/:slug",
+    name: "Employee",
+    component: EmployeeView,
     props: true,
     meta: {
       requireAuthentication: true,

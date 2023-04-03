@@ -118,8 +118,8 @@
 </template>
 
 <script>
+import { signUpUser } from "@/services/authService";
 import { API } from "@/api";
-import axios from "axios";
 
 export default {
   name: "SignupItem",
@@ -141,7 +141,7 @@ export default {
   methods: {
     // this function will noot be called unless,
     // all from validation is passed
-    register(values) {
+    async register(values) {
       // vales is an object with all the values from the form
       this.sub_show_alert = true;
       this.sub_in_process = true;
@@ -153,28 +153,44 @@ export default {
         email: values.email,
         password: values.password,
       };
+      const url = API.auth.register;
+      const signUpResponse = await signUpUser(url, newUserData);
 
-      // send data to the server
-      setTimeout(() => {
-        axios
-          .post(API.auth.register, newUserData)
-          // eslint-disable-next-line no-unused-vars
-          .then((res) => {
-            this.sub_in_process = false;
-            this.sub_alert_variant = "alert alert-success";
-            this.sub_alert_message = "Registration successful, redirecting...";
-            setTimeout(() => {
-              this.sub_show_alert = false;
-              this.signupPageShow();
-            }, 2000);
-          })
-          // eslint-disable-next-line no-unused-vars
-          .catch((err) => {
-            this.sub_in_process = false;
-            this.sub_alert_variant = "alert alert-danger";
-            this.sub_alert_message = "Registration failed";
-          });
-      }, 2000);
+      if (signUpResponse) {
+        this.sub_in_process = false;
+        this.sub_alert_variant = "alert alert-success";
+        this.sub_alert_message = "Registration successful, redirecting...";
+        setTimeout(() => {
+          this.sub_show_alert = false;
+          this.signupPageShow();
+        }, 2000);
+      } else {
+        this.sub_in_process = false;
+        this.sub_alert_variant = "alert alert-danger";
+        this.sub_alert_message = "Registration failed";
+      }
+
+      // // send data to the server
+      // setTimeout(() => {
+      //   axios
+      //     .post(API.auth.register, newUserData)
+      //     // eslint-disable-next-line no-unused-vars
+      //     .then((res) => {
+      //       this.sub_in_process = false;
+      //       this.sub_alert_variant = "alert alert-success";
+      //       this.sub_alert_message = "Registration successful, redirecting...";
+      //       setTimeout(() => {
+      //         this.sub_show_alert = false;
+      //         this.signupPageShow();
+      //       }, 2000);
+      //     })
+      //     // eslint-disable-next-line no-unused-vars
+      //     .catch((err) => {
+      //       this.sub_in_process = false;
+      //       this.sub_alert_variant = "alert alert-danger";
+      //       this.sub_alert_message = "Registration failed";
+      //     });
+      // }, 2000);
     },
     signupPageShow() {
       this.$emit("signup-page-show");

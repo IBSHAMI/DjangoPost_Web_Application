@@ -4,9 +4,9 @@
       <div class="row pb-3">
         <div class="container-fluid">
           <div class="row">
-            <profile-card
+            <employee-card
               :fullName="getDisplayName()"
-              :profilePicturePath="
+              :employeePicturePath="
                 this.authenticationStore.employeeProfilePicture
               "
             />
@@ -24,7 +24,7 @@
                     :alertMessage="alertMessage"
                     @closeAlert="closeAlert"
                   />
-                  <h2 class="text-center form-header">Profile Information</h2>
+                  <h2 class="text-center form-header">employee Information</h2>
                   <div class="card-body px-2">
                     <div class="row py-2">
                       <div class="form-group col-md-6 mb-3">
@@ -208,7 +208,7 @@
                           >
                             Click to Drag New Resume
                           </button>
-                          <profile-resume-upload
+                          <employee-resume-upload
                             v-else
                             @upload="upload"
                             @closeUploadModel="CloseUploadModel"
@@ -219,11 +219,11 @@
                     <div class="row py-2">
                       <div class="form-group col-md-12 mb-6">
                         <label class="form-label fst-italic"
-                          >Upload Profile Photo</label
+                          >Upload employee Photo</label
                         >
                         <div class="mt-1 py-2">
                           <div v-show="!PictureUploadShow">
-                            {{ profilePicture }}
+                            {{ employeePicture }}
                           </div>
                           <button
                             class="btn btn-outline-primary my-3"
@@ -231,9 +231,9 @@
                             v-if="!PictureUploadShow"
                             @click.prevent="PictureUploadShow = true"
                           >
-                            Click to Drag Profile Picture
+                            Click to Drag employee Picture
                           </button>
-                          <profile-picture-upload
+                          <employee-picture-upload
                             v-else
                             @upload="upload"
                             @closeUploadModel="CloseUploadModel"
@@ -266,9 +266,9 @@
 </template>
 
 <script>
-import ProfileCard from "@/components/profileComponents/ProfileCard.vue";
-import ProfileResumeUpload from "@/components/profileComponents/ProfileResumeUpload.vue";
-import ProfilePictureUpload from "@/components/profileComponents/ProfilePictureUpload.vue";
+import EmployeeCard from "@/components/employeeComponents/EmployeeCard.vue";
+import EmployeeResumeUpload from "@/components/employeeComponents/EmployeeResumeUpload.vue";
+import EmployeePictureUpload from "@/components/employeeComponents/EmployeePictureUpload.vue";
 import {
   getProfileData,
   updateProfileData,
@@ -279,7 +279,7 @@ import { uploadEmployeeResume } from "@/services/employeeSpecificService";
 import { getAuthenticationStore } from "@/services/authService";
 
 export default {
-  name: "ProfileDataItem",
+  name: "EmployeeDataItem",
   async created() {
     this.authenticationStore = getAuthenticationStore();
     const employeeData = await getProfileData(
@@ -297,10 +297,9 @@ export default {
       this.portfolioWebsite = employeeData.portfolio_url;
       if (employeeData.resume) {
         this.resume = this.getFileBaseName(employeeData.resume);
-        this.resumeuploadedCheck = true;
       }
       if (employeeData.profile_picture) {
-        this.profilePicture = this.getFileBaseName(
+        this.employeePicture = this.getFileBaseName(
           employeeData.profile_picture
         );
       }
@@ -323,7 +322,7 @@ export default {
         portfolio_website: "required|url",
       },
 
-      // Upload Resume and Profile Picture varaibles
+      // Upload Resume and employee Picture varaibles
       resumeUploadShow: false,
       PictureUploadShow: false,
 
@@ -340,7 +339,7 @@ export default {
       linkedinProfile: "",
       portfolioWebsite: "",
       resume: "",
-      profilePicture: "",
+      employeePicture: "",
 
       // this value is used to help show download resume button
       // since resume value is updated even tho the user did not
@@ -357,9 +356,9 @@ export default {
     };
   },
   components: {
-    ProfileCard,
-    ProfileResumeUpload,
-    ProfilePictureUpload,
+    EmployeeCard,
+    EmployeeResumeUpload,
+    EmployeePictureUpload,
   },
   methods: {
     getDisplayName() {
@@ -377,13 +376,10 @@ export default {
       }
     },
     upload(file, type) {
-      // We upload the files to their respective models
       if (type === "resume") {
-        // we save the file data to the resume variable
         this.resume = file[0];
       } else if (type === "picture") {
-        // we save the file data to the profilePicture variable
-        this.profilePicture = file[0];
+        this.employeePicture = file[0];
       }
     },
     CloseUploadModel(model) {
@@ -428,9 +424,9 @@ export default {
       this.authenticationStore.getAccountPictures();
     },
     async uploadFiles() {
-      // Upload Resume and Profile Picture varaibles
+      // Upload Resume and employee Picture varaibles
       let uploadResumeCheck = false;
-      let uploadProfilePictureCheck = false;
+      let uploademployeePictureCheck = false;
 
       const Resumedata = new FormData();
       const PictureData = new FormData();
@@ -445,14 +441,14 @@ export default {
         Resumedata.append("resume", "");
       }
 
-      // Check if profile picture is typeof file
-      if (this.profilePicture === null) {
-        PictureData.append("profile_picture", "");
-      } else if (typeof this.profilePicture === "object") {
-        PictureData.append("profile_picture", this.profilePicture);
-        uploadProfilePictureCheck = true;
+      // Check if employee picture is typeof file
+      if (this.employeePicture === null) {
+        PictureData.append("employee_picture", "");
+      } else if (typeof this.employeePicture === "object") {
+        PictureData.append("employee_picture", this.employeePicture);
+        uploademployeePictureCheck = true;
       } else {
-        PictureData.append("profile_picture", "");
+        PictureData.append("employee_picture", "");
       }
 
       if (uploadResumeCheck) {
@@ -479,9 +475,9 @@ export default {
           this.alertBackgroundColor = "alert alert-danger";
         }
       }
-      if (uploadProfilePictureCheck) {
+      if (uploademployeePictureCheck) {
         console.log("picture");
-        console.log(this.profilePicture);
+        console.log(this.employeePicture);
         console.log(PictureData);
         const updateEmployeePicture = await uploadProfilePicture(
           this.authenticationStore.token,
@@ -490,12 +486,13 @@ export default {
         );
 
         if (updateEmployeePicture) {
+          console.log(updateEmployeePicture);
           this.alert = true;
           this.alertMessage = "Files uploaded successfully";
           this.alertBackgroundColor = "alert alert-success";
 
           if (updateEmployeePicture.profile_picture) {
-            this.profilePicture = this.getFileBaseName(
+            this.employeePicture = this.getFileBaseName(
               updateEmployeePicture.profile_picture
             );
           }

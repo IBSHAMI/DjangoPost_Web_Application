@@ -55,7 +55,7 @@
 
 <script>
 import { getAuthenticationStore } from "@/services/authService";
-import axios from "axios";
+import { fetchDataWithToken, deleteDataWithToken } from "@/services/apiService";
 import { API } from "@/api";
 
 export default {
@@ -69,47 +69,27 @@ export default {
     };
   },
   methods: {
-    ChangeJobStatus() {
-      const changeJobStatusUrl = API.jobs.change_job_status + this.job.pk + "/";
+    async ChangeJobStatus() {
+      const url = API.jobs.change_job_status + this.job.pk + "/";
+      const changeJobStatus = await fetchDataWithToken(
+        url,
+        this.authenticationStore.token
+      );
 
-      const token = `Bearer ${this.authenticationStore.token}`;
-      console.log(token);
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
-
-      axios
-        .get(changeJobStatusUrl, { headers: headers })
-        .then((response) => {
-          console.log(response);
-          this.$emit("reloadJobsList");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (changeJobStatus.status === 200) {
+        this.$emit("reloadJobsList");
+      }
     },
-    deleteJob() {
-      const deleteJobUrl = API.jobs.delete_job + this.job.pk + "/";
+    async deleteJob() {
+      const url = API.jobs.delete_job + this.job.pk + "/";
+      const deleteJobStatus = await deleteDataWithToken(
+        url,
+        this.authenticationStore.token
+      );
 
-      const token = `Bearer ${this.authenticationStore.token}`;
-      console.log(token);
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
-
-      axios
-        .delete(deleteJobUrl, { headers: headers })
-        .then((response) => {
-          console.log(response);
-          this.$emit("reloadJobsList");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (deleteJobStatus === 204) {
+        this.$emit("reloadJobsList");
+      }
     },
     openJobDetails() {
       // make the details page open in a new tab

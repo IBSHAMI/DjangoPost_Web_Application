@@ -83,7 +83,7 @@
 <script>
 import JobCard from "@/components/jobComponents/JobCard.vue";
 import { getAuthenticationStore } from "@/services/authService";
-import { fetchDataWithTokenAndParams } from "@/services/apiService";
+import { fetchDataWithParams } from "@/services/apiService";
 import { API } from "@/api";
 
 export default {
@@ -127,11 +127,7 @@ export default {
         params.page = this.page;
       }
 
-      const getJobsList = await fetchDataWithTokenAndParams(
-        url,
-        this.authenticationStore.token,
-        params
-      );
+      const getJobsList = await fetchDataWithParams(url, params);
 
       if (getJobsList) {
         this.jobsList = getJobsList.results;

@@ -302,7 +302,7 @@
 <script>
 import { getAuthenticationStore } from "@/services/authService";
 import { getChoicesData } from "@/services/profileService";
-import axios from "axios";
+import { postDataWithToken } from "@/services/apiService";
 import { API } from "@/api";
 
 export default {
@@ -374,17 +374,10 @@ export default {
       this.alertBackgroundColor = "";
       this.alertMessage = "";
     },
-    createJob() {
-      const token = `Bearer ${this.authenticationStore.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
-      const createJobUrl = API.jobs.create;
+    async createJob() {
+      const url = API.jobs.create;
 
       const data = new FormData();
-
       data.append("title", this.positionTitle);
       data.append("type", this.positionType);
       data.append("framework", this.framework);
@@ -398,26 +391,24 @@ export default {
         data.append("remote", this.remote);
       }
 
-      console.log(data);
+      const postJobData = await postDataWithToken(
+        url,
+        data,
+        this.authenticationStore.token
+      );
 
-      axios
-        .post(createJobUrl, data, { headers: headers })
-        .then((response) => {
-          if (response.status === 201) {
-            this.alert = true;
-            this.alertMessage = "Job created successfully";
-            this.alertBackgroundColor = "alert alert-success";
-            setTimeout(() => {
-              this.$router.push({ name: "Company", params: { slug: "jobs" } });
-            }, 2000);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          this.alert = true;
-          this.alertMessage = "Error creating job";
-          this.alertBackgroundColor = "alert alert-danger";
-        });
+      if (postJobData) {
+        this.alert = true;
+        this.alertMessage = "Job created successfully";
+        this.alertBackgroundColor = "alert alert-success";
+        setTimeout(() => {
+          this.$router.push({ name: "Company", params: { slug: "jobs" } });
+        }, 1000);
+      } else {
+        this.alert = true;
+        this.alertMessage = "Error creating job";
+        this.alertBackgroundColor = "alert alert-danger";
+      }
     },
   },
 };

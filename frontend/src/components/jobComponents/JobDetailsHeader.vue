@@ -44,8 +44,8 @@
 
 <script>
 import { getAuthenticationStore } from "@/services/authService";
+import { postDataWithToken } from "@/services/apiService";
 import moment from "moment";
-import axios from "axios";
 import { API } from "@/api";
 
 export default {
@@ -61,7 +61,7 @@ export default {
       const createdDate = moment(this.headerData.dateCreated);
       return createdDate.fromNow();
     },
-    applyJob() {
+    async applyJob() {
       // check if the job is internal
       if (this.headerData.internal) {
         // if internal, redirect to the job details page in indeed
@@ -70,25 +70,18 @@ export default {
         // if not internal, open the easy apply modal
         console.log("easy apply");
         if (this.authenticationStore.employeeProfileCompleted) {
-          const applyUrl = API.jobs.apply_job;
-          const token = `Bearer ${this.authenticationStore.token}`;
-          // Add the token to the header as Bearer token
-          const headers = {
-            // eslint-disable-next-line prettier/prettier
-            Authorization: token,
-          };
+          const url = API.jobs.apply_job;
+          const applyToJobAPI = await postDataWithToken(
+            url,
+            { job_id: this.headerData.pk },
+            this.authenticationStore.token
+          );
 
-          axios
-            .post(applyUrl, { job_id: this.headerData.pk }, { headers })
-            .then((res) => {
-              console.log(res);
-              this.$emit("applied");
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+          if (applyToJobAPI) {
+            this.$emit("applied");
+          }
         } else {
-          // show alert to ask user to complete profile
+          // show alert to ask user to complete employee profile before they can apply
           alert("Please complete your employee profile first");
         }
       }
