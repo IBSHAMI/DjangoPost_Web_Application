@@ -4,11 +4,15 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
 import veeValidatePlugin from "@/includes/validation";
+import progressBar from "@/includes/progress_bar";
 import axios from "axios";
 import GlobalComponents from "./includes/_globals";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "@/assets/css/main.css";
+import "nprogress/nprogress.css";
+
+progressBar(router);
 
 const app = createApp(App);
 
