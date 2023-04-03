@@ -1,13 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { getAuthenticationStore } from "@/services/authService";
-import HomeView from "@/views/HomeView.vue";
-import AuthView from "@/views/AuthView.vue";
-import JobsView from "@/views/JobsView.vue";
-import CompanyView from "@/views/CompanyView.vue";
-import EmployeeView from "@/views/EmployeeView.vue";
 
-// Vue excpect this to be an array of objects with a path and a component
-// each object is called a route record
+const HomeView = () => import("@/views/HomeView.vue");
+const AuthView = () => import("@/views/AuthView.vue");
+const JobsView = () => import("@/views/JobsView.vue");
+const CompanyView = () => import("@/views/CompanyView.vue");
+const EmployeeView = () => import("@/views/EmployeeView.vue");
+
 const routes = [
   {
     path: "/", // the path to match

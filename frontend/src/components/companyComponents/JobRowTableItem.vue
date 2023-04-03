@@ -76,7 +76,7 @@ export default {
         this.authenticationStore.token
       );
 
-      if (changeJobStatus.status === 200) {
+      if (changeJobStatus) {
         this.$emit("reloadJobsList");
       }
     },

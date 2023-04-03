@@ -26,7 +26,7 @@ export const fetchDataWithToken = async (url, token) => {
     const response = await axios.get(url, {
       headers: headers,
     });
-    return response.data;
+    return response.data ? response.data : response.status;
   } catch (error) {
     console.log(error);
     return null;
@@ -40,7 +40,6 @@ export const fetchDataWithTokenAndParams = async (url, token, params) => {
       headers: headers,
       params: params,
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
