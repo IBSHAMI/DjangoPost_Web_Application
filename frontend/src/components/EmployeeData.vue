@@ -197,7 +197,8 @@
                     <div class="row py-2">
                       <div class="form-group col-md-12 mb-6">
                         <label class="form-label fst-italic"
-                          >Upload Resume</label
+                          >Upload Resume
+                          <small>(File size must be below 5MB )</small></label
                         >
                         <div class="mt-1 py-2">
                           <div v-show="!resumeUploadShow">
@@ -222,7 +223,8 @@
                     <div class="row py-2">
                       <div class="form-group col-md-12 mb-6">
                         <label class="form-label fst-italic"
-                          >Upload employee Photo</label
+                          >Upload employee Photo
+                          <small>(File size must be below 2MB )</small></label
                         >
                         <div class="mt-1 py-2">
                           <div v-show="!PictureUploadShow">

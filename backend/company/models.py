@@ -3,6 +3,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.conf import settings
 
+from .validators import validate_logo_file_size
+
 User = settings.AUTH_USER_MODEL
 
 
@@ -16,7 +18,7 @@ class CompanyProfile(models.Model):
     company_name = models.CharField(max_length=100, blank=True, null=True)
     company_website = models.URLField(max_length=200, blank=True, null=True)
     company_size = models.CharField(max_length=10, blank=True, null=True)
-    company_logo = models.ImageField(upload_to=get_company_logo_upload_path, blank=True, null=True)
+    company_logo = models.ImageField(upload_to=get_company_logo_upload_path, validators=[validate_logo_file_size], blank=True, null=True)
     company_location = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):

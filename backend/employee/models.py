@@ -1,8 +1,10 @@
 import os
 from django.db import models
-from django.core.validators import URLValidator, MaxLengthValidator
+from django.core.validators import URLValidator
 from django.db.models.signals import post_save
 from django.conf import settings
+
+from .validators import validate_file_size, validate_picture_file_size
 
 User = settings.AUTH_USER_MODEL
 
@@ -22,8 +24,9 @@ class EmployeeProfile(models.Model):
     expected_salary = models.CharField(max_length=100, blank=True, null=True)
     linkedin_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
     portfolio_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
-    resume = models.FileField(upload_to=get_picture_upload_path, blank=True, null=True)
-    profile_picture = models.ImageField(upload_to=get_resume_upload_path, blank=True, null=True)
+    resume = models.FileField(upload_to=get_picture_upload_path, validators=[validate_file_size], blank=True, null=True)
+    profile_picture = models.ImageField(upload_to=get_resume_upload_path, validators=[validate_picture_file_size], blank=True,
+                                        null=True)
 
     def __str__(self):
         return self.user.email

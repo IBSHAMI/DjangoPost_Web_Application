@@ -114,7 +114,8 @@
                     <div class="row py-2">
                       <div class="form-group col-md-12 mb-6">
                         <label class="form-label fst-italic"
-                          >Upload Company logo</label
+                          >Upload Company logo
+                          <small>(File size must be below 5MB )</small></label
                         >
                         <div class="mt-1 py-2">
                           <div v-show="!logoUploadShow">
