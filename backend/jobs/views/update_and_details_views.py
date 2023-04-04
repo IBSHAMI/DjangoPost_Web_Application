@@ -16,7 +16,7 @@ from ..serializers import (
 
 
 class JobDetailView(RetrieveAPIView):
-    queryset = Job.objects.filter(is_active=True)
+    queryset = Job.objects.filter(is_active=True).select_related('company')
     serializer_class = JobDetailSerializer
     permission_classes = [AllowAny]
 

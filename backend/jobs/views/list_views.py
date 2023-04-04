@@ -15,7 +15,7 @@ from ..services.search_services import get_filtered_jobs, get_company_specific_f
 
 # Create a view that get list of all jobs for main page
 class JobListView(ListAPIView):
-    queryset = Job.objects.all()
+    queryset = Job.objects.select_related('company').all()
     serializer_class = JobListSerializer
     permission_classes = [AllowAny]
 
@@ -55,8 +55,6 @@ class ApplicantsListView(ListAPIView):
         request = self.request
         job_id = request.GET.get('job_id')
         job = Job.objects.get(pk=job_id)
-
-        # get the applied jobs
-        applied_jobs = AppliedJob.objects.filter(job=job).exclude(application_status='rejected')
+        applied_jobs = AppliedJob.objects.filter(job=job).select_related("employee").exclude(application_status='rejected')
 
         return applied_jobs

@@ -3,8 +3,6 @@ from employee.models import EmployeeProfile
 
 
 def get_filtered_jobs(qs, user, table_variant, search_term, framework_choice):
-    print(user.is_authenticated)
-    print(table_variant)
     if user.is_authenticated:
         qs = filter_jobs_by_variant(qs, user, table_variant)
         qs = filter_jobs_by_search_term(qs, search_term)
@@ -29,7 +27,6 @@ def filter_jobs_by_variant(qs, user, table_variant):
     if table_variant == 'All Jobs':
         return qs.filter(is_active=True).exclude(company__user=user)
     elif table_variant == 'Saved Jobs':
-        print('saved jobs')
         return filter_saved_jobs(qs, user)
     elif table_variant == 'Applied Jobs':
         return filter_applied_jobs(qs, user)

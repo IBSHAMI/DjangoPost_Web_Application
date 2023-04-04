@@ -25,7 +25,7 @@
 import { getAuthenticationStore } from "@/services/authService";
 import JobDetailsHeader from "@/components/jobComponents/JobDetailsHeader.vue";
 import JobDetailsBody from "@/components/jobComponents/JobDetailsBody.vue";
-import { fetchData } from "@/services/apiService";
+import { fetchData, fetchDataWithToken } from "@/services/apiService";
 import { API } from "@/api";
 
 export default {
@@ -67,9 +67,16 @@ export default {
   methods: {
     async getJobDetails() {
       const url = API.jobs.detail + Number(this.jobId) + "/";
-      const jobDetails = await fetchData(url);
+      let jobDetails;
 
+      if (this.authenticationStore.isAuthenticated) {
+        const token = this.authenticationStore.token;
+        jobDetails = await fetchDataWithToken(url, token);
+      } else {
+        jobDetails = await fetchData(url);
+      }
       if (jobDetails) {
+        console.log(jobDetails);
         this.pk = jobDetails.pk;
         this.title = jobDetails.title;
         this.description = jobDetails.description;
@@ -87,6 +94,9 @@ export default {
         this.isApplied = jobDetails.is_applied;
         this.companyData = jobDetails.company_data;
       }
+    },
+    applied() {
+      this.isApplied = true;
     },
   },
   computed: {

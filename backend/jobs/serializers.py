@@ -106,7 +106,6 @@ class CompanyJobListSerializer(serializers.ModelSerializer):
     def get_number_of_applications(self, obj):
         job = obj
         number_of_applications = AppliedJob.objects.filter(job=job).exclude(application_status="rejected").count()
-
         return number_of_applications
 
 
@@ -136,6 +135,7 @@ class JobDetailSerializer(JobCreateSerializer):
         ]
 
     def get_company_data(self, obj):
+        print("helloooo")
         if obj.internal:
             return {
                 'company_name': obj.job_company,
@@ -154,9 +154,11 @@ class JobDetailSerializer(JobCreateSerializer):
     def get_is_applied(self, obj):
         user = self.context['request'].user
 
-        if not user.is_authenticated:
+        # if user is anonymous and not logged in
+        if user.is_anonymous:
             return False
 
+        # if user is logged in, check if he has applied for the job
         employee = EmployeeProfile.objects.get(user=user)
         job = obj
 
