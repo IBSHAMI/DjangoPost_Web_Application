@@ -17,6 +17,7 @@ from .serializers import (
     EmployeeProfileResumeSerializer,
     EmployeeProfileUpdateSerializer,
 )
+from .services import get_employee_profile
 
 User = get_user_model()
 
@@ -42,16 +43,8 @@ class EmployeeDetailsAPIView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         request = self.request
-
-        # get the user Token
         token = request.headers.get('Authorization').split(' ')[1]
-        user_email = Token.objects.get(key=token).user
-        user = User.objects.get(email=user_email)
-
-        # get the employee profile
-        employee = EmployeeProfile.objects.get(user=user)
-
-        get_object = employee
+        get_object, user = get_employee_profile(token)
 
         # check if the request is a PUT request
         if request.method == 'PUT':
@@ -97,18 +90,10 @@ class EmployeeProfilePictureAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = EmployeeProfilePictureSerializer
 
     def get_object(self):
-        # get the sent request
         request = self.request
+        token = request.headers.get('Authorization').split(' ')[1]
+        get_object, _ = get_employee_profile(token)
 
-        # get the user Token
-        token = request.headers.get('Authorization').split(' ')[1]  # get the token from the header
-        user_email = Token.objects.get(key=token).user
-        user = User.objects.get(email=user_email)
-
-        # get the employee profile
-        employee = EmployeeProfile.objects.get(user=user)
-
-        get_object = employee
         return get_object
 
 
@@ -117,35 +102,21 @@ class EmployeeProfileResumeAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = EmployeeProfileResumeSerializer
 
     def get_object(self):
-        # get the sent request
-        request = self.request
-
-        # get the user Token
-        token = request.headers.get('Authorization').split(' ')[1]  # get the token from the header
-        user_email = Token.objects.get(key=token).user
-        user = User.objects.get(email=user_email)
-
-        # get the employee profile
-        employee = EmployeeProfile.objects.get(user=user)
-
-        get_object = employee
-
+        request = self.requestn
+        token = request.headers.get('Authorization').split(' ')[1]
+        get_object, _ = get_employee_profile(token)
         return get_object
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
-
-        print(serializer.data)
         return Response(serializer.data)
 
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticatedOrReadOnly])
 def get_applicant_resume(request, pk):
-    # get the applicant profile
     applicant = get_object_or_404(EmployeeProfile, pk=pk)
-
     resume = EmployeeProfileResumeSerializer(applicant, context={'request': request})
 
     # send the resume file to the frontend
