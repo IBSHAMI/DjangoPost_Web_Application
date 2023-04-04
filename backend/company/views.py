@@ -1,11 +1,11 @@
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser
-from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
 
 from .models import CompanyProfile
 from .serializers import CompanyProfileSerializer, CompanyProfileLogoSerializer
+from .services import get_company_profile
 
 User = get_user_model()
 
@@ -16,18 +16,9 @@ class CompanyDetailsAPIView(generics.RetrieveUpdateAPIView):
     parser_classes = (MultiPartParser, FormParser, FileUploadParser)
 
     def get_object(self):
-        # get the sent request
         request = self.request
-
-        # get the user Token
         token = request.headers.get('Authorization').split(' ')[1]
-        user_email = Token.objects.get(key=token).user
-        user = User.objects.get(email=user_email)
-
-        # get the company profile
-        company = CompanyProfile.objects.get(user=user)
-
-        get_object = company
+        get_object = get_company_profile(token)
 
         return get_object
 
@@ -61,17 +52,8 @@ class CompanyProfileLogoAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = CompanyProfileLogoSerializer
 
     def get_object(self):
-        # get the sent request
         request = self.request
-
-        # get the user Token
-        token = request.headers.get('Authorization').split(' ')[1]  # get the token from the header
-        user_email = Token.objects.get(key=token).user
-        user = User.objects.get(email=user_email)
-
-        # get the employee profile
-        employee = CompanyProfile.objects.get(user=user)
-
-        get_object = employee
+        token = request.headers.get('Authorization').split(' ')[1]
+        get_object = get_company_profile(token)
 
         return get_object
