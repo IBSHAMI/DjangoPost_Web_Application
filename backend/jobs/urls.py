@@ -1,22 +1,28 @@
 from django.urls import path
 
-from .views import (
+from .views.list_views import (
     JobListView,
     CompanyJobListView,
+    ApplicantsListView
+)
+from .views.create_views import (
     JobCreateView,
-    JobDetailView,
-    JobUpdateView,
-    JobDeleteView,
-    JobChoicesView,
     SavedJobCreateView,
-    SavedJobDeleteView,
-    AppliedJobCreateView,
-    ApplicantsListView,
-    ApplicantsUpdateView,
+    AppliedJobCreateView
+)
+from .views.delete_views import JobDeleteView, SavedJobDeleteView
+from .views.update_and_details_views import (
+    JobUpdateView,
+    JobDetailView,
+    ApplicantsUpdateView
+)
+from .views.other_views import (
+    JobChoicesView,
     get_total_jobs_and_framework_choices,
     change_job_status,
     get_job_title
 )
+
 
 app_name = 'jobs'
 
