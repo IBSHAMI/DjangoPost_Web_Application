@@ -101,7 +101,7 @@ class EmployeeProfileResumeAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = EmployeeProfileResumeSerializer
 
     def get_object(self):
-        request = self.requestn
+        request = self.request
         token = request.headers.get('Authorization').split(' ')[1]
         get_object, _ = get_employee_profile(token)
         return get_object

@@ -7,6 +7,14 @@ from django.conf import settings
 User = settings.AUTH_USER_MODEL
 
 
+def get_picture_upload_path(instance, filename):
+    return f"{instance.user.id}/employee-picture/{filename}"
+
+
+def get_resume_upload_path(instance, filename):
+    return f"{instance.user.id}/employee-resume/{filename}"
+
+
 # Create employee profile after user is created
 class EmployeeProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='employee_profile')
@@ -14,8 +22,8 @@ class EmployeeProfile(models.Model):
     expected_salary = models.CharField(max_length=100, blank=True, null=True)
     linkedin_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
     portfolio_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
-    resume = models.FileField(upload_to='users/employee/resumes', blank=True, null=True)
-    profile_picture = models.ImageField(upload_to='users/employee/profile_pics', blank=True, null=True)
+    resume = models.FileField(upload_to=get_picture_upload_path, blank=True, null=True)
+    profile_picture = models.ImageField(upload_to=get_resume_upload_path, blank=True, null=True)
 
     def __str__(self):
         return self.user.email

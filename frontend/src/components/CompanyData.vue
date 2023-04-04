@@ -52,7 +52,7 @@
                         >
                         <div>
                           <vee-field
-                            type="text"
+                            type="number"
                             name="company_size"
                             id="company_size"
                             class="form-control"

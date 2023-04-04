@@ -8,10 +8,8 @@ from employee.models import EmployeeProfile
 
 User = get_user_model()
 
-if settings.DEBUG:
-    BASE_URL = 'http://127.0.0.1:8000/'
-else:
-    BASE_URL = ''
+
+
 
 
 # Create a Serializer class for job create
@@ -154,7 +152,7 @@ class JobDetailSerializer(JobCreateSerializer):
             'company_location': company.company_location,
             'company_website': company.company_website,
             'company_size': company.company_size,
-            'company_logo': urljoin(BASE_URL, company.company_logo.url),
+            'company_logo': company.company_logo.url if company.company_logo else None,
         }
 
     def get_is_applied(self, obj):
