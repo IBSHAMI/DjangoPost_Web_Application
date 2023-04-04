@@ -17,14 +17,11 @@ class JobDeleteView(DestroyAPIView):
     def get_queryset(self):
         # get authenticated user
         company = CompanyProfile.objects.get(user=self.request.user)
-
         queryset = Job.objects.filter(company=company)
         return queryset
 
     def perform_destroy(self, instance):
-        # get company profile
         company = CompanyProfile.objects.get(user=self.request.user)
-        # check if job is under user
         if instance.company == company:
             super().perform_destroy(instance)
         else:
@@ -35,16 +32,12 @@ class SavedJobDeleteView(DestroyAPIView):
     serializer_class = SavedJobSerializer
 
     def get_queryset(self):
-        # get authenticated user
         user = self.request.user
-
         queryset = SavedJob.objects.filter(employee__user=user)
         return queryset
 
     def get_object(self):
         job = Job.objects.get(pk=self.request.data.get('job_id'))
         employee = EmployeeProfile.objects.get(user=self.request.user)
-
         obj = SavedJob.objects.get(job=job, employee=employee)
-
         return obj
