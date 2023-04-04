@@ -4,7 +4,15 @@
       <div class="row pb-3">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-xl-8 mx-auto">
+            <company-card
+              v-show="!internal"
+              :companyName="companyData.company_name"
+              :companySize="companyData.company_size"
+              :companyLocation="companyData.company_location"
+              :companyWebsite="companyData.company_website"
+              :companyLogoPath="companyData.company_logo"
+            />
+            <div class="col-xl-8" :class="!internal ? 'order-xl-1' : 'mx-auto'">
               <div class="card overflow-hidden">
                 <job-details-header
                   :headerData="getJobHeaderData"
@@ -23,6 +31,7 @@
 
 <script>
 import { getAuthenticationStore } from "@/services/authService";
+import CompanyCard from "@/components/companyComponents/CompanyCard.vue";
 import JobDetailsHeader from "@/components/jobComponents/JobDetailsHeader.vue";
 import JobDetailsBody from "@/components/jobComponents/JobDetailsBody.vue";
 import { fetchData, fetchDataWithToken } from "@/services/apiService";
@@ -61,6 +70,7 @@ export default {
     };
   },
   components: {
+    CompanyCard,
     JobDetailsHeader,
     JobDetailsBody,
   },

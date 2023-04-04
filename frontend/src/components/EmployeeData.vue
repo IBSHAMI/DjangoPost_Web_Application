@@ -6,6 +6,9 @@
           <div class="row">
             <employee-card
               :fullName="getDisplayName()"
+              :experience="employeeExperience"
+              :linkedin="linkedinProfile"
+              :protofolio="portfolioWebsite"
               :employeePicturePath="
                 this.authenticationStore.employeeProfilePicture
               "
