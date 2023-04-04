@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
+import { fetchDataWithToken } from "@/services/apiService";
 import { API } from "@/api";
-import axios from "axios";
 
 export default defineStore("authentication", {
   // We use state object to create gloabl state
@@ -58,79 +58,49 @@ export default defineStore("authentication", {
     setResumePathToDownload(resumePathToDownload) {
       this.$patch({ resumePathToDownload: resumePathToDownload });
     },
-    getAccountPictures() {
-      // headers to retieve the account pictures
-      const token = `Bearer ${this.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        "content-type": "application/json",
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
+    async getAccountPictures() {
+      const employeeProfilePicUrl = API.employee.employee_profile_picture;
+      const companyProfileLogoUrl = API.company.company_profile_logo;
 
-      // get the employee profile picture
-      axios
-        .get(API.employee.employee_profile_picture, { headers: headers })
-        .then((response) => {
-          this.setEmployeeProfilePicture(response.data.profile_picture);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const employeeProfilePic = await fetchDataWithToken(
+        employeeProfilePicUrl,
+        this.token
+      );
 
-      // get the company logo
-      axios
-        .get(API.company.company_profile_logo, { headers: headers })
-        .then((response) => {
-          this.setCompanyProfileLogo(response.data.company_logo);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (employeeProfilePic) {
+        this.setEmployeeProfilePicture(employeeProfilePic.profile_picture);
+      }
+
+      const companyProfileLogo = await fetchDataWithToken(
+        companyProfileLogoUrl,
+        this.token
+      );
+
+      if (companyProfileLogo) {
+        this.setCompanyProfileLogo(companyProfileLogo.company_logo);
+      }
     },
-    checkIfProfileComplete() {
-      const token = `Bearer ${this.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        "content-type": "application/json",
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
+    async checkIfProfileComplete() {
+      const url = API.auth.checkIfProfileComplete;
+      const profileCompleteCheck = await fetchDataWithToken(url, this.token);
 
-      axios
-        .get(API.auth.checkIfProfileComplete, { headers: headers })
-        .then((response) => {
-          this.setIfEmployeeProfileCompleted(
-            response.data.employee_profile_complete
-          );
-          this.setIfCompanyProfileCompleted(
-            response.data.company_profile_complete
-          );
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (profileCompleteCheck) {
+        this.setIfEmployeeProfileCompleted(
+          profileCompleteCheck.employee_profile_complete
+        );
+        this.setIfCompanyProfileCompleted(
+          profileCompleteCheck.company_profile_complete
+        );
+      }
     },
 
-    getResumePathToDownload() {
-      // headers to retieve the account pictures
-      const token = `Bearer ${this.token}`;
-      // Add the token to the header as Bearer token
-      const headers = {
-        "content-type": "application/json",
-        // eslint-disable-next-line prettier/prettier
-        Authorization: token,
-      };
+    async getResumePathToDownload() {
+      const url = API.employee.employee_profile_resume;
+      const resumePathToDownload = await fetchDataWithToken(url, this.token);
 
-      // get the resume path to download
-      axios
-        .get(API.employee.employee_profile_resume, { headers: headers })
-        .then((response) => {
-          this.setResumePathToDownload(response.data.resume);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (resumePathToDownload) {
+        this.setResumePathToDownload(resumePathToDownload.resume);
+      }
     },
     logout() {
       localStorage.removeItem("Bearer");

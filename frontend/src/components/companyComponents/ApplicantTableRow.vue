@@ -83,6 +83,7 @@ export default {
 
       if (fetchResumePath) {
         resumePathToDownload = fetchResumePath.resume;
+        this.updateApplicationStatus("resume downloaded");
       }
 
       if (resumePathToDownload) {

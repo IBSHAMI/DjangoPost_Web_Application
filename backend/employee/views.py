@@ -14,7 +14,8 @@ from .choices_fields_data_employee import JOB_EXPERIENCE_CHOICES, JOB_SALARY_CHO
 from .serializers import (
     EmployeeProfileSerializer,
     EmployeeProfilePictureSerializer,
-    EmployeeProfileResumeSerializer
+    EmployeeProfileResumeSerializer,
+    EmployeeProfileUpdateSerializer,
 )
 
 User = get_user_model()
@@ -40,11 +41,10 @@ class EmployeeDetailsAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = EmployeeProfileSerializer
 
     def get_object(self):
-        # get the sent request
         request = self.request
 
         # get the user Token
-        token = request.headers.get('Authorization').split(' ')[1]  # get the token from the header
+        token = request.headers.get('Authorization').split(' ')[1]
         user_email = Token.objects.get(key=token).user
         user = User.objects.get(email=user_email)
 
@@ -53,7 +53,19 @@ class EmployeeDetailsAPIView(generics.RetrieveUpdateAPIView):
 
         get_object = employee
 
+        # check if the request is a PUT request
+        if request.method == 'PUT':
+            user.first_name = request.data.get('first_name', None)
+            user.last_name = request.data.get('last_name', None)
+            user.email = request.data.get('email', None)
+            user.save()
+
         return get_object
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return EmployeeProfileSerializer
+        return EmployeeProfileUpdateSerializer
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -79,36 +91,6 @@ class EmployeeDetailsAPIView(generics.RetrieveUpdateAPIView):
 
         return Response(data)
 
-    def update(self, request, *args, **kwargs):
-        # get request data
-        request = self.request
-        user = request.user
-
-        # get the user object
-        user = User.objects.get(email=user)
-        # update the user model with the new data
-        user.first_name = request.data['first_name']
-        user.last_name = request.data['last_name']
-        user.email = request.data['email']
-        user.save()
-        data = request.data.copy()
-        data.pop('first_name')
-        data.pop('last_name')
-        data.pop('email')
-
-        print(data)
-
-        # update the employee profile data fields without profile picture or resume
-        # because they are handled in a different view
-        partial = kwargs.pop('partial', False)
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-
-        # return only data without the user model for safety
-        return Response(data)
-
 
 class EmployeeProfilePictureAPIView(generics.RetrieveUpdateAPIView):
     queryset = EmployeeProfile.objects.all()
@@ -127,7 +109,6 @@ class EmployeeProfilePictureAPIView(generics.RetrieveUpdateAPIView):
         employee = EmployeeProfile.objects.get(user=user)
 
         get_object = employee
-
         return get_object
 
 

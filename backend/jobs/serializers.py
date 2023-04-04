@@ -230,10 +230,7 @@ class ApplicantsJobUpdateSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         request = self.context['request']
-        print(request.data)
         update_message = request.data.get('update_message')
-        print(update_message)
-
         if update_message == 'rejected':
             instance.application_status = 'rejected'
         elif update_message == 'resume downloaded':

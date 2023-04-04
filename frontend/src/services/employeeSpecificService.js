@@ -15,7 +15,6 @@ export const uploadEmployeeResume = async (token, resume) => {
     const response = await axios.put(apiUrl, resume, {
       headers: headers,
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);

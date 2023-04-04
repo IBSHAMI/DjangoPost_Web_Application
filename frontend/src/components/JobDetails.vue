@@ -25,7 +25,7 @@
 import { getAuthenticationStore } from "@/services/authService";
 import JobDetailsHeader from "@/components/jobComponents/JobDetailsHeader.vue";
 import JobDetailsBody from "@/components/jobComponents/JobDetailsBody.vue";
-import axios from "axios";
+import { fetchData } from "@/services/apiService";
 import { API } from "@/api";
 
 export default {
@@ -65,47 +65,28 @@ export default {
     JobDetailsBody,
   },
   methods: {
-    getJobDetails() {
-      const jobDetailsUrl = API.jobs.detail + Number(this.jobId) + "/";
+    async getJobDetails() {
+      const url = API.jobs.detail + Number(this.jobId) + "/";
+      const jobDetails = await fetchData(url);
 
-      let headers = {};
-      if (this.authenticationStore.isAuthenticated) {
-        const token = `Bearer ${this.authenticationStore.token}`;
-        // Add the token to the header as Bearer token
-        headers = {
-          // eslint-disable-next-line prettier/prettier
-          Authorization: token,
-        };
+      if (jobDetails) {
+        this.pk = jobDetails.pk;
+        this.title = jobDetails.title;
+        this.description = jobDetails.description;
+        this.location = jobDetails.location;
+        this.type = jobDetails.type;
+        this.framework = jobDetails.framework;
+        this.language = jobDetails.language;
+        this.experience = jobDetails.experience;
+        this.numberOfPositions = jobDetails.number_of_positions;
+        this.dateCreated = jobDetails.date_created;
+        this.remote = jobDetails.remote;
+        this.salary = jobDetails.salary;
+        this.internal = jobDetails.internal;
+        this.jobLink = jobDetails.job_link;
+        this.isApplied = jobDetails.is_applied;
+        this.companyData = jobDetails.company_data;
       }
-
-      axios
-        .get(jobDetailsUrl, { headers })
-        .then((response) => {
-          console.log(response.data);
-          this.pk = response.data.pk;
-          this.title = response.data.title;
-          this.description = response.data.description;
-          this.location = response.data.location;
-          this.type = response.data.type;
-          this.framework = response.data.framework;
-          this.language = response.data.language;
-          this.experience = response.data.experience;
-          this.numberOfPositions = response.data.number_of_positions;
-          this.dateCreated = response.data.date_created;
-          this.remote = response.data.remote;
-          this.salary = response.data.salary;
-          this.internal = response.data.internal;
-          this.jobLink = response.data.job_link;
-          this.isApplied = response.data.is_applied;
-          this.companyData = response.data.company_data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    applied() {
-      console.log("applied");
-      this.isApplied = true;
     },
   },
   computed: {

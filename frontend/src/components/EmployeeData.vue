@@ -24,7 +24,7 @@
                     :alertMessage="alertMessage"
                     @closeAlert="closeAlert"
                   />
-                  <h2 class="text-center form-header">employee Information</h2>
+                  <h2 class="text-center form-header">Employee Information</h2>
                   <div class="card-body px-2">
                     <div class="row py-2">
                       <div class="form-group col-md-6 mb-3">
@@ -297,6 +297,7 @@ export default {
       this.portfolioWebsite = employeeData.portfolio_url;
       if (employeeData.resume) {
         this.resume = this.getFileBaseName(employeeData.resume);
+        this.resumeuploadedCheck = true;
       }
       if (employeeData.profile_picture) {
         this.employeePicture = this.getFileBaseName(
@@ -407,7 +408,7 @@ export default {
       const updateEmployeeStatus = await updateProfileData(
         this.authenticationStore.token,
         data,
-        "company"
+        "employee"
       );
 
       if (updateEmployeeStatus === 200) {
@@ -443,12 +444,12 @@ export default {
 
       // Check if employee picture is typeof file
       if (this.employeePicture === null) {
-        PictureData.append("employee_picture", "");
+        PictureData.append("profile_picture", "");
       } else if (typeof this.employeePicture === "object") {
-        PictureData.append("employee_picture", this.employeePicture);
+        PictureData.append("profile_picture", this.employeePicture);
         uploademployeePictureCheck = true;
       } else {
-        PictureData.append("employee_picture", "");
+        PictureData.append("profile_picture", "");
       }
 
       if (uploadResumeCheck) {
@@ -467,6 +468,7 @@ export default {
 
           if (updateEmployeeResume.resume) {
             this.resume = this.getFileBaseName(updateEmployeeResume.resume);
+            this.resumeuploadedCheck = true;
           }
           this.resumeUploadShow = false;
         } else {
@@ -484,6 +486,8 @@ export default {
           PictureData,
           "employee"
         );
+
+        console.log("updateEmployeePicture : ", updateEmployeePicture);
 
         if (updateEmployeePicture) {
           console.log(updateEmployeePicture);

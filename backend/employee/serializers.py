@@ -15,10 +15,19 @@ class EmployeeProfileSerializer(serializers.ModelSerializer):
             'linkedin_url',
             'portfolio_url',
             'experience',
-            # resume and profile picture are used to return
-            # the file name of the resume and profile picture
             'resume',
             'profile_picture',
+        ]
+
+
+class EmployeeProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmployeeProfile
+        fields = [
+            'expected_salary',
+            'linkedin_url',
+            'portfolio_url',
+            'experience',
         ]
 
 
@@ -30,7 +39,6 @@ class EmployeeProfilePictureSerializer(serializers.ModelSerializer):
         ]
 
     def update(self, instance, validated_data):
-        print('validated_data: ', validated_data)
         profile_picture = validated_data.get('profile_picture', None)
         if profile_picture is not None:
             instance.profile_picture = profile_picture
@@ -39,7 +47,6 @@ class EmployeeProfilePictureSerializer(serializers.ModelSerializer):
 
 
 class EmployeeProfileResumeSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = EmployeeProfile
         fields = [
@@ -47,10 +54,8 @@ class EmployeeProfileResumeSerializer(serializers.ModelSerializer):
         ]
 
     def update(self, instance, validated_data):
-        print('validated_data_resume: ', validated_data)
         resume = validated_data.get('resume', None)
         if resume is not None:
             instance.resume = resume
             instance.save()
         return instance
-
