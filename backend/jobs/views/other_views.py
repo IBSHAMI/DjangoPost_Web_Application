@@ -57,15 +57,10 @@ def get_total_jobs_and_framework_choices(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def change_job_status(request, pk):
-    # get job
     job = get_object_or_404(Job, pk=pk)
-
-    # get company profile
     company = CompanyProfile.objects.get(user=request.user)
 
-    # check if job is under user
     if job.company == company:
-        # update job status
         job.is_active = not job.is_active
         job.save()
         return Response("Status changed successfully")
@@ -78,5 +73,4 @@ def change_job_status(request, pk):
 def get_job_title(request):
     job_id = request.GET.get('job_id')
     job_title = Job.objects.get(id=job_id).title
-
     return Response({'job_title': job_title})

@@ -23,23 +23,19 @@ class JobDetailView(RetrieveAPIView):
 
 class JobUpdateView(UpdateAPIView):
     serializer_class = CompanyJobListSerializer
-    lookup_field = 'pk'
 
     def get_queryset(self):
-        # get authenticated user
         user = self.request.user
-
         queryset = Job.objects.filter(user=user)
         return queryset
 
     def perform_update(self, serializer):
-        # get company profile
         company = CompanyProfile.objects.get(user=self.request.user)
-        # check if job is under user
         if serializer.instance.company == company:
             super().perform_update(serializer)
         else:
             raise serializers.ValidationError('You are not the owner of this job')
+
 
 class ApplicantsUpdateView(UpdateAPIView):
     serializer_class = ApplicantsJobUpdateSerializer

@@ -41,7 +41,6 @@ def filter_saved_jobs(qs, user):
     saved_jobs = SavedJob.objects.filter(employee=employee).select_related('job')
     saved_jobs_ids = [saved_job.job.id for saved_job in saved_jobs]
     qs = qs.filter(id__in=saved_jobs_ids)
-    print(qs)
     return qs
 
 
@@ -50,7 +49,6 @@ def filter_applied_jobs(qs, user):
     applied_jobs = AppliedJob.objects.filter(employee=employee).select_related('job')
     applied_jobs_ids = [applied_job.job.id for applied_job in applied_jobs]
     qs = qs.filter(id__in=applied_jobs_ids)
-    print(qs)
     return qs
 
 

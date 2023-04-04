@@ -12,12 +12,10 @@ from ..serializers import (
 
 class JobDeleteView(DestroyAPIView):
     serializer_class = CompanyJobListSerializer
-    lookup_field = 'pk'
 
     def get_queryset(self):
-        # get authenticated user
         company = CompanyProfile.objects.get(user=self.request.user)
-        queryset = Job.objects.filter(company=company)
+        queryset = Job.objects.filter(company=company).select_related('company')
         return queryset
 
     def perform_destroy(self, instance):
