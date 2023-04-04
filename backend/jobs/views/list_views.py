@@ -10,7 +10,7 @@ from ..serializers import (
     CompanyJobListSerializer,
     ApplicantsJobListSerializer,
 )
-# from ..services.search_services import get_filtered_jobs, get_company_specific_filtered_jobs
+from ..services.search_services import get_filtered_jobs, get_company_specific_filtered_jobs
 
 
 # Create a view that get list of all jobs for main page
@@ -26,48 +26,8 @@ class JobListView(ListAPIView):
         search_term = request.GET.get('search_term')
         framework_choice = request.GET.get('framework_choice')
         qs = super().get_queryset()
-
-        if user.is_authenticated:
-            if table_variant == 'All Jobs':
-                qs = qs.filter(is_active=True).exclude(company__user=user)
-
-            elif table_variant == 'Saved Jobs':
-                employee = EmployeeProfile.objects.get(user=user)
-                saved_jobs = SavedJob.objects.filter(employee=employee).select_related('job')
-
-                saved_jobs_ids = [saved_job.job.id for saved_job in saved_jobs]
-
-                qs = qs.filter(id__in=saved_jobs_ids)
-
-            elif table_variant == 'Applied Jobs':
-                employee = EmployeeProfile.objects.get(user=user)
-                applied_jobs = AppliedJob.objects.filter(employee=employee).select_related('job')
-
-                applied_jobs_ids = [applied_job.job.id for applied_job in applied_jobs]
-
-                qs = qs.filter(id__in=applied_jobs_ids)
-
-            if search_term is not None:
-                qs = qs.filter(title__icontains=search_term)
-
-            if framework_choice is not None:
-                print(framework_choice)
-                qs = qs.filter(framework__contains=framework_choice)
-
-            return qs
-
-
-        else:
-            qs = qs.filter(is_active=True)
-
-            if search_term is not None:
-                qs = qs.filter(title__icontains=search_term)
-
-            if framework_choice is not None:
-                print(framework_choice)
-                qs = qs.filter(framework__contains=framework_choice)
-
-            return qs
+        qs = get_filtered_jobs(qs, user, table_variant, search_term, framework_choice)
+        return qs
 
 
 # Create a class listAPIView to list all jobs
@@ -81,28 +41,10 @@ class CompanyJobListView(ListAPIView):
         search_term = request.GET.get('search_term')
         table_variant = request.GET.get('table_variant')
         company = CompanyProfile.objects.get(user=request.user)
-
+        sorting_option = request.GET.get('sorting_option')
         qs = super().get_queryset()
         qs = qs.filter(company=company)
-        # filter queryset based on table variant
-        if table_variant != 'all':
-            if table_variant == 'active':
-                qs = qs.filter(is_active=True)
-            elif table_variant == 'inactive':
-                qs = qs.filter(is_active=False)
-
-        # order queryset by sorting option selected
-        sorting_option = request.GET.get('sorting_option')
-        if sorting_option != "None":
-            if sorting_option == "Latest":
-                qs = qs.order_by('-date_created')
-            elif sorting_option == "Oldest":
-                qs = qs.order_by('date_created')
-
-        # filter queryset based on search term
-        if search_term is not None:
-            qs = qs.filter(title__icontains=search_term)
-
+        qs = get_company_specific_filtered_jobs(qs, table_variant, sorting_option, search_term)
         return qs
 
 
@@ -111,10 +53,7 @@ class ApplicantsListView(ListAPIView):
 
     def get_queryset(self):
         request = self.request
-        # get job id
         job_id = request.GET.get('job_id')
-
-        # get the job
         job = Job.objects.get(pk=job_id)
 
         # get the applied jobs
