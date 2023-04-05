@@ -91,7 +91,7 @@ import { API } from "@/api";
 
 export default {
   name: "JobsList",
-  props: ["searchTitleTerm", "frameworkChoice"],
+  props: ["searchTitleTerm", "frameworkChoice", "applyTypeChosen"],
   components: {
     JobCard,
   },
@@ -119,6 +119,7 @@ export default {
         table_variant: this.tableVariant,
         search_term: this.searchTitleTerm,
         framework_choice: this.frameworkChoice,
+        apply_type_chosen: this.applyTypeChosen,
       };
       if (handleNextAndPrevious) {
         if (NavigateType === "Next") {
@@ -169,6 +170,9 @@ export default {
       this.getJobsList();
     },
     frameworkChoice() {
+      this.getJobsList();
+    },
+    applyTypeChosen() {
       this.getJobsList();
     },
   },

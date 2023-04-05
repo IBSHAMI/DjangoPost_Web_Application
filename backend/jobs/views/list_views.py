@@ -25,8 +25,9 @@ class JobListView(ListAPIView):
         table_variant = request.GET.get('table_variant')
         search_term = request.GET.get('search_term')
         framework_choice = request.GET.get('framework_choice')
+        apply_type_chosen = request.GET.get('apply_type_chosen')
         qs = super().get_queryset()
-        qs = get_filtered_jobs(qs, user, table_variant, search_term, framework_choice)
+        qs = get_filtered_jobs(qs, user, table_variant, search_term, framework_choice, apply_type_chosen)
         return qs
 
 

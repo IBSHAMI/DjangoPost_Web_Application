@@ -24,7 +24,7 @@
             </div>
             <div class="search-background py-4 text-center mx-auto">
               <div class="form row no-gutters d-flex justify-content-center">
-                <div class="col-xl-6 col-lg-5 col-md-12 mb-0 form-group">
+                <div class="col-xl-4 col-lg-3 col-md-12 mb-0 form-group">
                   <input
                     type="text"
                     class="form-control input-lg border-end-0 br-tr-md-0 br-br-md-0 form-control"
@@ -34,7 +34,7 @@
                   />
                 </div>
                 <div
-                  class="col-xl-4 col-lg-4 select2-lg col-md-12 mb-0 form-group"
+                  class="col-xl-3 col-lg-3 select2-lg col-md-12 mb-0 form-group"
                 >
                   <select
                     class="form-control select2-show-search border-bottom-0 w-100 select2-hidden-accessible"
@@ -53,6 +53,25 @@
                       :key="index"
                     >
                       {{ framework }}
+                    </option>
+                  </select>
+                </div>
+                <div
+                  class="col-xl-3 col-lg-3 select2-lg col-md-12 mb-0 form-group"
+                >
+                  <select
+                    class="form-control select2-show-search border-bottom-0 w-100 select2-hidden-accessible"
+                    data-placeholder="Select"
+                    data-select2-id="select2-data-1-v645"
+                    tabindex="-1"
+                    aria-hidden="true"
+                    v-model="applyType"
+                  >
+                    <option data-select2-id="select2-data-3-bm82">
+                      All Jobs
+                    </option>
+                    <option data-select2-id="select2-data-3-bm82">
+                      Easy Apply
                     </option>
                   </select>
                 </div>
@@ -83,6 +102,7 @@ export default {
     return {
       searchTerm: "",
       frameworkChoice: "All Frameworks",
+      applyType: "All Jobs",
       totalJobsCount: 0,
       frameworks: [],
     };
@@ -103,8 +123,14 @@ export default {
     searchByJobTitle() {
       const frameworkChosen =
         this.frameworkChoice !== "All Frameworks" ? this.frameworkChoice : "";
-      console.log(frameworkChosen);
-      this.$emit("searchByJobTitle", this.searchTerm, frameworkChosen);
+      const applyTypeChosen =
+        this.applyType !== "All Jobs" ? this.applyType : "";
+      this.$emit(
+        "searchByJobTitle",
+        this.searchTerm,
+        frameworkChosen,
+        applyTypeChosen
+      );
     },
   },
 };

@@ -2,15 +2,17 @@ from ..models import SavedJob, AppliedJob
 from employee.models import EmployeeProfile
 
 
-def get_filtered_jobs(qs, user, table_variant, search_term, framework_choice):
+def get_filtered_jobs(qs, user, table_variant, search_term, framework_choice, apply_type_chosen):
     if user.is_authenticated:
         qs = filter_jobs_by_variant(qs, user, table_variant)
         qs = filter_jobs_by_search_term(qs, search_term)
         qs = filter_jobs_by_framework_choice(qs, framework_choice)
+        qs = filter_jobs_by_apply_type_choice(qs, apply_type_chosen)
     else:
         qs = qs.filter(is_active=True)
         qs = filter_jobs_by_search_term(qs, search_term)
         qs = filter_jobs_by_framework_choice(qs, framework_choice)
+        qs = filter_jobs_by_apply_type_choice(qs, apply_type_chosen)
 
     return qs
 
@@ -78,4 +80,10 @@ def filter_jobs_by_search_term(qs, search_term):
 def filter_jobs_by_framework_choice(qs, framework_choice):
     if framework_choice is not None:
         return qs.filter(framework__contains=framework_choice)
+    return qs
+
+
+def filter_jobs_by_apply_type_choice(qs, apply_type_chosen):
+    if apply_type_chosen == "Easy Apply":
+        qs = qs.filter(internal=False)
     return qs

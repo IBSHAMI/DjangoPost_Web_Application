@@ -67,6 +67,9 @@ class Job(models.Model):
 
     objects = JobManager()
 
+    class Meta:
+        ordering = ['-date_created']
+
     def __str__(self):
         return self.title
 
@@ -81,6 +84,7 @@ class SavedJob(models.Model):
 
     class Meta:
         unique_together = ('employee', 'job')
+        ordering = ['-date_saved']
 
 
 class AppliedJob(models.Model):
@@ -94,3 +98,4 @@ class AppliedJob(models.Model):
 
     class Meta:
         unique_together = ('employee', 'job')
+        ordering = ['-date_applied']

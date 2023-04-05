@@ -11,6 +11,7 @@
       v-if="passedSlug === 'jobs'"
       :searchTitleTerm="searchTitleTerm"
       :frameworkChoice="frameworkChoice"
+      :applyTypeChosen="applyTypeChosen"
     />
     <job-details v-else-if="checkIfJobDetails" :jobId="jobId" />
   </section>
@@ -30,6 +31,7 @@ export default {
       passedSlug: this.$route.params.slug,
       searchTitleTerm: "",
       frameworkChoice: "",
+      applyTypeChosen: "",
     };
   },
   components: {
@@ -46,8 +48,9 @@ export default {
     checkIfJobDetails() {
       return this.passedSlug.includes("jobDetails");
     },
-    searchByJobTitle(searchTerm, frameworkChoice) {
+    searchByJobTitle(searchTerm, frameworkChoice, applyTypeChosen) {
       this.frameworkChoice = frameworkChoice;
+      this.applyTypeChosen = applyTypeChosen;
       this.searchTitleTerm = searchTerm;
       this.passedSlug = "jobs";
     },
