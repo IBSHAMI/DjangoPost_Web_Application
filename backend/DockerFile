@@ -11,7 +11,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Install Python dependencies
-COPY requirements.txt .
+COPY ./backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 RUN rm requirements.txt
 
