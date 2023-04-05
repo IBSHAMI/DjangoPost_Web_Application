@@ -28,7 +28,6 @@ def get_jobs_data(job_title, location, num_pages=1):
         chrome_remote_url = settings.CHROME_DRIVER_REMOTE_URL
         
         options = webdriver.ChromeOptions()
-        options.add_argument(' - incognito')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         

@@ -1,2 +1,2 @@
 FROM selenium/standalone-chrome
-CMD ["chromedriver", "--whitelisted-ips", "--port=4444"]
+ENTRYPOINT ["chromedriver", "--whitelisted-ips", "--bind-all", "--port=4444", "--disable-dev-shm-usage"]
