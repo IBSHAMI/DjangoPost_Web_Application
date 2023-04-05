@@ -26,6 +26,7 @@ def get_jobs_data(job_title, location, num_pages=1):
         
     else:
         chrome_remote_url = settings.CHROME_DRIVER_REMOTE_URL
+        print("Remote driver url: ", chrome_remote_url)
         
         options = webdriver.ChromeOptions()
         options.add_argument('--no-sandbox')
