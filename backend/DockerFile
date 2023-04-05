@@ -1,0 +1,42 @@
+FROM python:3.10.10-slim
+
+# Install dependencies
+RUN apt-get update \
+    && apt-get install -y build-essential libpq-dev gettext libcairo2 libpango-1.0-0 libpangocairo-1.0-0 libgdk-pixbuf2.0-0 libffi-dev shared-mime-info \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# install google chrome
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+RUN apt-get -y update
+RUN apt-get install -y google-chrome-stable
+
+# install chromedriver
+RUN apt-get install -yqq unzip
+RUN wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`/chromedriver_linux64.zip
+RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
+
+# Set up app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+RUN rm requirements.txt
+
+# Copy over the app code
+COPY . .
+
+# Convert line endings of runserver.sh
+RUN apt-get update && apt-get install -y dos2unix && dos2unix runserver.sh && apt-get --purge remove -y dos2unix && rm -rf /var/lib/apt/lists/*
+
+# Set up the runserver.sh script
+RUN chmod +x runserver.sh
+
+# Expose the port that the app listens on
+EXPOSE 80
+
+# Start the app with the runserver.sh script
+CMD ["/bin/bash", "./runserver.sh"]
