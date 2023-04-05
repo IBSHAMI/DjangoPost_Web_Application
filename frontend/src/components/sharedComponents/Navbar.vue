@@ -112,7 +112,7 @@
                 >
                 <router-link
                   v-if="companyProfile && pageType === 'jobs'"
-                  :to="{ name: 'Employee', params: { slug: 'data' } }"
+                  :to="{ name: 'Jobs', params: { slug: 'jobs' } }"
                   class="btn button button-primary"
                   >{{ "Find Jobs" }}</router-link
                 >
