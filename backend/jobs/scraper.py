@@ -20,6 +20,7 @@ def get_jobs_data(job_title, location, num_pages=1):
         
     else:
         options = webdriver.ChromeOptions()
+        options.add_argument(' - incognito')
         options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
