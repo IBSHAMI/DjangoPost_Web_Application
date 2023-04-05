@@ -90,15 +90,15 @@
                       </div>
                       <div class="form-group col-md-4 mb-2">
                         <label
-                          for="position_experience"
+                          for="employee_experience"
                           class="form-label fst-italic"
                           >Years of Experience</label
                         >
                         <div>
                           <vee-field
                             as="select"
-                            name="position_experience"
-                            id="position_experience"
+                            name="employee_experience"
+                            id="employee_experience"
                             class="form-select"
                             v-model="employeeExperience"
                           >
@@ -111,7 +111,7 @@
                             </option>
                           </vee-field>
                           <ErrorMessage
-                            name="position_experience"
+                            name="employee_experience"
                             class="error-message small font-italic"
                           />
                         </div>
@@ -323,6 +323,7 @@ export default {
         first_name: "required|min:5|max:20",
         last_name: "required|min:5|max:20",
         email: "required|email",
+        employee_experience: "required|max:25",
         expected_salary: "required|max:25",
         linkedin_profile: "required|url",
         portfolio_website: "required|url",

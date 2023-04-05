@@ -39,3 +39,19 @@ export const signUpUser = async (url, data) => {
   }
   return false;
 };
+
+export const createDemoUser = async (url) => {
+  const authenticationStore = getAuthenticationStore();
+  const createDemoUserResponse = await postData(url);
+  if (createDemoUserResponse) {
+    console.log(createDemoUserResponse);
+    const token = createDemoUserResponse.auth_token;
+    const email = createDemoUserResponse.email;
+    authenticationStore.setToken(token);
+    authenticationStore.setUser(email);
+    authenticationStore.getAccountPictures();
+    authenticationStore.checkIfProfileComplete();
+    return true;
+  }
+  return false;
+};

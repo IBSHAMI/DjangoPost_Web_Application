@@ -51,6 +51,16 @@
               Sign In
             </button>
           </div>
+          <div class="d-grid py-2">
+            <button
+              type="button"
+              :disabled="login_in_process"
+              @click.prevent="createDemoUserLogin"
+              class="btn button btn-lg button-outline-primary"
+            >
+              Sign In as Demo User
+            </button>
+          </div>
           <p class="para">
             Don’t have an account yet?
             <a
@@ -67,7 +77,11 @@
 </template>
 
 <script>
-import { getAuthenticationStore, loginUser } from "@/services/authService";
+import {
+  getAuthenticationStore,
+  loginUser,
+  createDemoUser,
+} from "@/services/authService";
 import { API } from "@/api";
 
 export default {
@@ -101,6 +115,28 @@ export default {
       const loginUserResponse = await loginUser(url, loginCredentials);
 
       if (loginUserResponse) {
+        this.login_in_process = false;
+        this.login_alert_variant = "alert alert-success";
+        this.login_alert_message = "Login successful, redirecting...";
+        setTimeout(() => {
+          this.$router.push({ name: "Jobs", params: { slug: "jobs" } });
+        }, 3000);
+      } else {
+        this.login_in_process = false;
+        this.login_alert_variant = "alert alert-danger";
+        this.login_alert_message = "Login failed, please try again";
+      }
+    },
+    async createDemoUserLogin() {
+      this.login_show_alert = true;
+      this.login_in_process = true;
+      this.login_alert_variant = "alert alert-info";
+      this.login_alert_message = "Please wait, processing your request";
+
+      const url = API.auth.create_demo_user;
+      const demoUserResponse = await createDemoUser(url);
+
+      if (demoUserResponse) {
         this.login_in_process = false;
         this.login_alert_variant = "alert alert-success";
         this.login_alert_message = "Login successful, redirecting...";

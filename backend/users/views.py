@@ -6,18 +6,30 @@ from django.conf import settings
 import random
 import string
 
+from .models import User
 from employee.models import EmployeeProfile
 from company.models import CompanyProfile
 from jobs.models import Job
 
-User = settings.AUTH_USER_MODEL
 
 
-# A view to handle creating demo users
-# @api_view(['POST'])
-# @permission_classes([AllowAny])
-# def create_demo_user(request):
-#     random_username =
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def create_demo_user(request):
+    random_email = f"demo-user-{random.randint(1, 1000)}" + "@example.com"
+    password = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+
+    user = User.objects.create_user(email=random_email, password=password)
+    user.save()
+
+    token, _ = Token.objects.get_or_create(user=user)
+
+    data = {
+        'auth_token': token.key,
+        'email': random_email,
+    }
+
+    return Response(data)
 
 
 @api_view(['GET'])
