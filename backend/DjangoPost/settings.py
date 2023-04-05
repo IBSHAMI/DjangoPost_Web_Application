@@ -13,18 +13,18 @@ READ_DOT_ENV_FILE = env.bool("READ_DOT_ENV_FILE", default=False)
 if not READ_DOT_ENV_FILE:
     environ.Env.read_env(os.path.join(BASE_DIR_ENV, '.env'))
 
-# False if not in os.environ because of casting above
 DEBUG = env('DEBUG')
-
-# Raises Django's ImproperlyConfigured
-# exception if SECRET_KEY not in os.environ
 SECRET_KEY = env('SECRET_KEY')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(',')
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000",
-                        "http://127.0.0.1:5173",
-                        "http://127.0.0.1:8000"]
+CSRF_TRUSTED_ORIGINS = env('CSRF_TRUSTED_ORIGINS').split(',')
+
+CORS_ALLOWED_ORIGINS = env('CORS_ALLOWED_ORIGINS').split(',')
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 
 CORS_ALLOW_HEADERS = [
     "accept",
@@ -117,12 +117,24 @@ WSGI_APPLICATION = 'DjangoPost.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': env('DATABASE_NAME'),
+            'USER': env('DATABASE_USER'),
+            'PASSWORD': env('DATABASE_PASSWORD'),
+            'HOST': env('DATABASE_HOST'),
+            'PORT': env('DATABASE_PORT'),
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -185,10 +197,10 @@ REST_FRAMEWORK = {
         "api.authentication.TokenAuthentication"
     ],
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticatedOrReadOnly", # Read only for non-authenticated users (GET requests)
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",  # Read only for non-authenticated users (GET requests)
     ],
-    'DEFAULT_PAGINATION_CLASS':    
-         'DjangoPost.pagination.CustomPagination'
+    'DEFAULT_PAGINATION_CLASS':
+        'DjangoPost.pagination.CustomPagination'
 }
 
 DJOSER = {
@@ -207,7 +219,6 @@ if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 if not DEBUG:
-
     # Email settings
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = 'smtp.gmail.com'
