@@ -24,7 +24,8 @@ def get_jobs_data(job_title, location, num_pages=1):
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         # create new instance of chrome in incognito mode
-        driver = webdriver.Chrome(options=options)
+        driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver",
+                                  options=options)
 
     base_url = "https://www.indeed.com/"
     job_data = []
