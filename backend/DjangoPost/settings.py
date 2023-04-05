@@ -187,6 +187,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 
+CHROME_DRIVER_REMOTE_URL=env('CHROME_DRIVER_REMOTE_URL')
+
 # REST FRAMEWORK SETTINGS
 REST_FRAMEWORK = {
     # We can set our default authentication classes or permission classes here

@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from django.conf import settings
 from bs4 import BeautifulSoup
 import time
@@ -19,14 +21,18 @@ def get_jobs_data(job_title, location, num_pages=1):
         driver = webdriver.Chrome(executable_path=DRIVER_PATH, options=options)
         
     else:
+        chrome_remote_url = settings.CHROME_DRIVER_REMOTE_URL
+        
         options = webdriver.ChromeOptions()
         options.add_argument(' - incognito')
-        options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
-        # create new instance of chrome in incognito mode
-        driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver",
-                                  options=options)
+        
+        capabilities = DesiredCapabilities.CHROME.copy()
+        capabilities.update(options.to_capabilities())
+        
+        driver = webdriver.Remote(chrome_remote_url, capabilities)
+
 
     base_url = "https://www.indeed.com/"
     job_data = []
