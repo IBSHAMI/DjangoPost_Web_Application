@@ -1,6 +1,4 @@
 {
   "schemaVersion": 2,
-  "dockerfileLines": [
-    "FROM selenium/standalone-chrome"
-  ]
+  "dockerfilePath": "./ChromeDockerFile"
 }
