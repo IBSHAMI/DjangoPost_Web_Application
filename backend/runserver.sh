@@ -4,6 +4,10 @@
 echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
+# Make database migrations
+echo "Making database migrations..."
+python manage.py makemigrations
+
 
 # Apply database migrations
 echo "Applying database migrations..."
