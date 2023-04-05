@@ -12,11 +12,12 @@ WORKDIR /usr/src/app
 
 # Install Python dependencies
 COPY ./backend/requirements.txt .
+RUN python -m pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 RUN rm requirements.txt
 
 # Copy over the app code
-COPY . .
+COPY ./backend .
 
 # Convert line endings of runserver.sh
 RUN apt-get update && apt-get install -y dos2unix && dos2unix celery.sh && apt-get --purge remove -y dos2unix && rm -rf /var/lib/apt/lists/*
