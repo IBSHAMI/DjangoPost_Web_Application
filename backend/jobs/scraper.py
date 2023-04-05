@@ -1,3 +1,4 @@
+import environ
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -11,6 +12,8 @@ from bs4 import BeautifulSoup
 import time
 import random
 
+from driver import Browser
+
 
 def get_jobs_data(job_title, location, num_pages=1):
     
@@ -21,19 +24,22 @@ def get_jobs_data(job_title, location, num_pages=1):
         driver = webdriver.Chrome(executable_path=DRIVER_PATH, options=options)
         
     else:
-        chrome_remote_url = settings.CHROME_DRIVER_REMOTE_URL
+        driver = Browser()
+        print(driver)
+
+        # chrome_remote_url = settings.CHROME_DRIVER_REMOTE_URL
         
-        options = webdriver.ChromeOptions()
-        options.add_argument(' - incognito')
-        options.add_argument('--no-sandbox')
-        options.add_argument('--disable-dev-shm-usage')
+        # options = webdriver.ChromeOptions()
+        # options.add_argument(' - incognito')
+        # options.add_argument('--no-sandbox')
+        # options.add_argument('--disable-dev-shm-usage')
         
-        capabilities = DesiredCapabilities.CHROME.copy()
-        capabilities.update(options.to_capabilities())
+        # capabilities = DesiredCapabilities.CHROME.copy()
+        # capabilities.update(options.to_capabilities())
         
-        driver = webdriver.Remote(chrome_remote_url, capabilities)
+        # driver = webdriver.Remote(chrome_remote_url, capabilities)
         
-        print("Remote driver is created")
+        # print("Remote driver is created")
         
     
 
