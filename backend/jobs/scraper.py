@@ -25,29 +25,19 @@ def get_jobs_data(job_title, location, num_pages=1):
         driver = webdriver.Chrome(executable_path=DRIVER_PATH, options=options)
         
     else:
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_prefs = {}
-        chrome_options.experimental_options["prefs"] = chrome_prefs
-        chrome_prefs["profile.default_content_settings"] = {"images": 2}
-        driver = webdriver.Chrome(options=chrome_options)
-        print("Local driver is created")
-
-        # chrome_remote_url = settings.CHROME_DRIVER_REMOTE_URL
+        chrome_remote_url = settings.CHROME_DRIVER_REMOTE_URL
         
-        # options = webdriver.ChromeOptions()
-        # options.add_argument(' - incognito')
-        # options.add_argument('--no-sandbox')
-        # options.add_argument('--disable-dev-shm-usage')
+        options = webdriver.ChromeOptions()
+        options.add_argument(' - incognito')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
         
-        # capabilities = DesiredCapabilities.CHROME.copy()
-        # capabilities.update(options.to_capabilities())
+        capabilities = DesiredCapabilities.CHROME.copy()
+        capabilities.update(options.to_capabilities())
         
-        # driver = webdriver.Remote(chrome_remote_url, capabilities)
+        driver = webdriver.Remote(chrome_remote_url, capabilities)
         
-        # print("Remote driver is created")
+        print("Remote driver is created")
         
     
 
