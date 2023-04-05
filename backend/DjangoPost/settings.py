@@ -55,9 +55,6 @@ INSTALLED_APPS = [
     # third party packages
     'storages',
     'django_cleanup.apps.CleanupConfig',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
     "django_celery_beat",
     "django_celery_results",
     'rest_framework',
