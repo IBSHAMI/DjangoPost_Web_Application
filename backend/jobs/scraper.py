@@ -4,20 +4,27 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from django.conf import settings
 from bs4 import BeautifulSoup
 import time
 import random
 
 
 def get_jobs_data(job_title, location, num_pages=1):
-    # create chrome driver instance
-    DRIVER_PATH = './chromedriver'
-    options = webdriver.ChromeOptions()
-    # set incognito mode
-    # options.add_argument('--incognito')
-    # options.add_argument('--headless')
-    # create new instance of chrome in incognito mode
-    driver = webdriver.Chrome(executable_path=DRIVER_PATH, options=options)
+    
+    if settings.DEBUG:
+        # create chrome driver instance
+        DRIVER_PATH = './chromedriver'
+        options = webdriver.ChromeOptions()
+        driver = webdriver.Chrome(executable_path=DRIVER_PATH, options=options)
+        
+    else:
+        options = webdriver.ChromeOptions()
+        options.add_argument('--headless')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        # create new instance of chrome in incognito mode
+        driver = webdriver.Chrome(options=options)
 
     base_url = "https://www.indeed.com/"
     job_data = []
