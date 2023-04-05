@@ -1,13 +1,23 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 from django.conf import settings
+import random
+import string
 
 from employee.models import EmployeeProfile
 from company.models import CompanyProfile
 from jobs.models import Job
 
 User = settings.AUTH_USER_MODEL
+
+
+# A view to handle creating demo users
+# @api_view(['POST'])
+# @permission_classes([AllowAny])
+# def create_demo_user(request):
+#     random_username =
 
 
 @api_view(['GET'])

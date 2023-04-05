@@ -9,11 +9,15 @@ from django.db.models.signals import post_save
 
 # custom user model
 class User(AbstractUser):
+    username = None
     email = models.EmailField(_('email address'), unique=True, validators=[EmailValidator()])
     phone_number = models.CharField("Phone number", unique=True, max_length=15, blank=True, null=True)
     user_creation_date = models.DateTimeField(auto_now_add=True)
 
     objects = CustomUserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return self.email

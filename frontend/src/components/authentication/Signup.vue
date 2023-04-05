@@ -18,17 +18,6 @@
           </div>
           <vee-form action="#" :validation-schema="schema" @submit="register">
             <div class="form-group mb-3">
-              <label for="email" class="py-1">Username</label>
-              <vee-field
-                class="form-control"
-                type="text"
-                name="username"
-                id="username"
-                placeholder="username"
-              />
-              <ErrorMessage name="username" class="invalid-input" />
-            </div>
-            <div class="form-group mb-3">
               <label for="email" class="py-1">Your email</label>
               <vee-field
                 class="form-control"
@@ -126,7 +115,6 @@ export default {
   data() {
     return {
       schema: {
-        username: "required|min:3|max:20|alpha_spaces",
         email: "required|min:3|max:100|email",
         password: "required|min:9|max:100|excluded_password:password",
         confirm_password: "confirmed:@password",
@@ -149,7 +137,6 @@ export default {
       this.sub_alert_message = "Please wait, processing your request";
 
       const newUserData = {
-        username: values.username,
         email: values.email,
         password: values.password,
       };
@@ -169,28 +156,6 @@ export default {
         this.sub_alert_variant = "alert alert-danger";
         this.sub_alert_message = "Registration failed";
       }
-
-      // // send data to the server
-      // setTimeout(() => {
-      //   axios
-      //     .post(API.auth.register, newUserData)
-      //     // eslint-disable-next-line no-unused-vars
-      //     .then((res) => {
-      //       this.sub_in_process = false;
-      //       this.sub_alert_variant = "alert alert-success";
-      //       this.sub_alert_message = "Registration successful, redirecting...";
-      //       setTimeout(() => {
-      //         this.sub_show_alert = false;
-      //         this.signupPageShow();
-      //       }, 2000);
-      //     })
-      //     // eslint-disable-next-line no-unused-vars
-      //     .catch((err) => {
-      //       this.sub_in_process = false;
-      //       this.sub_alert_variant = "alert alert-danger";
-      //       this.sub_alert_message = "Registration failed";
-      //     });
-      // }, 2000);
     },
     signupPageShow() {
       this.$emit("signup-page-show");
