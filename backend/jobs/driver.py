@@ -10,11 +10,11 @@ class Browser(webdriver.Chrome):
 
     def __init__(self):
         
-        # Adds the executable folder to PATH so that chromedriver is available
-        path_bin = str(settings.BASE_DIR / 'bin')
+        # # Adds the executable folder to PATH so that chromedriver is available
+        # path_bin = str(settings.BASE_DIR / 'bin')
         
-        env = environ.Env()
-        PATH = env('PATH', default=path_bin)
+        # env = environ.Env()
+        # PATH = env('PATH', default=path_bin)
         
         # Customise Chrome options
         chrome_options = webdriver.ChromeOptions()
