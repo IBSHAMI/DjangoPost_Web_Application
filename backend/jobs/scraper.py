@@ -1,5 +1,6 @@
 import environ
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -24,8 +25,15 @@ def get_jobs_data(job_title, location, num_pages=1):
         driver = webdriver.Chrome(executable_path=DRIVER_PATH, options=options)
         
     else:
-        driver = Browser()
-        print(driver)
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_prefs = {}
+        chrome_options.experimental_options["prefs"] = chrome_prefs
+        chrome_prefs["profile.default_content_settings"] = {"images": 2}
+        driver = webdriver.Chrome(options=chrome_options)
+        print("Local driver is created")
 
         # chrome_remote_url = settings.CHROME_DRIVER_REMOTE_URL
         
