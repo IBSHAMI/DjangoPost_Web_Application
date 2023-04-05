@@ -13,7 +13,7 @@ from bs4 import BeautifulSoup
 import time
 import random
 
-from driver import Browser
+# from driver import Browser
 
 
 def get_jobs_data(job_title, location, num_pages=1):
