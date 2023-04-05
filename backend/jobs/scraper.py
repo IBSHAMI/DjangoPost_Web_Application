@@ -32,14 +32,20 @@ def get_jobs_data(job_title, location, num_pages=1):
         capabilities.update(options.to_capabilities())
         
         driver = webdriver.Remote(chrome_remote_url, capabilities)
+        
+        print("Remote driver is created")
+        
+    
 
 
     base_url = "https://www.indeed.com/"
     job_data = []
-    timeout = 25
+    timeout = 50
 
     # get the url and wait for the page to load
     driver.get(base_url)
+    time.sleep(5)
+    print(driver.page_source)
     print(f"Getting {base_url}...")
     try:
         WebDriverWait(driver, timeout).until(EC.presence_of_element_located((By.ID, "text-input-what")))
