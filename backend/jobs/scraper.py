@@ -26,21 +26,18 @@ def get_jobs_data(job_title, location, num_pages=1):
         
     else:
         chrome_remote_url = settings.CHROME_DRIVER_REMOTE_URL
-        print("Remote driver url: ", chrome_remote_url)
         
-        options = webdriver.ChromeOptions()
-        options.add_argument('--no-sandbox')
-        options.add_argument('--disable-dev-shm-usage')
-        
-        capabilities = DesiredCapabilities.CHROME.copy()
-        capabilities.update(options.to_capabilities())
-        
-        driver = webdriver.Remote(chrome_remote_url, capabilities)
-        
-        print("Remote driver is created")
-        
-    
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.set_capability('browserless:token', settings.BROWSERLESS_TOKEN)
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--headless")
 
+        driver = webdriver.Remote(
+            command_executor=chrome_remote_url,
+            options=chrome_options
+        )
+                
+        print("Remote driver is created")
 
     base_url = "https://www.indeed.com/"
     job_data = []
