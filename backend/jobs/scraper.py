@@ -26,9 +26,11 @@ def get_jobs_data(job_title, location, num_pages=1):
         
     else:
         chrome_remote_url = settings.CHROME_DRIVER_REMOTE_URL
+        user_agent =  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36'
         
         chrome_options = webdriver.ChromeOptions()
         chrome_options.set_capability('browserless:token', settings.BROWSERLESS_TOKEN)
+        chrome_options.add_argument(f'user-agent={user_agent}')
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--headless")
 
