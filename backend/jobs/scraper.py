@@ -46,7 +46,6 @@ def get_jobs_data(job_title, location, num_pages=1):
     timeout = 50
 
     # get the url and wait for the page to load
-    driver.get(base_url)
     time.sleep(5)
     print(driver.page_source)
     print(f"Getting {base_url}...")
