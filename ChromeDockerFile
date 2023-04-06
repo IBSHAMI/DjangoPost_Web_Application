@@ -1,14 +1,6 @@
 FROM selenium/standalone-chrome
 
-RUN apt-get update \
-    && apt-get install -y build-essential libpq-dev gettext libcairo2 libpango-1.0-0 libpangocairo-1.0-0 libgdk-pixbuf2.0-0 libffi-dev shared-mime-info \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# Convert line endings of runserver.sh
-RUN apt-get update && apt-get install -y dos2unix && dos2unix entrypoint.sh && apt-get --purge remove -y dos2unix && rm -rf /var/lib/apt/lists/*
-
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
+# Run Selenium server with allowed IPs option
+CMD /usr/bin/supervisord --configuration /etc/supervisor/conf.d/supervisord.conf --nodaemon -e info && \
+    echo "Starting Selenium server with allowed IPs option..." && \
+    SE_OPTS="--allowed-ips=*" /opt/bin/start-selenium-standalone.sh
