@@ -34,7 +34,6 @@ export const loginUser = async (url, data) => {
 export const signUpUser = async (url, data) => {
   const signUpResponse = await postData(url, data);
   if (signUpResponse) {
-    console.log(signUpResponse);
     return true;
   }
   return false;
@@ -44,7 +43,6 @@ export const createDemoUser = async (url) => {
   const authenticationStore = getAuthenticationStore();
   const createDemoUserResponse = await postData(url);
   if (createDemoUserResponse) {
-    console.log(createDemoUserResponse);
     const token = createDemoUserResponse.auth_token;
     const email = createDemoUserResponse.email;
     authenticationStore.setToken(token);

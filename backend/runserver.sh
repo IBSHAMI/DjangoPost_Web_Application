@@ -8,12 +8,15 @@ python manage.py collectstatic --noinput
 echo "Making database migrations..."
 python manage.py makemigrations
 
-
 # Apply database migrations
 echo "Applying database migrations..."
 python manage.py migrate
 
-# create superuser
+# Load data from the fixture file
+echo "Loading data from the fixture file..."
+python manage.py loaddata data.json
+
+# Create superuser
 echo "Creating superuser..."
 python manage.py createsuperuser --noinput
 

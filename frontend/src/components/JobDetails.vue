@@ -86,7 +86,6 @@ export default {
         jobDetails = await fetchData(url);
       }
       if (jobDetails) {
-        console.log(jobDetails);
         this.pk = jobDetails.pk;
         this.title = jobDetails.title;
         this.description = jobDetails.description;

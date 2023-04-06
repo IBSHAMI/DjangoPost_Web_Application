@@ -1,17 +1,5 @@
 <template>
-  <div
-    class="cover-image sptb-1 bg-background"
-    data-image-src="../src/assets/img/jobs_search/job_search_bg_img.jpg"
-    style="
-      background: url('../src/assets/img/jobs_search/job_search_bg_img.jpg')
-        center center;
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      background-size: cover;
-      padding-top: 4.5rem;
-      padding-bottom: 4.5rem;
-    "
-  >
+  <div class="cover-image sptb-1 bg-background" :style="backgroundImageStyle">
     <div class="header-text1 mb-0">
       <div class="container">
         <div class="row">
@@ -93,6 +81,7 @@
 </template>
 
 <script>
+import SearchImg from "@/assets/img/jobs_search/job_search_bg_img.jpg";
 import { fetchData } from "@/services/apiService";
 import { API } from "@/api";
 
@@ -100,6 +89,7 @@ export default {
   name: "JobMainSearch",
   data() {
     return {
+      jobSearchBG: SearchImg,
       searchTerm: "",
       frameworkChoice: "All Frameworks",
       applyType: "All Jobs",
@@ -110,6 +100,12 @@ export default {
   created() {
     this.getTotalJobsAndFrameworkChoices();
   },
+  computed: {
+    backgroundImageStyle() {
+      return `background: url(${this.jobSearchBG}) center center; background-repeat: no-repeat; background-size: 100% 100%; background-size: cover; padding-top: 4.5rem; padding-bottom: 4.5rem;`;
+    },
+  },
+
   methods: {
     async getTotalJobsAndFrameworkChoices() {
       const Url = API.jobs.get_total_jobs;

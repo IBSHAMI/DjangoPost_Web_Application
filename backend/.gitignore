@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# tar 
+*.tar
+
 # Distribution / packaging
 .Python
 build/
@@ -153,3 +156,4 @@ cython_debug/
 
 db.sqlite3
 media
+chromedriver.exe

@@ -3,7 +3,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium_stealth import stealth
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
@@ -22,37 +21,26 @@ def get_jobs_data(job_title, location, num_pages=1):
     if settings.DEBUG:
         # create chrome driver instance
         DRIVER_PATH = './chromedriver'
-        options = webdriver.ChromeOptions()
+        options = webdriver.ChromeOptions() 
         driver = webdriver.Chrome(executable_path=DRIVER_PATH, options=options)
         
     else:
         chrome_remote_url = settings.CHROME_DRIVER_REMOTE_URL
-        user_agent =  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36'
-        
+        user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36'
+        print("Remote driver is being created at: ", chrome_remote_url)
         chrome_options = webdriver.ChromeOptions()
         chrome_options.set_capability('browserless:token', settings.BROWSERLESS_TOKEN)
-        chrome_options.add_argument(f'user-agent={user_agent}')
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--headless")
-        chrome_options.add_argument("start-maximized")
-
-        # options.add_argument("--headless")
-
-        chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        chrome_options.add_experimental_option('useAutomationExtension', False)
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument(f"user-agent={user_agent}")
+        
 
         driver = webdriver.Remote(
             command_executor=chrome_remote_url,
-            options=chrome_options
+            desired_capabilities=chrome_options.to_capabilities()
         )
-        
-        stealth(driver,   user_agent= 'USER AGENT',
-        languages=["en-US", "en"],
-        vendor="Google Inc.",
-        platform="Win32",
-        webgl_vendor="Intel Inc.",
-        renderer="Intel Iris OpenGL Engine",
-        fix_hairline=True,)
+        print(driver)
                 
         print("Remote driver is created")
 
@@ -61,7 +49,6 @@ def get_jobs_data(job_title, location, num_pages=1):
     timeout = 50
 
     # get the url and wait for the page to load
-    time.sleep(5)
     print(driver.page_source)
     print(f"Getting {base_url}...")
     try:

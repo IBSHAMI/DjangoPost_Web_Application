@@ -193,7 +193,6 @@ export default {
       }
     },
     navigator(page) {
-      console.log(page);
       this.page = page;
       this.getApplicantsList();
     },

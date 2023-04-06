@@ -459,9 +459,6 @@ export default {
       }
 
       if (uploadResumeCheck) {
-        console.log("resume");
-        console.log(this.resume);
-        console.log(Resumedata);
         const updateEmployeeResume = await uploadEmployeeResume(
           this.authenticationStore.token,
           Resumedata
@@ -484,19 +481,13 @@ export default {
         }
       }
       if (uploademployeePictureCheck) {
-        console.log("picture");
-        console.log(this.employeePicture);
-        console.log(PictureData);
         const updateEmployeePicture = await uploadProfilePicture(
           this.authenticationStore.token,
           PictureData,
           "employee"
         );
 
-        console.log("updateEmployeePicture : ", updateEmployeePicture);
-
         if (updateEmployeePicture) {
-          console.log(updateEmployeePicture);
           this.alert = true;
           this.alertMessage = "Files uploaded successfully";
           this.alertBackgroundColor = "alert alert-success";
@@ -518,10 +509,6 @@ export default {
     downloadResume() {
       // get the download link from server
       this.authenticationStore.getResumePathToDownload();
-      console.log(
-        "resumePath : ",
-        this.authenticationStore.resumePathToDownload
-      );
       const downloadUrl = this.authenticationStore.getResumePathToDownloadUrl;
 
       if (downloadUrl) {

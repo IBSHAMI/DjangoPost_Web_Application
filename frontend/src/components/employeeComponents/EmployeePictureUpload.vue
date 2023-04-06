@@ -95,7 +95,6 @@ export default {
         this.closeErrorAlert();
         this.$emit("upload", file, "picture");
       } else {
-        console.log(file[0].type);
         this.uploadErrorHandle("You can only upload png or jpeg images");
       }
     },

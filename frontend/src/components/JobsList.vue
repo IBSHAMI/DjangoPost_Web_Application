@@ -160,7 +160,6 @@ export default {
       this.getJobsList();
     },
     navigator(page) {
-      console.log(page);
       this.page = page;
       this.getJobsList();
     },

@@ -1,5 +1,1 @@
-FROM selenium/standalone-chrome
-
-# Run Selenium server with allowed IPs option
-CMD echo "Starting Selenium server with allowed IPs option..." && \
-    SE_OPTS="--allowed-ips=*" /opt/bin/start-selenium-standalone.sh
+FROM selenium/standalone-chrome-debug:3.141.59-20200525

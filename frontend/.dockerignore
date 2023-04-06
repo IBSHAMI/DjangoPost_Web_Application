@@ -1,0 +1,44 @@
+# Ignore git and cache files
+.git
+.gitignore
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment files
+venv
+*.egg-info/
+
+# Ignore logs
+*.log
+
+# Ignore local configuration files
+*.cfg
+*.ini
+*.local
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE generated files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+
+# Ignore build and distribution files
+build/
+*.tar.gz
+*.whl
+*.egg
+*.so
+*.o
+
+# Ignore any file or folder named "tmp"
+tmp/
+
+chromedriver.exe
+db.sqlite3

@@ -1,4 +1,5 @@
-const baseURL = "http://127.0.0.1:8000";
+// use the base url from the environment variable using Vite
+const baseURL = "https://django-post-backend.projects.ibrahimal-shami.com";
 
 export const API = {
   auth: {

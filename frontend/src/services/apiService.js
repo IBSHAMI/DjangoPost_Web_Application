@@ -76,7 +76,7 @@ export const updateDataWithToken = async (url, data, token) => {
 
 export const uploadDataWithToken = async (url, data, token) => {
   const headers = setHeaders(token);
-  console.log(data);
+
   try {
     const response = await axios.put(url, data, {
       headers: headers,

@@ -1,11 +1,7 @@
 <template>
   <main>
     <section class="min-vh-100 d-flex align-items-center">
-      <div
-        class="container form-bg-image"
-        data-background="./src/assets/img/auth/signin.svg"
-        style="background-image: url(../src/assets/img/auth/signin.svg)"
-      >
+      <div class="container form-bg-image" :style="backgroundImageStyle">
         <div class="card rounded mx-auto col-lg-5 col-md-7">
           <div class="card-header bg-transparent pb-5" v-if="slug == 'signin'">
             <login-item @signupPageShow="signupPageShow" />
@@ -23,6 +19,7 @@
 </template>
 
 <script>
+import AuthSvg from "@/assets/img/auth/signin.svg";
 import SignupItem from "@/components/authentication/Signup.vue";
 import LoginItem from "@/components/authentication/Login.vue";
 
@@ -33,6 +30,7 @@ export default {
   },
   data() {
     return {
+      authSVG: AuthSvg,
       slug: this.slug,
     };
   },
@@ -47,6 +45,11 @@ export default {
       } else {
         this.slug = "signup";
       }
+    },
+  },
+  computed: {
+    backgroundImageStyle() {
+      return `background-image: url(${this.authSVG});`;
     },
   },
 };

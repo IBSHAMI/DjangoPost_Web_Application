@@ -68,7 +68,7 @@ export default {
         window.open(this.headerData.jobLink, "_blank");
       } else {
         // if not internal, open the easy apply modal
-        console.log("easy apply");
+
         if (this.authenticationStore.employeeProfileCompleted) {
           const url = API.jobs.apply_job;
           const applyToJobAPI = await postDataWithToken(

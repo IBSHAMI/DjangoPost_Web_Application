@@ -55,7 +55,6 @@ router.beforeEach((to, from, next) => {
 
   // Check if the route requires authentication and if it is check if the user is authenticated
   if (to.meta.requireAuthentication && !authenticationStore.isAuthenticated) {
-    console.log("You are not authenticated");
     // If the user is not authenticated redirect to the authentication page
     next({ name: "LandingPage" });
   } else {

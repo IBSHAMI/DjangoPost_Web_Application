@@ -37,7 +37,6 @@ export default {
   },
   computed: {
     jobId() {
-      console.log(this.passedSlug);
       return this.passedSlug.split("-")[1];
     },
   },
