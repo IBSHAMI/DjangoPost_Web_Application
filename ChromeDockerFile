@@ -1,6 +1,5 @@
 FROM selenium/standalone-chrome
 
 # Run Selenium server with allowed IPs option
-CMD /usr/bin/supervisord --configuration /etc/supervisor/conf.d/supervisord.conf --nodaemon -e info && \
-    echo "Starting Selenium server with allowed IPs option..." && \
+CMD echo "Starting Selenium server with allowed IPs option..." && \
     SE_OPTS="--allowed-ips=*" /opt/bin/start-selenium-standalone.sh
