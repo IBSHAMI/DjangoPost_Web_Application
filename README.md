@@ -50,7 +50,7 @@ git clone https://github.com/IBSHAMI/DjangoPost_Web_Application.git
 
 ```
 
-cd djangopost
+cd DjangoPost_Web_Application
 
 ```
 
