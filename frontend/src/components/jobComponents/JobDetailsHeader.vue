@@ -101,7 +101,7 @@ export default {
 .card-briefcase {
   display: inline-block;
   padding: 2px 20px 2px 20px;
-  background: url(../src/assets/img/icons/icons-briefcase.svg) no-repeat 0px 6px;
+  background: url(../assets/img/icons/icons-briefcase.svg) no-repeat 0px 6px;
   background-size: 15px;
   margin-right: 10px;
   background-position: 0px 6px;
@@ -110,7 +110,7 @@ export default {
 .card-time {
   display: inline-block;
   padding: 2px 20px 2px 20px;
-  background: url(../src/assets/img/icons/icons-refresh.svg) no-repeat 0px 6px;
+  background: url(../assets/img/icons/icons-refresh.svg) no-repeat 0px 6px;
   background-size: 15px;
   margin-right: 10px;
   background-position: 0px 6px;
@@ -119,7 +119,7 @@ export default {
 .card-framework {
   display: inline-block;
   padding: 4px 25px 4px 25px;
-  background: url(../src/assets/img/icons/icons-framework.svg) no-repeat 0px 6px;
+  background: url(../assets/img/icons/icons-framework.svg) no-repeat 0px 6px;
   background-size: 20px;
   margin-right: 10px;
   background-position: 0px 6px;

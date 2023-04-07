@@ -35,6 +35,18 @@
             <h5 v-if="!fileName">Drop your resume here</h5>
             <h5 v-else>Resume uploaded!!</h5>
           </div>
+          <div class="text-center my-3">
+            <label for="resume-upload" class="btn btn-primary mt-3"
+              >Upload Resume</label
+            >
+            <input
+              id="resume-upload"
+              type="file"
+              class="d-none"
+              @change="upload($event, true)"
+              accept=".pdf"
+            />
+          </div>
           <hr class="my-4" />
           <!-- Progess Bars -->
           <div class="mb-4">
@@ -76,26 +88,28 @@ export default {
     CloseUploadModel() {
       this.$emit("closeUploadModel", "resume_model");
     },
-    upload($event) {
-      // Disable the active drop styles
+    upload(event, isFileInput = false) {
       this.dragEnd();
 
-      // Get the files from the event
-      const file = [...$event.dataTransfer.files];
+      let file;
 
-      // check if the file is pdf
+      if (isFileInput) {
+        file = [...event.target.files];
+      } else {
+        file = [...event.dataTransfer.files];
+      }
+
       if (file.length > 1) {
-        // Upload the file
-        this.uploadErrorHandle("You can only upload one pdf file");
+        this.uploadErrorHandle("You can only upload one PDF file");
         return;
       }
+
       if (file[0].type === "application/pdf") {
-        // Get file name
         this.fileName = file[0].name;
         this.closeErrorAlert();
         this.$emit("upload", file, "resume");
       } else {
-        this.uploadErrorHandle("You can only upload pdf files");
+        this.uploadErrorHandle("You can only upload PDF files");
       }
     },
   },

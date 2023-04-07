@@ -36,6 +36,18 @@
             <h5 v-if="!fileName">Drop your logo here</h5>
             <h5 v-else>Logo uploaded!!</h5>
           </div>
+          <div class="text-center my-3">
+            <label for="file-upload" class="btn btn-primary">
+              Upload Logo
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              class="d-none"
+              @change="upload($event, true)"
+              accept="image/jpeg, image/png"
+            />
+          </div>
           <hr class="my-6" />
           <!-- Progess Bars -->
           <div class="mb-4">
@@ -77,21 +89,23 @@ export default {
     CloseUploadModel() {
       this.$emit("closeUploadModel");
     },
-    upload($event) {
-      // Disable the active drop styles
+    upload(event, isFileInput = false) {
       this.dragEnd();
 
-      // Get the files from the event
-      const file = [...$event.dataTransfer.files];
+      let file;
 
-      // check if the file is pdf
+      if (isFileInput) {
+        file = [...event.target.files];
+      } else {
+        file = [...event.dataTransfer.files];
+      }
+
       if (file.length > 1) {
-        // Upload the file
-        this.uploadErrorHandle("You can only upload one file");
+        this.uploadErrorHandle("You can only upload one image file");
         return;
       }
+
       if (file[0].type === "image/png" || file[0].type === "image/jpeg") {
-        // Get the file name
         this.fileName = file[0].name;
         this.closeErrorAlert();
         this.$emit("upload", file);
