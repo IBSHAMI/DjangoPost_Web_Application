@@ -73,14 +73,15 @@ pip install -r requirements.txt
 ### Running the Application
 
 1. Start the frontend development server
-   cd frontend
-   npm run serve
-
+```
+cd frontend
+npm run dev
+```
 2. Start the backend development server
 
 ```
-   cd backend
-   python manage.py runserver
+cd backend
+python manage.py runserver
 ```
 
 3. Access the application at `http://127.0.0.1:5173/`
