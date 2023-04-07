@@ -1,5 +1,5 @@
 <template>
-  <div class="col-xl-4 order-xl-1 mb-sm-4">
+  <div class="col-xl-4 order-xl-1 mb-3 p-2">
     <div class="card border-0 text-center p-0">
       <div class="card-body pb-5">
         <img

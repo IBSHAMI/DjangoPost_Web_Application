@@ -2,15 +2,17 @@
   <!-- component -->
   <section class="container d-flex justify-content-center py-4 my-4">
     <div class="w-100 text-center text-md-start">
-      <div class="row">
-        <div class="d-flex justify-content-between py-4">
-          <div class="d-block mb-4 mb-md-0">
+      <div class="row pb-3">
+        <div
+          class="d-flex flex-column flex-md-row justify-content-center justify-content-md-between py-4"
+        >
+          <div class="d-block mb-3 mb-md-0">
             <h2 class="h3">Jobs</h2>
             <p class="para mb-0">
-              Here you can view all the jobs that is posted under your company.
+              Here you can view all the jobs that are posted under your company.
             </p>
           </div>
-          <div class="">
+          <div class="d-flex align-items-center mx-auto mx-md-0">
             <div
               @click.prevent="createJob"
               class="btn button button-primary btn-lg"
@@ -22,7 +24,7 @@
       </div>
 
       <div class="row justify-content-between align-items-center">
-        <div class="col-9 col-lg-8 d-md-flex">
+        <div class="col-9 col-lg-8 d-md-flex mx-auto mx-md-0">
           <div class="form-group col-md-4 mb-3">
             <p class="form-label">Search by Name:</p>
             <input
@@ -34,7 +36,7 @@
               placeholder="Search Jobs"
             />
           </div>
-          <div class="form-group col-md-4 mb-3 mx-3">
+          <div class="form-group col-md-4 mb-3 mx-md-3">
             <p class="form-label">Sort By:</p>
             <select
               aria-label="select"

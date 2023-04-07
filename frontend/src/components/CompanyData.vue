@@ -11,7 +11,7 @@
               :companyWebsite="companyWebsite"
               :companyLogoPath="this.authenticationStore.companyProfileLogo"
             />
-            <div class="col-xl-8 order-xl-1">
+            <div class="col-xl-8 order-xl-1 mb-3 p-2">
               <vee-form
                 action="#"
                 :validation-schema="schema"

@@ -1,5 +1,5 @@
 <template>
-  <div class="container py-4 my-4">
+  <div class="container p-4">
     <div class="row">
       <div class="row pb-3">
         <div class="container-fluid">
@@ -13,7 +13,7 @@
                 this.authenticationStore.employeeProfilePicture
               "
             />
-            <div class="col-xl-8 order-xl-1">
+            <div class="col-xl-8 order-xl-1 mb-3 p-2">
               <vee-form
                 action="#"
                 :validation-schema="schema"

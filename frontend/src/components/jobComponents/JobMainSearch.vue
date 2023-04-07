@@ -6,13 +6,15 @@
           <div class="col-xl-8 col-lg-12 col-md-12 d-block mx-auto">
             <div class="text-center text-white mx-auto">
               <h1 class="text-center form-header">
-                <span class="font-weight-bold">{{ totalJobsCount }}</span>
+                <span class="font-weight-bold text-success">{{
+                  totalJobsCount
+                }}</span>
                 Jobs Available In DjangoPost
               </h1>
             </div>
             <div class="search-background py-4 text-center mx-auto">
               <div class="form row no-gutters d-flex justify-content-center">
-                <div class="col-xl-4 col-lg-3 col-md-12 mb-0 form-group">
+                <div class="col-xl-4 col-lg-3 col-md-12 mb-3 form-group">
                   <input
                     type="text"
                     class="form-control input-lg border-end-0 br-tr-md-0 br-br-md-0 form-control"
@@ -22,7 +24,7 @@
                   />
                 </div>
                 <div
-                  class="col-xl-3 col-lg-3 select2-lg col-md-12 mb-0 form-group"
+                  class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12 mb-3 form-group"
                 >
                   <select
                     class="form-control select2-show-search border-bottom-0 w-100 select2-hidden-accessible"
@@ -45,7 +47,7 @@
                   </select>
                 </div>
                 <div
-                  class="col-xl-3 col-lg-3 select2-lg col-md-12 mb-0 form-group"
+                  class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12 mb-3 form-group"
                 >
                   <select
                     class="form-control select2-show-search border-bottom-0 w-100 select2-hidden-accessible"
@@ -63,7 +65,9 @@
                     </option>
                   </select>
                 </div>
-                <div class="col-xl-2 col-lg-3 col-md-12 mb-0 form-group">
+                <div
+                  class="col-xl-2 col-lg-3 col-md-12 col-sm-12 col-12 mb-3 form-group"
+                >
                   <a
                     @click.prevent="searchByJobTitle"
                     class="btn btn-lg btn-block btn-secondary br-bl-0 br-tl-0"

@@ -1,34 +1,36 @@
 <template>
   <div class="mx-auto py-auto">
-    <ul class="pagination m-3 pb-5">
-      <li
-        class="page-item page-prev"
-        :class="{ disabled: currentPage === 1 }"
-        style="cursor: pointer"
-        @click="navigatePrevious"
-      >
-        <span class="page-link" tabindex="-1">Prev</span>
-      </li>
-      <li
-        v-for="page in totalPages"
-        class="page-item"
-        :key="page"
-        :class="{ active: page === currentPage }"
-        style="cursor: pointer"
-        @click.prevent="navigatePages(page)"
-        :disabled="page === currentPage"
-      >
-        <span class="page-link">{{ page }}</span>
-      </li>
-      <li
-        class="page-item page-next"
-        :class="{ disabled: currentPage === totalPages }"
-        style="cursor: pointer"
-        @click.prevent="navigateNext"
-      >
-        <span class="page-link">Next</span>
-      </li>
-    </ul>
+    <div class="pagination-container">
+      <ul class="pagination m-3 pb-5">
+        <li
+          class="page-item page-prev"
+          :class="{ disabled: currentPage === 1 }"
+          style="cursor: pointer"
+          @click="navigatePrevious"
+        >
+          <span class="page-link" tabindex="-1">Prev</span>
+        </li>
+        <li
+          v-for="page in totalPages"
+          class="page-item"
+          :key="page"
+          :class="{ active: page === currentPage }"
+          style="cursor: pointer"
+          @click.prevent="navigatePages(page)"
+          :disabled="page === currentPage"
+        >
+          <span class="page-link">{{ page }}</span>
+        </li>
+        <li
+          class="page-item page-next"
+          :class="{ disabled: currentPage === totalPages }"
+          style="cursor: pointer"
+          @click.prevent="navigateNext"
+        >
+          <span class="page-link">Next</span>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -81,5 +83,17 @@ export default {
   color: #fff;
   background-color: #11ab7c;
   border-color: #11ab7c;
+}
+
+.pagination-container {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .pagination-container {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }
 </style>

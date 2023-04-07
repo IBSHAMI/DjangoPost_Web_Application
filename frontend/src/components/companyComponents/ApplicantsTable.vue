@@ -14,7 +14,7 @@
       </div>
 
       <div class="row justify-content-between align-items-center">
-        <div class="col-9 col-lg-8 d-md-flex">
+        <div class="col-9 col-lg-8 d-md-flex mx-auto mx-md-0">
           <div class="form-group col-md-4 mb-3">
             <p class="form-label">Search by Name:</p>
             <input
@@ -26,7 +26,7 @@
               placeholder="Search Jobs"
             />
           </div>
-          <div class="form-group col-md-4 mb-3 mx-3">
+          <div class="form-group col-md-4 mb-3 mx-md-3">
             <p class="form-label">Sort By:</p>
             <select
               aria-label="select"

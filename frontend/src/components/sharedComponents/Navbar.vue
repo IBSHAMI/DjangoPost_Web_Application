@@ -6,7 +6,7 @@
         aria-label="Primary navigation"
         class="navbar navbar-expand-lg navbar-light"
       >
-        <div class="container d-flex justify-content-between p-3 d-md-none">
+        <div class="container d-flex justify-content-between">
           <router-link class="navbar-brand align" :to="{ name: 'LandingPage' }">
             DjangoPost
           </router-link>
@@ -22,9 +22,9 @@
             <span class="navbar-toggler-icon"></span>
           </button>
 
-          <div class="collapse navbar-collapse" id="navbarNav">
+          <div class="collapse navbar-collapse pt-3 d-md-none" id="navbarNav">
             <div class="mx-auto d-none d-lg-block"></div>
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav text-sm-start">
               <li
                 class="nav-item"
                 v-show="

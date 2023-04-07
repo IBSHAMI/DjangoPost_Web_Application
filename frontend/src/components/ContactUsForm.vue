@@ -1,6 +1,6 @@
 <template>
   <section class="container d-flex justify-content-center py-4 my-4">
-    <div class="card w-75 border-0 text-center text-md-start">
+    <div class="card w-100 border-0 text-center text-md-start">
       <div class="row card-title text-center">
         <h5 class="my-4 form-header">Contact Us</h5>
         <p class="para">
