@@ -3,8 +3,8 @@ FROM node:lts-alpine
 # update npm 
 RUN npm install -g npm@latest
 
-# install simple http server for serving static content
-RUN npm install -g http-server
+# install serve for serving static content
+RUN npm install -g serve
 
 # make the 'app' folder the current working directory
 WORKDIR /app
@@ -14,4 +14,4 @@ COPY frontend/dist dist
 
 EXPOSE 8080
 
-CMD [ "http-server", "dist" ]
+CMD [ "serve", "-s", "dist", "-l", "8080" ]
