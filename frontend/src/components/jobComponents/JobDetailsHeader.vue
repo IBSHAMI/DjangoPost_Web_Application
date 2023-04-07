@@ -7,15 +7,33 @@
             {{ headerData.title }}
           </h3>
           <div class="mt-0 mb-15">
-            <span class="form-label fst-italic card-briefcase mx-2">{{
-              headerData.type
-            }}</span>
-            <span class="form-label fst-italic card-framework">{{
-              headerData.framework
-            }}</span>
-            <span class="form-label fst-italic card-time">{{
-              formattedDate()
-            }}</span>
+            <span
+              class="form-label fst-italic card-briefcase mx-2"
+              :style="{
+                backgroundImage: `url(${briefcaseSvg})`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: '0px 6px',
+              }"
+              >{{ headerData.type }}</span
+            >
+            <span
+              class="form-label fst-italic card-framework"
+              :style="{
+                backgroundImage: `url(${frameworkSvg})`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: '0px 6px',
+              }"
+              >{{ headerData.framework }}</span
+            >
+            <span
+              class="form-label fst-italic card-time"
+              :style="{
+                backgroundImage: `url(${timeSvg})`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: '0px 6px',
+              }"
+              >{{ formattedDate() }}</span
+            >
           </div>
         </div>
         <div class="col-lg-4 col-md-12 text-lg-end">
@@ -43,6 +61,9 @@
 </template>
 
 <script>
+import BriefcaseSvg from "@/assets/img/icons/icons-briefcase.svg";
+import FrameworkSvg from "@/assets/img/icons/icons-framework.svg";
+import TimeSvg from "@/assets/img/icons/icons-refresh.svg";
 import { getAuthenticationStore } from "@/services/authService";
 import { postDataWithToken } from "@/services/apiService";
 import moment from "moment";
@@ -54,6 +75,9 @@ export default {
   data() {
     return {
       authenticationStore: getAuthenticationStore(),
+      briefcaseSvg: BriefcaseSvg,
+      frameworkSvg: FrameworkSvg,
+      timeSvg: TimeSvg,
     };
   },
   methods: {
@@ -101,7 +125,6 @@ export default {
 .card-briefcase {
   display: inline-block;
   padding: 2px 20px 2px 20px;
-  background: url(../assets/img/icons/icons-briefcase.svg) no-repeat 0px 6px;
   background-size: 15px;
   margin-right: 10px;
   background-position: 0px 6px;
